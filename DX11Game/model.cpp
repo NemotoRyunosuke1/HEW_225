@@ -242,7 +242,7 @@ void UpdateModel(void)
 		StartExplosion(g_posModel,XMFLOAT2(50.0f,50.0f));
 	
 	}
-
+	 // test
 
 #if _DEBUG
 	//PrintDebugProc("[Ëº³· ²Á : (%f : %f : %f)]\n", g_posModel.x, g_posModel.y, g_posModel.z);
