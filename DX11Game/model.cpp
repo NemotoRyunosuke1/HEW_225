@@ -243,6 +243,8 @@ void UpdateModel(void)
 	
 	}
 	 // test
+	// aaa
+
 
 #if _DEBUG
 	//PrintDebugProc("[Ëº³· ²Á : (%f : %f : %f)]\n", g_posModel.x, g_posModel.y, g_posModel.z);
