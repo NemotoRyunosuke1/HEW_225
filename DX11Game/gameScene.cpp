@@ -11,7 +11,7 @@
 #include "Camera.h"
 #include "model.h"
 #include "shadow.h"
-#include "tree.h"
+
 
 //=============================================================================
 // 初期化処理
@@ -23,18 +23,6 @@ GameScene::GameScene()
 
 	// モデル初期化
 	InitModel();
-
-	// ツリー初期化
-	InitTree();
-
-	// ツリーセット
-	for (int nCntTree = 0; nCntTree < 10; ++nCntTree) 
-	{
-		float fPosX = (float)(rand() % 6200) / 10.0f - 310.0f;
-		float fPosY = 0.0f;
-		float fPosZ = (float)(rand() % 3200) ;
-		SetTree(XMFLOAT3(fPosX, fPosY, fPosZ), 300.0f, 400.0f, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f));
-	}
 
 	// 丸影初期化
 	InitShadow();
@@ -51,8 +39,6 @@ GameScene::~GameScene()
 	// モデル終了処理
 	UninitModel();
 
-	// ツリー終了処理
-	UninitTree();
 
 	// 丸影終了処理
 	UninitShadow();
@@ -75,8 +61,6 @@ void GameScene::Update()
 	// 丸影更新
 	UpdateShadow();
 
-	// ツリー更新
-	UpdateTree();
 
 	//次のシーンへ移る条件
 	if (GetAsyncKeyState(VK_RETURN) & 0x8000)
@@ -113,9 +97,6 @@ void GameScene::Draw()
 
 	// 丸影描画
 	DrawShadow();
-
-	// ツリー描画
-	DrawTree();
 
 	// 2D描画
 	// Zバッファ無効(Zチェック無&Z更新無)

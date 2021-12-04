@@ -90,20 +90,22 @@ void UpdateModel(void)
 		if (GetKeyPress(VK_UP) || GetKeyPress(VK_W))
 		{
 			// 左前移動
-			g_moveModel.x -= SinDeg(rotCamera.y + 135.0f) * VALUE_MOVE_MODEL;
-			g_moveModel.z -= CosDeg(rotCamera.y + 135.0f) * VALUE_MOVE_MODEL;
+			g_moveModel.x -= SinDeg(g_rotModel.y) * VALUE_MOVE_MODEL;
+			g_moveModel.z -= CosDeg(g_rotModel.y) * VALUE_MOVE_MODEL;
 
 			// 機体のロール
 			g_rotDestModel.z = -30.0f;
+			g_rotDestModel.y -= 2;
 		}		
 		else
 		{
 			// 左移動
-			g_moveModel.x -= SinDeg(rotCamera.y + 90.0f) * VALUE_MOVE_MODEL;
-			g_moveModel.z -= CosDeg(rotCamera.y + 90.0f) * VALUE_MOVE_MODEL;
+			//g_moveModel.x -= SinDeg(g_rotModel.y + 90.0f) * VALUE_MOVE_MODEL;
+			//g_moveModel.z -= CosDeg(g_rotModel.y + 90.0f) * VALUE_MOVE_MODEL;
 
 			// 機体のロール
 			g_rotDestModel.z = -30.0f;
+			g_rotDestModel.y -= 2;
 		}
 	}
 	else if (GetKeyPress(VK_RIGHT) || GetKeyPress(VK_D))
@@ -111,41 +113,43 @@ void UpdateModel(void)
 		if (GetKeyPress(VK_UP) || GetKeyPress(VK_W))
 		{
 			// 右前移動
-			g_moveModel.x -= SinDeg(rotCamera.y - 135.0f) * VALUE_MOVE_MODEL;
-			g_moveModel.z -= CosDeg(rotCamera.y - 135.0f) * VALUE_MOVE_MODEL;
+			g_moveModel.x -= SinDeg(g_rotModel.y) * VALUE_MOVE_MODEL;
+			g_moveModel.z -= CosDeg(g_rotModel.y) * VALUE_MOVE_MODEL;
 
 			// 機体のロール
 			g_rotDestModel.z = 30.0f;
+			g_rotDestModel.y += 2;
 		} 
 		else
 		{
 			// 右移動
-			g_moveModel.x -= SinDeg(rotCamera.y - 90.0f) * VALUE_MOVE_MODEL;
-			g_moveModel.z -= CosDeg(rotCamera.y - 90.0f) * VALUE_MOVE_MODEL;
+			//g_moveModel.x -= SinDeg(g_rotModel.y - 90.0f) * VALUE_MOVE_MODEL;
+			//g_moveModel.z -= CosDeg(g_rotModel.y - 90.0f) * VALUE_MOVE_MODEL;
 
 			// 機体のロール
 			g_rotDestModel.z = 30.0f;
+			g_rotDestModel.y += 2;
 
 		}
 	} 
 	else if (GetKeyPress(VK_UP) || GetKeyPress(VK_W))
 	{
 		// 前移動
-		g_moveModel.x -= SinDeg(180.0f + rotCamera.y) * VALUE_MOVE_MODEL;
-		g_moveModel.z -= CosDeg(180.0f + rotCamera.y) * VALUE_MOVE_MODEL;
+		g_moveModel.x -= SinDeg(g_rotModel.y) * VALUE_MOVE_MODEL;
+		g_moveModel.z -= CosDeg(g_rotModel.y) * VALUE_MOVE_MODEL;
 
-		g_rotDestModel.y = 180.0f + rotCamera.y;
+		
 	}
 	else
 	{
 		// モデルの向きを前(z軸マイナス方向)にする
-		g_rotDestModel.y = 180.0f + rotCamera.y;
+		//g_rotDestModel.y = 180.0f + rotCamera.y;
 	}
 
 
 	// 自動前移動
-	g_moveModel.z -= CosDeg(g_rotModel.y ) * VALUE_MOVE_MODEL;
-	g_moveModel.x -= SinDeg(g_rotModel.y) * VALUE_MOVE_MODEL;
+	//g_moveModel.z -= CosDeg(g_rotModel.y ) * VALUE_MOVE_MODEL;
+	//g_moveModel.x -= SinDeg(g_rotModel.y) * VALUE_MOVE_MODEL;
 	
 	// 上昇&下降処理
 	g_rotDestModel.x = 0;  // 機体の傾きリセット
@@ -163,6 +167,14 @@ void UpdateModel(void)
 		g_rotDestModel.x = -30;	 // 機体の傾き
 	}
 
+	if (g_rotDestModel.y >= 360)
+	{
+		g_rotDestModel.y -= 360.0f;
+	}
+	if (g_rotDestModel.y <= 0)
+	{
+		g_rotDestModel.y += +360.0f;
+	}
 
 	// 目的の角度までの差分
 	float fDiffRotY = g_rotDestModel.y - g_rotModel.y;
