@@ -1,7 +1,7 @@
 //=============================================================================
 //
 // モデル処理 [model.cpp]
-// Author : HINA OSHIKUBO
+// Author : 根本龍之介
 //
 //=============================================================================
 #include "model.h"
@@ -49,7 +49,7 @@ HRESULT InitModel(void)
 	// 位置・回転・スケールの初期設定
 	g_posModel = XMFLOAT3(0.0f, 100.0f, 0.0f);
 	g_moveModel = XMFLOAT3(0.0f, 0.0f, 0.0f);
-	g_rotModel = XMFLOAT3(0.0f, 0.0f, 0.0f);
+	g_rotModel = XMFLOAT3(0.0f, 180.0f, 0.0f);
 	g_rotDestModel = XMFLOAT3(0.0f, 0.0f, 0.0f);
 
 	// モデルデータの読み込み
@@ -130,17 +130,22 @@ void UpdateModel(void)
 		g_moveModel.z -= CosDeg(180.0f + rotCamera.y) * VALUE_MOVE_MODEL;
 
 		g_rotDestModel.y = 180.0f + rotCamera.y;
-	} else if (GetKeyPress(VK_DOWN)) {
-		// 後移動
-		g_moveModel.x -= SinDeg(rotCamera.y) * VALUE_MOVE_MODEL;
-		g_moveModel.z -= CosDeg(rotCamera.y) * VALUE_MOVE_MODEL;
-
-		g_rotDestModel.y = rotCamera.y;
 	}
+	else
+	{
+		g_rotDestModel.y = 180.0f + rotCamera.y;
+	}
+	//else if (GetKeyPress(VK_DOWN)) {
+	//	// 後移動
+	//	g_moveModel.x -= SinDeg(rotCamera.y) * VALUE_MOVE_MODEL;
+	//	g_moveModel.z -= CosDeg(rotCamera.y) * VALUE_MOVE_MODEL;
 
-	
-	g_moveModel.z -= CosDeg(rotCamera.y + 135.0f) * VALUE_MOVE_MODEL;
+	//	g_rotDestModel.y = rotCamera.y;
+	//}
 
+	// 自動前移動
+	g_moveModel.z -= CosDeg(g_rotModel.y ) * VALUE_MOVE_MODEL;
+	g_moveModel.x -= SinDeg(g_rotModel.y) * VALUE_MOVE_MODEL;
 	// 上昇&下降処理
 
 	g_rotModel.x = 0;  // 機体の傾き
@@ -266,7 +271,7 @@ void UpdateModel(void)
 
 #if _DEBUG
 	PrintDebugProc("[ﾋｺｳｷ ｲﾁ : (%f : %f : %f)]\n", g_posModel.x, g_posModel.y, g_posModel.z);
-	//PrintDebugProc("[ﾋｺｳｷ ﾑｷ : (%f) < ﾓｸﾃｷ ｲﾁ:(%f) >]\n", g_rotModel.y, g_rotDestModel.y);
+	PrintDebugProc("[ﾋｺｳｷ ﾑｷ : (%f) < ﾓｸﾃｷ ｲﾁ:(%f) >]\n", g_rotModel.x, g_rotDestModel.y);
 	//PrintDebugProc("\n");
 
 	PrintDebugProc("*** ﾋｺｳｷ ｿｳｻ ***\n");
@@ -306,4 +311,22 @@ void DrawModel(void)
 XMFLOAT3& GetModelPos()
 {
 	return g_posModel;
+}
+//=============================================================================
+// モデルピッチ取得
+//=============================================================================
+int GetModelRotX()
+{
+	if (g_rotModel.x < -10)	// 下を向いてる時
+	{
+		return -1;	
+	}
+	else if (g_rotModel.x > 10)	 // 上を向いてる時
+	{
+		return 1;
+	}
+	else   // 正面を向いてる時
+	{
+		return 0;
+	}
 }

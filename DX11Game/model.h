@@ -1,7 +1,7 @@
 //=============================================================================
 //
 // ÉÇÉfÉãèàóù [model.h]
-// Author : HIROHIKO HAMAYA
+// Author : ç™ñ{ó¥îVâÓ
 //
 //=============================================================================
 #pragma once
@@ -17,3 +17,4 @@ void UpdateModel(void);
 void DrawModel(void);
 
 XMFLOAT3& GetModelPos();
+int GetModelRotX();
