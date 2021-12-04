@@ -1,0 +1,231 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ソース ファイル">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="ヘッダー ファイル">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="リソース ファイル">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ソース ファイル\scene">
+      <UniqueIdentifier>{3464d907-b3b1-41b5-96ac-9b40a56608c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\scene\titleScene">
+      <UniqueIdentifier>{4d4a4af1-f099-42f2-91a5-d9229aedefe3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\scene\gameScene">
+      <UniqueIdentifier>{b889b316-533c-4a13-b448-9f57764cd628}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\scene\system">
+      <UniqueIdentifier>{c4ca1793-9347-4f4d-ad32-0bb458dbc3c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\scene">
+      <UniqueIdentifier>{ae49b6eb-28e6-4525-9b2d-b5ea36a4223c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\scene\gameScene">
+      <UniqueIdentifier>{8cd18965-3341-4720-a87c-aef57dfe35f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\scene\titleScene">
+      <UniqueIdentifier>{7ead6678-26e5-47b6-a36b-4fd158ae2753}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\scene\system">
+      <UniqueIdentifier>{00b127fb-0db7-4aab-99f9-9ac9315926ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\scene\gameScene\player">
+      <UniqueIdentifier>{f25d2646-6ca3-443c-8c4d-52cddb300e67}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="scene.cpp">
+      <Filter>ソース ファイル\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="mesh.cpp">
+      <Filter>ソース ファイル\scene\system</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>ソース ファイル\scene\system</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>ソース ファイル\scene\system</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>ソース ファイル\scene\system</Filter>
+    </ClCompile>
+    <ClCompile Include="shadow.cpp">
+      <Filter>ソース ファイル\scene\system</Filter>
+    </ClCompile>
+    <ClCompile Include="polygon.cpp">
+      <Filter>ソース ファイル\scene\system</Filter>
+    </ClCompile>
+    <ClCompile Include="Light.cpp">
+      <Filter>ソース ファイル\scene\system</Filter>
+    </ClCompile>
+    <ClCompile Include="AssimpModel.cpp">
+      <Filter>ソース ファイル\scene\system</Filter>
+    </ClCompile>
+    <ClCompile Include="debugproc.cpp">
+      <Filter>ソース ファイル\scene\system</Filter>
+    </ClCompile>
+    <ClCompile Include="input.cpp">
+      <Filter>ソース ファイル\scene\system</Filter>
+    </ClCompile>
+    <ClCompile Include="model.cpp">
+      <Filter>ソース ファイル\scene\gameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="tree.cpp">
+      <Filter>ソース ファイル\scene\gameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="explosion.cpp">
+      <Filter>ソース ファイル\scene\gameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="enemy.cpp">
+      <Filter>ソース ファイル\scene\gameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="bullet.cpp">
+      <Filter>ソース ファイル\scene\gameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="bg.cpp">
+      <Filter>ソース ファイル\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="fade.cpp">
+      <Filter>ソース ファイル\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="object.cpp">
+      <Filter>ソース ファイル\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="titleScene.cpp">
+      <Filter>ソース ファイル\scene\titleScene</Filter>
+    </ClCompile>
+    <ClCompile Include="gameScene.cpp">
+      <Filter>ソース ファイル\scene\gameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="titleBG.cpp">
+      <Filter>ソース ファイル\scene\titleScene</Filter>
+    </ClCompile>
+    <ClCompile Include="meshfield.cpp">
+      <Filter>ソース ファイル\scene\gameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="sceneBase.cpp">
+      <Filter>ソース ファイル\scene</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="main.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="AssimpModel.h">
+      <Filter>ヘッダー ファイル\scene\system</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>ヘッダー ファイル\scene\system</Filter>
+    </ClInclude>
+    <ClInclude Include="debugproc.h">
+      <Filter>ヘッダー ファイル\scene\system</Filter>
+    </ClInclude>
+    <ClInclude Include="input.h">
+      <Filter>ヘッダー ファイル\scene\system</Filter>
+    </ClInclude>
+    <ClInclude Include="mesh.h">
+      <Filter>ヘッダー ファイル\scene\system</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>ヘッダー ファイル\scene\system</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>ヘッダー ファイル\scene\system</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>ヘッダー ファイル\scene\system</Filter>
+    </ClInclude>
+    <ClInclude Include="scene.h">
+      <Filter>ヘッダー ファイル\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="polygon.h">
+      <Filter>ヘッダー ファイル\scene\system</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>ヘッダー ファイル\scene\system</Filter>
+    </ClInclude>
+    <ClInclude Include="shadow.h">
+      <Filter>ヘッダー ファイル\scene\system</Filter>
+    </ClInclude>
+    <ClInclude Include="bg.h">
+      <Filter>ヘッダー ファイル\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="bullet.h">
+      <Filter>ヘッダー ファイル\scene\gameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy.h">
+      <Filter>ヘッダー ファイル\scene\gameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="explosion.h">
+      <Filter>ヘッダー ファイル\scene\gameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="model.h">
+      <Filter>ヘッダー ファイル\scene\gameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="tree.h">
+      <Filter>ヘッダー ファイル\scene\gameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="fade.h">
+      <Filter>ヘッダー ファイル\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="object.h">
+      <Filter>ヘッダー ファイル\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="titleScene.h">
+      <Filter>ヘッダー ファイル\scene\titleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="gameScene.h">
+      <Filter>ヘッダー ファイル\scene\gameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="titleBG.h">
+      <Filter>ヘッダー ファイル\scene\titleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="meshfield.h">
+      <Filter>ヘッダー ファイル\scene\gameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="sceneBase.h">
+      <Filter>ヘッダー ファイル\scene</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Pixel.hlsl">
+      <Filter>ソース ファイル\scene\system</Filter>
+    </FxCompile>
+    <FxCompile Include="Pixel2D.hlsl">
+      <Filter>ソース ファイル\scene\system</Filter>
+    </FxCompile>
+    <FxCompile Include="Vertex.hlsl">
+      <Filter>ソース ファイル\scene\system</Filter>
+    </FxCompile>
+    <FxCompile Include="Vertex2D.hlsl">
+      <Filter>ソース ファイル\scene\system</Filter>
+    </FxCompile>
+    <FxCompile Include="AssimpPixel.hlsl">
+      <Filter>ソース ファイル\scene\system</Filter>
+    </FxCompile>
+    <FxCompile Include="AssimpVertex.hlsl">
+      <Filter>ソース ファイル\scene\system</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="DX11Game.rc">
+      <Filter>リソース ファイル</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\directx9.ico">
+      <Filter>リソース ファイル</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
