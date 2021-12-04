@@ -61,11 +61,12 @@ enum ECullMode {
 
 	MAX_CULLMODE
 };
+
 //ÉVÅ[ÉìóÒãìë‡
 enum EScene
 {
 	SCENE_TITLE = 0,
-	SCENE_MENY,
+	SCENE_STAGE_SELECT,
 	SCENE_GAME,
 	SCENE_RESULT,
 

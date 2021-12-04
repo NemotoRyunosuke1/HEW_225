@@ -1,3 +1,9 @@
+//=============================================================================
+//
+// シーン処理 [scene.cpp]
+// Author : RYUNOSUKE NEMOTO
+//
+//=============================================================================
 #include "scene.h"
 #include "debugproc.h"
 #include "fade.h"
@@ -6,22 +12,31 @@
 EScene Scene::m_eScene;
 TitleScene* Scene::m_pTitleScene;
 GameScene* Scene::m_pGameScene;
+StageSlectScene* Scene::m_pStageSelectScene;
 
 
-
-
+//=============================================================================
+// コンストラクタ
+//=============================================================================
 Scene::Scene()
 {
+#if _DEBUG
+	// ゲームの開始するときのシーン
+	m_eScene = SCENE_GAME;
+
+#else
 	// ゲームの開始するときのシーン
 	m_eScene = SCENE_TITLE;
 
+#endif
+	
 	switch (m_eScene)
 	{
 	case SCENE_TITLE:
 		m_pTitleScene = new TitleScene;
 
 		break;
-	case SCENE_MENY:
+	case SCENE_STAGE_SELECT:
 		break;
 	case SCENE_GAME:
 		m_pGameScene = new GameScene;
@@ -35,8 +50,13 @@ Scene::Scene()
 		break;
 	}
 
+	// フェード初期化
 	InitFade();
 }
+
+//=============================================================================
+// デストラクタ
+//=============================================================================
 Scene::~Scene()
 {
 	switch (m_eScene)
@@ -45,7 +65,7 @@ Scene::~Scene()
 		delete m_pTitleScene;
 
 		break;
-	case SCENE_MENY:
+	case SCENE_STAGE_SELECT:
 		break;
 	case SCENE_GAME:
 		delete m_pGameScene;
@@ -59,9 +79,13 @@ Scene::~Scene()
 		break;
 	}
 	
+	//フェード終了処理
 	UninitFade();
 }
 
+//=============================================================================
+// 更新処理
+//=============================================================================
 void Scene::Update() 
 {
 	switch (m_eScene)
@@ -70,7 +94,7 @@ void Scene::Update()
 		m_pTitleScene->Update();
 
 		break;
-	case SCENE_MENY:
+	case SCENE_STAGE_SELECT:
 		break;
 	case SCENE_GAME:
 		m_pGameScene->Update();
@@ -84,8 +108,13 @@ void Scene::Update()
 		break;
 	}
 
+	// フェード更新
 	UpdateFade();
 }
+
+//=============================================================================
+// 描画処理
+//=============================================================================
 void Scene::Draw()
 {
 	switch (m_eScene)
@@ -94,7 +123,7 @@ void Scene::Draw()
 		m_pTitleScene->Draw();
 		
 		break;
-	case SCENE_MENY:
+	case SCENE_STAGE_SELECT:
 		break;
 	case SCENE_GAME:
 		m_pGameScene->Draw();
@@ -112,9 +141,14 @@ void Scene::Draw()
 	// Zバッファ無効(Zチェック無&Z更新無)
 	SetZBuffer(false);
 
+	// フェード描画
 	DrawFade();
 
 }
+
+//=============================================================================
+// セットシーン
+//=============================================================================
 void Scene::SetScene(EScene eScene)
 {	
 	
@@ -124,7 +158,7 @@ void Scene::SetScene(EScene eScene)
 	case SCENE_TITLE://タイトルシーン
 		delete m_pTitleScene;
 		break;
-	case SCENE_MENY://メニューシーン
+	case SCENE_STAGE_SELECT://メニューシーン
 
 		break;
 	case SCENE_GAME://ゲームシーン
@@ -148,7 +182,7 @@ void Scene::SetScene(EScene eScene)
 	case SCENE_TITLE://タイトルシーン
 		m_pTitleScene = new TitleScene;
 		break;
-	case SCENE_MENY://メニューシーン
+	case SCENE_STAGE_SELECT://メニューシーン
 
 		break;
 	case SCENE_GAME://ゲームシーン

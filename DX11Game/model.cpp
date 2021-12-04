@@ -188,7 +188,8 @@ void UpdateModel(void)
 	g_moveModel.y += (0.0f - g_moveModel.y) * RATE_MOVE_MODEL;
 	g_moveModel.z += (0.0f - g_moveModel.z) * RATE_MOVE_MODEL;
 
-	if (g_posModel.x < -310.0f) {
+	// ˆÚ“®”ÍˆÍ§ŒÀ
+	/*if (g_posModel.x < -310.0f) {
 		g_posModel.x = -310.0f;
 	}
 	if (g_posModel.x > 310.0f) {
@@ -205,7 +206,7 @@ void UpdateModel(void)
 	}
 	if (g_posModel.y > 80.0f) {
 		g_posModel.y = 80.0f;
-	}
+	}*/
 
 	if (GetKeyPress(VK_RETURN)) {
 		// ƒŠƒZƒbƒg

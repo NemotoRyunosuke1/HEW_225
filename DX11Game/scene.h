@@ -4,9 +4,10 @@
 #include "fade.h"
 #include "titleScene.h"
 #include "gameScene.h"
+#include "sceneBase.h"
+#include "stageSelectScene.h"
 
-
-class Scene
+class Scene : public SceneBase
 {
 public:
 	Scene();
@@ -20,5 +21,6 @@ private:
 	static EScene m_eScene;
 	static TitleScene* m_pTitleScene;
 	static GameScene* m_pGameScene;
+	static StageSlectScene* m_pStageSelectScene;
 };
 

@@ -40,6 +40,15 @@
     <Filter Include="ヘッダー ファイル\scene\gameScene\player">
       <UniqueIdentifier>{f25d2646-6ca3-443c-8c4d-52cddb300e67}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\scene\gameScene\player">
+      <UniqueIdentifier>{6d34b9bc-adee-41b8-8656-f5dba02835f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\scene\stageSelectScene">
+      <UniqueIdentifier>{dc456fb7-03dc-44f1-b23d-60257aed7eea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\scene\stageSelectScene">
+      <UniqueIdentifier>{7014d5e2-e51b-470d-8784-874a5430bcc4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -49,9 +58,6 @@
       <Filter>ソース ファイル\scene</Filter>
     </ClCompile>
     <ClCompile Include="mesh.cpp">
-      <Filter>ソース ファイル\scene\system</Filter>
-    </ClCompile>
-    <ClCompile Include="Camera.cpp">
       <Filter>ソース ファイル\scene\system</Filter>
     </ClCompile>
     <ClCompile Include="Shader.cpp">
@@ -117,15 +123,18 @@
     <ClCompile Include="sceneBase.cpp">
       <Filter>ソース ファイル\scene</Filter>
     </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>ソース ファイル\scene\gameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="stageSelectScene.cpp">
+      <Filter>ソース ファイル\scene\stageSelectScene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="AssimpModel.h">
-      <Filter>ヘッダー ファイル\scene\system</Filter>
-    </ClInclude>
-    <ClInclude Include="Camera.h">
       <Filter>ヘッダー ファイル\scene\system</Filter>
     </ClInclude>
     <ClInclude Include="debugproc.h">
@@ -196,6 +205,12 @@
     </ClInclude>
     <ClInclude Include="sceneBase.h">
       <Filter>ヘッダー ファイル\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="stageSelectScene.h">
+      <Filter>ヘッダー ファイル\scene\stageSelectScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>ヘッダー ファイル\scene\gameScene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
