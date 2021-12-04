@@ -47,7 +47,7 @@ HRESULT InitModel(void)
 	ID3D11DeviceContext* pDeviceContext = GetDeviceContext();
 
 	// 位置・回転・スケールの初期設定
-	g_posModel = XMFLOAT3(0.0f, 20.0f, 0.0f);
+	g_posModel = XMFLOAT3(0.0f, 100.0f, 0.0f);
 	g_moveModel = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	g_rotModel = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	g_rotDestModel = XMFLOAT3(0.0f, 0.0f, 0.0f);
@@ -138,12 +138,25 @@ void UpdateModel(void)
 		g_rotDestModel.y = rotCamera.y;
 	}
 
+	
+	g_moveModel.z -= CosDeg(rotCamera.y + 135.0f) * VALUE_MOVE_MODEL;
+
+	// 上昇&下降処理
+
+	g_rotModel.x = 0;  // 機体の傾き
+
+	// 上昇
 	if (GetKeyPress(VK_I)) {
 		g_moveModel.y += VALUE_MOVE_MODEL;
+		g_rotModel.x = 30;	// 機体の傾き
 	}
+	// 下降
 	if (GetKeyPress(VK_K)) {
 		g_moveModel.y -= VALUE_MOVE_MODEL;
+		g_rotModel.x = -30;	 // 機体の傾き
 	}
+
+	
 
 	if (GetKeyPress(VK_LSHIFT)) {
 		// 左回転
@@ -189,6 +202,10 @@ void UpdateModel(void)
 	g_moveModel.z += (0.0f - g_moveModel.z) * RATE_MOVE_MODEL;
 
 	// 移動範囲制限
+	if (g_posModel.y < 0.0f)	// 地面 
+	{
+		g_posModel.y = 0.0f;
+	}
 	/*if (g_posModel.x < -310.0f) {
 		g_posModel.x = -310.0f;
 	}
@@ -248,7 +265,7 @@ void UpdateModel(void)
 
 
 #if _DEBUG
-	//PrintDebugProc("[ﾋｺｳｷ ｲﾁ : (%f : %f : %f)]\n", g_posModel.x, g_posModel.y, g_posModel.z);
+	PrintDebugProc("[ﾋｺｳｷ ｲﾁ : (%f : %f : %f)]\n", g_posModel.x, g_posModel.y, g_posModel.z);
 	//PrintDebugProc("[ﾋｺｳｷ ﾑｷ : (%f) < ﾓｸﾃｷ ｲﾁ:(%f) >]\n", g_rotModel.y, g_rotDestModel.y);
 	//PrintDebugProc("\n");
 
