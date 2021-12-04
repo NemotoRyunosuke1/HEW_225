@@ -10,7 +10,7 @@
 #include "meshfield.h"
 #include "Camera.h"
 #include "model.h"
-
+#include "shadow.h"
 
 //=============================================================================
 // 初期化処理
@@ -22,6 +22,9 @@ GameScene::GameScene()
 
 	// モデル初期化
 	InitModel();
+
+	// 丸影初期化
+	InitShadow();
 }
 
 //=============================================================================
@@ -34,6 +37,9 @@ GameScene::~GameScene()
 
 	// モデル終了処理
 	UninitModel();
+
+	// 丸影終了処理
+	UninitShadow();
 }
 
 //=============================================================================
@@ -47,8 +53,11 @@ void GameScene::Update()
 	// メッシュフィールド更新
 	UpdateMeshField();
 
+	// モデル更新
 	UpdateModel();
 
+	// 丸影更新
+	UpdateShadow();
 
 	//次のシーンへ移る条件
 	if (GetAsyncKeyState(VK_RETURN) & 0x8000)
@@ -80,6 +89,9 @@ void GameScene::Draw()
 	DrawMeshField();
 
 	DrawModel();
+
+	// 丸影描画
+	DrawShadow();
 
 	// 2D描画
 	// Zバッファ無効(Zチェック無&Z更新無)
