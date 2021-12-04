@@ -1,7 +1,7 @@
 //=============================================================================
 //
 // カメラ クラス [Camera.cpp]
-// Author : HINA OSHIKUBO
+// Author : 押久保日菜
 //
 //=============================================================================
 #include "Camera.h"
@@ -14,11 +14,11 @@
 //*****************************************************************************
 namespace {
 	const float CAM_POS_P_X = 0.0f;					// カメラの視点初期位置(X座標)
-	const float CAM_POS_P_Y = 25.0f;				// カメラの視点初期位置(Y座標)
+	const float CAM_POS_P_Y = 30.0f;				// カメラの視点初期位置(Y座標)
 	const float CAM_POS_P_Z = -20.0f;				// カメラの視点初期位置(Z座標)
 	const float CAM_POS_R_X = 0.0f;					// カメラの注視点初期位置(X座標)
 	const float CAM_POS_R_Y = -100.0f;				// カメラの注視点初期位置(Y座標)
-	const float CAM_POS_R_Z = 200.0f;				// カメラの注視点初期位置(Z座標)
+	const float CAM_POS_R_Z = 300.0f;				// カメラの注視点初期位置(Z座標)
 	const float VIEW_ANGLE = 90.0f;					// ビュー平面の視野角
 	const float VIEW_ASPECT = (float)SCREEN_WIDTH / SCREEN_HEIGHT;	// ビュー平面のアスペクト比
 	const float VIEW_NEAR_Z = 10.0f;				// ビュー平面のNearZ値
@@ -76,6 +76,7 @@ void CCamera::Init()
 // 更新
 void CCamera::Update()
 {
+	/*
 	if (GetKeyPress(VK_C)) {
 		// 右旋回
 		m_vDestAngle.y -= VALUE_ROTATE_CAMERA;
@@ -89,6 +90,18 @@ void CCamera::Update()
 		if (m_vDestAngle.y >= 180.0f) {
 			m_vDestAngle.y -= 360.0f;
 		}
+	}
+	*/
+
+	// カメラの上下視点移動
+	switch (0)
+	{
+	case 0: m_vAngle.x = 0;
+		break;
+	case 1: m_vAngle.x = 45.0f;
+		break;
+	case 2: m_vAngle.x = -45.0f;
+		break;
 	}
 
 	// 目的の角度までの差分
