@@ -18,7 +18,7 @@ namespace {
 	const float CAM_POS_P_Z = -20.0f;				// カメラの視点初期位置(Z座標)
 	const float CAM_POS_R_X = 0.0f;					// カメラの注視点初期位置(X座標)
 	const float CAM_POS_R_Y = -100.0f;				// カメラの注視点初期位置(Y座標)
-	const float CAM_POS_R_Z =200.0f;				// カメラの注視点初期位置(Z座標)
+	const float CAM_POS_R_Z = 200.0f;				// カメラの注視点初期位置(Z座標)
 	const float VIEW_ANGLE = 90.0f;					// ビュー平面の視野角
 	const float VIEW_ASPECT = (float)SCREEN_WIDTH / SCREEN_HEIGHT;	// ビュー平面のアスペクト比
 	const float VIEW_NEAR_Z = 10.0f;				// ビュー平面のNearZ値
