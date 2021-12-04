@@ -8,7 +8,9 @@
 #include "debugproc.h"
 #include "fade.h"
 
-
+//*****************************************************************************
+// ƒOƒ[ƒoƒ‹•Ï”
+//*****************************************************************************
 EScene Scene::m_eScene;
 TitleScene* Scene::m_pTitleScene;
 GameScene* Scene::m_pGameScene;

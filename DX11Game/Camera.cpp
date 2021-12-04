@@ -25,6 +25,7 @@ namespace {
 	const float VIEW_FAR_Z = 3000.0f;				// ビュー平面のFarZ値
 	const float VALUE_MOVE_CAMERA = 2.0f;			// カメラの移動量
 	const float VALUE_ROTATE_CAMERA = 1.8f;			// カメラの回転量
+	const float RATE_ROTATE_CAMERA = 0.20f;			// カメラの注視点への補正係数
 
 	const float INTERVAL_CAMERA_R = 1.5f;			// モデルの視線の先までの距離
 	const float RATE_CHASE_CAMERA_P = 0.35f;		// カメラの視点への補正係数
@@ -50,6 +51,7 @@ void CCamera::Init()
 	m_vPos = XMFLOAT3(CAM_POS_P_X, CAM_POS_P_Y, CAM_POS_P_Z);	// 視点
 	m_vTarget = XMFLOAT3(CAM_POS_R_X, CAM_POS_R_Y, CAM_POS_R_Z);// 注視点
 	m_vUp = XMFLOAT3(0.0f, 1.0f, 0.0f);							// 上方ベクトル
+	m_vSrcPos = m_vPos;
 	m_vDestPos = m_vPos;
 	m_vDestTarget = m_vTarget;
 	m_vVelocity = XMFLOAT3(0.0f, 0.0f, 0.0f);
@@ -74,6 +76,41 @@ void CCamera::Init()
 // 更新
 void CCamera::Update()
 {
+	if (GetKeyPress(VK_C)) {
+		// 右旋回
+		m_vDestAngle.y -= VALUE_ROTATE_CAMERA;
+		if (m_vDestAngle.y < -180.0f) {
+			m_vDestAngle.y += 360.0f;
+		}
+	}
+	if (GetKeyPress(VK_Z)) {
+		// 左旋回
+		m_vDestAngle.y += VALUE_ROTATE_CAMERA;
+		if (m_vDestAngle.y >= 180.0f) {
+			m_vDestAngle.y -= 360.0f;
+		}
+	}
+
+	// 目的の角度までの差分
+	float fDiffRotY = m_vDestAngle.y - m_vAngle.y;
+	if (fDiffRotY >= 180.0f) {
+		fDiffRotY -= 360.0f;
+	}
+	if (fDiffRotY < -180.0f) {
+		fDiffRotY += 360.0f;
+	}
+
+	// 目的の角度まで慣性をかける
+	m_vAngle.y += fDiffRotY * RATE_ROTATE_CAMERA;
+	if (m_vAngle.y >= 180.0f) {
+		m_vAngle.y -= 360.0f;
+	}
+	if (m_vAngle.y < -180.0f) {
+		m_vAngle.y += 360.0f;
+	}
+	m_vSrcPos.x = -SinDeg(m_vAngle.y) * m_fLengthInterval;
+	m_vSrcPos.z = -CosDeg(m_vAngle.y) * m_fLengthInterval;
+
 	// 追跡カメラ
 	XMFLOAT3& vModelPos = GetModelPos();	// モデル座標
 	m_vDestPos.x = CAM_POS_P_X + vModelPos.x;

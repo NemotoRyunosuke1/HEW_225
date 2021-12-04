@@ -14,6 +14,9 @@ private:
 	XMFLOAT3 m_vTarget;				// 注視点
 	XMFLOAT3 m_vUp;					// 上方ベクトル
 
+	XMFLOAT3 m_vSrcPos;				// 元の視点
+
+
 	XMFLOAT3 m_vDestPos;			// 視点の目的位置
 	XMFLOAT3 m_vDestTarget;			// 注視点の目的位置
 	XMFLOAT3 m_vVelocity;			// 移動量
