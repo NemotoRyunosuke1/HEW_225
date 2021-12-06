@@ -10,9 +10,8 @@
 #include "AssimpModel.h"
 #include "debugproc.h"
 #include "shadow.h"
-#include "bullet.h"
-
 #include "explosion.h"
+
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
@@ -84,118 +83,144 @@ void UpdateModel(void)
 	// カメラの向き取得
 	XMFLOAT3 rotCamera = CCamera::Get()->GetAngle();
 
-	if (GetKeyPress(VK_LEFT)) {
-		if (GetKeyPress(VK_UP)) {
+	g_rotDestModel.z = 0;  // 機体の傾きリセット
+
+	if (GetKeyPress(VK_LEFT )|| GetKeyPress(VK_A))
+	{
+		if (GetKeyPress(VK_UP) || GetKeyPress(VK_W))
+		{
 			// 左前移動
-			g_moveModel.x -= SinDeg(rotCamera.y + 135.0f) * VALUE_MOVE_MODEL;
-			g_moveModel.z -= CosDeg(rotCamera.y + 135.0f) * VALUE_MOVE_MODEL;
+			g_moveModel.x -= SinDeg(g_rotModel.y) * VALUE_MOVE_MODEL;
+			g_moveModel.z -= CosDeg(g_rotModel.y) * VALUE_MOVE_MODEL;
 
-			g_rotDestModel.y = rotCamera.y + 135.0f;
-		} else if (GetKeyPress(VK_DOWN)) {
-			// 左後移動
-			g_moveModel.x -= SinDeg(rotCamera.y + 45.0f) * VALUE_MOVE_MODEL;
-			g_moveModel.z -= CosDeg(rotCamera.y + 45.0f) * VALUE_MOVE_MODEL;
-
-			g_rotDestModel.y = rotCamera.y + 45.0f;
-		} else {
+			// 機体のロール
+			g_rotDestModel.z = -30.0f;
+			g_rotDestModel.y -= 2;
+		}		
+		else
+		{
 			// 左移動
-			g_moveModel.x -= SinDeg(rotCamera.y + 90.0f) * VALUE_MOVE_MODEL;
-			g_moveModel.z -= CosDeg(rotCamera.y + 90.0f) * VALUE_MOVE_MODEL;
+			//g_moveModel.x -= SinDeg(g_rotModel.y + 90.0f) * VALUE_MOVE_MODEL;
+			//g_moveModel.z -= CosDeg(g_rotModel.y + 90.0f) * VALUE_MOVE_MODEL;
 
-			g_rotDestModel.y = rotCamera.y + 90.0f;
+			// 機体のロール
+			g_rotDestModel.z = -30.0f;
+			g_rotDestModel.y -= 2;
 		}
-	} else if (GetKeyPress(VK_RIGHT)) {
-		if (GetKeyPress(VK_UP)) {
+	}
+	else if (GetKeyPress(VK_RIGHT) || GetKeyPress(VK_D))
+	{
+		if (GetKeyPress(VK_UP) || GetKeyPress(VK_W))
+		{
 			// 右前移動
-			g_moveModel.x -= SinDeg(rotCamera.y - 135.0f) * VALUE_MOVE_MODEL;
-			g_moveModel.z -= CosDeg(rotCamera.y - 135.0f) * VALUE_MOVE_MODEL;
+			g_moveModel.x -= SinDeg(g_rotModel.y) * VALUE_MOVE_MODEL;
+			g_moveModel.z -= CosDeg(g_rotModel.y) * VALUE_MOVE_MODEL;
 
-			g_rotDestModel.y = rotCamera.y - 135.0f;
-		} else if (GetKeyPress(VK_DOWN)) {
-			// 右後移動
-			g_moveModel.x -= SinDeg(rotCamera.y - 45.0f) * VALUE_MOVE_MODEL;
-			g_moveModel.z -= CosDeg(rotCamera.y - 45.0f) * VALUE_MOVE_MODEL;
-
-			g_rotDestModel.y = rotCamera.y - 45.0f;
-		} else {
+			// 機体のロール
+			g_rotDestModel.z = 30.0f;
+			g_rotDestModel.y += 2;
+		} 
+		else
+		{
 			// 右移動
-			g_moveModel.x -= SinDeg(rotCamera.y - 90.0f) * VALUE_MOVE_MODEL;
-			g_moveModel.z -= CosDeg(rotCamera.y - 90.0f) * VALUE_MOVE_MODEL;
+			//g_moveModel.x -= SinDeg(g_rotModel.y - 90.0f) * VALUE_MOVE_MODEL;
+			//g_moveModel.z -= CosDeg(g_rotModel.y - 90.0f) * VALUE_MOVE_MODEL;
 
-			g_rotDestModel.y = rotCamera.y - 90.0f;
+			// 機体のロール
+			g_rotDestModel.z = 30.0f;
+			g_rotDestModel.y += 2;
+
 		}
-	} else if (GetKeyPress(VK_UP)) {
+	} 
+	else if (GetKeyPress(VK_UP) || GetKeyPress(VK_W))
+	{
 		// 前移動
-		g_moveModel.x -= SinDeg(180.0f + rotCamera.y) * VALUE_MOVE_MODEL;
-		g_moveModel.z -= CosDeg(180.0f + rotCamera.y) * VALUE_MOVE_MODEL;
+		g_moveModel.x -= SinDeg(g_rotModel.y) * VALUE_MOVE_MODEL;
+		g_moveModel.z -= CosDeg(g_rotModel.y) * VALUE_MOVE_MODEL;
 
-		g_rotDestModel.y = 180.0f + rotCamera.y;
+		
 	}
 	else
 	{
-		g_rotDestModel.y = 180.0f + rotCamera.y;
+		// モデルの向きを前(z軸マイナス方向)にする
+		//g_rotDestModel.y = 180.0f + rotCamera.y;
 	}
-	//else if (GetKeyPress(VK_DOWN)) {
-	//	// 後移動
-	//	g_moveModel.x -= SinDeg(rotCamera.y) * VALUE_MOVE_MODEL;
-	//	g_moveModel.z -= CosDeg(rotCamera.y) * VALUE_MOVE_MODEL;
 
-	//	g_rotDestModel.y = rotCamera.y;
-	//}
 
 	// 自動前移動
-	g_moveModel.z -= CosDeg(g_rotModel.y ) * VALUE_MOVE_MODEL;
-	g_moveModel.x -= SinDeg(g_rotModel.y) * VALUE_MOVE_MODEL;
+	//g_moveModel.z -= CosDeg(g_rotModel.y ) * VALUE_MOVE_MODEL;
+	//g_moveModel.x -= SinDeg(g_rotModel.y) * VALUE_MOVE_MODEL;
+	
 	// 上昇&下降処理
-
-	g_rotModel.x = 0;  // 機体の傾き
+	g_rotDestModel.x = 0;  // 機体の傾きリセット
 
 	// 上昇
-	if (GetKeyPress(VK_I)) {
+	if (GetKeyPress(VK_I)) 
+	{
 		g_moveModel.y += VALUE_MOVE_MODEL;
-		g_rotModel.x = 30;	// 機体の傾き
+		g_rotDestModel.x = 30;	// 機体の傾き
 	}
 	// 下降
-	if (GetKeyPress(VK_K)) {
+	if (GetKeyPress(VK_K)) 
+	{
 		g_moveModel.y -= VALUE_MOVE_MODEL;
-		g_rotModel.x = -30;	 // 機体の傾き
+		g_rotDestModel.x = -30;	 // 機体の傾き
 	}
 
-	
-
-	if (GetKeyPress(VK_LSHIFT)) {
-		// 左回転
-		g_rotDestModel.y -= VALUE_ROTATE_MODEL;
-		if (g_rotDestModel.y < -180.0f) {
-			g_rotDestModel.y += 360.0f;
-		}
+	if (g_rotDestModel.y >= 360)
+	{
+		g_rotDestModel.y -= 360.0f;
 	}
-	if (GetKeyPress(VK_RSHIFT)) {
-		// 右回転
-		g_rotDestModel.y += VALUE_ROTATE_MODEL;
-		if (g_rotDestModel.y >= 180.0f) {
-			g_rotDestModel.y -= 360.0f;
-		}
+	if (g_rotDestModel.y <= 0)
+	{
+		g_rotDestModel.y += +360.0f;
 	}
 
 	// 目的の角度までの差分
 	float fDiffRotY = g_rotDestModel.y - g_rotModel.y;
+	float fDiffRotX = g_rotDestModel.x - g_rotModel.x;
+	float fDiffRotZ = g_rotDestModel.z - g_rotModel.z;
 	if (fDiffRotY >= 180.0f) {
 		fDiffRotY -= 360.0f;
 	}
 	if (fDiffRotY < -180.0f) {
 		fDiffRotY += 360.0f;
 	}
+	if (fDiffRotX >= 180.0f) {
+		fDiffRotX -= 360.0f;
+	}
+	if (fDiffRotX < -180.0f) {
+		fDiffRotX += 360.0f;
+	}
+	if (fDiffRotZ >= 180.0f) {
+		fDiffRotZ -= 360.0f;
+	}
+	if (fDiffRotZ < -180.0f) {
+		fDiffRotZ += 360.0f;
+	}
 
 	// 目的の角度まで慣性をかける
 	g_rotModel.y += fDiffRotY * RATE_ROTATE_MODEL;
+	g_rotModel.x += fDiffRotX * RATE_ROTATE_MODEL;
+	g_rotModel.z += fDiffRotZ * RATE_ROTATE_MODEL;
 	if (g_rotModel.y >= 180.0f) {
 		g_rotModel.y -= 360.0f;
 	}
 	if (g_rotModel.y < -180.0f) {
 		g_rotModel.y += 360.0f;
 	}
-
+	if (g_rotModel.x >= 180.0f) {
+		g_rotModel.x -= 360.0f;
+	}
+	if (g_rotModel.x < -180.0f) {
+		g_rotModel.x += 360.0f;
+	}
+	if (g_rotModel.z >= 180.0f) {
+		g_rotModel.z -= 360.0f;
+	}
+	if (g_rotModel.z < -180.0f) {
+		g_rotModel.z += 360.0f;
+	}
 	/// 位置移動
 	g_posModel.x += g_moveModel.x;
 	g_posModel.y += g_moveModel.y;
@@ -258,25 +283,15 @@ void UpdateModel(void)
 	// 丸影の移動
 	MoveShadow(g_nShadow, g_posModel);
 
-	//弾発射
-	if (GetKeyPress(VK_Z))
-	{
-		FireBullet(g_posModel, XMFLOAT3(-g_mtxWorld._31, -g_mtxWorld._32, -g_mtxWorld._33));
-		StartExplosion(g_posModel,XMFLOAT2(50.0f,50.0f));
-	
-	}
-	 // test
-	// aaa
-
 
 #if _DEBUG
+
+	// デバック用文字列
 	PrintDebugProc("[ﾋｺｳｷ ｲﾁ : (%f : %f : %f)]\n", g_posModel.x, g_posModel.y, g_posModel.z);
 	PrintDebugProc("[ﾋｺｳｷ ﾑｷ : (%f) < ﾓｸﾃｷ ｲﾁ:(%f) >]\n", g_rotModel.x, g_rotDestModel.y);
 	//PrintDebugProc("\n");
-
 	PrintDebugProc("*** ﾋｺｳｷ ｿｳｻ ***\n");
 	PrintDebugProc("ﾏｴ   ｲﾄﾞｳ : \x1e\n");//↑
-	PrintDebugProc("ｳｼﾛ  ｲﾄﾞｳ : \x1f\n");//↓
 	PrintDebugProc("ﾋﾀﾞﾘ ｲﾄﾞｳ : \x1d\n");//←
 	PrintDebugProc("ﾐｷﾞ  ｲﾄﾞｳ : \x1c\n");//→
 	PrintDebugProc("ｼﾞｮｳｼｮｳ   : I\n");
@@ -329,4 +344,8 @@ int GetModelRotX()
 	{
 		return 0;
 	}
+}
+XMFLOAT3& GetModelRot()
+{
+	return g_rotModel;
 }

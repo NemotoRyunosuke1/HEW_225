@@ -156,11 +156,18 @@ void CCamera::Update()
 
 	// マトリックス更新
 	UpdateMatrix();
+
+#if _DEBUG
+	// デバック用文字列
 	PrintDebugProc("[ｶﾒﾗ ｲﾁ : (%d)]\n", GetModelRotX());
 	PrintDebugProc("[ｶﾒﾗ ｲﾁ : (%f, %f, %f)]\n", m_vAngle.x, m_vAngle.y, m_vAngle.z);
 	//PrintDebugProc("[ｶﾒﾗ ｲﾁ : (%f, %f, %f)]\n", m_vPos.x, m_vPos.y, m_vPos.z);
 	//PrintDebugProc("[ﾁｭｳｼﾃﾝ : (%f, %f, %f)]\n", m_vTarget.x, m_vTarget.y, m_vTarget.z);
 	//PrintDebugProc("\n");
+
+#endif // _DEBUG
+
+	
 }
 
 // ビュー/プロジェクション マトリックス更新
