@@ -135,9 +135,19 @@ void CCamera::Update()
 	if (m_vAngle.y < -180.0f) {
 		m_vAngle.y += 360.0f;
 	}
-	m_vSrcPos.x = SinDeg(GetModelRot().y) * m_fLengthInterval;
-	m_vSrcPos.y = SinDeg(GetModelRot().x) * m_fLengthInterval;
-	m_vSrcPos.z = CosDeg(GetModelRot().y) * m_fLengthInterval;
+	if (GetKeyPress(VK_P))
+	{
+		SetCursorPos(SCREEN_CENTER_X , SCREEN_CENTER_Y);
+	}
+	else
+	{
+
+	}
+	
+	// カメラの移動座標
+	m_vSrcPos.x = SinDeg((float)GetMousePosition()->x) * m_fLengthInterval;
+	m_vSrcPos.y = SinDeg((float)GetMousePosition()->y) * m_fLengthInterval;
+	m_vSrcPos.z = CosDeg((float)GetMousePosition()->x) * m_fLengthInterval;
 
 	// 追跡カメラ
 	XMFLOAT3& vModelPos = GetModelPos();	// モデル座標
@@ -161,6 +171,7 @@ void CCamera::Update()
 	// デバック用文字列
 	PrintDebugProc("[ｶﾒﾗ ｲﾁ : (%d)]\n", GetModelRotX());
 	PrintDebugProc("[ｶﾒﾗ ｲﾁ : (%f, %f, %f)]\n", m_vAngle.x, m_vAngle.y, m_vAngle.z);
+	PrintDebugProc("[ｶｰｿﾙｲﾁ : (%f, %f)]\n", (float)GetMousePosition()->x, (float)GetMousePosition()->y);
 	//PrintDebugProc("[ｶﾒﾗ ｲﾁ : (%f, %f, %f)]\n", m_vPos.x, m_vPos.y, m_vPos.z);
 	//PrintDebugProc("[ﾁｭｳｼﾃﾝ : (%f, %f, %f)]\n", m_vTarget.x, m_vTarget.y, m_vTarget.z);
 	//PrintDebugProc("\n");
