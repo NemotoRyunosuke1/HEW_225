@@ -345,3 +345,7 @@ int GetModelRotX()
 		return 0;
 	}
 }
+XMFLOAT3& GetModelRot()
+{
+	return g_rotModel;
+}

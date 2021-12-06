@@ -18,3 +18,4 @@ void DrawModel(void);
 
 XMFLOAT3& GetModelPos();
 int GetModelRotX();
+XMFLOAT3& GetModelRot();
