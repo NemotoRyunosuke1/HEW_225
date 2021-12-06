@@ -91,7 +91,7 @@ void CCamera::Update()
 			m_vDestAngle.y -= 360.0f;
 		}
 	}
-	*/
+	
 	// カメラの上下視点移動
 	switch (GetModelRotX())
 	{
@@ -102,6 +102,7 @@ void CCamera::Update()
 	case -1: m_vDestAngle.x = 30.0f;
 		break;
 	}
+	*/
 
 	// 目的の角度までの差分
 	float fDiffRotX = m_vDestAngle.x - m_vAngle.x;
@@ -144,7 +145,7 @@ void CCamera::Update()
 	m_vDestPos.y = CAM_POS_P_Y + vModelPos.y;
 	m_vDestPos.z = CAM_POS_P_Z + vModelPos.z;
 	m_vDestTarget.x = CAM_POS_R_X + vModelPos.x;
-	m_vDestTarget.y = m_vSrcPos.y + vModelPos.y;
+	m_vDestTarget.y = CAM_POS_R_Y + vModelPos.y;
 	m_vDestTarget.z = CAM_POS_R_Z + vModelPos.z;
 	m_vPos.x = m_vPos.x * 0.9f + m_vDestPos.x * 0.1f;
 	m_vPos.y = m_vPos.y * 0.9f + m_vDestPos.y * 0.1f;
