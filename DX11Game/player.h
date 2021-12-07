@@ -1,6 +1,6 @@
 //=============================================================================
 //
-// モデル処理 [model.h]
+// プレイヤークラス [player.h]
 // Author : 根本龍之介
 //
 //=============================================================================
@@ -11,11 +11,24 @@
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
-HRESULT InitModel(void);
-void UninitModel(void);
-void UpdateModel(void);
-void DrawModel(void);
+// HRESULT InitModel(void);
+// void UninitModel(void);
+// void UpdateModel(void);
+// void DrawModel(void);
+// 
+// XMFLOAT3& GetModelPos();
+// int GetModelRotX();
 
-XMFLOAT3& GetModelPos();
-int GetModelRotX();
-XMFLOAT3& GetModelRot();
+class Player
+{
+private:
+	Player();
+	~Player();
+
+	void Update();
+	void Draw();
+	XMFLOAT3& GetPos();
+	int GetRotX();
+
+private:
+};

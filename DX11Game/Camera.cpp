@@ -14,11 +14,11 @@
 //*****************************************************************************
 namespace {
 	const float CAM_POS_P_X = 0.0f;					// カメラの視点初期位置(X座標)
-	const float CAM_POS_P_Y = 50.0f;				// カメラの視点初期位置(Y座標)
-	const float CAM_POS_P_Z = -30.0f;				// カメラの視点初期位置(Z座標)
+	const float CAM_POS_P_Y = 15.0f;				// カメラの視点初期位置(Y座標)
+	const float CAM_POS_P_Z = 20.0f;				// カメラの視点初期位置(Z座標)
 	const float CAM_POS_R_X = 0.0f;					// カメラの注視点初期位置(X座標)
-	const float CAM_POS_R_Y = 0.0f;				// カメラの注視点初期位置(Y座標)
-	const float CAM_POS_R_Z = 50.0f;				// カメラの注視点初期位置(Z座標)
+	const float CAM_POS_R_Y = 0.0f;				    // カメラの注視点初期位置(Y座標)
+	const float CAM_POS_R_Z = 0.0f;				    // カメラの注視点初期位置(Z座標)
 	const float VIEW_ANGLE = 90.0f;					// ビュー平面の視野角
 	const float VIEW_ASPECT = (float)SCREEN_WIDTH / SCREEN_HEIGHT;	// ビュー平面のアスペクト比
 	const float VIEW_NEAR_Z = 10.0f;				// ビュー平面のNearZ値
@@ -29,7 +29,7 @@ namespace {
 
 	const float INTERVAL_CAMERA_R = 1.5f;			// モデルの視線の先までの距離
 	const float RATE_CHASE_CAMERA_P = 0.35f;		// カメラの視点への補正係数
-	const float RATE_CHASE_CAMERA_R = 0.20f;		// カメラの注視点への補正係数
+	const float RATE_CHASE_CAMERA_R = 0.0020f;		// カメラの注視点への補正係数
 
 	const float CHASE_HEIGHT_P = 100.0f;			// 追跡時の視点の高さ
 	const float CHASE_HEIGHT_R = 10.0f;				// 追跡時の注視点の高さ
@@ -91,7 +91,7 @@ void CCamera::Update()
 			m_vDestAngle.y -= 360.0f;
 		}
 	}
-	*/
+	
 	// カメラの上下視点移動
 	switch (GetModelRotX())
 	{
@@ -102,10 +102,11 @@ void CCamera::Update()
 	case -1: m_vDestAngle.x = 30.0f;
 		break;
 	}
+	*/
 
 	// 目的の角度までの差分
-	float fDiffRotX = m_vDestAngle.x - m_vAngle.x;
-	float fDiffRotY = m_vDestAngle.y - m_vAngle.y;
+	float fDiffRotX = m_vDestAngle.x - GetModelRot().x;
+	float fDiffRotY = m_vDestAngle.y - GetModelRot().y;
 	if (fDiffRotX >= 180.0f) {
 		fDiffRotX -= 360.0f;
 	}
@@ -134,18 +135,18 @@ void CCamera::Update()
 	if (m_vAngle.y < -180.0f) {
 		m_vAngle.y += 360.0f;
 	}
-	m_vSrcPos.x = -SinDeg(m_vAngle.y) * m_fLengthInterval;
-	m_vSrcPos.y = -SinDeg(m_vAngle.x) * m_fLengthInterval;
-	m_vSrcPos.z = -CosDeg(m_vAngle.y) * m_fLengthInterval;
+	m_vSrcPos.x = SinDeg(GetModelRot().y) * m_fLengthInterval;
+	m_vSrcPos.y = SinDeg(GetModelRot().x) * m_fLengthInterval;
+	m_vSrcPos.z = CosDeg(GetModelRot().y) * m_fLengthInterval;
 
 	// 追跡カメラ
 	XMFLOAT3& vModelPos = GetModelPos();	// モデル座標
-	m_vDestPos.x = CAM_POS_P_X + vModelPos.x;
-	m_vDestPos.y = CAM_POS_P_Y + vModelPos.y;
-	m_vDestPos.z = CAM_POS_P_Z + vModelPos.z;
-	m_vDestTarget.x = CAM_POS_R_X + vModelPos.x;
+	m_vDestPos.x = m_vSrcPos.x + vModelPos.x;
+	m_vDestPos.y = CAM_POS_P_Y+vModelPos.y;
+	m_vDestPos.z = m_vSrcPos.z + vModelPos.z;
+	m_vDestTarget.x =  vModelPos.x;
 	m_vDestTarget.y = m_vSrcPos.y + vModelPos.y;
-	m_vDestTarget.z = CAM_POS_R_Z + vModelPos.z;
+	m_vDestTarget.z =  vModelPos.z;
 	m_vPos.x = m_vPos.x * 0.9f + m_vDestPos.x * 0.1f;
 	m_vPos.y = m_vPos.y * 0.9f + m_vDestPos.y * 0.1f;
 	m_vPos.z = m_vPos.z * 0.9f + m_vDestPos.z * 0.1f;

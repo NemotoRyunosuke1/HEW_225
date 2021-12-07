@@ -1,7 +1,7 @@
 //=============================================================================
 //
-// モデル処理 [model.h]
-// Author : 根本龍之介
+// 味方処理 [crew.h]
+// Author : 藤崎佑輔
 //
 //=============================================================================
 #pragma once
@@ -11,11 +11,7 @@
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
-HRESULT InitModel(void);
-void UninitModel(void);
-void UpdateModel(void);
-void DrawModel(void);
-
-XMFLOAT3& GetModelPos();
-int GetModelRotX();
-XMFLOAT3& GetModelRot();
+HRESULT InitCrew(void);
+void UninitCrew(void);
+void UpdateCrew(void);
+void DrawCrew(void);
