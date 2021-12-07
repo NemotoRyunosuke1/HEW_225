@@ -135,6 +135,9 @@
     <ClCompile Include="crew.cpp">
       <Filter>ソース ファイル\scene\gameScene</Filter>
     </ClCompile>
+    <ClCompile Include="wind.cpp">
+      <Filter>ソース ファイル\scene\gameScene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -222,6 +225,9 @@
       <Filter>ヘッダー ファイル\scene\gameScene\player</Filter>
     </ClInclude>
     <ClInclude Include="crew.h">
+      <Filter>ヘッダー ファイル\scene\gameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="wind.h">
       <Filter>ヘッダー ファイル\scene\gameScene</Filter>
     </ClInclude>
   </ItemGroup>

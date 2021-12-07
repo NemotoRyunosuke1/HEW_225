@@ -14,12 +14,12 @@
 //*****************************************************************************
 namespace {
 	const float CAM_POS_P_X = 0.0f;					// カメラの視点初期位置(X座標)
-	const float CAM_POS_P_Y = 15.0f;				// カメラの視点初期位置(Y座標)
-	const float CAM_POS_P_Z = 20.0f;				// カメラの視点初期位置(Z座標)
+	const float CAM_POS_P_Y = 25.0f;				// カメラの視点初期位置(Y座標)
+	const float CAM_POS_P_Z = 0.0f;				// カメラの視点初期位置(Z座標)
 	const float CAM_POS_R_X = 0.0f;					// カメラの注視点初期位置(X座標)
-	const float CAM_POS_R_Y = 0.0f;				    // カメラの注視点初期位置(Y座標)
-	const float CAM_POS_R_Z = 0.0f;				    // カメラの注視点初期位置(Z座標)
-	const float VIEW_ANGLE = 90.0f;					// ビュー平面の視野角
+	const float CAM_POS_R_Y = 10.0f;				    // カメラの注視点初期位置(Y座標)
+	const float CAM_POS_R_Z = -50.0f;				    // カメラの注視点初期位置(Z座標)
+	const float VIEW_ANGLE = 80.0f;					// ビュー平面の視野角
 	const float VIEW_ASPECT = (float)SCREEN_WIDTH / SCREEN_HEIGHT;	// ビュー平面のアスペクト比
 	const float VIEW_NEAR_Z = 10.0f;				// ビュー平面のNearZ値
 	const float VIEW_FAR_Z = 3000.0f;				// ビュー平面のFarZ値
@@ -135,28 +135,19 @@ void CCamera::Update()
 	if (m_vAngle.y < -180.0f) {
 		m_vAngle.y += 360.0f;
 	}
-	if (GetKeyPress(VK_P))
-	{
-		SetCursorPos(SCREEN_CENTER_X , SCREEN_CENTER_Y);
-	}
-	else
-	{
-
-	}
+	m_vSrcPos.x = SinDeg(GetModelRot().y) * m_fLengthInterval + CAM_POS_P_X;
+	m_vSrcPos.y = -SinDeg(GetModelRot().x) * m_fLengthInterval+ CAM_POS_P_Y;
+	m_vSrcPos.z = CosDeg(GetModelRot().y) * m_fLengthInterval + CAM_POS_P_Z;
 	
-	// カメラの移動座標
-	m_vSrcPos.x = SinDeg((float)GetMousePosition()->x) * m_fLengthInterval;
-	m_vSrcPos.y = SinDeg((float)GetMousePosition()->y) * m_fLengthInterval;
-	m_vSrcPos.z = CosDeg((float)GetMousePosition()->x) * m_fLengthInterval;
-
+		
 	// 追跡カメラ
 	XMFLOAT3& vModelPos = GetModelPos();	// モデル座標
 	m_vDestPos.x = m_vSrcPos.x + vModelPos.x;
-	m_vDestPos.y = CAM_POS_P_Y+vModelPos.y;
-	m_vDestPos.z = m_vSrcPos.z + vModelPos.z;
-	m_vDestTarget.x =  vModelPos.x;
-	m_vDestTarget.y = m_vSrcPos.y + vModelPos.y;
-	m_vDestTarget.z =  vModelPos.z;
+	m_vDestPos.y = m_vSrcPos.y + vModelPos.y;
+	m_vDestPos.z =  m_vSrcPos.z + vModelPos.z;
+	m_vDestTarget.x = vModelPos.x;
+	m_vDestTarget.y = vModelPos.y;
+	m_vDestTarget.z = vModelPos.z;
 	m_vPos.x = m_vPos.x * 0.9f + m_vDestPos.x * 0.1f;
 	m_vPos.y = m_vPos.y * 0.9f + m_vDestPos.y * 0.1f;
 	m_vPos.z = m_vPos.z * 0.9f + m_vDestPos.z * 0.1f;
@@ -171,7 +162,6 @@ void CCamera::Update()
 	// デバック用文字列
 	PrintDebugProc("[ｶﾒﾗ ｲﾁ : (%d)]\n", GetModelRotX());
 	PrintDebugProc("[ｶﾒﾗ ｲﾁ : (%f, %f, %f)]\n", m_vAngle.x, m_vAngle.y, m_vAngle.z);
-	PrintDebugProc("[ｶｰｿﾙｲﾁ : (%f, %f)]\n", (float)GetMousePosition()->x, (float)GetMousePosition()->y);
 	//PrintDebugProc("[ｶﾒﾗ ｲﾁ : (%f, %f, %f)]\n", m_vPos.x, m_vPos.y, m_vPos.z);
 	//PrintDebugProc("[ﾁｭｳｼﾃﾝ : (%f, %f, %f)]\n", m_vTarget.x, m_vTarget.y, m_vTarget.z);
 	//PrintDebugProc("\n");

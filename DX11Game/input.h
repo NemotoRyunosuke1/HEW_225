@@ -5,9 +5,9 @@
 //
 //=============================================================================
 #pragma once
-
+#pragma comment (lib,"xinput.lib")
 #include "main.h"
-
+#include <Xinput.h>
 //*****************************************************************************
 // É}ÉNÉçíËã`
 //*****************************************************************************
@@ -48,15 +48,17 @@
 #define VK_Y	'Y'
 #define VK_Z	'Z'
 
-#define JOYSTICKID3		2
-#define JOYSTICKID4		3
-#define JOYSTICKID5		4
-#define JOYSTICKID6		5
-#define JOYSTICKID7		6
-#define JOYSTICKID8		7
-#define JOYSTICKID9		8
-#define JOYSTICKID10	9
-#define JOYSTICKID11	10
+#define JOYSTICKID1		0 // A
+#define JOYSTICKID2		1 // B
+#define JOYSTICKID3		2 // Y
+#define JOYSTICKID4		3 // X
+#define JOYSTICKID5		4 // LB
+#define JOYSTICKID6		5 // RB
+#define JOYSTICKID7		6 // Back
+#define JOYSTICKID8		7 // Start
+#define JOYSTICKID9		8 // LStickâüÇµçûÇ›
+#define JOYSTICKID10	9 // RStickâüÇµçûÇ› 
+#define JOYSTICKID11	10  //
 #define JOYSTICKID12	11
 #define JOYSTICKID13	12
 #define JOYSTICKID14	13

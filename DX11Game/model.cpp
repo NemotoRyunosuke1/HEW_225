@@ -31,6 +31,7 @@ static XMFLOAT3		g_posModel;		// 現在の位置
 static XMFLOAT3		g_rotModel;		// 現在の向き
 static XMFLOAT3		g_rotDestModel;	// 目的の向き
 static XMFLOAT3		g_moveModel;	// 移動量
+static XMFLOAT3		g_accModel;	// 加速度
 
 static XMFLOAT4X4	g_mtxWorld;		// ワールドマトリックス
 
@@ -50,6 +51,7 @@ HRESULT InitModel(void)
 	g_moveModel = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	g_rotModel = XMFLOAT3(0.0f, 180.0f, 0.0f);
 	g_rotDestModel = XMFLOAT3(0.0f, 0.0f, 0.0f);
+	g_accModel = XMFLOAT3(0.0f, 0.0f, 1.0f);
 
 	// モデルデータの読み込み
 	if (!g_model.Load(pDevice, pDeviceContext, MODEL_PLANE)) {
@@ -59,6 +61,8 @@ HRESULT InitModel(void)
 
 	// 丸影の生成
 	g_nShadow = CreateShadow(g_posModel, 12.0f);
+
+
 
 	return hr;
 }
@@ -80,91 +84,136 @@ void UninitModel(void)
 //=============================================================================
 void UpdateModel(void)
 {
+	// アナログスティックステート
+	XINPUT_STATE state;
+	XInputGetState(0, &state);
+	int iPad_left = 0, iPad_right = 0, iPad_up = 0, iPad_down = 0;
+	int iPad_leftshoulder = 0, iPad_rightshoulder = 0;
+	int iPad_A = 0, iPad_B = 0, iPad_X = 0, iPad_Y = 0;
+
+	//左ゲームパッドアナログスティックのデッドゾーン処理
+	if ((state.Gamepad.sThumbLX < XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE && state.Gamepad.sThumbLX > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) &&
+		(state.Gamepad.sThumbLY < XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE && state.Gamepad.sThumbLY > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE))
+	{
+		state.Gamepad.sThumbLX = 0;
+		state.Gamepad.sThumbLY = 0;
+	}
+	//右ゲームパッドアナログスティックのデッドゾーン処理
+	if ((state.Gamepad.sThumbRX < XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE && state.Gamepad.sThumbRX > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) &&
+		(state.Gamepad.sThumbRY < XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE && state.Gamepad.sThumbRY > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE))
+	{
+		state.Gamepad.sThumbRX = 0;
+		state.Gamepad.sThumbRY = 0;
+	}
+
 	// カメラの向き取得
 	XMFLOAT3 rotCamera = CCamera::Get()->GetAngle();
 
-	g_rotDestModel.z = 0;  // 機体の傾きリセット
+	// 機体の傾きリセット
+	g_rotDestModel.z = 0;  
 
-	if (GetKeyPress(VK_LEFT )|| GetKeyPress(VK_A))
-	{
-		if (GetKeyPress(VK_UP) || GetKeyPress(VK_W))
-		{
-			// 左前移動
-			g_moveModel.x -= SinDeg(g_rotModel.y) * VALUE_MOVE_MODEL;
-			g_moveModel.z -= CosDeg(g_rotModel.y) * VALUE_MOVE_MODEL;
-
-			// 機体のロール
-			g_rotDestModel.z = -30.0f;
-			g_rotDestModel.y -= 2;
-		}		
-		else
-		{
-			// 左移動
-			//g_moveModel.x -= SinDeg(g_rotModel.y + 90.0f) * VALUE_MOVE_MODEL;
-			//g_moveModel.z -= CosDeg(g_rotModel.y + 90.0f) * VALUE_MOVE_MODEL;
-
-			// 機体のロール
-			g_rotDestModel.z = -30.0f;
-			g_rotDestModel.y -= 2;
-		}
-	}
-	else if (GetKeyPress(VK_RIGHT) || GetKeyPress(VK_D))
-	{
-		if (GetKeyPress(VK_UP) || GetKeyPress(VK_W))
-		{
-			// 右前移動
-			g_moveModel.x -= SinDeg(g_rotModel.y) * VALUE_MOVE_MODEL;
-			g_moveModel.z -= CosDeg(g_rotModel.y) * VALUE_MOVE_MODEL;
-
-			// 機体のロール
-			g_rotDestModel.z = 30.0f;
-			g_rotDestModel.y += 2;
-		} 
-		else
-		{
-			// 右移動
-			//g_moveModel.x -= SinDeg(g_rotModel.y - 90.0f) * VALUE_MOVE_MODEL;
-			//g_moveModel.z -= CosDeg(g_rotModel.y - 90.0f) * VALUE_MOVE_MODEL;
-
-			// 機体のロール
-			g_rotDestModel.z = 30.0f;
-			g_rotDestModel.y += 2;
-
-		}
-	} 
-	else if (GetKeyPress(VK_UP) || GetKeyPress(VK_W))
-	{
-		// 前移動
-		g_moveModel.x -= SinDeg(g_rotModel.y) * VALUE_MOVE_MODEL;
-		g_moveModel.z -= CosDeg(g_rotModel.y) * VALUE_MOVE_MODEL;
-
+	// キー旋回
+	if (GetKeyPress(VK_LEFT )|| GetKeyPress(VK_A) )
+	{	
+		// 機体のロール
+		g_rotDestModel.z = -30.0f;
+		g_rotDestModel.y -= 2;
 		
 	}
-	else
+	else if (GetKeyPress(VK_RIGHT) || GetKeyPress(VK_D) )
+	{
+		// 機体のロール
+		g_rotDestModel.z = 30.0f;
+		g_rotDestModel.y += 2;
+	
+	} 
+	//else if (GetKeyPress(VK_UP) || GetKeyPress(VK_W))
+	//{
+	//	// 前移動
+	//	g_moveModel.x -= SinDeg(g_rotModel.y) * VALUE_MOVE_MODEL;
+	//	g_moveModel.z -= CosDeg(g_rotModel.y) * VALUE_MOVE_MODEL;
+
+	//	
+	//}
+	else 
 	{
 		// モデルの向きを前(z軸マイナス方向)にする
 		//g_rotDestModel.y = 180.0f + rotCamera.y;
 	}
 
+	// 左アナログスティック旋回
+	g_rotDestModel.y += 1 * state.Gamepad.sThumbLX /20000;
+	g_rotDestModel.z += 30.0f* state.Gamepad.sThumbLX / 20000;
+	//g_rotDestModel.x += 30.0f * state.Gamepad.sThumbLY / 10000;	// 機体の傾き
+
+	// はばたき
+	if (GetJoyTrigger(0, JOYSTICKID2))
+	{
+		g_accModel.z = 3;
+	}
+
+	// 加速度の減少
+	if (g_accModel.z > 1)
+	{
+		g_accModel.z -= 0.01f;
+		if (g_accModel.z < 1)
+		{
+			g_accModel.z = 1;
+		}
+	}
+
 
 	// 自動前移動
-	//g_moveModel.z -= CosDeg(g_rotModel.y ) * VALUE_MOVE_MODEL;
-	//g_moveModel.x -= SinDeg(g_rotModel.y) * VALUE_MOVE_MODEL;
+	g_moveModel.z -= CosDeg(g_rotModel.y ) * VALUE_MOVE_MODEL * g_accModel.z;
+	g_moveModel.x -= SinDeg(g_rotModel.y) * VALUE_MOVE_MODEL * g_accModel.z;
+	g_moveModel.y += SinDeg(g_rotModel.x) * VALUE_MOVE_MODEL * g_accModel.z;
 	
 	// 上昇&下降処理
-	g_rotDestModel.x = 0;  // 機体の傾きリセット
-
-	// 上昇
-	if (GetKeyPress(VK_I)) 
+	
+	// 機体の傾きリセット
+	if (g_rotDestModel.x > 0)
 	{
-		g_moveModel.y += VALUE_MOVE_MODEL;
-		g_rotDestModel.x = 30;	// 機体の傾き
+		g_rotDestModel.x -= 0.5f;
+		if (g_rotDestModel.x < 0.5f && g_rotDestModel.x > 0.5f)
+		{
+			g_rotDestModel.x = 0;
+		}
+	}
+	if (g_rotDestModel.x < 0)
+	{
+		g_rotDestModel.x += 0.5f;
+		if (g_rotDestModel.x > 0.5f && g_rotDestModel.x < 0.5f)
+		{
+			g_rotDestModel.x = 0;
+		}
+	}
+
+	// ゲームパッド
+	// 上昇
+	if (state.Gamepad.sThumbLY < 0)
+	{
+		//g_rotDestModel.x = 30;
+		g_rotDestModel.x = 10 * -state.Gamepad.sThumbLY /25000;	// 機体の傾き
 	}
 	// 下降
-	if (GetKeyPress(VK_K)) 
+	if (state.Gamepad.sThumbLY > 0)
 	{
-		g_moveModel.y -= VALUE_MOVE_MODEL;
-		g_rotDestModel.x = -30;	 // 機体の傾き
+		//g_rotDestModel.x = -30;
+		g_rotDestModel.x = 10 * -state.Gamepad.sThumbLY / 8000;	 // 機体の傾き
+	}
+
+	// キーボード
+	// 上昇
+	if (GetKeyPress(VK_I) )
+	{
+		//g_rotDestModel.x = 30;
+		g_rotDestModel.x = 10 * -state.Gamepad.sThumbLY / 10000;	// 機体の傾き
+	}
+	// 下降
+	if (GetKeyPress(VK_K) )
+	{
+		//g_rotDestModel.x = -30;
+		g_rotDestModel.x = 10 * -state.Gamepad.sThumbLY / 10000;	 // 機体の傾き
 	}
 
 	if (g_rotDestModel.y >= 360)
@@ -287,7 +336,7 @@ void UpdateModel(void)
 #if _DEBUG
 
 	// デバック用文字列
-	PrintDebugProc("[ﾋｺｳｷ ｲﾁ : (%f : %f : %f)]\n", g_posModel.x, g_posModel.y, g_posModel.z);
+	PrintDebugProc("[ﾋｺｳｷ ｲﾁ : (%f : %f : %f)]\n", (float)state.Gamepad.sThumbLX, (float)state.Gamepad.sThumbLY, g_posModel.z);
 	PrintDebugProc("[ﾋｺｳｷ ﾑｷ : (%f) < ﾓｸﾃｷ ｲﾁ:(%f) >]\n", g_rotModel.x, g_rotDestModel.y);
 	//PrintDebugProc("\n");
 	PrintDebugProc("*** ﾋｺｳｷ ｿｳｻ ***\n");
