@@ -98,14 +98,7 @@ void UpdateModel(void)
 		state.Gamepad.sThumbLX = 0;
 		state.Gamepad.sThumbLY = 0;
 	}
-	//右ゲームパッドアナログスティックのデッドゾーン処理
-	if ((state.Gamepad.sThumbRX < XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE && state.Gamepad.sThumbRX > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) &&
-		(state.Gamepad.sThumbRY < XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE && state.Gamepad.sThumbRY > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE))
-	{
-		state.Gamepad.sThumbRX = 0;
-		state.Gamepad.sThumbRY = 0;
-	}
-
+	
 	// カメラの向き取得
 	XMFLOAT3 rotCamera = CCamera::Get()->GetAngle();
 
