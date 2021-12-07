@@ -199,14 +199,14 @@ void UpdateModel(void)
 	// 上昇
 	if (GetKeyPress(VK_I) )
 	{
-		//g_rotDestModel.x = 30;
-		g_rotDestModel.x = 10 * -state.Gamepad.sThumbLY / 10000;	// 機体の傾き
+		g_rotDestModel.x = 30;
+		
 	}
 	// 下降
 	if (GetKeyPress(VK_K) )
 	{
-		//g_rotDestModel.x = -30;
-		g_rotDestModel.x = 10 * -state.Gamepad.sThumbLY / 10000;	 // 機体の傾き
+		g_rotDestModel.x = -30;
+		
 	}
 
 	if (g_rotDestModel.y >= 360)
@@ -297,13 +297,7 @@ void UpdateModel(void)
 		g_posModel.y = 80.0f;
 	}*/
 
-	if (GetKeyPress(VK_RETURN)) {
-		// リセット
-		g_posModel = XMFLOAT3(0.0f, 20.0f, 0.0f);
-		g_moveModel = XMFLOAT3(0.0f, 0.0f, 0.0f);
-		g_rotModel = XMFLOAT3(0.0f, 0.0f, 0.0f);
-		g_rotDestModel = XMFLOAT3(0.0f, 0.0f, 0.0f);
-	}
+	
 
 	XMMATRIX mtxWorld, mtxRot, mtxTranslate;
 
@@ -327,7 +321,13 @@ void UpdateModel(void)
 
 
 #if _DEBUG
-
+	if (GetKeyPress(VK_RETURN)) {
+		// リセット
+		g_posModel = XMFLOAT3(0.0f, 20.0f, 0.0f);
+		g_moveModel = XMFLOAT3(0.0f, 0.0f, 0.0f);
+		g_rotModel = XMFLOAT3(0.0f, 0.0f, 0.0f);
+		g_rotDestModel = XMFLOAT3(0.0f, 0.0f, 0.0f);
+	}
 	// デバック用文字列
 	PrintDebugProc("[ﾋｺｳｷ ｲﾁ : (%f : %f : %f)]\n", (float)state.Gamepad.sThumbLX, (float)state.Gamepad.sThumbLY, g_posModel.z);
 	PrintDebugProc("[ﾋｺｳｷ ﾑｷ : (%f) < ﾓｸﾃｷ ｲﾁ:(%f) >]\n", g_rotModel.x, g_rotDestModel.y);
