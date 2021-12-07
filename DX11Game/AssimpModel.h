@@ -221,6 +221,7 @@ private:
 	TAssimpMaterial* m_pMaterial;
 
 	DirectX::XMFLOAT3 m_vBBox;
+	CLight* m_pLight;
 	DirectX::XMFLOAT3 m_vCenter;
 
 	const aiScene* m_pScene;
@@ -252,6 +253,8 @@ public:
 	UINT GetAnimCount();
 	double GetAnimDuration(int nAnimIndex = -1/* -1:åªç›ÇÃÉAÉjÉÅ */);
 	void SetAnimTime(double dTime);
+	void SetLight(CLight* pLight) { m_pLight = pLight; }
+	CLight* GetLight() { return m_pLight; }
 
 	void Release();
 
