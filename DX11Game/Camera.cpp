@@ -104,6 +104,21 @@ void CCamera::Update()
 	}
 	*/
 
+	// アナログスティックステート
+	XINPUT_STATE state;
+	XInputGetState(0, &state);
+	int iPad_left = 0, iPad_right = 0, iPad_up = 0, iPad_down = 0;
+	int iPad_leftshoulder = 0, iPad_rightshoulder = 0;
+	int iPad_A = 0, iPad_B = 0, iPad_X = 0, iPad_Y = 0;
+
+	//右ゲームパッドアナログスティックのデッドゾーン処理
+	if ((state.Gamepad.sThumbRX < XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE && state.Gamepad.sThumbRX > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) &&
+		(state.Gamepad.sThumbRY < XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE && state.Gamepad.sThumbRY > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE))
+	{
+		state.Gamepad.sThumbRX = 0;
+		state.Gamepad.sThumbRY = 0;
+	}
+
 	// 目的の角度までの差分
 	float fDiffRotX = m_vDestAngle.x - GetModelRot().x;
 	float fDiffRotY = m_vDestAngle.y - GetModelRot().y;
@@ -135,11 +150,26 @@ void CCamera::Update()
 	if (m_vAngle.y < -180.0f) {
 		m_vAngle.y += 360.0f;
 	}
+	m_vDestAngle.y += state.Gamepad.sThumbRX / 20000;
+	m_vDestAngle.x += state.Gamepad.sThumbRY / 20000;
+
+	if (m_vDestAngle.x > 50.0f)
+	{
+		m_vDestAngle.x = 50.0f;
+	}
+
+	if (m_vDestAngle.x < -50.0f)
+	{
+		m_vDestAngle.x = -50.0f;
+	}
+
 	m_vSrcPos.x = SinDeg(GetModelRot().y) * m_fLengthInterval + CAM_POS_P_X;
 	m_vSrcPos.y = -SinDeg(GetModelRot().x) * m_fLengthInterval+ CAM_POS_P_Y;
 	m_vSrcPos.z = CosDeg(GetModelRot().y) * m_fLengthInterval + CAM_POS_P_Z;
-	
-		
+	m_vSrcPos.x = SinDeg(m_vDestAngle.y) * m_fLengthInterval + CAM_POS_P_X;
+	m_vSrcPos.y = -SinDeg(m_vDestAngle.x) * m_fLengthInterval + CAM_POS_P_Y;
+	m_vSrcPos.z = CosDeg(m_vDestAngle.y) * m_fLengthInterval + CAM_POS_P_Z;
+	state.Gamepad.sThumbRX / 20000;
 	// 追跡カメラ
 	XMFLOAT3& vModelPos = GetModelPos();	// モデル座標
 	m_vDestPos.x = m_vSrcPos.x + vModelPos.x;
