@@ -16,6 +16,7 @@
 // マクロ定義
 //*****************************************************************************
 #define MODEL_PLANE			"data/model/airplane000.fbx"
+//#define MODEL_PLANE			"data/model/Totoro.fbx"
 
 #define	VALUE_MOVE_MODEL	(0.50f)		// 移動速度
 #define	RATE_MOVE_MODEL		(0.20f)		// 移動慣性係数
@@ -34,7 +35,7 @@ static XMFLOAT3		g_moveModel;	// 移動量
 static XMFLOAT3		g_accModel;	// 加速度
 
 static XMFLOAT4X4	g_mtxWorld;		// ワールドマトリックス
-
+static XMFLOAT3			g_sclModel;
 static int			g_nShadow;		// 丸影番号
 
 //=============================================================================
@@ -49,10 +50,10 @@ HRESULT InitModel(void)
 	// 位置・回転・スケールの初期設定
 	g_posModel = XMFLOAT3(0.0f, 100.0f, 0.0f);
 	g_moveModel = XMFLOAT3(0.0f, 0.0f, 0.0f);
-	g_rotModel = XMFLOAT3(0.0f, 180.0f, 0.0f);
-	g_rotDestModel = XMFLOAT3(0.0f, 0.0f, 0.0f);
+	g_rotModel = XMFLOAT3(90.0f, 180.0f, 90.0f);
+	g_rotDestModel = XMFLOAT3(90.0f, 0.0f, 90.0f);
 	g_accModel = XMFLOAT3(0.0f, 0.0f, 1.0f);
-
+	g_sclModel = XMFLOAT3(1.1f, 1.1f, 1.1f);
 	// モデルデータの読み込み
 	if (!g_model.Load(pDevice, pDeviceContext, MODEL_PLANE)) {
 		MessageBoxA(GetMainWnd(), "モデルデータ読み込みエラー", "InitModel", MB_OK);
@@ -120,29 +121,22 @@ void UpdateModel(void)
 		g_rotDestModel.y += 2;
 	
 	} 
-	//else if (GetKeyPress(VK_UP) || GetKeyPress(VK_W))
-	//{
-	//	// 前移動
-	//	g_moveModel.x -= SinDeg(g_rotModel.y) * VALUE_MOVE_MODEL;
-	//	g_moveModel.z -= CosDeg(g_rotModel.y) * VALUE_MOVE_MODEL;
-
-	//	
-	//}
-	else 
-	{
-		// モデルの向きを前(z軸マイナス方向)にする
-		//g_rotDestModel.y = 180.0f + rotCamera.y;
-	}
-
+	
 	// 左アナログスティック旋回
 	g_rotDestModel.y += 1 * state.Gamepad.sThumbLX /20000;
 	g_rotDestModel.z += 30.0f* state.Gamepad.sThumbLX / 20000;
 	//g_rotDestModel.x += 30.0f * state.Gamepad.sThumbLY / 10000;	// 機体の傾き
 
-	// はばたき
+	// Bボタンはばたき
 	if (GetJoyTrigger(0, JOYSTICKID2))
 	{
 		g_accModel.z = 3;
+	}
+
+	if (GetKeyPress(VK_SPACE) )
+	{
+		g_accModel.z = 3;
+
 	}
 
 	// 加速度の減少
@@ -197,12 +191,22 @@ void UpdateModel(void)
 
 	// キーボード
 	// 上昇
+	if (GetKeyPress(VK_DOWN) || GetKeyPress(VK_S))
+	{
+		// 前移動
+		g_rotDestModel.x = 30;
+	}
 	if (GetKeyPress(VK_I) )
 	{
 		g_rotDestModel.x = 30;
 		
 	}
 	// 下降
+	if (GetKeyPress(VK_UP) || GetKeyPress(VK_W))
+	{
+		// 前移動
+		g_rotDestModel.x = -50;
+	}
 	if (GetKeyPress(VK_K) )
 	{
 		g_rotDestModel.x = -30;
@@ -299,10 +303,15 @@ void UpdateModel(void)
 
 	
 
-	XMMATRIX mtxWorld, mtxRot, mtxTranslate;
+	XMMATRIX mtxWorld, mtxRot, mtxScl, mtxTranslate;
 
 	// ワールドマトリックスの初期化
 	mtxWorld = XMMatrixIdentity();
+
+	//スケール反映
+	mtxScl = XMMatrixScaling(g_sclModel.x, g_sclModel.y, g_sclModel.z);
+	mtxWorld = XMMatrixMultiply(mtxWorld, mtxScl);
+
 
 	// 回転を反映
 	mtxRot = XMMatrixRotationRollPitchYaw(XMConvertToRadians(g_rotModel.x),
