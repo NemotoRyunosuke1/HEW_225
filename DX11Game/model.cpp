@@ -144,7 +144,7 @@ void UpdateModel(void)
 	// 左アナログスティック旋回
 	g_rotDestModel.y += 1 * state.Gamepad.sThumbLX /20000;
 	g_rotDestModel.z += 30.0f* state.Gamepad.sThumbLX / 20000;
-	g_rotDestModel.x += 30.0f * state.Gamepad.sThumbLY / 10000;	// 機体の傾き
+	//g_rotDestModel.x += 30.0f * state.Gamepad.sThumbLY / 10000;	// 機体の傾き
 
 	// はばたき
 	if (GetJoyTrigger(0, JOYSTICKID2))
@@ -169,18 +169,50 @@ void UpdateModel(void)
 	g_moveModel.y += SinDeg(g_rotModel.x) * VALUE_MOVE_MODEL * g_accModel.z;
 	
 	// 上昇&下降処理
-	g_rotDestModel.x = 0;  // 機体の傾きリセット
-
-	// 上昇
-	if (GetKeyPress(VK_I) || state.Gamepad.sThumbLY < 0)
+	
+	// 機体の傾きリセット
+	if (g_rotDestModel.x > 0)
 	{
-		g_rotDestModel.x = 30;
-		g_rotDestModel.x = 10 * -state.Gamepad.sThumbLY /10000;	// 機体の傾き
+		g_rotDestModel.x -= 0.5f;
+		if (g_rotDestModel.x < 0.5f && g_rotDestModel.x > 0.5f)
+		{
+			g_rotDestModel.x = 0;
+		}
+	}
+	if (g_rotDestModel.x < 0)
+	{
+		g_rotDestModel.x += 0.5f;
+		if (g_rotDestModel.x > 0.5f && g_rotDestModel.x < 0.5f)
+		{
+			g_rotDestModel.x = 0;
+		}
+	}
+
+	// ゲームパッド
+	// 上昇
+	if (state.Gamepad.sThumbLY < 0)
+	{
+		//g_rotDestModel.x = 30;
+		g_rotDestModel.x = 10 * -state.Gamepad.sThumbLY /25000;	// 機体の傾き
 	}
 	// 下降
-	if (GetKeyPress(VK_K)|| state.Gamepad.sThumbLY > 0)
+	if (state.Gamepad.sThumbLY > 0)
 	{
-		g_rotDestModel.x = -30;
+		//g_rotDestModel.x = -30;
+		g_rotDestModel.x = 10 * -state.Gamepad.sThumbLY / 8000;	 // 機体の傾き
+	}
+
+	// キーボード
+	// 上昇
+	if (GetKeyPress(VK_I) )
+	{
+		//g_rotDestModel.x = 30;
+		g_rotDestModel.x = 10 * -state.Gamepad.sThumbLY / 10000;	// 機体の傾き
+	}
+	// 下降
+	if (GetKeyPress(VK_K) )
+	{
+		//g_rotDestModel.x = -30;
 		g_rotDestModel.x = 10 * -state.Gamepad.sThumbLY / 10000;	 // 機体の傾き
 	}
 
