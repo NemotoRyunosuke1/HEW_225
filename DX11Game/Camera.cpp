@@ -153,14 +153,14 @@ void CCamera::Update()
 	m_vDestAngle.y += state.Gamepad.sThumbRX / 20000;
 	m_vDestAngle.x += state.Gamepad.sThumbRY / 20000;
 
-	if (m_vDestAngle.x > 50.0f)
+	if (m_vDestAngle.x > 90.0f)
 	{
-		m_vDestAngle.x = 50.0f;
+		m_vDestAngle.x = 90.0f;
 	}
 
-	if (m_vDestAngle.x < -50.0f)
+	if (m_vDestAngle.x < -90.0f)
 	{
-		m_vDestAngle.x = -50.0f;
+		m_vDestAngle.x = -90.0f;
 	}
 
 	m_vSrcPos.x = SinDeg(GetModelRot().y) * m_fLengthInterval + CAM_POS_P_X;
