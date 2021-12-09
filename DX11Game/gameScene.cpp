@@ -30,6 +30,9 @@ GameScene::GameScene()
 
 	// 味方初期化
 	InitCrew();
+
+	// 風初期化
+	m_pWind = new Wind;
 }
 
 //=============================================================================
@@ -49,6 +52,9 @@ GameScene::~GameScene()
 
 	// 味方終了処理
 	UninitCrew();
+
+	// 風終了処理
+	delete m_pWind;
 }
 
 //=============================================================================
@@ -71,6 +77,8 @@ void GameScene::Update()
 	// 味方更新
 	UpdateCrew();
 
+	// 風更新
+	m_pWind->Update();
 
 	//次のシーンへ移る条件
 	if (GetAsyncKeyState(VK_RETURN) & 0x8000)
@@ -110,6 +118,9 @@ void GameScene::Draw()
 
 	// 味方描画
 	DrawCrew();
+
+	// 風描画
+	m_pWind->Draw();
 
 	// 2D描画
 	// Zバッファ無効(Zチェック無&Z更新無)

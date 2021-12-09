@@ -170,6 +170,7 @@ void CCamera::Update()
 	m_vSrcPos.y = -SinDeg(m_vDestAngle.x) * m_fLengthInterval + CAM_POS_P_Y;
 	m_vSrcPos.z = CosDeg(m_vDestAngle.y) * m_fLengthInterval + CAM_POS_P_Z;
 	state.Gamepad.sThumbRX / 20000;
+
 	// í«ê’ÉJÉÅÉâ
 	XMFLOAT3& vModelPos = GetModelPos();	// ÉÇÉfÉãç¿ïW
 	m_vDestPos.x = m_vSrcPos.x + vModelPos.x;

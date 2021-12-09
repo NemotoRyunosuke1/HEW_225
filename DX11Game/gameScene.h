@@ -1,7 +1,7 @@
 #pragma once
 
 #include "main.h"
-
+#include "wind.h"
 
 class GameScene
 {
@@ -13,6 +13,6 @@ public:
 	void Draw();
 
 private:
-
+	Wind* m_pWind;
 };
 

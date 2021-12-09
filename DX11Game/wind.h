@@ -7,6 +7,7 @@
 #pragma once
 
 #include "main.h"
+#include "AssimpModel.h"
 
 class Wind
 {
@@ -16,9 +17,19 @@ public:
 
 	void Update();
 	void Draw();
-	XMFLOAT3 GetPos();
 
+	void Create(Pos pos);	// 風生成
+
+	static XMFLOAT3 GetPos();	// 位置取得
+	static XMFLOAT3 GetSize();	// サイズ取得
+	static XMFLOAT3 GetRot();	// 向き取得
 private:
-	XMFLOAT3 m_pos;
-	XMFLOAT3 m_size;
+	CAssimpModel m_model;	// モデル
+	static XMFLOAT3 m_pos;		// 位置
+	static XMFLOAT3 m_size;	// サイズ
+	static XMFLOAT3 m_rot;		// 現在の向き
+
+	bool m_use;			// 使用フラグ
+
+	XMFLOAT4X4	m_mtxWorld;		// ワールドマトリックス
 };

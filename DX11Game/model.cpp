@@ -4,6 +4,7 @@
 // Author : 根本龍之介
 //
 //=============================================================================
+
 #include "model.h"
 #include "main.h"
 #include "input.h"
@@ -11,14 +12,22 @@
 #include "debugproc.h"
 #include "shadow.h"
 #include "explosion.h"
+#include "wind.h"
+#include <dinput.h>
+//#include <dinputd.h>
+
+//#pragma comment(lib,"dinput8.dll")
+
+
 
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-#define MODEL_PLANE			"data/model/airplane000.fbx"
+//#define MODEL_PLANE			"data/model/airplane000.fbx"
+#define MODEL_PLANE			"data/model/mukudori1.fbx"
 //#define MODEL_PLANE			"data/model/Totoro.fbx"
 
-#define	VALUE_MOVE_MODEL	(0.50f)		// 移動速度
+#define	VALUE_MOVE_MODEL	(0.50f)		// 移動速g_sclModel度
 #define	RATE_MOVE_MODEL		(0.20f)		// 移動慣性係数
 #define	VALUE_ROTATE_MODEL	(9.0f)		// 回転速度
 #define	RATE_ROTATE_MODEL	(0.20f)		// 回転慣性係数
@@ -33,9 +42,10 @@ static XMFLOAT3		g_rotModel;		// 現在の向き
 static XMFLOAT3		g_rotDestModel;	// 目的の向き
 static XMFLOAT3		g_moveModel;	// 移動量
 static XMFLOAT3		g_accModel;	// 加速度
+static XMFLOAT3		g_collisionSize;	// 当たり判定サイズ
 
 static XMFLOAT4X4	g_mtxWorld;		// ワールドマトリックス
-static XMFLOAT3			g_sclModel;
+static XMFLOAT3		g_sclModel;
 static int			g_nShadow;		// 丸影番号
 
 //=============================================================================
@@ -50,16 +60,17 @@ HRESULT InitModel(void)
 	// 位置・回転・スケールの初期設定
 	g_posModel = XMFLOAT3(0.0f, 100.0f, 0.0f);
 	g_moveModel = XMFLOAT3(0.0f, 0.0f, 0.0f);
-	g_rotModel = XMFLOAT3(90.0f, 180.0f, 90.0f);
-	g_rotDestModel = XMFLOAT3(90.0f, 0.0f, 90.0f);
+	g_rotModel = XMFLOAT3(0.0f, 180.0f, 0.0f);
+	g_rotDestModel = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	g_accModel = XMFLOAT3(0.0f, 0.0f, 1.0f);
-	g_sclModel = XMFLOAT3(1.1f, 1.1f, 1.1f);
+	g_sclModel = XMFLOAT3(5.1f, 5.1f, 5.1f);
+	g_collisionSize = XMFLOAT3(100.1f, 100.1f, 100.1f);
 	// モデルデータの読み込み
 	if (!g_model.Load(pDevice, pDeviceContext, MODEL_PLANE)) {
 		MessageBoxA(GetMainWnd(), "モデルデータ読み込みエラー", "InitModel", MB_OK);
 		return E_FAIL;
 	}
-
+	
 	// 丸影の生成
 	g_nShadow = CreateShadow(g_posModel, 12.0f);
 
@@ -301,7 +312,17 @@ void UpdateModel(void)
 		g_posModel.y = 80.0f;
 	}*/
 
-	
+	 // 風との当たり判定
+	XMFLOAT3 windPos  = Wind::GetPos();
+	XMFLOAT3 windSise = Wind::GetSize();
+
+	if (g_posModel.x + g_collisionSize.x /2 > windPos.x - 100 && g_posModel.x - g_collisionSize.x / 2 < windPos.x +100 &&
+		g_posModel.y + g_collisionSize.y / 2 > windPos.y - 100 && g_posModel.y - 50 < windPos.y + 100 &&
+		g_posModel.z + 50 > windPos.z - 100 && g_posModel.z - 50 < windPos.z + 100)
+	{
+		g_accModel.z = 3;
+		g_rotDestModel.x = 60;
+	}
 
 	XMMATRIX mtxWorld, mtxRot, mtxScl, mtxTranslate;
 
@@ -338,8 +359,8 @@ void UpdateModel(void)
 		g_rotDestModel = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	}
 	// デバック用文字列
-	PrintDebugProc("[ﾋｺｳｷ ｲﾁ : (%f : %f : %f)]\n", (float)state.Gamepad.sThumbLX, (float)state.Gamepad.sThumbLY, g_posModel.z);
-	PrintDebugProc("[ﾋｺｳｷ ﾑｷ : (%f) < ﾓｸﾃｷ ｲﾁ:(%f) >]\n", g_rotModel.x, g_rotDestModel.y);
+	PrintDebugProc("[ﾋｺｳｷ ｲﾁ : (%f : %f : %f)]\n", g_posModel.x, g_posModel.y, g_posModel.z);
+	PrintDebugProc("[ﾋｺｳｷ ﾑｷ : (%f) < ﾓｸﾃｷ ｲﾁ:(%f) >]\n", windPos.x, windPos.y);
 	//PrintDebugProc("\n");
 	PrintDebugProc("*** ﾋｺｳｷ ｿｳｻ ***\n");
 	PrintDebugProc("ﾏｴ   ｲﾄﾞｳ : \x1e\n");//↑
