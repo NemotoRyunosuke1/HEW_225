@@ -132,6 +132,9 @@
     <ClCompile Include="player.cpp">
       <Filter>ソース ファイル\scene\gameScene\player</Filter>
     </ClCompile>
+    <ClCompile Include="crew.cpp">
+      <Filter>ソース ファイル\scene\gameScene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -217,6 +220,9 @@
     </ClInclude>
     <ClInclude Include="player.h">
       <Filter>ヘッダー ファイル\scene\gameScene\player</Filter>
+    </ClInclude>
+    <ClInclude Include="crew.h">
+      <Filter>ヘッダー ファイル\scene\gameScene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
