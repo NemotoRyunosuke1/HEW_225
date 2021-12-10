@@ -62,7 +62,7 @@ HRESULT InitModel(void)
 	g_moveModel = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	g_rotModel = XMFLOAT3(0.0f, 180.0f, 0.0f);
 	g_rotDestModel = XMFLOAT3(0.0f, 0.0f, 0.0f);
-	g_accModel = XMFLOAT3(0.0f, 0.0f, 1.0f);
+	g_accModel = XMFLOAT3(1.0f, 1.0f, 1.0f);
 	g_sclModel = XMFLOAT3(5.1f, 5.1f, 5.1f);
 	g_collisionSize = XMFLOAT3(100.1f, 100.1f, 100.1f);
 	// モデルデータの読み込み
@@ -134,19 +134,27 @@ void UpdateModel(void)
 	} 
 	
 	// 左アナログスティック旋回
-	g_rotDestModel.y += 1 * state.Gamepad.sThumbLX /20000;
-	g_rotDestModel.z += 30.0f* state.Gamepad.sThumbLX / 20000;
-	//g_rotDestModel.x += 30.0f * state.Gamepad.sThumbLY / 10000;	// 機体の傾き
+	if (GetJoyCount() > 0)
+	{
+		g_rotDestModel.y += 1 * state.Gamepad.sThumbLX / 20000;
+		g_rotDestModel.z += 30.0f* state.Gamepad.sThumbLX / 20000;
+		//g_rotDestModel.x += 30.0f * state.Gamepad.sThumbLY / 10000;	// 機体の傾き
 
+	}
+	
 	// Bボタンはばたき
 	if (GetJoyTrigger(0, JOYSTICKID2))
 	{
-		g_accModel.z = 3;
+		g_accModel.x += 3;
+		g_accModel.y += 3;
+		g_accModel.z += 3;
 	}
 
 	if (GetKeyPress(VK_SPACE) )
 	{
-		g_accModel.z = 3;
+		g_accModel.x += 3;
+		g_accModel.y += 3;
+		g_accModel.z += 3;
 
 	}
 
@@ -159,12 +167,54 @@ void UpdateModel(void)
 			g_accModel.z = 1;
 		}
 	}
+	if (g_accModel.y > 1)
+	{
+		g_accModel.y -= 0.31f;
+		if (g_accModel.y < 1)
+		{
+			g_accModel.y = 1;
+		}
+	}
+	if (g_accModel.x > 1)
+	{
+		g_accModel.x -= 0.01f;
+		if (g_accModel.x < 1)
+		{
+			g_accModel.x = 1;
+		}
+	}
 
+
+	// 下降時の速度の上昇
+	if (g_rotDestModel.x < 0)
+	{
+		g_accModel.y += 1 * -g_rotDestModel.x/150 ;
+		g_accModel.x += 1 * -g_rotDestModel.x / 250;
+		g_accModel.z += 1 * -g_rotDestModel.x / 250;
+	}
+	else
+	{
+		
+	}
+	
+	// 加速度の上限
+	if (g_accModel.y > 4.5f)
+	{
+		g_accModel.y = 4.5f;
+	}
+	if (g_accModel.x > 4.5f)
+	{
+		g_accModel.x = 4.5f;
+	}
+	if (g_accModel.z > 4.5f)
+	{
+		g_accModel.z = 4.5f;
+	}
 
 	// 自動前移動
-	g_moveModel.z -= CosDeg(g_rotModel.y ) * VALUE_MOVE_MODEL * g_accModel.z;
+	g_moveModel.z -= CosDeg(g_rotModel.y) * VALUE_MOVE_MODEL * g_accModel.z;
 	g_moveModel.x -= SinDeg(g_rotModel.y) * VALUE_MOVE_MODEL * g_accModel.z;
-	g_moveModel.y += SinDeg(g_rotModel.x) * VALUE_MOVE_MODEL * g_accModel.z;
+	g_moveModel.y += SinDeg(g_rotModel.x) * VALUE_MOVE_MODEL * g_accModel.y ;
 	
 	// 上昇&下降処理
 	
@@ -191,13 +241,13 @@ void UpdateModel(void)
 	if (state.Gamepad.sThumbLY < 0)
 	{
 		//g_rotDestModel.x = 30;
-		g_rotDestModel.x = 10 * -state.Gamepad.sThumbLY /25000;	// 機体の傾き
+		g_rotDestModel.x = 10 * -state.Gamepad.sThumbLY / 8000;	// 機体の傾き
 	}
 	// 下降
 	if (state.Gamepad.sThumbLY > 0)
 	{
 		//g_rotDestModel.x = -30;
-		g_rotDestModel.x = 10 * -state.Gamepad.sThumbLY / 8000;	 // 機体の傾き
+		g_rotDestModel.x = 10 * -state.Gamepad.sThumbLY / 5000;	 // 機体の傾き
 	}
 
 	// キーボード
@@ -278,7 +328,8 @@ void UpdateModel(void)
 	if (g_rotModel.z < -180.0f) {
 		g_rotModel.z += 360.0f;
 	}
-	/// 位置移動
+
+	// 位置移動
 	g_posModel.x += g_moveModel.x;
 	g_posModel.y += g_moveModel.y;
 	g_posModel.z += g_moveModel.z;
@@ -320,7 +371,9 @@ void UpdateModel(void)
 		g_posModel.y + g_collisionSize.y / 2 > windPos.y - 100 && g_posModel.y - 50 < windPos.y + 100 &&
 		g_posModel.z + 50 > windPos.z - 100 && g_posModel.z - 50 < windPos.z + 100)
 	{
-		g_accModel.z = 3;
+		g_accModel.x += 2;
+		g_accModel.y += 6;
+		g_accModel.z += 2;
 		g_rotDestModel.x = 60;
 	}
 
@@ -360,6 +413,8 @@ void UpdateModel(void)
 	}
 	// デバック用文字列
 	PrintDebugProc("[ﾋｺｳｷ ｲﾁ : (%f : %f : %f)]\n", g_posModel.x, g_posModel.y, g_posModel.z);
+	PrintDebugProc("[ﾓﾃﾞﾙﾑｷ : (%f : %f : %f)]\n", g_rotDestModel.x, g_posModel.y, g_posModel.z);
+	PrintDebugProc("[ﾓﾃﾞﾙﾑｷ : (%f : %f : %f)]\n",(float)GetJoyCount(), g_accModel.y, g_posModel.z);
 	PrintDebugProc("[ﾋｺｳｷ ﾑｷ : (%f) < ﾓｸﾃｷ ｲﾁ:(%f) >]\n", windPos.x, windPos.y);
 	//PrintDebugProc("\n");
 	PrintDebugProc("*** ﾋｺｳｷ ｿｳｻ ***\n");
