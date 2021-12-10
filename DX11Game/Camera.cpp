@@ -119,6 +119,8 @@ void CCamera::Update()
 		state.Gamepad.sThumbRY = 0;
 	}
 
+
+
 	// –Ú“I‚ÌŠp“x‚Ü‚Å‚Ì·•ª
 	float fDiffRotX = m_vDestAngle.x - GetModelRot().x;
 	float fDiffRotY = m_vDestAngle.y - GetModelRot().y;
