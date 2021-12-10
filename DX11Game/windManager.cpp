@@ -12,7 +12,7 @@ WindManager::WindManager()
 
 		//m_pWind->Create();
 	}
-	
+	m_pWind[0].Create(XMFLOAT3(), XMFLOAT3(), XMFLOAT3());
 }
 WindManager::~WindManager()
 {
