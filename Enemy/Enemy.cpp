@@ -4,6 +4,8 @@
 // Author : TAKUMI SUZUKI
 //
 //*********************************************************************************
+
+
 #include "Enemy.h"
 #include "Main.h"
 #include "Shadow.h"
