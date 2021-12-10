@@ -1,7 +1,7 @@
 //=============================================================================
 //
-// 敵機処理 [enemy.cpp]
-// Author : SUZUKI TAKUMI
+// 敵の生成 [enemy.cpp]
+// Author : 鈴木 拓巳
 //
 //=============================================================================
 #include "enemy.h"
@@ -9,11 +9,12 @@
 #include "AssimpModel.h"
 #include "debugproc.h"
 #include "shadow.h"
+#include "model.h"
 
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-#define MODEL_ENEMY			"data/model/helicopter000.fbx"
+#define MODEL_ENEMY			"data/model/mukudori1.fbx"
 
 #define	VALUE_MOVE_ENEMY	(0.40f)		// 移動速度
 #define	RATE_MOVE_ENEMY		(0.20f)		// 移動慣性係数
@@ -21,6 +22,7 @@
 #define	RATE_ROTATE_ENEMY	(0.20f)		// 回転慣性係数
 
 #define MAX_ENEMY			(10)		// 敵機最大数
+#define ENEMY_RADIUS        (10.0f)
 
 //*****************************************************************************
 // 構造体定義
@@ -206,4 +208,15 @@ void DrawEnemy(void)
 		SetZWrite(true);				// Zバッファ更新する
 		SetBlendState(BS_NONE);			// アルファブレンド無効
 	}
+}
+
+int StartChase()
+{
+	for (int i = 0; i < MAX_ENEMY; ++i)
+	{
+		g_enemy[i].m_pos = GetModelPos();
+		g_enemy[i].m_rotDest = GetModelPos();
+		return i;
+	}
+
 }
