@@ -104,19 +104,34 @@ void CCamera::Update()
 	}
 	*/
 
+	
+
 	// アナログスティックステート
-	XINPUT_STATE state;
-	XInputGetState(0, &state);
-	int iPad_left = 0, iPad_right = 0, iPad_up = 0, iPad_down = 0;
-	int iPad_leftshoulder = 0, iPad_rightshoulder = 0;
-	int iPad_A = 0, iPad_B = 0, iPad_X = 0, iPad_Y = 0;
+	GetJoyState(0);
+	LONG stickX = GetJoyRX(0);
+	LONG stickY = GetJoyRY(0);
 
 	//右ゲームパッドアナログスティックのデッドゾーン処理
-	if ((state.Gamepad.sThumbRX < XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE && state.Gamepad.sThumbRX > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) &&
-		(state.Gamepad.sThumbRY < XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE && state.Gamepad.sThumbRY > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE))
+	if ((stickX < STICK_DEAD_ZONE && stickX > -STICK_DEAD_ZONE) &&
+		(stickY < STICK_DEAD_ZONE && stickY > -STICK_DEAD_ZONE))
 	{
-		state.Gamepad.sThumbRX = 0;
-		state.Gamepad.sThumbRY = 0;
+		stickX = 0;
+		stickY = 0;
+
+		m_vDestAngle.y = GetModelRot().y;
+		m_vDestAngle.x = GetModelRot().x;
+
+		m_vSrcPos.x = SinDeg(GetModelRot().y) * m_fLengthInterval + CAM_POS_P_X;
+		m_vSrcPos.y = -SinDeg(GetModelRot().x) * m_fLengthInterval + CAM_POS_P_Y;
+		m_vSrcPos.z = CosDeg(GetModelRot().y) * m_fLengthInterval + CAM_POS_P_Z;
+
+	}
+	else
+	{
+		m_vSrcPos.x = SinDeg(m_vDestAngle.y) * m_fLengthInterval + CAM_POS_P_X;
+		m_vSrcPos.y = -SinDeg(m_vDestAngle.x) * m_fLengthInterval + CAM_POS_P_Y;
+		m_vSrcPos.z = CosDeg(m_vDestAngle.y) * m_fLengthInterval + CAM_POS_P_Z;
+
 	}
 
 	// 目的の角度までの差分
@@ -150,8 +165,8 @@ void CCamera::Update()
 	if (m_vAngle.y < -180.0f) {
 		m_vAngle.y += 360.0f;
 	}
-	m_vDestAngle.y += state.Gamepad.sThumbRX / 20000;
-	m_vDestAngle.x += state.Gamepad.sThumbRY / 20000;
+	m_vDestAngle.y += stickX / 20000;
+	m_vDestAngle.x += stickY / 20000;
 
 	if (m_vDestAngle.x > 90.0f)
 	{
@@ -163,13 +178,12 @@ void CCamera::Update()
 		m_vDestAngle.x = -90.0f;
 	}
 
-	m_vSrcPos.x = SinDeg(GetModelRot().y) * m_fLengthInterval + CAM_POS_P_X;
-	m_vSrcPos.y = -SinDeg(GetModelRot().x) * m_fLengthInterval+ CAM_POS_P_Y;
-	m_vSrcPos.z = CosDeg(GetModelRot().y) * m_fLengthInterval + CAM_POS_P_Z;
-	m_vSrcPos.x = SinDeg(m_vDestAngle.y) * m_fLengthInterval + CAM_POS_P_X;
-	m_vSrcPos.y = -SinDeg(m_vDestAngle.x) * m_fLengthInterval + CAM_POS_P_Y;
-	m_vSrcPos.z = CosDeg(m_vDestAngle.y) * m_fLengthInterval + CAM_POS_P_Z;
-	state.Gamepad.sThumbRX / 20000;
+	
+
+	//m_vSrcPos.x = SinDeg(m_vDestAngle.y) * m_fLengthInterval + CAM_POS_P_X;
+	//m_vSrcPos.y = -SinDeg(m_vDestAngle.x) * m_fLengthInterval + CAM_POS_P_Y;
+	//m_vSrcPos.z = CosDeg(m_vDestAngle.y) * m_fLengthInterval + CAM_POS_P_Z;
+	
 
 	// 追跡カメラ
 	XMFLOAT3& vModelPos = GetModelPos();	// モデル座標
@@ -193,7 +207,7 @@ void CCamera::Update()
 	// デバック用文字列
 	PrintDebugProc("[ｶﾒﾗ ｲﾁ : (%d)]\n", GetModelRotX());
 	PrintDebugProc("[ｶﾒﾗ ｲﾁ : (%f, %f, %f)]\n", m_vAngle.x, m_vAngle.y, m_vAngle.z);
-	//PrintDebugProc("[ｶﾒﾗ ｲﾁ : (%f, %f, %f)]\n", m_vPos.x, m_vPos.y, m_vPos.z);
+	PrintDebugProc("[ｶﾒﾗ ｲﾁ : (%f, %f, %f)]\n", stickX, stickY, m_vPos.z);
 	//PrintDebugProc("[ﾁｭｳｼﾃﾝ : (%f, %f, %f)]\n", m_vTarget.x, m_vTarget.y, m_vTarget.z);
 	//PrintDebugProc("\n");
 
