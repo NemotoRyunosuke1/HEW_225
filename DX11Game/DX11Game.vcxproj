@@ -162,6 +162,7 @@
     <ClCompile Include="bg.cpp" />
     <ClCompile Include="bullet.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="collision.cpp" />
     <ClCompile Include="crew.cpp" />
     <ClCompile Include="debugproc.cpp" />
     <ClCompile Include="enemy.cpp" />
@@ -193,6 +194,7 @@
     <ClInclude Include="bg.h" />
     <ClInclude Include="bullet.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="collision.h" />
     <ClInclude Include="crew.h" />
     <ClInclude Include="debugproc.h" />
     <ClInclude Include="enemy.h" />

@@ -10,6 +10,7 @@
 #include "debugproc.h"
 #include "shadow.h"
 #include "model.h"
+#include "collision.h"
 
 //*****************************************************************************
 // ƒ}ƒNƒ’è‹`
@@ -220,5 +221,16 @@ int StartChase()
 		g_crew[i].m_rotDest = GetModelPos();
 		return i;
 	}
-	
+}
+
+bool CollisionCrew(XMFLOAT3 pos, float radius)
+{
+	TCrew* pCrew = g_crew;
+	bool hit = CollisionSphere(g_crew->m_pos, CREW_RADIUS, pos, radius);
+	if (hit)
+	{
+		int nChase = -1;
+		nChase = StartChase();
+	}
+	return hit;
 }
