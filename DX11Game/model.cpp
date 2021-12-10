@@ -13,7 +13,7 @@
 #include "shadow.h"
 #include "explosion.h"
 #include "wind.h"
-#include <dinput.h>
+
 //#include <dinputd.h>
 
 //#pragma comment(lib,"dinput8.dll")
@@ -339,9 +339,11 @@ void UpdateModel(void)
 	// •—‚Æ‚Ì“–‚½‚è”»’è
 	XMFLOAT3 windPos = Wind::GetPos();
 	XMFLOAT3 windSise = Wind::GetSize();
+	bool windUse = Wind::GetUse();
 	if (g_posModel.x + g_collisionSize.x / 2 > windPos.x - windSise.x / 2 && g_posModel.x - g_collisionSize.x / 2 < windPos.x + windSise.x / 2 &&
-		g_posModel.y + g_collisionSize.y / 2 > windPos.y - windSise.y / 2 && g_posModel.y - 50 < windPos.y + windSise.y / 2 &&
-		g_posModel.z + 50 > windPos.z - windSise.z / 2 && g_posModel.z - 50 < windPos.z + windSise.z / 2)
+		g_posModel.y + g_collisionSize.y / 2 > windPos.y - windSise.y / 2 && g_posModel.y - g_collisionSize.y / 2 < windPos.y + windSise.y / 2 &&
+		g_posModel.z + g_collisionSize.y / 2 > windPos.z - windSise.z / 2 && g_posModel.z - g_collisionSize.y / 2 < windPos.z + windSise.z / 2 && 
+		windUse)
 	{
 		g_accModel.x = 1;
 		g_accModel.y += 6;

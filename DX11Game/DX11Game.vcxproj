@@ -187,6 +187,7 @@
     <ClCompile Include="titleScene.cpp" />
     <ClCompile Include="tree.cpp" />
     <ClCompile Include="wind.cpp" />
+    <ClCompile Include="windManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AssimpModel.h" />
@@ -219,6 +220,7 @@
     <ClInclude Include="titleScene.h" />
     <ClInclude Include="tree.h" />
     <ClInclude Include="wind.h" />
+    <ClInclude Include="windManager.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="AssimpPixel.hlsl">

@@ -6,15 +6,18 @@ static float i = 0;
 XMFLOAT3 Wind::m_pos;
 XMFLOAT3 Wind::m_size;
 XMFLOAT3 Wind::m_rot;
-
+bool Wind::m_use;
 
 Wind::Wind()
 {
 	m_pos  = XMFLOAT3(0.0f,50.0f,0.0f);	// 位置
 	m_size = XMFLOAT3(300.0f,2000.0f,300.0f);	// サイズ
 	m_rot  = XMFLOAT3(0.0f,0.0f,0.0f);	// 向き
+	m_vec  = XMFLOAT3(0.0f,1.0f,0.0f);	// 向き
 
 	m_use  = false;
+
+
 
 	ID3D11Device* pDevice = GetDevice();
 	ID3D11DeviceContext* pDeviceContext = GetDeviceContext();
@@ -31,11 +34,9 @@ Wind::~Wind()
 
 void Wind::Update()
 {
+	// 使用されてなければ処理をしない
+	if (!m_use)return;
 	
-	//i += 1.1;
-	//m_pos.x += SinDeg(i) * 10;
-
-
 	XMMATRIX mtxWorld, mtxRot, mtxScl, mtxTranslate;
 
 	// ワールドマトリックスの初期化
@@ -62,6 +63,9 @@ void Wind::Update()
 }
 void Wind::Draw()
 {
+	// 使用されてなければ処理をしない
+	if (!m_use)return;
+
 	ID3D11DeviceContext* pDC = GetDeviceContext();
 
 	// 不透明部分を描画
@@ -74,9 +78,12 @@ void Wind::Draw()
 	SetZWrite(true);				// Zバッファ更新する
 	SetBlendState(BS_NONE);			// アルファブレンド無効
 }
-void Wind::Create(Pos pos)
+void Wind::Create(XMFLOAT3 pos, XMFLOAT3 size, XMFLOAT3 vec)
 {
-
+	m_pos = pos;
+	m_size = size;
+	m_rot = vec;
+	m_use = true;
 }
 XMFLOAT3 Wind::GetPos()
 {
@@ -89,4 +96,12 @@ XMFLOAT3 Wind::GetSize()
 XMFLOAT3 Wind::GetRot()
 {
 	return m_rot;
+}
+bool Wind::GetUse()
+{
+	return m_use;
+}
+XMFLOAT3 Wind::GetVec()
+{
+	return m_vec;
 }
