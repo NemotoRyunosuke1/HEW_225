@@ -277,7 +277,7 @@ JOYINFOEX *GetJoyState(DWORD dwJoy)
 //=============================================================================
 // ゲームパッドX軸取得
 //=============================================================================
-LONG GetJoyX(DWORD dwJoy)
+LONG GetJoyLX(DWORD dwJoy)
 {
 	if (dwJoy >= NUM_JOY_MAX) return 0L;
 	return (LONG)g_joyState[dwJoy].dwXpos - 0x08000;
@@ -286,7 +286,7 @@ LONG GetJoyX(DWORD dwJoy)
 //=============================================================================
 // ゲームパッドY軸取得
 //=============================================================================
-LONG GetJoyY(DWORD dwJoy)
+LONG GetJoyLY(DWORD dwJoy)
 {
 	if (dwJoy >= NUM_JOY_MAX) return 0L;
 	return (LONG)g_joyState[dwJoy].dwYpos - 0x08000;
@@ -295,10 +295,36 @@ LONG GetJoyY(DWORD dwJoy)
 //=============================================================================
 // ゲームパッドZ軸取得
 //=============================================================================
-LONG GetJoyZ(DWORD dwJoy)
+LONG GetJoyLZ(DWORD dwJoy)
 {
 	if (dwJoy >= NUM_JOY_MAX) return 0L;
 	return (LONG)g_joyState[dwJoy].dwZpos - 0x08000;
+}
+//=============================================================================
+// ゲームパッドRスティックX軸取得
+//=============================================================================
+LONG GetJoyRX(DWORD dwJoy)
+{
+	if (dwJoy >= NUM_JOY_MAX) return 0L;
+	return (LONG)g_joyState[dwJoy].dwUpos - 0x08000;
+}
+//=============================================================================
+// ゲームパッドRスティックY軸取得
+//=============================================================================
+
+LONG GetJoyRY(DWORD dwJoy)
+{
+	if (dwJoy >= NUM_JOY_MAX) return 0L;
+	return (LONG)g_joyState[dwJoy].dwRpos - 0x08000;
+}
+//=============================================================================
+// ゲームパッドRスティックZ軸取得
+//=============================================================================
+
+LONG GetJoyRZ(DWORD dwJoy)
+{
+	if (dwJoy >= NUM_JOY_MAX) return 0L;
+	return (LONG)g_joyState[dwJoy].dwVpos - 0x08000;
 }
 
 //=============================================================================

@@ -11,7 +11,7 @@ XMFLOAT3 Wind::m_rot;
 Wind::Wind()
 {
 	m_pos  = XMFLOAT3(0.0f,50.0f,0.0f);	// 位置
-	m_size = XMFLOAT3(100.0f,100.0f,100.0f);	// サイズ
+	m_size = XMFLOAT3(300.0f,2000.0f,300.0f);	// サイズ
 	m_rot  = XMFLOAT3(0.0f,0.0f,0.0f);	// 向き
 
 	m_use  = false;

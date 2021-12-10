@@ -71,6 +71,8 @@
 #define MOUSEBUTTON_X1	3
 #define MOUSEBUTTON_X2	4
 
+#define STICK_DEAD_ZONE (4000)	// デッドゾーン
+
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
@@ -85,9 +87,13 @@ bool GetKeyRepeat(int nKey);
 
 DWORD GetJoyCount();
 JOYINFOEX *GetJoyState(DWORD dwJoy);
-LONG GetJoyX(DWORD dwJoy);
-LONG GetJoyY(DWORD dwJoy);
-LONG GetJoyZ(DWORD dwJoy);
+LONG GetJoyLX(DWORD dwJoy);
+LONG GetJoyLY(DWORD dwJoy);
+LONG GetJoyLZ(DWORD dwJoy);
+LONG GetJoyRX(DWORD dwJoy);
+LONG GetJoyRY(DWORD dwJoy);
+LONG GetJoyRZ(DWORD dwJoy);
+
 bool GetJoyButton(DWORD dwJoy, DWORD dwBtn);
 bool GetJoyTrigger(DWORD dwJoy, DWORD dwBtn);
 bool GetJoyRelease(DWORD dwJoy, DWORD dwBtn);
