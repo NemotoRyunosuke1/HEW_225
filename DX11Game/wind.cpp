@@ -6,6 +6,7 @@ static float i = 0;
 XMFLOAT3 Wind::m_pos;
 XMFLOAT3 Wind::m_size;
 XMFLOAT3 Wind::m_rot;
+XMFLOAT3 Wind::m_vec;
 bool Wind::m_use;
 
 Wind::Wind()
