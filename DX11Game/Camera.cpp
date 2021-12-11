@@ -111,26 +111,43 @@ void CCamera::Update()
 	LONG stickX = GetJoyRX(0);
 	LONG stickY = GetJoyRY(0);
 
-	//右ゲームパッドアナログスティックのデッドゾーン処理
-	if ((stickX < STICK_DEAD_ZONE && stickX > -STICK_DEAD_ZONE) &&
-		(stickY < STICK_DEAD_ZONE && stickY > -STICK_DEAD_ZONE))
+	if (GetJoyCount() > 0)
 	{
-		stickX = 0;
-		stickY = 0;
+		//右ゲームパッドアナログスティックのデッドゾーン処理
+		if ((stickX < STICK_DEAD_ZONE && stickX > -STICK_DEAD_ZONE) &&
+			(stickY < STICK_DEAD_ZONE && stickY > -STICK_DEAD_ZONE))
+		{
+			stickX = 0;
+			stickY = 0;
 
-		m_vDestAngle.y = GetModelRot().y;
-		m_vDestAngle.x = GetModelRot().x;
+			m_vDestAngle.y = GetModelRot().y;
+			m_vDestAngle.x = GetModelRot().x;
 
+			m_vSrcPos.x = SinDeg(GetModelRot().y) * m_fLengthInterval + CAM_POS_P_X;
+			m_vSrcPos.y = -SinDeg(GetModelRot().x) * m_fLengthInterval + CAM_POS_P_Y;
+			m_vSrcPos.z = CosDeg(GetModelRot().y) * m_fLengthInterval + CAM_POS_P_Z;
+
+		}
+		else
+		{
+			m_vSrcPos.x = SinDeg(m_vDestAngle.y) * m_fLengthInterval + CAM_POS_P_X;
+			m_vSrcPos.y = -SinDeg(m_vDestAngle.x) * m_fLengthInterval + CAM_POS_P_Y;
+			m_vSrcPos.z = CosDeg(m_vDestAngle.y) * m_fLengthInterval + CAM_POS_P_Z;
+
+		}
+
+	}
+	else
+	{
 		m_vSrcPos.x = SinDeg(GetModelRot().y) * m_fLengthInterval + CAM_POS_P_X;
 		m_vSrcPos.y = -SinDeg(GetModelRot().x) * m_fLengthInterval + CAM_POS_P_Y;
 		m_vSrcPos.z = CosDeg(GetModelRot().y) * m_fLengthInterval + CAM_POS_P_Z;
 
 	}
-	else
+	
+
+	if (GetJoyCount() > 0)
 	{
-		m_vSrcPos.x = SinDeg(m_vDestAngle.y) * m_fLengthInterval + CAM_POS_P_X;
-		m_vSrcPos.y = -SinDeg(m_vDestAngle.x) * m_fLengthInterval + CAM_POS_P_Y;
-		m_vSrcPos.z = CosDeg(m_vDestAngle.y) * m_fLengthInterval + CAM_POS_P_Z;
 
 	}
 
