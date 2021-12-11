@@ -12,7 +12,7 @@
 #include "debugproc.h"
 #include "shadow.h"
 #include "explosion.h"
-#include "wind.h"
+
 
 //#include <dinputd.h>
 
@@ -152,7 +152,7 @@ void UpdateModel(void)
 		g_accModel.x += 3;
 		g_accModel.y += 3;
 		g_accModel.z += 3;
-		g_rotDestModel.y += 1.0f * stickX /80 ;
+		//g_rotDestModel.y += 1.0f * stickX /80 ;
 	}
 	
 
@@ -336,20 +336,22 @@ void UpdateModel(void)
 		g_rotModel.z += 360.0f;
 	}
 
-	// ïóÇ∆ÇÃìñÇΩÇËîªíË
-	XMFLOAT3 windPos = Wind::GetPos();
-	XMFLOAT3 windSise = Wind::GetSize();
-	bool windUse = Wind::GetUse();
-	if (g_posModel.x + g_collisionSize.x / 2 > windPos.x - windSise.x / 2 && g_posModel.x - g_collisionSize.x / 2 < windPos.x + windSise.x / 2 &&
-		g_posModel.y + g_collisionSize.y / 2 > windPos.y - windSise.y / 2 && g_posModel.y - g_collisionSize.y / 2 < windPos.y + windSise.y / 2 &&
-		g_posModel.z + g_collisionSize.y / 2 > windPos.z - windSise.z / 2 && g_posModel.z - g_collisionSize.y / 2 < windPos.z + windSise.z / 2 && 
-		windUse)
+	//// ïóÇ∆ÇÃìñÇΩÇËîªíË
+	//for(int i = 0;i < )
+	//XMFLOAT3 windPos = Wind::GetPos();
+	//XMFLOAT3 windSise = Wind::GetSize();
+	//bool windUse = Wind::GetUse();
+	//if (g_posModel.x + g_collisionSize.x / 2 > windPos.x - windSise.x / 2 && g_posModel.x - g_collisionSize.x / 2 < windPos.x + windSise.x / 2 &&
+	//	g_posModel.y + g_collisionSize.y / 2 > windPos.y - windSise.y / 2 && g_posModel.y - g_collisionSize.y / 2 < windPos.y + windSise.y / 2 &&
+	//	g_posModel.z + g_collisionSize.y / 2 > windPos.z - windSise.z / 2 && g_posModel.z - g_collisionSize.y / 2 < windPos.z + windSise.z / 2 && 
+	//	windUse)
+	 if(bWind)
 	{
 		g_accModel.x = 1;
-		g_accModel.y += 6;
+		g_accModel.y += 0.5f;
 		g_accModel.z = 1;
 		g_rotDestModel.x = 90;
-		bWind = true;
+		
 	}
 	
 	// à íuà⁄ìÆ
@@ -426,7 +428,6 @@ void UpdateModel(void)
 	PrintDebugProc("[À∫≥∑ ≤¡ : (%f : %f : %f)]\n", g_posModel.x, g_posModel.y, g_posModel.z);
 	PrintDebugProc("[”√ﬁŸ—∑ : (%f : %f : %f)]\n", g_rotDestModel.x, g_posModel.y, g_posModel.z);
 	PrintDebugProc("[”√ﬁŸ∂ø∏ : (%d : %f : %f)]\n",g_accModel.x, g_accModel.y, g_accModel.z);
-	PrintDebugProc("[À∫≥∑ —∑ : (%f) < ”∏√∑ ≤¡:(%f) >]\n", windPos.x, windPos.y);
 	//PrintDebugProc("\n");
 	PrintDebugProc("*** À∫≥∑ ø≥ª ***\n");
 	PrintDebugProc("œ¥   ≤ƒﬁ≥ : \x1e\n");//Å™
@@ -486,4 +487,12 @@ int GetModelRotX()
 XMFLOAT3& GetModelRot()
 {
 	return g_rotModel;
+}
+XMFLOAT3& GetModelCollisionSize()
+{
+	return g_collisionSize;
+}
+void SetWindCollision(bool flg)
+{
+	bWind = flg;
 }

@@ -220,5 +220,5 @@ int StartChase()
 		g_crew[i].m_rotDest = GetModelPos();
 		return i;
 	}
-	
+	return 0;
 }

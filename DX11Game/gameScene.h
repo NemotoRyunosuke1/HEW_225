@@ -2,6 +2,8 @@
 
 #include "main.h"
 #include "wind.h"
+#include "windManager.h"
+
 
 class GameScene
 {
@@ -13,6 +15,7 @@ public:
 	void Draw();
 
 private:
-	Wind* m_pWind;
+	
+	WindManager* m_pWindManager;
 };
 
