@@ -1,11 +1,10 @@
 #pragma once
 
-#include "main.h"
-#include "wind.h"
+#include "sceneBase.h"
 #include "windManager.h"
+#include "goal.h"
 
-
-class GameScene
+class GameScene :public SceneBase
 {
 public:
 	GameScene();
@@ -17,5 +16,6 @@ public:
 private:
 	
 	WindManager* m_pWindManager;
+	Goal* m_pGoal;
 };
 

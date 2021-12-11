@@ -31,11 +31,11 @@ GameScene::GameScene()
 	// 味方初期化
 	InitCrew();
 
-	// 風初期化
-	//m_pWind = new Wind;
-
 	// 風マネージャー初期化
 	m_pWindManager = new WindManager;
+
+	// ゴール初期化
+	m_pGoal = new Goal;
 }
 
 //=============================================================================
@@ -56,11 +56,11 @@ GameScene::~GameScene()
 	// 味方終了処理
 	UninitCrew();
 
-	// 風終了処理
-	//delete m_pWind;
-
 	// 風マネージャー終了
 	delete m_pWindManager;
+
+	// ゴール終了
+	delete m_pGoal;
 }
 
 //=============================================================================
@@ -83,11 +83,11 @@ void GameScene::Update()
 	// 味方更新
 	UpdateCrew();
 
-	// 風更新
-	//m_pWind->Update();
-
 	// 風マネージャー更新
 	m_pWindManager->Update();
+
+	// ゴール更新
+	m_pGoal->Update();
 
 	// 風とプレイヤーの当たり判定
 	for (int i = 0; i < MAX_WIND; ++i)
@@ -160,12 +160,11 @@ void GameScene::Draw()
 	// 味方描画
 	DrawCrew();
 
-	// 風描画
-	//m_pWind->Draw();
-
 	// 風マネージャー描画
 	m_pWindManager->Draw();
 
+	// ゴール描画
+	m_pGoal->Draw();
 
 	// 2D描画
 	// Zバッファ無効(Zチェック無&Z更新無)

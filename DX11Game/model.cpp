@@ -11,7 +11,6 @@
 #include "AssimpModel.h"
 #include "debugproc.h"
 #include "shadow.h"
-#include "explosion.h"
 
 
 //#include <dinputd.h>
@@ -178,13 +177,13 @@ void UpdateModel(void)
 		if (stickY < 0 && !bWind)
 		{
 			//g_rotDestModel.x = 30;
-			g_rotDestModel.x = 5 * stickY / 5000;	// ‹@‘Ì‚ÌŒX‚«
+			g_rotDestModel.x = 5 * (float)stickY / 5000;	// ‹@‘Ì‚ÌŒX‚«
 		}
 		// ã¸
 		if (stickY > 0 && !bWind)
 		{
 			//g_rotDestModel.x = -30;
-			g_rotDestModel.x = 5 * stickY / 8000;	 // ‹@‘Ì‚ÌŒX‚«
+			g_rotDestModel.x = 5 * (float)stickY / 8000;	 // ‹@‘Ì‚ÌŒX‚«
 		}
 	}
 	

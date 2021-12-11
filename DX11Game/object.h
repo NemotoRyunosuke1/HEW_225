@@ -6,24 +6,18 @@
 
 
 
-struct Acc
-{
-	float x;
-	float y;
-};
 
 class Object
 {
 public:
 	Object();
 	~Object();
-	HRESULT Init();
-	void Uninit();
+	
 	void Update();
 	void Draw();
 
 protected:
-	Pos m_pos;
-	Size m_size;
+	XMFLOAT3 m_pos;
+	XMFLOAT3 m_size;
 	ID3D11ShaderResourceView* m_pTexture;
 };
