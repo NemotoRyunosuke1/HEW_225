@@ -1,14 +1,14 @@
 #pragma once
 
-#include "object.h"
+#include "main.h"
 
-class Goal :public Object
+class Goal 
 {
 public:
 	Goal();
 	~Goal();
 	
 	void Update();
-	void draw();
+	void Draw();
 
 };

@@ -49,7 +49,6 @@ GameScene::~GameScene()
 	// ƒ‚ƒfƒ‹I—¹ˆ—
 	UninitModel();
 
-
 	// ŠÛ‰eI—¹ˆ—
 	UninitShadow();
 

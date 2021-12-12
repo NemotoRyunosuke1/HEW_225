@@ -13,7 +13,7 @@ void Goal::Update()
 {
 
 }
-void Goal::draw()
+void Goal::Draw()
 {
 
 }
