@@ -16,6 +16,6 @@ void UninitCrew(void);
 void UpdateCrew(void);
 void DrawCrew(void);
 
-int StartChase();
+int StartChase(int i);
 
-bool CollisionCrew(XMFLOAT3 pos, float radius);
+//bool CollisionCrew(XMFLOAT3 pos, float radius);
