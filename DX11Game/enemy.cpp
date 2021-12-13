@@ -1,7 +1,7 @@
 //=============================================================================
 //
-// “G‹@ˆ— [enemy.cpp]
-// Author : SUZUKI TAKUMI2
+// “G‚Ì¶¬ [enemy.cpp]
+// Author : —é–Ø‘ñ–¤
 //
 //=============================================================================
 #include "enemy.h"
@@ -20,7 +20,7 @@
 #define	VALUE_ROTATE_ENEMY	(7.0f)		// ‰ñ“]‘¬“x
 #define	RATE_ROTATE_ENEMY	(0.20f)		// ‰ñ“]Šµ«ŒW”
 
-#define MAX_ENEMY			(10)		// “G‹@Å‘å”
+#define MAX_ENEMY			(10)		// “G‚ÌÅ‘å”
 
 //*****************************************************************************
 // \‘¢‘Ì’è‹`
@@ -36,11 +36,17 @@ struct TEnemy {
 	int			m_nShadow;	// ŠÛ‰e”Ô†
 };
 
+typedef struct D3DXVECTOR3 {
+	FLOAT x;
+	FLOAT y;
+	FLOAT z;
+} D3DXVECTOR3, *LPD3DXVECTOR3;
+
 //*****************************************************************************
 // ƒOƒ[ƒoƒ‹•Ï”
 //*****************************************************************************
 static CAssimpModel	g_model;			// ƒ‚ƒfƒ‹
-static TEnemy		g_enemy[MAX_ENEMY];	// “G‹@î•ñ
+static TEnemy		g_enemy[MAX_ENEMY];	// “G‚Ìî•ñ
 
 //=============================================================================
 // ‰Šú‰»ˆ—
@@ -184,6 +190,38 @@ void UpdateEnemy(void)
 		// ŠÛ‰e‚ÌˆÚ“®
 		MoveShadow(g_enemy[i].m_nShadow, g_enemy[i].m_pos);
 	}
+
+	// “G‚Æ‚Ì“–‚½‚è”»’è
+	struct ENEMY {
+		D3DXVECTOR3 min;         // Å‘å’l
+		D3DXVECTOR3 max;         // Å¬’l
+		D3DXVECTOR3 actor01dPos; // ‘O‚ÌÀ•W
+
+		ENEMY() = default;
+		~ENEMY() = default;
+		ENEMY(D3DXVECTOR3 minValue, D3DXVECTOR3 maxValue, D3DXVECTOR3 actorPos)
+		{
+			min = minValue;
+			max = maxValue;
+			actor01dPos = actorPos;
+		}
+		// XV
+		void Update(const D3DXVECTOR3& actorPosition) {
+			D3DXVECTOR3 diff = actorPosition - actor01dPos;
+			min.x += diff.x;
+			max.y += diff.y;
+			actor01dPos = actorPosition;
+	};
+		// Õ“Ë”»’è
+		inline bool intersectAABB(const ENEMY& box1, const ENEMY& box2) {
+			if (box1.min.x > box2.max.x) return false;
+			if (box1.max.x < box2.min.x) return false;
+			if (box1.min.y > box2.max.y) return false;
+			if (box1.max.y < box2.min.y) return false;
+			if (box1.min.z > box2.max.z) return false;
+			if (box1.max.z < box2.min.z) return false;
+
+			return true;   
 }
 
 //=============================================================================
@@ -192,7 +230,7 @@ void UpdateEnemy(void)
 void DrawEnemy(void)
 {
 	ID3D11DeviceContext* pDC = GetDeviceContext();
-
+	
 	// •s“§–¾•”•ª‚ð•`‰æ
 	for (int i = 0; i < MAX_ENEMY; ++i) {
 		g_model.Draw(pDC, g_enemy[i].m_mtxWorld, eOpacityOnly);
