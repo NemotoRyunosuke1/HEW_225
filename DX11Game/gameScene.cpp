@@ -124,7 +124,7 @@ void GameScene::Update()
 	if (GetAsyncKeyState(VK_RETURN) & 0x8000)
 	{
 
-		StartFadeOut(SCENE_TITLE);
+		StartFadeOut(SCENE_RESULT);
 	}
 
 #if _DEBUG

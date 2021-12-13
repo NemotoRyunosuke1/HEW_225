@@ -79,6 +79,7 @@ HRESULT InitModel(void)
 	g_nShadow = CreateShadow(g_posModel, 12.0f);
 
 	
+	//風の移動量？の初期化？
 	bWind = false;
 	for (int i = 0; i < 10; i++) {
 		bWind1[i] = false;
@@ -124,16 +125,15 @@ void UpdateModel(void)
 
 	for (int i = 0; i < 10; i++)
 	{
+		//使用していなかったらスキップ
 		if (!bWind1[i])
 		{
-			
 			continue;
 		}
 
 		// 風に乗ったときの処理
 		if (bWind1[i])
 		{
-
 			g_accModel.x  += 0.8f * WindVec[i].x;
 			g_accModel.y  += 0.8f * WindVec[i].y;
 			g_accModel.z  += 0.8f * WindVec[i].z;
