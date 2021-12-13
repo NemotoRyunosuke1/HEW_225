@@ -1,10 +1,11 @@
 //=============================================================================
 //
 // ステージセレクトシーン処理 [stageselectScene.cpp]
-// Author : RYUNOSUKE NEMOTO
+// Author : 根本龍之介
 //
 //=============================================================================
 #include "stageSelectScene.h"
+#include "debugproc.h"
 
 //=============================================================================
 // コンストラクタ
@@ -26,6 +27,19 @@ StageSlectScene::~StageSlectScene()
 void StageSlectScene::Update()
 {
 
+
+	//次のシーンへ移る条件
+	if (GetAsyncKeyState(VK_RETURN) & 0x8000)
+	{
+
+	
+	}
+
+#if _DEBUG
+	// デバック用文字列
+	PrintDebugProc("****** StageSelectScene ******\n");
+	PrintDebugProc("\n");
+#endif
 }
 //=============================================================================
 // 描画処理

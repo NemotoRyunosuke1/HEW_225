@@ -1,11 +1,12 @@
 #pragma once
 
-#include "main.h"
+
 #include "fade.h"
+#include "sceneBase.h"
 #include "titleScene.h"
 #include "gameScene.h"
-#include "sceneBase.h"
 #include "stageSelectScene.h"
+#include "resultScene.h"
 
 class Scene : public SceneBase
 {
@@ -22,5 +23,6 @@ private:
 	static TitleScene* m_pTitleScene;
 	static GameScene* m_pGameScene;
 	static StageSlectScene* m_pStageSelectScene;
+	static ResultScene* m_pResultScene;
 };
 

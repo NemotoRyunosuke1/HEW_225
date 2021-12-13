@@ -1,12 +1,8 @@
 #include "wind.h"
-
+#include "debugproc.h"
 #define MODEL_PLANE			"data/model/box1.fbx"
 
-static float i = 0;
-XMFLOAT3 Wind::m_pos;
-XMFLOAT3 Wind::m_size;
-XMFLOAT3 Wind::m_rot;
-bool Wind::m_use;
+
 
 Wind::Wind()
 {
@@ -16,8 +12,6 @@ Wind::Wind()
 	m_vec  = XMFLOAT3(0.0f,1.0f,0.0f);	// 向き
 
 	m_use  = false;
-
-
 
 	ID3D11Device* pDevice = GetDevice();
 	ID3D11DeviceContext* pDeviceContext = GetDeviceContext();
@@ -59,7 +53,13 @@ void Wind::Update()
 	// ワールドマトリックス設定
 	XMStoreFloat4x4(&m_mtxWorld, mtxWorld);
 
+#if _DEBUG
 	
+	// デバック用文字列
+	//PrintDebugProc("[ｶｾﾞ ｲﾁ : (%f : %f : %f)]\n", m_pos.x, m_pos.y, m_pos.z);
+	//PrintDebugProc("[ｶｾﾞｻｲｽﾞ : (%f : %f : %f)]\n", m_size.x, m_size.y, m_size.z);
+	
+#endif
 }
 void Wind::Draw()
 {

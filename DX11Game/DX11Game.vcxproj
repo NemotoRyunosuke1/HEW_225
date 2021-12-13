@@ -160,14 +160,13 @@
   <ItemGroup>
     <ClCompile Include="AssimpModel.cpp" />
     <ClCompile Include="bg.cpp" />
-    <ClCompile Include="bullet.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="crew.cpp" />
     <ClCompile Include="debugproc.cpp" />
     <ClCompile Include="enemy.cpp" />
-    <ClCompile Include="explosion.cpp" />
     <ClCompile Include="fade.cpp" />
     <ClCompile Include="gameScene.cpp" />
+    <ClCompile Include="goal.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="main.cpp" />
@@ -177,6 +176,7 @@
     <ClCompile Include="object.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="polygon.cpp" />
+    <ClCompile Include="resultScene.cpp" />
     <ClCompile Include="scene.cpp" />
     <ClCompile Include="sceneBase.cpp" />
     <ClCompile Include="Shader.cpp" />
@@ -185,21 +185,20 @@
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="titleBG.cpp" />
     <ClCompile Include="titleScene.cpp" />
-    <ClCompile Include="tree.cpp" />
+    <ClCompile Include="UI.cpp" />
     <ClCompile Include="wind.cpp" />
     <ClCompile Include="windManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AssimpModel.h" />
     <ClInclude Include="bg.h" />
-    <ClInclude Include="bullet.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="crew.h" />
     <ClInclude Include="debugproc.h" />
     <ClInclude Include="enemy.h" />
-    <ClInclude Include="explosion.h" />
     <ClInclude Include="fade.h" />
     <ClInclude Include="gameScene.h" />
+    <ClInclude Include="goal.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="main.h" />
@@ -210,6 +209,7 @@
     <ClInclude Include="player.h" />
     <ClInclude Include="polygon.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="resultScene.h" />
     <ClInclude Include="scene.h" />
     <ClInclude Include="sceneBase.h" />
     <ClInclude Include="Shader.h" />
@@ -218,7 +218,7 @@
     <ClInclude Include="Texture.h" />
     <ClInclude Include="titleBG.h" />
     <ClInclude Include="titleScene.h" />
-    <ClInclude Include="tree.h" />
+    <ClInclude Include="UI.h" />
     <ClInclude Include="wind.h" />
     <ClInclude Include="windManager.h" />
   </ItemGroup>
