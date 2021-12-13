@@ -20,8 +20,8 @@ TitleBG::TitleBG()
 	ID3D11Device* pDevice = GetDevice();
 
 	// 変数初期化
-	m_pos = { 0,0 };
-	m_size = { SCREEN_WIDTH,SCREEN_HEIGHT };
+	m_pos = XMFLOAT3(0.0f,0.0f,0.0f);
+	m_size = XMFLOAT3(SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f);
 
 	// テクスチャ読込
 	CreateTextureFromFile(pDevice, PATH_TITLE_BGTEXTURE, &m_pTexture);

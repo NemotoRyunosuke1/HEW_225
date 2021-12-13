@@ -1,7 +1,7 @@
 //=============================================================================
 //
-// ゲームシーン処理 [gameScene.cpp]
-// Author : FUJISAKI YUSUKE
+// タイトルシーン処理 [titleScene.cpp]
+// Author : 
 //
 //=============================================================================
 #include "scene.h"
@@ -56,9 +56,16 @@ void TitleScene::Update()
 		StartFadeOut(SCENE_GAME);
 	}
 	
+
+#if _DEBUG
 	//デバック用文字列
 	PrintDebugProc("****** TitleScene ******\n");
 	PrintDebugProc("\n");
+
+#else 
+
+#endif
+	
 }
 //=============================================================================
 // 描画処理

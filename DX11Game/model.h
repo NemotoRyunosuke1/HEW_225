@@ -19,3 +19,6 @@ void DrawModel(void);
 XMFLOAT3& GetModelPos();
 int GetModelRotX();
 XMFLOAT3& GetModelRot();
+XMFLOAT3& GetModelCollisionSize();
+void SetWindCollision(bool );
+void SetModelWindCollision(bool ,int ,XMFLOAT3 vec);
