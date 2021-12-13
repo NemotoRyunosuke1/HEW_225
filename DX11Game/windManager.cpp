@@ -12,7 +12,6 @@ WindManager::WindManager()
 
 		//m_pWind->Create();
 	}
-	
 }
 WindManager::~WindManager()
 {
