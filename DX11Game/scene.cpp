@@ -15,7 +15,7 @@ EScene Scene::m_eScene;
 TitleScene* Scene::m_pTitleScene;
 GameScene* Scene::m_pGameScene;
 StageSlectScene* Scene::m_pStageSelectScene;
-
+ResultScene* Scene::m_pResultScene;
 
 //=============================================================================
 // コンストラクタ
@@ -36,16 +36,20 @@ Scene::Scene()
 	{
 	case SCENE_TITLE:
 		m_pTitleScene = new TitleScene;
+		break;
 
-		break;
 	case SCENE_STAGE_SELECT:
+		m_pStageSelectScene = new StageSlectScene;
 		break;
+
 	case SCENE_GAME:
 		m_pGameScene = new GameScene;
+		break;
 
-		break;
 	case SCENE_RESULT:
+		m_pResultScene = new ResultScene;
 		break;
+
 	case MAX_SCENE:
 		break;
 	default:
@@ -65,18 +69,23 @@ Scene::~Scene()
 	{
 	case SCENE_TITLE:
 		delete m_pTitleScene;
+		break;
 
-		break;
 	case SCENE_STAGE_SELECT:
+		delete m_pStageSelectScene;
 		break;
+
 	case SCENE_GAME:
 		delete m_pGameScene;
+		break;
 
-		break;
 	case SCENE_RESULT:
+		delete m_pResultScene;
 		break;
+
 	case MAX_SCENE:
 		break;
+
 	default:
 		break;
 	}
@@ -94,16 +103,20 @@ void Scene::Update()
 	{
 	case SCENE_TITLE:
 		m_pTitleScene->Update();
+		break;
 
-		break;
 	case SCENE_STAGE_SELECT:
+		m_pStageSelectScene->Update();
 		break;
+
 	case SCENE_GAME:
 		m_pGameScene->Update();
+		break;
 
-		break;
 	case SCENE_RESULT:
+		m_pResultScene->Update();
 		break;
+
 	case MAX_SCENE:
 		break;
 	default:
@@ -123,16 +136,20 @@ void Scene::Draw()
 	{
 	case SCENE_TITLE:
 		m_pTitleScene->Draw();
-		
 		break;
+
 	case SCENE_STAGE_SELECT:
+		m_pResultScene->Draw();
 		break;
+
 	case SCENE_GAME:
-		m_pGameScene->Draw();
-		
+		m_pGameScene->Draw();	
 		break;
+
 	case SCENE_RESULT:
+		m_pResultScene->Draw();
 		break;
+
 	case MAX_SCENE:
 		break;
 	default:
@@ -160,15 +177,19 @@ void Scene::SetScene(EScene eScene)
 	case SCENE_TITLE://タイトルシーン
 		delete m_pTitleScene;
 		break;
-	case SCENE_STAGE_SELECT://メニューシーン
 
+	case SCENE_STAGE_SELECT://メニューシーン
+		delete m_pStageSelectScene;
 		break;
+
 	case SCENE_GAME://ゲームシーン
 		delete m_pGameScene;
 		break;
-	case SCENE_RESULT://リザルトシーン
 
+	case SCENE_RESULT://リザルトシーン
+		delete m_pResultScene;
 		break;
+
 	case MAX_SCENE:
 		break;
 	default:
@@ -184,17 +205,22 @@ void Scene::SetScene(EScene eScene)
 	case SCENE_TITLE://タイトルシーン
 		m_pTitleScene = new TitleScene;
 		break;
-	case SCENE_STAGE_SELECT://メニューシーン
 
+	case SCENE_STAGE_SELECT://メニューシーン
+		m_pStageSelectScene = new StageSlectScene;
 		break;
+
 	case SCENE_GAME://ゲームシーン
 		m_pGameScene = new GameScene;
 		break;
-	case SCENE_RESULT://リザルトシーン
 
+	case SCENE_RESULT://リザルトシーン
+		m_pResultScene = new ResultScene;
 		break;
+
 	case MAX_SCENE:
 		break;
+
 	default:
 		break;
 	}
