@@ -105,7 +105,8 @@ void UpdateEnemy(void)
 {
 	XMMATRIX mtxWorld, mtxRot, mtxTranslate;
 
-	for (int i = 0; i < MAX_ENEMY; ++i) {
+	for (int i = 0; i < MAX_ENEMY; ++i)
+	{
 		// ˆÚ“®
 		g_enemy[i].m_pos.x += g_enemy[i].m_move.x;
 		g_enemy[i].m_pos.y += g_enemy[i].m_move.y;
@@ -192,7 +193,7 @@ void UpdateEnemy(void)
 		// ŠÛ‰e‚ÌˆÚ“®
 		MoveShadow(g_enemy[i].m_nShadow, g_enemy[i].m_pos);
 	}
-
+}
 	// “G‚Æ‚Ì“–‚½‚è”»’è
 	struct ENEMY
 	{
@@ -230,10 +231,10 @@ void UpdateEnemy(void)
 		}
 	};
 
-	//=============================================================================
-	//•`‰æˆ—
-	//=============================================================================
-	void DrawEnemy(void)
+//=============================================================================
+// •`‰æˆ—
+//=============================================================================
+	void DrawEnemy (void)
 	{
 		ID3D11DeviceContext* pDC = GetDeviceContext();
 
@@ -254,12 +255,11 @@ void UpdateEnemy(void)
 
 	int StartChase()
 	{
-		for (int = 0; i < MAX_ENEMY; ++i)
+		for (int i = 0; i < MAX_ENEMY; ++i)
 		{
 			g_enemy[i].m_pos = GetModelPos();
 			g_enemy[i].m_rotDest = GetModelPos();
 			return i;
-
 		}
 		return 0;
 	}
