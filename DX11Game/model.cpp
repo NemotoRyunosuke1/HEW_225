@@ -49,6 +49,8 @@ static XMFLOAT3		g_sclModel;
 static int			g_nShadow;		// 丸影番号
 
 static bool bWind;
+static bool bWind1[10];
+static XMFLOAT3 WindVec[10];
 
 //=============================================================================
 // 初期化処理
@@ -76,9 +78,12 @@ HRESULT InitModel(void)
 	// 丸影の生成
 	g_nShadow = CreateShadow(g_posModel, 12.0f);
 
-
+	
 	bWind = false;
-
+	for (int i = 0; i < 10; i++) {
+		bWind1[i] = false;
+		WindVec[i] = XMFLOAT3(0.0f,0.0f,0.0f);
+	}
 	return hr;
 }
 
@@ -117,15 +122,38 @@ void UpdateModel(void)
 	// 機体の傾きリセット
 	g_rotDestModel.z = 0;  
 
+	for (int i = 0; i < 10; i++)
+	{
+		if (!bWind1[i])
+		{
+			
+			continue;
+		}
+
+		// 風に乗ったときの処理
+		if (bWind1[i])
+		{
+
+			g_accModel.x  += 0.8f * WindVec[i].x;
+			g_accModel.y  += 0.8f * WindVec[i].y;
+			g_accModel.z  += 0.8f * WindVec[i].z;
+			g_rotDestModel.x = 90 * WindVec[i].y;
+			//g_rotDestModel.y = 90 * WindVec[i].x;
+			//g_rotDestModel.y = 90 * WindVec[i].z;
+			bWind = true;
+		}
+	}
+	
+
 	// キー旋回
-	if (GetKeyPress(VK_LEFT )|| GetKeyPress(VK_A) )
+	if ((GetKeyPress(VK_LEFT )|| GetKeyPress(VK_A))&& !bWind )
 	{	
 		// 機体のロール
 		g_rotDestModel.z = -30.0f;
 		g_rotDestModel.y -=  2.0f;
 		
 	}
-	else if (GetKeyPress(VK_RIGHT) || GetKeyPress(VK_D) )
+	else if ((GetKeyPress(VK_RIGHT) || GetKeyPress(VK_D)) && !bWind)
 	{
 		// 機体のロール
 		g_rotDestModel.z = 30.0f;
@@ -133,9 +161,10 @@ void UpdateModel(void)
 	
 	} 
 	
-	// 左アナログスティック旋回
+	
 	if (GetJoyCount() > 0)
 	{
+		// 左アナログスティック旋回
 		g_rotDestModel.y +=  1.0f * stickX / 20000;
 		g_rotDestModel.z += 30.0f * stickX / 20000;
 		//g_rotDestModel.x += 30.0f * state.Gamepad.sThumbLY / 10000;	// 機体の傾き
@@ -143,6 +172,19 @@ void UpdateModel(void)
 		{
 
 			g_rotDestModel.y += 1.0f * stickX / 8000;
+		}
+		// ゲームパッド
+	 // 下降
+		if (stickY < 0 && !bWind)
+		{
+			//g_rotDestModel.x = 30;
+			g_rotDestModel.x = 5 * stickY / 5000;	// 機体の傾き
+		}
+		// 上昇
+		if (stickY > 0 && !bWind)
+		{
+			//g_rotDestModel.x = -30;
+			g_rotDestModel.x = 5 * stickY / 8000;	 // 機体の傾き
 		}
 	}
 	
@@ -161,21 +203,24 @@ void UpdateModel(void)
 		g_accModel.x += 3;
 		g_accModel.y += 3;
 		g_accModel.z += 3;
-
+		//g_rotDestModel.y += 1.0f;// *g_rotDestModel.y / 10;
 	}
+
+	
 
 	// 加速度の減少
 	if (g_accModel.z > 1)
 	{
 		g_accModel.z -= 0.01f;
-		if (g_accModel.z < 1)
+		if (g_accModel.z <= 1)
 		{
+			bWind = false;
 			g_accModel.z = 1;
 		}
 	}
 	if (g_accModel.y > 1)
 	{
-		g_accModel.y -= 0.31f;
+		g_accModel.y -= 0.71f;
 		if (g_accModel.y < 1)
 		{
 			bWind = false;
@@ -187,6 +232,7 @@ void UpdateModel(void)
 		g_accModel.x -= 0.01f;
 		if (g_accModel.x < 1)
 		{
+			bWind = false;
 			g_accModel.x = 1;
 		}
 	}
@@ -243,23 +289,11 @@ void UpdateModel(void)
 		}
 	}
 
-	// ゲームパッド
-	// 上昇
-	if (stickY < 0 && !bWind)
-	{
-		//g_rotDestModel.x = 30;
-		g_rotDestModel.x = 10 * stickY / 8000;	// 機体の傾き
-	}
-	// 下降
-	if (stickY > 0 && !bWind)
-	{
-		//g_rotDestModel.x = -30;
-		g_rotDestModel.x = 10 * stickY / 5000;	 // 機体の傾き
-	}
+	
 
 	// キーボード
 	// 上昇
-	if (GetKeyPress(VK_DOWN) || GetKeyPress(VK_S))
+	if ((GetKeyPress(VK_DOWN) || GetKeyPress(VK_S) ) && !bWind)
 	{
 		// 前移動
 		g_rotDestModel.x = 30;
@@ -270,7 +304,7 @@ void UpdateModel(void)
 		
 	}
 	// 下降
-	if (GetKeyPress(VK_UP) || GetKeyPress(VK_W))
+	if ((GetKeyPress(VK_UP) || GetKeyPress(VK_W) ) && !bWind)
 	{
 		// 前移動
 		g_rotDestModel.x = -50;
@@ -345,14 +379,15 @@ void UpdateModel(void)
 	//	g_posModel.y + g_collisionSize.y / 2 > windPos.y - windSise.y / 2 && g_posModel.y - g_collisionSize.y / 2 < windPos.y + windSise.y / 2 &&
 	//	g_posModel.z + g_collisionSize.y / 2 > windPos.z - windSise.z / 2 && g_posModel.z - g_collisionSize.y / 2 < windPos.z + windSise.z / 2 && 
 	//	windUse)
-	 if(bWind)
-	{
-		g_accModel.x = 1;
-		g_accModel.y += 0.5f;
-		g_accModel.z = 1;
-		g_rotDestModel.x = 90;
-		
-	}
+	
+	///* if(bWind)
+	//{
+	//	g_accModel.x = 0;
+	//	g_accModel.y += 0.8f;
+	//	g_accModel.z = 0;
+	//	g_rotDestModel.x = 90;
+	//	
+	//}*/
 	
 	// 位置移動
 	g_posModel.x += g_moveModel.x;
@@ -427,7 +462,7 @@ void UpdateModel(void)
 	// デバック用文字列
 	PrintDebugProc("[ﾋｺｳｷ ｲﾁ : (%f : %f : %f)]\n", g_posModel.x, g_posModel.y, g_posModel.z);
 	PrintDebugProc("[ﾓﾃﾞﾙﾑｷ : (%f : %f : %f)]\n", g_rotDestModel.x, g_posModel.y, g_posModel.z);
-	PrintDebugProc("[ﾓﾃﾞﾙｶｿｸ : (%d : %f : %f)]\n",g_accModel.x, g_accModel.y, g_accModel.z);
+	PrintDebugProc("[ﾓﾃﾞﾙｶｿｸ : (%d : %f : %f)]\n",g_accModel.x, WindVec[1].y, g_accModel.z);
 	//PrintDebugProc("\n");
 	PrintDebugProc("*** ﾋｺｳｷ ｿｳｻ ***\n");
 	PrintDebugProc("ﾏｴ   ｲﾄﾞｳ : \x1e\n");//↑
@@ -493,6 +528,12 @@ XMFLOAT3& GetModelCollisionSize()
 	return g_collisionSize;
 }
 void SetWindCollision(bool flg)
-{
+{																		 
 	bWind = flg;
+}
+void SetModelWindCollision(bool flg, int i,XMFLOAT3 vec)
+{
+	bWind1[i] = flg;
+	WindVec[i] = vec;
+
 }

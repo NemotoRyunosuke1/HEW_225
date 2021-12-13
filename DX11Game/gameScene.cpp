@@ -97,8 +97,8 @@ void GameScene::Update()
 #if _DEBUG
 
 		// デバック用文字列
-		PrintDebugProc("[ｶｾﾞ ｲﾁ [%d]: (%f : %f : %f)]\n", i, m_pWindManager->GetPos(i).x, m_pWindManager->GetPos(i).y, m_pWindManager->GetPos(i).z);
-		PrintDebugProc("[ｶｾﾞｻｲｽﾞ [%d]: (%f : %f : %f)]\n", i, m_pWindManager->GetSize(i).x, m_pWindManager->GetSize(i).y, m_pWindManager->GetSize(i).z);
+		//PrintDebugProc("[ｶｾﾞ ｲﾁ  [%d]: (%f : %f : %f)]\n", i, m_pWindManager->GetPos(i).x, m_pWindManager->GetPos(i).y, m_pWindManager->GetPos(i).z);
+		//PrintDebugProc("[ｶｾﾞｻｲｽﾞ [%d]: (%f : %f : %f)]\n", i, m_pWindManager->GetSize(i).x, m_pWindManager->GetSize(i).y, m_pWindManager->GetSize(i).z);
 
 #endif
 
@@ -108,14 +108,18 @@ void GameScene::Update()
 			)
 		{
 			SetWindCollision(true);
+			SetModelWindCollision(true, i,m_pWindManager->GetVec(i));
 		}
 		else
 		{
-			SetWindCollision(false);
+			SetModelWindCollision(false, i,XMFLOAT3(1.0f,1.0f,1.0f));
 		}
 
+	
 
 	}
+
+	
 
 	//次のシーンへ移る条件
 	if (GetAsyncKeyState(VK_RETURN) & 0x8000)
