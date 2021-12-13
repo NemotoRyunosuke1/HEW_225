@@ -11,7 +11,7 @@
 #include "AssimpModel.h"
 #include "debugproc.h"
 #include "shadow.h"
-
+#include "Light.h"
 
 //#include <dinputd.h>
 
@@ -22,14 +22,13 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-//#define MODEL_PLANE			"data/model/airplane000.fbx"
 #define MODEL_PLANE			"data/model/mukudori1.fbx"
-//#define MODEL_PLANE			"data/model/Totoro.fbx"
 
-#define	VALUE_MOVE_MODEL	(0.50f)		// 移動速g_sclModel度
+
+#define	VALUE_MOVE_MODEL	(0.50f)		// 移動速度
 #define	RATE_MOVE_MODEL		(0.20f)		// 移動慣性係数
 #define	VALUE_ROTATE_MODEL	(9.0f)		// 回転速度
-#define	RATE_ROTATE_MODEL	(0.20f)		// 回転慣性係数
+#define	RATE_ROTATE_MODEL	(0.08f)		// 回転慣性係数
 
 //*****************************************************************************
 // グローバル変数
@@ -46,6 +45,8 @@ static XMFLOAT3		g_collisionSize;	// 当たり判定サイズ
 static XMFLOAT4X4	g_mtxWorld;		// ワールドマトリックス
 static XMFLOAT3		g_sclModel;
 static int			g_nShadow;		// 丸影番号
+
+static CLight g_light;
 
 static bool bWind;
 static bool bWind1[10];
@@ -105,7 +106,7 @@ void UpdateModel(void)
 {
 	
 
-	GetJoyState(0);
+	
 	LONG stickX = GetJoyLX(0);
 	LONG stickY = GetJoyLY(0);
 
