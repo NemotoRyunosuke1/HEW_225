@@ -1,6 +1,7 @@
 #pragma once
 
 #include "sceneBase.h"
+#include "fade.h"
 
 class ResultScene :public SceneBase
 {
