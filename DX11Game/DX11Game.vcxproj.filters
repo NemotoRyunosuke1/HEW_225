@@ -153,8 +153,11 @@
     <ClCompile Include="UI.cpp">
       <Filter>ソース ファイル\scene\system</Filter>
     </ClCompile>
-    <ClCompile Include="titleUI.cpp">
-      <Filter>ソース ファイル\scene\titleScene</Filter>
+    <ClCompile Include="staminaBar.cpp">
+      <Filter>ソース ファイル\scene\gameScene\player</Filter>
+    </ClCompile>
+    <ClCompile Include="collision.cpp">
+      <Filter>ソース ファイル\scene\gameScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -251,8 +254,11 @@
     <ClInclude Include="UI.h">
       <Filter>ヘッダー ファイル\scene\system</Filter>
     </ClInclude>
-    <ClInclude Include="titleUI.h">
-      <Filter>ヘッダー ファイル\scene\titleScene</Filter>
+    <ClInclude Include="staminaBar.h">
+      <Filter>ヘッダー ファイル\scene\gameScene\player</Filter>
+    </ClInclude>
+    <ClInclude Include="collision.h">
+      <Filter>ヘッダー ファイル\scene\gameScene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

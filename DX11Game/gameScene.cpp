@@ -40,6 +40,9 @@ GameScene::GameScene()
 
 	// ゴール初期化
 	m_pGoal = new Goal;
+
+	// スタミナゲージ初期化
+	m_pStaminaBar = new StaminaBar;
 }
 
 //=============================================================================
@@ -67,6 +70,9 @@ GameScene::~GameScene()
 
 	// ゴール終了
 	delete m_pGoal;
+
+	// スタミナゲージ終了
+	delete m_pStaminaBar;
 }
 
 //=============================================================================
@@ -82,6 +88,9 @@ void GameScene::Update()
 
 	// モデル更新
 	UpdateModel();
+
+	// スタミナゲージ更新
+	m_pStaminaBar->SetSTM(GetSTM());
 
 	// 丸影更新
 	UpdateShadow();
@@ -134,7 +143,7 @@ void GameScene::Update()
 	if (GetAsyncKeyState(VK_RETURN) & 0x8000)
 	{
 
-		StartFadeOut(SCENE_TITLE);
+		StartFadeOut(SCENE_RESULT);
 	}
 
 #if _DEBUG
@@ -182,5 +191,5 @@ void GameScene::Draw()
 	// Zバッファ無効(Zチェック無&Z更新無)
 	SetZBuffer(false);
 
-	
+	m_pStaminaBar->Draw();
 }

@@ -161,6 +161,7 @@
     <ClCompile Include="AssimpModel.cpp" />
     <ClCompile Include="bg.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="collision.cpp" />
     <ClCompile Include="crew.cpp" />
     <ClCompile Include="debugproc.cpp" />
     <ClCompile Include="enemy.cpp" />
@@ -182,6 +183,7 @@
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="shadow.cpp" />
     <ClCompile Include="stageSelectScene.cpp" />
+    <ClCompile Include="staminaBar.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="titleBG.cpp" />
     <ClCompile Include="titleScene.cpp" />
@@ -194,6 +196,7 @@
     <ClInclude Include="AssimpModel.h" />
     <ClInclude Include="bg.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="collision.h" />
     <ClInclude Include="crew.h" />
     <ClInclude Include="debugproc.h" />
     <ClInclude Include="enemy.h" />
@@ -216,6 +219,7 @@
     <ClInclude Include="Shader.h" />
     <ClInclude Include="shadow.h" />
     <ClInclude Include="stageSelectScene.h" />
+    <ClInclude Include="staminaBar.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="titleBG.h" />
     <ClInclude Include="titleScene.h" />

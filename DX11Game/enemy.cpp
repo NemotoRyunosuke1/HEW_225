@@ -249,7 +249,7 @@ void UpdateEnemy(void)
 		// çXêV
 		void Update(const D3DXVECTOR3& actorPosition)
 		{
-			D3DXVECTOR3 diff = actorPosition - actor01dPos;
+			D3DXVECTOR3 diff = actorPosition;// -actor01dPos;
 			min.x += diff.x;
 			max.y += diff.y;
 			actor01dPos = actorPosition;
