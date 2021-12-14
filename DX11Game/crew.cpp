@@ -10,6 +10,7 @@
 #include "debugproc.h"
 #include "shadow.h"
 #include "model.h"
+#include "collision.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -21,8 +22,8 @@
 #define	VALUE_ROTATE_CREW	(7.0f)		// 回転速度
 #define	RATE_ROTATE_CREW	(0.20f)		// 回転慣性係数
 
-#define MAX_CREW			(50)		// 味方最大数
-#define	CREW_RADIUS		    (50.0f)		// 境界球半径
+#define MAX_CREW			(100)		// 味方最大数
+#define	CREW_RADIUS		    (100.0f)	// 境界球半径
 
 //*****************************************************************************
 // 構造体定義
@@ -61,9 +62,9 @@ HRESULT InitCrew(void)
 
 	for (int i = 0; i < MAX_CREW; ++i) {
 		// 位置・回転・スケールの初期設定
-		g_crew[i].m_pos = XMFLOAT3(rand() % 620 - 310.0f,
-			20.0f,
-			rand() % 620 - 310.0f);
+		g_crew[i].m_pos = XMFLOAT3(rand() % 12800 - 6400.0f,
+			rand() % 1000 + 500.0f,
+			rand() % 12800 - 6400.0f);
 		g_crew[i].m_rot = XMFLOAT3(0.0f, rand() % 360 - 180.0f, 0.0f);
 		g_crew[i].m_rotDest = g_crew[i].m_rot;
 		g_crew[i].m_move = XMFLOAT3(
@@ -99,35 +100,39 @@ void UpdateCrew(void)
 {
 	XMMATRIX mtxWorld, mtxRot, mtxTranslate;
 
+	XMFLOAT3 g_modelPos = GetModelPos();
+
 	for (int i = 0; i < MAX_CREW; ++i) {
 		// 移動
+		StartChase(i,g_modelPos,200.0f);
+
 		g_crew[i].m_pos.x += g_crew[i].m_move.x;
 		g_crew[i].m_pos.y += g_crew[i].m_move.y;
 		g_crew[i].m_pos.z += g_crew[i].m_move.z;
 
 		// 壁にぶつかった
 		bool lr = false, fb = false;
-		if (g_crew[i].m_pos.x < -310.0f) {
-			g_crew[i].m_pos.x = -310.0f;
+		if (g_crew[i].m_pos.x < -6400.0f) {
+			g_crew[i].m_pos.x = -6400.0f;
 			lr = true;
 		}
-		if (g_crew[i].m_pos.x > 310.0f) {
-			g_crew[i].m_pos.x = 310.0f;
+		if (g_crew[i].m_pos.x > 6400.0f) {
+			g_crew[i].m_pos.x = 6400.0f;
 			lr = true;
 		}
-		if (g_crew[i].m_pos.z < -310.0f) {
-			g_crew[i].m_pos.z = -310.0f;
+		if (g_crew[i].m_pos.z < -6400.0f) {
+			g_crew[i].m_pos.z = -6400.0f;
 			fb = true;
 		}
-		if (g_crew[i].m_pos.z > 310.0f) {
-			g_crew[i].m_pos.z = 310.0f;
+		if (g_crew[i].m_pos.z > 6400.0f) {
+			g_crew[i].m_pos.z = 6400.0f;
 			fb = true;
 		}
 		if (g_crew[i].m_pos.y < 0.0f) {
 			g_crew[i].m_pos.y = 0.0f;
 		}
-		if (g_crew[i].m_pos.y > 80.0f) {
-			g_crew[i].m_pos.y = 80.0f;
+		if (g_crew[i].m_pos.y > 6400.0f) {
+			g_crew[i].m_pos.y = 6400.0f;
 		}
 		if (fabsf(g_crew[i].m_rot.y - g_crew[i].m_rotDest.y) < 0.0001f) {
 			if (lr) {
@@ -140,8 +145,10 @@ void UpdateCrew(void)
 				g_crew[i].m_rotDest.y = XMConvertToDegrees(atan2f(-g_crew[i].m_move.x, -g_crew[i].m_move.z));
 			}
 		}
-
-		// 目的の角度までの差分
+		//if (CollisionCrew(GetModelPos(), CREW_RADIUS)) {
+		//	
+		//	continue;
+		//}		// 目的の角度までの差分
 		float fDiffRotY = g_crew[i].m_rotDest.y - g_crew[i].m_rot.y;
 		if (fDiffRotY >= 180.0f) {
 			fDiffRotY -= 360.0f;
@@ -185,8 +192,6 @@ void UpdateCrew(void)
 
 		// 丸影の移動
 		MoveShadow(g_crew[i].m_nShadow, g_crew[i].m_pos);
-
-		StartChase();
 	}
 }
 
@@ -212,13 +217,16 @@ void DrawCrew(void)
 	}
 }
 
-int StartChase()
+int StartChase(int i, XMFLOAT3 pos, float radius)
 {
-	for (int i = 0; i < MAX_CREW; ++i)
+	XMFLOAT3 g_modelPos = GetModelPos();
+	
+	bool hit = CollisionSphere(g_crew[i].m_pos, CREW_RADIUS, pos, radius);
+	if (hit)
 	{
-		g_crew[i].m_pos = GetModelPos();
-		g_crew[i].m_rotDest = GetModelPos();
-		return i;
+		g_crew[i].m_pos.x = g_modelPos.x;// + rand() % 20 - 10.0f;
+		g_crew[i].m_pos.y = g_modelPos.y;// + rand() % 20 - 10.0f;
+		g_crew[i].m_pos.z = g_modelPos.z;// + rand() % 20 - 10.0f;
 	}
-	return 0;
+	return i,hit;
 }
