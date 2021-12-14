@@ -253,7 +253,7 @@ void UpdateEnemy(void)
 		}
 	}
 
-	int StartChase()
+	int EnemyStartChase()
 	{
 		for (int i = 0; i < MAX_ENEMY; ++i)
 		{
