@@ -12,6 +12,7 @@
 #include "model.h"
 #include "shadow.h"
 #include "crew.h"
+#include "enemy.h"
 
 
 //=============================================================================
@@ -31,11 +32,17 @@ GameScene::GameScene()
 	// 味方初期化
 	InitCrew();
 
+	// 敵初期化
+	InitEnemy();
+
 	// 風マネージャー初期化
 	m_pWindManager = new WindManager;
 
 	// ゴール初期化
 	m_pGoal = new Goal;
+
+	// スタミナゲージ初期化
+	m_pStaminaBar = new StaminaBar;
 }
 
 //=============================================================================
@@ -55,11 +62,17 @@ GameScene::~GameScene()
 	// 味方終了処理
 	UninitCrew();
 
+	// 敵終了処理
+	UninitEnemy();
+
 	// 風マネージャー終了
 	delete m_pWindManager;
 
 	// ゴール終了
 	delete m_pGoal;
+
+	// スタミナゲージ終了
+	delete m_pStaminaBar;
 }
 
 //=============================================================================
@@ -76,11 +89,17 @@ void GameScene::Update()
 	// モデル更新
 	UpdateModel();
 
+	// スタミナゲージ更新
+	m_pStaminaBar->SetSTM(GetSTM());
+
 	// 丸影更新
 	UpdateShadow();
 
 	// 味方更新
 	UpdateCrew();
+
+	// 敵更新
+	UpdateEnemy();
 
 	// 風マネージャー更新
 	m_pWindManager->Update();
@@ -124,7 +143,7 @@ void GameScene::Update()
 	if (GetAsyncKeyState(VK_RETURN) & 0x8000)
 	{
 
-		StartFadeOut(SCENE_TITLE);
+		StartFadeOut(SCENE_RESULT);
 	}
 
 #if _DEBUG
@@ -159,6 +178,9 @@ void GameScene::Draw()
 	// 味方描画
 	DrawCrew();
 
+	// 敵描画
+	DrawEnemy();
+
 	// 風マネージャー描画
 	m_pWindManager->Draw();
 
@@ -169,5 +191,5 @@ void GameScene::Draw()
 	// Zバッファ無効(Zチェック無&Z更新無)
 	SetZBuffer(false);
 
-	
+	m_pStaminaBar->Draw();
 }

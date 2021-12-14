@@ -38,6 +38,8 @@ namespace {
 }
 
 CCamera* CCamera::m_pCamera = &g_camera;			// 現在のカメラ
+LONG g_mouseX = GetMousePosition()->x;
+LONG g_mouseY = GetMousePosition()->y;
 
 // コンストラクタ
 CCamera::CCamera()
@@ -76,34 +78,14 @@ void CCamera::Init()
 // 更新
 void CCamera::Update()
 {
-	/*
-	if (GetKeyPress(VK_C)) {
-		// 右旋回
-		m_vDestAngle.y -= VALUE_ROTATE_CAMERA;
-		if (m_vDestAngle.y < -180.0f) {
-			m_vDestAngle.y += 360.0f;
-		}
-	}
-	if (GetKeyPress(VK_Z)) {
-		// 左旋回
-		m_vDestAngle.y += VALUE_ROTATE_CAMERA;
-		if (m_vDestAngle.y >= 180.0f) {
-			m_vDestAngle.y -= 360.0f;
-		}
-	}
-	
-	// カメラの上下視点移動
-	switch (GetModelRotX())
-	{
-	case 0: m_vDestAngle.x = 0;
-		break;
-	case 1: m_vDestAngle.x = -30.0f;
-		break;
-	case -1: m_vDestAngle.x = 30.0f;
-		break;
-	}
-	*/
+	// マウス情報取得
+	LONG mouseX = GetMousePosition()->x;
+	LONG mouseY = GetMousePosition()->y;
 
+	LONG mouseMoveX = mouseX - SCREEN_CENTER_X;
+	LONG mouseMoveY = mouseY - SCREEN_CENTER_Y;
+
+	
 	
 
 	// アナログスティックステート
@@ -113,6 +95,8 @@ void CCamera::Update()
 
 	if (GetJoyCount() > 0)
 	{
+		// コントローラースティック視点移動
+
 		//右ゲームパッドアナログスティックのデッドゾーン処理
 		if ((stickX < STICK_DEAD_ZONE && stickX > -STICK_DEAD_ZONE) &&
 			(stickY < STICK_DEAD_ZONE && stickY > -STICK_DEAD_ZONE))
@@ -137,8 +121,25 @@ void CCamera::Update()
 		}
 
 	}
-	else
+	else	// マウス視点移動
 	{
+		/*if (mouseMoveX == 0 && mouseMoveY == 0)
+		{
+			m_vSrcPos.x = SinDeg(GetModelRot().y) * m_fLengthInterval + CAM_POS_P_X;
+			m_vSrcPos.y = -SinDeg(GetModelRot().x) * m_fLengthInterval + CAM_POS_P_Y;
+			m_vSrcPos.z = CosDeg(GetModelRot().y) * m_fLengthInterval + CAM_POS_P_Z;
+
+		}
+		else
+		{
+			m_vDestAngle.y = mouseX;
+			m_vDestAngle.x = mouseY;
+			m_vSrcPos.x = SinDeg(m_vDestAngle.y) * m_fLengthInterval + CAM_POS_P_X;
+			m_vSrcPos.y = -SinDeg(m_vDestAngle.x) * m_fLengthInterval + CAM_POS_P_Y;
+			m_vSrcPos.z = CosDeg(m_vDestAngle.y) * m_fLengthInterval + CAM_POS_P_Z;
+
+		}
+*/
 		m_vSrcPos.x = SinDeg(GetModelRot().y) * m_fLengthInterval + CAM_POS_P_X;
 		m_vSrcPos.y = -SinDeg(GetModelRot().x) * m_fLengthInterval + CAM_POS_P_Y;
 		m_vSrcPos.z = CosDeg(GetModelRot().y) * m_fLengthInterval + CAM_POS_P_Z;
@@ -220,7 +221,7 @@ void CCamera::Update()
 
 #if _DEBUG
 	// デバック用文字列
-	PrintDebugProc("[ｶﾒﾗ ｲﾁ : (%d)]\n", GetModelRotX());
+	PrintDebugProc("[ｶﾒﾗ ｲﾁ : (%d)(%d)]\n", mouseX,mouseY);
 	PrintDebugProc("[ｶﾒﾗ ｲﾁ : (%f, %f, %f)]\n", m_vAngle.x, m_vAngle.y, m_vAngle.z);
 	PrintDebugProc("[ｶﾒﾗ ｲﾁ : (%f, %f, %f)]\n", stickX, stickY, m_vPos.z);
 	//PrintDebugProc("[ﾁｭｳｼﾃﾝ : (%f, %f, %f)]\n", m_vTarget.x, m_vTarget.y, m_vTarget.z);
