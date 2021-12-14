@@ -416,13 +416,14 @@ void UpdateModel(void)
 
 	// スタミナ
 	g_pStaminaBar->SetSTM(g_stm);
-	if (g_rotModel.x > 0)
+	if (g_rotModel.x > 3)
 	{
 		if(!bWind)
 		g_stm -= 0.1f;
 	}
 	else
 	{
+
 		g_stm += 0.1f;
 		if (g_stm > 100)
 		{
@@ -557,4 +558,8 @@ void SetModelWindCollision(bool flg, int i,XMFLOAT3 vec)
 	bWind1[i] = flg;
 	WindVec[i] = vec;
 
+}
+float GetSTM()
+{
+	return g_stm;
 }
