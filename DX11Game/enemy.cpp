@@ -11,6 +11,7 @@
 #include "shadow.h"
 #include "model.h"
 
+
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
@@ -21,8 +22,17 @@
 #define	VALUE_ROTATE_ENEMY	(7.0f)		// 回転速度
 #define	RATE_ROTATE_ENEMY	(0.20f)		// 回転慣性係数
 
-#define MAX_ENEMY			(10)        // 敵の最大数
 #define ENEMY_RADIUS        (50.0f)     // 境界球半径
+#define ENEMY_SPEED			3.0f
+#define ENEMY_WIDTH			64.0f
+#define ENEMY_HEIGHT		64.0f
+
+#define MAX_ENEMY			(10)        // 敵の最大数
+
+#define COLLISION_WIDH      30.0f
+#define COLLISION_HELIGHT   24.0f
+#define COLLISION_OFFSETX   0.0f
+#define COLLISION_OFFSTY    -8.0f
 
 //*****************************************************************************
 // 構造体定義
@@ -44,11 +54,35 @@ typedef struct D3DXVECTOR3 {
 	FLOAT z;
 } D3DXVECTOR3, *LPD3DXVECTOR3;
 
+struct ANIM_PAT {	// アニメーション データ
+	int nFrame;			// 表示枠No. (-1で終了)
+	int nCount;			// 表示フレーム数
+};
+
+struct ENEMY  // 敵の情報
+{
+	XMFLOAT2 vPos;
+	int      nAnimFrame;
+	int      nFrameCount;
+	int      nAnimPar;
+	int      nDir;
+};
+
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
 static CAssimpModel	g_model;			// モデル
 static TEnemy		g_enemy[MAX_ENEMY];	// 敵の情報
+
+static ANIM_PAT g_animPat[4][5] =
+{
+	{{ 0, 5}, { 1, 2}, { 2, 5}, { 1, 2}, {-1, -1}},
+	{{ 4, 5}, { 5, 2}, { 6, 5}, { 5, 2}, {-1, -1}},
+	{{ 8, 5}, { 9, 2}, {10, 5}, { 9, 2}, {-1, -1}},
+	{{12, 5}, {13, 2}, {14, 5}, {13, 2}, {-1, -1}},
+};
+static ID3D11ShaderResourceView* g_pTexture;
+static int		g_nEnemy;			// 敵現在数
 
 //=============================================================================
 // 初期化処理
@@ -103,6 +137,8 @@ void UninitEnemy(void)
 //=============================================================================
 void UpdateEnemy(void)
 {
+	
+	
 	XMMATRIX mtxWorld, mtxRot, mtxTranslate;
 
 	for (int i = 0; i < MAX_ENEMY; ++i)
@@ -194,6 +230,7 @@ void UpdateEnemy(void)
 		MoveShadow(g_enemy[i].m_nShadow, g_enemy[i].m_pos);
 	}
 }
+	/*
 	// 敵との当たり判定
 	struct ENEMY
 	{
@@ -230,6 +267,19 @@ void UpdateEnemy(void)
 			return true;
 		}
 	};
+	*/
+
+// 当たり判定
+int CollisionEnemy(XMFLOAT2 vCenter,
+	XMFLOAT2 vRect, float fDamage)
+{
+	XMFLOAT2 vEnemyPos;
+	XMFLOAT2 vEnemyRect(COLLISION_WIDH,
+		COLLISION_HELIGHT);
+}
+
+
+
 
 //=============================================================================
 // 描画処理

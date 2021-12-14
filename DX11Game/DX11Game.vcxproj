@@ -185,6 +185,7 @@
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="titleBG.cpp" />
     <ClCompile Include="titleScene.cpp" />
+    <ClCompile Include="titleUI.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="wind.cpp" />
     <ClCompile Include="windManager.cpp" />
@@ -218,6 +219,7 @@
     <ClInclude Include="Texture.h" />
     <ClInclude Include="titleBG.h" />
     <ClInclude Include="titleScene.h" />
+    <ClInclude Include="titleUI.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="wind.h" />
     <ClInclude Include="windManager.h" />
