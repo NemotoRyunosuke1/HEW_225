@@ -31,7 +31,9 @@ void StageSlectScene::Update()
 	//Ÿ‚ÌƒV[ƒ“‚ÖˆÚ‚éğŒ
 	if (GetAsyncKeyState(VK_RETURN) & 0x8000)
 	{
-
+#if _DEBUG
+		StartFadeOut(SCENE_GAME);
+#endif
 	
 	}
 
