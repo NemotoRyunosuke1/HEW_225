@@ -150,7 +150,6 @@ void CCamera::Update()
 	{
 
 	}
-	
 
 	// 目的の角度までの差分
 	float fDiffRotX = m_vDestAngle.x - GetModelRot().x;
@@ -196,8 +195,6 @@ void CCamera::Update()
 		m_vDestAngle.x = -90.0f;
 	}
 
-	
-
 	//m_vSrcPos.x = SinDeg(m_vDestAngle.y) * m_fLengthInterval + CAM_POS_P_X;
 	//m_vSrcPos.y = -SinDeg(m_vDestAngle.x) * m_fLengthInterval + CAM_POS_P_Y;
 	//m_vSrcPos.z = CosDeg(m_vDestAngle.y) * m_fLengthInterval + CAM_POS_P_Z;
@@ -230,8 +227,6 @@ void CCamera::Update()
 	//PrintDebugProc("\n");
 
 #endif // _DEBUG
-
-	
 }
 
 // ビュー/プロジェクション マトリックス更新
