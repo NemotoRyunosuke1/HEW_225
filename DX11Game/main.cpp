@@ -10,16 +10,9 @@
 #include "polygon.h"
 #include "debugproc.h"
 #include "mesh.h"
-#include "meshfield.h"
-#include "model.h"
-#include "shadow.h"
 #include "bg.h"
-#include "enemy.h"
-#include "tree.h"
-#include "bullet.h"
-#include "explosion.h"
 #include "scene.h"
-#include "fade.h"
+
 
 //-------- ライブラリのリンク
 #pragma comment(lib, "winmm")
@@ -30,7 +23,7 @@
 // マクロ定義
 //*****************************************************************************
 #define CLASS_NAME		_T("AppClass")			// ウインドウのクラス名
-#define WINDOW_NAME		_T("ベースプログラム")	// ウインドウのキャプション名
+#define WINDOW_NAME		_T("「ムレキドリ」プロトタイプ")	// ウインドウのキャプション名
 
 //*****************************************************************************
 // プロトタイプ宣言
@@ -498,9 +491,12 @@ void Update(void)
 	// デバッグ文字列表示更新
 	UpdateDebugProc();
 
+#if _DEBUG
 	// デバッグ文字列設定
 	StartDebugProc();
 	PrintDebugProc("FPS:%d\n\n", g_nCountFPS);
+
+#endif
 
 	// シーン更新
 	m_pScene->Update();
