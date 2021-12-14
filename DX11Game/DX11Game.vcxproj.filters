@@ -153,6 +153,9 @@
     <ClCompile Include="UI.cpp">
       <Filter>ソース ファイル\scene\system</Filter>
     </ClCompile>
+    <ClCompile Include="staminaBar.cpp">
+      <Filter>ソース ファイル\scene\gameScene\player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -247,6 +250,9 @@
     </ClInclude>
     <ClInclude Include="UI.h">
       <Filter>ヘッダー ファイル\scene\system</Filter>
+    </ClInclude>
+    <ClInclude Include="staminaBar.h">
+      <Filter>ヘッダー ファイル\scene\gameScene\player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

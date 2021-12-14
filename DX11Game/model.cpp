@@ -12,7 +12,8 @@
 #include "debugproc.h"
 #include "shadow.h"
 #include "Light.h"
-
+#include "fade.h"
+#include "staminaBar.h"
 //#include <dinputd.h>
 
 //#pragma comment(lib,"dinput8.dll")
@@ -27,8 +28,8 @@
 
 #define	VALUE_MOVE_MODEL	(0.50f)		// 移動速度
 #define	RATE_MOVE_MODEL		(0.20f)		// 移動慣性係数
-#define	VALUE_ROTATE_MODEL	(9.0f)		// 回転速度
-#define	RATE_ROTATE_MODEL	(0.08f)		// 回転慣性係数
+#define	VALUE_ROTATE_MODEL	(3.0f)		// 回転速度
+#define	RATE_ROTATE_MODEL	(0.065f)		// 回転慣性係数
 
 //*****************************************************************************
 // グローバル変数
@@ -47,11 +48,12 @@ static XMFLOAT3		g_sclModel;
 static int			g_nShadow;		// 丸影番号
 
 static CLight g_light;
-
+ 
 static bool bWind;
 static bool bWind1[10];
 static XMFLOAT3 WindVec[10];
-
+static StaminaBar *g_pStaminaBar;
+static float g_stm;
 //=============================================================================
 // 初期化処理
 //=============================================================================
@@ -84,6 +86,9 @@ HRESULT InitModel(void)
 		bWind1[i] = false;
 		WindVec[i] = XMFLOAT3(0.0f,0.0f,0.0f);
 	}
+	g_stm = 100;
+	g_pStaminaBar = new StaminaBar;
+	g_pStaminaBar->SetSTM(g_stm);
 	return hr;
 }
 
@@ -94,7 +99,7 @@ void UninitModel(void)
 {
 	// 丸影の解放
 	ReleaseShadow(g_nShadow);
-
+	delete g_pStaminaBar;
 	// モデルの解放
 	g_model.Release();
 }
@@ -104,7 +109,7 @@ void UninitModel(void)
 //=============================================================================
 void UpdateModel(void)
 {
-	
+	 
 
 	
 	LONG stickX = GetJoyLX(0);
@@ -137,10 +142,15 @@ void UpdateModel(void)
 			g_accModel.x  += 0.8f * WindVec[i].x;
 			g_accModel.y  += 0.8f * WindVec[i].y;
 			g_accModel.z  += 0.8f * WindVec[i].z;
-			g_rotDestModel.x = 90 * WindVec[i].y;
+			g_rotDestModel.x += 10 * WindVec[i].y;
 			//g_rotDestModel.y = 90 * WindVec[i].x;
 			//g_rotDestModel.y = 90 * WindVec[i].z;
-			bWind = true;
+			if (g_rotDestModel.x >= 90)
+			{
+				g_rotDestModel.x = 90;
+				bWind = true;
+			}
+			
 		}
 	}
 	
@@ -178,7 +188,7 @@ void UpdateModel(void)
 		if (stickY < 0 && !bWind)
 		{
 			//g_rotDestModel.x = 30;
-			g_rotDestModel.x = 5 * (float)stickY / 5000;	// 機体の傾き
+			g_rotDestModel.x = 5 * (float)stickY / 3000;	// 機体の傾き
 		}
 		// 上昇
 		if (stickY > 0 && !bWind)
@@ -192,7 +202,7 @@ void UpdateModel(void)
 	if (GetJoyRelease(0, JOYSTICKID6))
 	{
 		g_accModel.x += 3;
-		g_accModel.y += 3;
+		g_accModel.y += 6;
 		g_accModel.z += 3;
 		//g_rotDestModel.y += 1.0f * stickX /80 ;
 	}
@@ -251,17 +261,17 @@ void UpdateModel(void)
 	}
 	
 	// 加速度の上限
-	if (g_accModel.y > 4.5f)
+	if (g_accModel.y > 5.5f)
 	{
-		g_accModel.y = 4.5f;
+		g_accModel.y = 5.5f;
 	}
-	if (g_accModel.x > 4.5f)
+	if (g_accModel.x > 5.5f)
 	{
-		g_accModel.x = 4.5f;
+		g_accModel.x = 5.5f;
 	}
-	if (g_accModel.z > 4.5f)
+	if (g_accModel.z > 5.5f)
 	{
-		g_accModel.z = 4.5f;
+		g_accModel.z = 5.5f;
 	}
 
 	// 自動前移動
@@ -369,25 +379,6 @@ void UpdateModel(void)
 	if (g_rotModel.z < -180.0f) {
 		g_rotModel.z += 360.0f;
 	}
-
-	//// 風との当たり判定
-	//for(int i = 0;i < )
-	//XMFLOAT3 windPos = Wind::GetPos();
-	//XMFLOAT3 windSise = Wind::GetSize();
-	//bool windUse = Wind::GetUse();
-	//if (g_posModel.x + g_collisionSize.x / 2 > windPos.x - windSise.x / 2 && g_posModel.x - g_collisionSize.x / 2 < windPos.x + windSise.x / 2 &&
-	//	g_posModel.y + g_collisionSize.y / 2 > windPos.y - windSise.y / 2 && g_posModel.y - g_collisionSize.y / 2 < windPos.y + windSise.y / 2 &&
-	//	g_posModel.z + g_collisionSize.y / 2 > windPos.z - windSise.z / 2 && g_posModel.z - g_collisionSize.y / 2 < windPos.z + windSise.z / 2 && 
-	//	windUse)
-	
-	///* if(bWind)
-	//{
-	//	g_accModel.x = 0;
-	//	g_accModel.y += 0.8f;
-	//	g_accModel.z = 0;
-	//	g_rotDestModel.x = 90;
-	//	
-	//}*/
 	
 	// 位置移動
 	g_posModel.x += g_moveModel.x;
@@ -423,7 +414,32 @@ void UpdateModel(void)
 		g_posModel.y = 80.0f;
 	}*/
 
-	
+	// スタミナ
+	g_pStaminaBar->SetSTM(g_stm);
+	if (g_rotModel.x > 0)
+	{
+		if(!bWind)
+		g_stm -= 0.1f;
+	}
+	else
+	{
+		g_stm += 0.1f;
+		if (g_stm > 100)
+		{
+			g_stm = 100;
+		}
+	}
+
+	 // 死亡条件
+	if (g_posModel.y <= 0.0f)	// 地面 
+	{
+#if  _DEBUG
+		StartFadeOut(SCENE_GAME);
+#else
+
+#endif
+		
+	}
 
 	XMMATRIX mtxWorld, mtxRot, mtxScl, mtxTranslate;
 
@@ -492,6 +508,11 @@ void DrawModel(void)
 	g_model.Draw(pDC, g_mtxWorld, eTransparentOnly);
 	SetZWrite(true);				// Zバッファ更新する
 	SetBlendState(BS_NONE);			// アルファブレンド無効
+
+	// 2D描画
+	// Zバッファ無効(Zチェック無&Z更新無)
+	SetZBuffer(false);
+	g_pStaminaBar->Draw();
 }
 
 //=============================================================================

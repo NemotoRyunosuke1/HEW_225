@@ -12,6 +12,10 @@
 #include "model.h"
 #include "shadow.h"
 #include "crew.h"
+#include "input.h"
+
+
+bool flg = true;
 
 
 //=============================================================================
@@ -117,7 +121,27 @@ void GameScene::Update()
 	
 
 	}
+	
+	// マウスカーソルの固定
+	
+	if (GetKeyTrigger(VK_P))
+	{
+		if (flg)
+		{
+			
+			flg = false;
+		}
+		else
+		{
+			flg = true;
+		}
 
+	}
+	if (flg)
+	{
+		//SetCursorPos(SCREEN_CENTER_X , SCREEN_CENTER_Y);
+		
+	}
 	
 
 	//次のシーンへ移る条件
