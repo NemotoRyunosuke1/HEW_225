@@ -1,6 +1,7 @@
 #pragma once
 
 #include "main.h"
+#include "fade.h"
 
 class SceneBase
 {
