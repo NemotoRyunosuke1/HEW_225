@@ -22,8 +22,8 @@
 #define	VALUE_ROTATE_CREW	(7.0f)		// 回転速度
 #define	RATE_ROTATE_CREW	(0.20f)		// 回転慣性係数
 
-#define MAX_CREW			(50)		// 味方最大数
-#define	CREW_RADIUS		    (50.0f)		// 境界球半径
+#define MAX_CREW			(100)		// 味方最大数
+#define	CREW_RADIUS		    (100.0f)	// 境界球半径
 
 //*****************************************************************************
 // 構造体定義
@@ -62,9 +62,9 @@ HRESULT InitCrew(void)
 
 	for (int i = 0; i < MAX_CREW; ++i) {
 		// 位置・回転・スケールの初期設定
-		g_crew[i].m_pos = XMFLOAT3(rand() % 6200 - 3100.0f,
-			20.0f,
-			rand() % 6200 - 3100.0f);
+		g_crew[i].m_pos = XMFLOAT3(rand() % 12800 - 6400.0f,
+			rand() % 1000 + 500.0f,
+			rand() % 12800 - 6400.0f);
 		g_crew[i].m_rot = XMFLOAT3(0.0f, rand() % 360 - 180.0f, 0.0f);
 		g_crew[i].m_rotDest = g_crew[i].m_rot;
 		g_crew[i].m_move = XMFLOAT3(
@@ -100,9 +100,11 @@ void UpdateCrew(void)
 {
 	XMMATRIX mtxWorld, mtxRot, mtxTranslate;
 
+	XMFLOAT3 g_modelPos = GetModelPos();
+
 	for (int i = 0; i < MAX_CREW; ++i) {
 		// 移動
-		StartChase(i);
+		StartChase(i,g_modelPos,200.0f);
 
 		g_crew[i].m_pos.x += g_crew[i].m_move.x;
 		g_crew[i].m_pos.y += g_crew[i].m_move.y;
@@ -126,8 +128,8 @@ void UpdateCrew(void)
 			g_crew[i].m_pos.z = 6400.0f;
 			fb = true;
 		}
-		if (g_crew[i].m_pos.y < 5.0f) {
-			g_crew[i].m_pos.y = 5.0f;
+		if (g_crew[i].m_pos.y < 0.0f) {
+			g_crew[i].m_pos.y = 0.0f;
 		}
 		if (g_crew[i].m_pos.y > 6400.0f) {
 			g_crew[i].m_pos.y = 6400.0f;
@@ -215,30 +217,16 @@ void DrawCrew(void)
 	}
 }
 
-int StartChase(int i)
+int StartChase(int i, XMFLOAT3 pos, float radius)
 {
-	
 	XMFLOAT3 g_modelPos = GetModelPos();
 	
-		g_crew[i].m_pos.x = g_modelPos.x;// + rand() % 200 - 100;
-		g_crew[i].m_pos.y = g_modelPos.y;// + rand() % 200 - 100;
-		g_crew[i].m_pos.z = g_modelPos.z;// + rand() % 200 - 100;
-
-		return i;
-	
+	bool hit = CollisionSphere(g_crew[i].m_pos, CREW_RADIUS, pos, radius);
+	if (hit)
+	{
+		g_crew[i].m_pos.x = g_modelPos.x;// + rand() % 20 - 10.0f;
+		g_crew[i].m_pos.y = g_modelPos.y;// + rand() % 20 - 10.0f;
+		g_crew[i].m_pos.z = g_modelPos.z;// + rand() % 20 - 10.0f;
+	}
+	return i,hit;
 }
-
-//bool CollisionCrew(XMFLOAT3 pos, float radius)
-//{
-//	//TCrew* pCrew = g_crew;
-//	bool hit = CollisionSphere(g_crew->m_pos, CREW_RADIUS, pos, radius);
-//	if (hit)
-//	{
-//		for (int i = 0; i < MAX_CREW; i++)
-//		{
-//			int nChase = -1;
-//			nChase = StartChase(i);
-//		}
-//	}
-//	return hit;
-//}
