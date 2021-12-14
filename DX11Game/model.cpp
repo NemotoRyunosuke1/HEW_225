@@ -11,12 +11,7 @@
 #include "AssimpModel.h"
 #include "debugproc.h"
 #include "shadow.h"
-#include "Light.h"
 #include "fade.h"
-#include "staminaBar.h"
-//#include <dinputd.h>
-
-//#pragma comment(lib,"dinput8.dll")
 
 
 
@@ -52,7 +47,6 @@ static CLight g_light;
 static bool bWind;
 static bool bWind1[10];
 static XMFLOAT3 WindVec[10];
-static StaminaBar *g_pStaminaBar;
 static float g_stm;
 //=============================================================================
 // 初期化処理
@@ -87,9 +81,7 @@ HRESULT InitModel(void)
 		bWind1[i] = false;
 		WindVec[i] = XMFLOAT3(0.0f,0.0f,0.0f);
 	}
-	g_stm = 100;
-	g_pStaminaBar = new StaminaBar;
-	g_pStaminaBar->SetSTM(g_stm);
+	g_stm = 100; // スタミナ
 	return hr;
 }
 
@@ -100,7 +92,6 @@ void UninitModel(void)
 {
 	// 丸影の解放
 	ReleaseShadow(g_nShadow);
-	delete g_pStaminaBar;
 	// モデルの解放
 	g_model.Release();
 }
@@ -180,7 +171,7 @@ void UpdateModel(void)
 		//g_rotDestModel.x += 30.0f * state.Gamepad.sThumbLY / 10000;	// 機体の傾き
 		if (GetJoyButton(0, JOYSTICKID6))
 		{
-
+			g_stm -= 0.3f;
 			g_rotDestModel.y += 1.0f * stickX / 8000;
 		}
 		// ゲームパッド
@@ -198,13 +189,14 @@ void UpdateModel(void)
 		}
 	}
 	
-	// Bボタンはばたき
+	// LBボタンはばたき
 	if (GetJoyRelease(0, JOYSTICKID6))
 	{
 		g_accModel.x += 3;
 		g_accModel.y += 6;
 		g_accModel.z += 3;
 		//g_rotDestModel.y += 1.0f * stickX /80 ;
+	
 	}
 	
 
@@ -414,8 +406,7 @@ void UpdateModel(void)
 		g_posModel.y = 80.0f;
 	}*/
 
-	// スタミナ
-	g_pStaminaBar->SetSTM(g_stm);
+	// スタミナ処理
 	if (g_rotModel.x > 3)
 	{
 		if(!bWind)
@@ -437,7 +428,7 @@ void UpdateModel(void)
 #if  _DEBUG
 		StartFadeOut(SCENE_GAME);
 #else
-
+		StartFadeOut(SCENE_GAME);
 #endif
 		
 	}
@@ -513,7 +504,7 @@ void DrawModel(void)
 	// 2D描画
 	// Zバッファ無効(Zチェック無&Z更新無)
 	SetZBuffer(false);
-	g_pStaminaBar->Draw();
+	
 }
 
 //=============================================================================
