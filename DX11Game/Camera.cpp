@@ -15,10 +15,10 @@
 namespace {
 	const float CAM_POS_P_X = 0.0f;					// カメラの視点初期位置(X座標)
 	const float CAM_POS_P_Y = 25.0f;				// カメラの視点初期位置(Y座標)
-	const float CAM_POS_P_Z = 0.0f;				// カメラの視点初期位置(Z座標)
+	const float CAM_POS_P_Z = 0.0f;				    // カメラの視点初期位置(Z座標)
 	const float CAM_POS_R_X = 0.0f;					// カメラの注視点初期位置(X座標)
-	const float CAM_POS_R_Y = 10.0f;				    // カメラの注視点初期位置(Y座標)
-	const float CAM_POS_R_Z = -50.0f;				    // カメラの注視点初期位置(Z座標)
+	const float CAM_POS_R_Y = 10.0f;				// カメラの注視点初期位置(Y座標)
+	const float CAM_POS_R_Z = -50.0f;				// カメラの注視点初期位置(Z座標)
 	const float VIEW_ANGLE = 80.0f;					// ビュー平面の視野角
 	const float VIEW_ASPECT = (float)SCREEN_WIDTH / SCREEN_HEIGHT;	// ビュー平面のアスペクト比
 	const float VIEW_NEAR_Z = 10.0f;				// ビュー平面のNearZ値
@@ -50,9 +50,9 @@ CCamera::CCamera()
 // 初期化
 void CCamera::Init()
 {
-	m_vPos = XMFLOAT3(CAM_POS_P_X, CAM_POS_P_Y, CAM_POS_P_Z);	// 視点
-	m_vTarget = XMFLOAT3(CAM_POS_R_X, CAM_POS_R_Y, CAM_POS_R_Z);// 注視点
-	m_vUp = XMFLOAT3(0.0f, 1.0f, 0.0f);							// 上方ベクトル
+	m_vPos = XMFLOAT3(CAM_POS_P_X, CAM_POS_P_Y, CAM_POS_P_Z);	  // 視点
+	m_vTarget = XMFLOAT3(CAM_POS_R_X, CAM_POS_R_Y, CAM_POS_R_Z);  // 注視点
+	m_vUp = XMFLOAT3(0.0f, 1.0f, 0.0f);							  // 上方ベクトル
 	m_vSrcPos = m_vPos;
 	m_vDestPos = m_vPos;
 	m_vDestTarget = m_vTarget;
