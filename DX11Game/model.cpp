@@ -24,7 +24,13 @@
 #define	VALUE_MOVE_MODEL	(0.50f)		// ˆÚ“®‘¬“x
 #define	RATE_MOVE_MODEL		(0.20f)		// ˆÚ“®Šµ«ŒW”
 #define	VALUE_ROTATE_MODEL	(3.0f)		// ‰ñ“]‘¬“x
-#define	RATE_ROTATE_MODEL	(0.065f)		// ‰ñ“]Šµ«ŒW”
+#define	RATE_ROTATE_MODEL	(0.065f)	// ‰ñ“]Šµ«ŒW”
+
+#define AUTO_FALL_ROT	(-20)	// Ž©“®—Ž‰ºŽž‚ÌŠp“x
+
+#define MAX_ACC (5.5f)			// ‰Á‘¬“x‚ÌãŒÀ
+
+#define MAX_FLY_Y (2000)	// Å‚‚“x		
 
 //*****************************************************************************
 // ƒOƒ[ƒoƒ‹•Ï”
@@ -71,6 +77,8 @@ HRESULT InitModel(void)
 		return E_FAIL;
 	}
 	
+	GetJoyState(0);
+
 	// ŠÛ‰e‚Ì¶¬
 	g_nShadow = CreateShadow(g_posModel, 12.0f);
 
@@ -152,14 +160,22 @@ void UpdateModel(void)
 		// ‹@‘Ì‚Ìƒ[ƒ‹
 		g_rotDestModel.z = -30.0f;
 		g_rotDestModel.y -=  2.0f;
+		if (GetKeyPress(VK_SPACE))
+		{
+			g_rotDestModel.y -= 2.0f;
+		}
+
 		
 	}
 	else if ((GetKeyPress(VK_RIGHT) || GetKeyPress(VK_D)) && !bWind)
 	{
 		// ‹@‘Ì‚Ìƒ[ƒ‹
 		g_rotDestModel.z = 30.0f;
-		g_rotDestModel.y += 2;
-	
+		g_rotDestModel.y += 2.0f;
+		if (GetKeyPress(VK_SPACE))
+		{
+			g_rotDestModel.y += 2.0f;
+		}
 	} 
 	
 	
@@ -200,7 +216,7 @@ void UpdateModel(void)
 	}
 	
 
-	if (GetKeyPress(VK_SPACE) )
+	if (GetKeyTrigger(VK_SPACE) )
 	{
 		g_accModel.x += 3;
 		g_accModel.y += 3;
@@ -253,17 +269,17 @@ void UpdateModel(void)
 	}
 	
 	// ‰Á‘¬“x‚ÌãŒÀ
-	if (g_accModel.y > 5.5f)
+	if (g_accModel.y > MAX_ACC)
 	{
-		g_accModel.y = 5.5f;
+		g_accModel.y = MAX_ACC;
 	}
-	if (g_accModel.x > 5.5f)
+	if (g_accModel.x > MAX_ACC)
 	{
-		g_accModel.x = 5.5f;
+		g_accModel.x = MAX_ACC;
 	}
-	if (g_accModel.z > 5.5f)
+	if (g_accModel.z > MAX_ACC)
 	{
-		g_accModel.z = 5.5f;
+		g_accModel.z = MAX_ACC;
 	}
 
 	// Ž©“®‘OˆÚ“®
@@ -274,20 +290,22 @@ void UpdateModel(void)
 	// ã¸&‰º~ˆ—
 	
 	// ‹@‘Ì‚ÌŒX‚«ƒŠƒZƒbƒg
-	if (g_rotDestModel.x > 0)
+	if (g_rotDestModel.x > AUTO_FALL_ROT)
 	{
 		g_rotDestModel.x -= 0.5f;
 		if (g_rotDestModel.x < 0.5f && g_rotDestModel.x > 0.5f)
 		{
-			g_rotDestModel.x = 0;
+			bWind = false;
+			g_rotDestModel.x = AUTO_FALL_ROT;
 		}
 	}
-	if (g_rotDestModel.x < 0)
+	if (g_rotDestModel.x < AUTO_FALL_ROT)
 	{
 		g_rotDestModel.x += 0.5f;
 		if (g_rotDestModel.x > 0.5f && g_rotDestModel.x < 0.5f)
 		{
-			g_rotDestModel.x = 0;
+			bWind = false;
+			g_rotDestModel.x = AUTO_FALL_ROT;
 		}
 	}
 
@@ -386,6 +404,10 @@ void UpdateModel(void)
 	if (g_posModel.y < 0.0f)	// ’n–Ê 
 	{
 		g_posModel.y = 0.0f;
+	}
+	if (g_posModel.y > MAX_FLY_Y)	// ’n–Ê 
+	{
+		g_posModel.y = MAX_FLY_Y;
 	}
 	/*if (g_posModel.x < -310.0f) {
 		g_posModel.x = -310.0f;
