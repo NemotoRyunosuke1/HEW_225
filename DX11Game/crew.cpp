@@ -23,7 +23,8 @@
 #define	RATE_ROTATE_CREW	(0.20f)		// 回転慣性係数
 
 #define MAX_CREW			(100)		// 味方最大数
-#define	CREW_RADIUS		    (100.0f)	// 境界球半径
+#define	CREW_RADIUS		    (20.0f)    // 境界球半径
+#define MAP_HIROSA          (8000)      // マップの広さ
 
 //*****************************************************************************
 // 構造体定義
@@ -37,6 +38,8 @@ struct TCrew {
 	XMFLOAT4X4	m_mtxWorld;	// ワールドマトリックス
 
 	int			m_nShadow;	// 丸影番号
+
+	bool m_catch;
 };
 
 //*****************************************************************************
@@ -62,16 +65,16 @@ HRESULT InitCrew(void)
 
 	for (int i = 0; i < MAX_CREW; ++i) {
 		// 位置・回転・スケールの初期設定
-		g_crew[i].m_pos = XMFLOAT3(rand() % 12800 - 6400.0f,
+		g_crew[i].m_pos = XMFLOAT3(rand() % MAP_HIROSA - MAP_HIROSA/2,
 			rand() % 1000 + 500.0f,
-			rand() % 12800 - 6400.0f);
+			rand() % MAP_HIROSA - MAP_HIROSA / 2);
 		g_crew[i].m_rot = XMFLOAT3(0.0f, rand() % 360 - 180.0f, 0.0f);
 		g_crew[i].m_rotDest = g_crew[i].m_rot;
 		g_crew[i].m_move = XMFLOAT3(
 			-SinDeg(g_crew[i].m_rot.y) * VALUE_MOVE_CREW,
 			0.0f,
 			-CosDeg(g_crew[i].m_rot.y) * VALUE_MOVE_CREW);
-
+		g_crew[i].m_catch = false;
 		// 丸影の生成
 		g_crew[i].m_nShadow = CreateShadow(g_crew[i].m_pos, 12.0f);
 	}
@@ -104,7 +107,17 @@ void UpdateCrew(void)
 
 	for (int i = 0; i < MAX_CREW; ++i) {
 		// 移動
-		StartChase(i,g_modelPos,200.0f);
+		StartChase(i,g_modelPos);
+		
+		
+
+		int cnt = 0;
+		if (g_crew[i].m_catch)
+		{
+			cnt++;
+		}
+
+		
 
 		g_crew[i].m_pos.x += g_crew[i].m_move.x;
 		g_crew[i].m_pos.y += g_crew[i].m_move.y;
@@ -112,27 +125,27 @@ void UpdateCrew(void)
 
 		// 壁にぶつかった
 		bool lr = false, fb = false;
-		if (g_crew[i].m_pos.x < -6400.0f) {
-			g_crew[i].m_pos.x = -6400.0f;
+		if (g_crew[i].m_pos.x < -MAP_HIROSA / 2) {
+			g_crew[i].m_pos.x = -MAP_HIROSA / 2;
 			lr = true;
 		}
-		if (g_crew[i].m_pos.x > 6400.0f) {
-			g_crew[i].m_pos.x = 6400.0f;
+		if (g_crew[i].m_pos.x > MAP_HIROSA / 2) {
+			g_crew[i].m_pos.x = MAP_HIROSA / 2;
 			lr = true;
 		}
-		if (g_crew[i].m_pos.z < -6400.0f) {
-			g_crew[i].m_pos.z = -6400.0f;
+		if (g_crew[i].m_pos.z < -MAP_HIROSA / 2) {
+			g_crew[i].m_pos.z = -MAP_HIROSA / 2;
 			fb = true;
 		}
-		if (g_crew[i].m_pos.z > 6400.0f) {
-			g_crew[i].m_pos.z = 6400.0f;
+		if (g_crew[i].m_pos.z > MAP_HIROSA / 2) {
+			g_crew[i].m_pos.z = MAP_HIROSA / 2;
 			fb = true;
 		}
 		if (g_crew[i].m_pos.y < 0.0f) {
 			g_crew[i].m_pos.y = 0.0f;
 		}
-		if (g_crew[i].m_pos.y > 6400.0f) {
-			g_crew[i].m_pos.y = 6400.0f;
+		if (g_crew[i].m_pos.y > 2000.0f) {
+			g_crew[i].m_pos.y = 2000.0f;
 		}
 		if (fabsf(g_crew[i].m_rot.y - g_crew[i].m_rotDest.y) < 0.0001f) {
 			if (lr) {
@@ -145,10 +158,15 @@ void UpdateCrew(void)
 				g_crew[i].m_rotDest.y = XMConvertToDegrees(atan2f(-g_crew[i].m_move.x, -g_crew[i].m_move.z));
 			}
 		}
-		//if (CollisionCrew(GetModelPos(), CREW_RADIUS)) {
-		//	
-		//	continue;
-		//}		// 目的の角度までの差分
+
+		// 目的の角度までの差分
+		float fDiffRotX = g_crew[i].m_rotDest.x - g_crew[i].m_rot.x;
+		if (fDiffRotX >= 180.0f) {
+			fDiffRotX -= 360.0f;
+		}
+		if (fDiffRotX < -180.0f) {
+			fDiffRotX += 360.0f;
+		}
 		float fDiffRotY = g_crew[i].m_rotDest.y - g_crew[i].m_rot.y;
 		if (fDiffRotY >= 180.0f) {
 			fDiffRotY -= 360.0f;
@@ -157,7 +175,15 @@ void UpdateCrew(void)
 			fDiffRotY += 360.0f;
 		}
 
+
 		// 目的の角度まで慣性をかける
+		g_crew[i].m_rot.x += fDiffRotX * RATE_ROTATE_CREW;
+		if (g_crew[i].m_rot.x >= 180.0f) {
+			g_crew[i].m_rot.x -= 360.0f;
+		}
+		if (g_crew[i].m_rot.x < -180.0f) {
+			g_crew[i].m_rot.x += 360.0f;
+		}
 		g_crew[i].m_rot.y += fDiffRotY * RATE_ROTATE_CREW;
 		if (g_crew[i].m_rot.y >= 180.0f) {
 			g_crew[i].m_rot.y -= 360.0f;
@@ -169,6 +195,7 @@ void UpdateCrew(void)
 			-SinDeg(g_crew[i].m_rot.y) * VALUE_MOVE_CREW,
 			0.0f,
 			-CosDeg(g_crew[i].m_rot.y) * VALUE_MOVE_CREW);
+		
 
 		// ワールドマトリックスの初期化
 		mtxWorld = XMMatrixIdentity();
@@ -217,16 +244,85 @@ void DrawCrew(void)
 	}
 }
 
-int StartChase(int i, XMFLOAT3 pos, float radius)
+int StartChase(int i, XMFLOAT3 pos)
 {
 	XMFLOAT3 g_modelPos = GetModelPos();
 	
-	bool hit = CollisionSphere(g_crew[i].m_pos, CREW_RADIUS, pos, radius);
+	bool hit = CollisionSphere(g_crew[i].m_pos, CREW_RADIUS, pos, 200.0f);
+
+	bool hit2 = CollisionSphere(g_crew[i].m_pos, CREW_RADIUS, pos, 100.0f);
+
 	if (hit)
 	{
-		g_crew[i].m_pos.x = g_modelPos.x;// + rand() % 20 - 10.0f;
-		g_crew[i].m_pos.y = g_modelPos.y;// + rand() % 20 - 10.0f;
-		g_crew[i].m_pos.z = g_modelPos.z;// + rand() % 20 - 10.0f;
+		g_crew[i].m_catch = true;
+		if (g_modelPos.y - g_crew[i].m_pos.y > 20.0f)
+		{
+			//上
+			g_crew[i].m_rotDest.x = 30.0f;
+		}
+		else if (g_modelPos.y - g_crew[i].m_pos.y < -20.0f)
+		{
+			//下
+			g_crew[i].m_rotDest.x = -30.0f;
+		}
+		else
+		{
+			//水平
+			g_crew[i].m_rotDest.x = 0;
+		}
+
+		if (g_modelPos.x - g_crew[i].m_pos.x > 0 && g_modelPos.z - g_crew[i].m_pos.z > 0)
+		{
+			//左後ろ
+			g_crew[i].m_rotDest.y = -135.0f;
+		}
+		else if (g_modelPos.x - g_crew[i].m_pos.x < -0 && g_modelPos.z - g_crew[i].m_pos.z > 0)
+		{
+			//右後ろ
+			g_crew[i].m_rotDest.y = 135.0f;
+		}
+		else if (g_modelPos.x - g_crew[i].m_pos.x > 0 && g_modelPos.z - g_crew[i].m_pos.z < -0)
+		{
+			//左前
+			g_crew[i].m_rotDest.y = -45.0f;
+		}
+		else if (g_modelPos.x - g_crew[i].m_pos.x < -0 && g_modelPos.z - g_crew[i].m_pos.z < -0)
+		{
+			//右前
+			g_crew[i].m_rotDest.y = 45.0f;
+		}
+		else if (g_modelPos.x - g_crew[i].m_pos.x > 0)
+		{
+			//左
+			g_crew[i].m_rotDest.y = -90.0f;
+		}
+		else if (g_modelPos.x - g_crew[i].m_pos.x < 0)
+		{
+			//右
+			g_crew[i].m_rotDest.y = 90.0f;
+		}
+		else if (g_modelPos.z - g_crew[i].m_pos.z > 0)
+		{
+			//後ろ
+			g_crew[i].m_rotDest.y = 180.0f;
+		}
+		else
+		{
+			//前
+			g_crew[i].m_rotDest.y = 0;
+		}
+
+		g_crew[i].m_pos.x -= SinDeg(g_crew[i].m_rot.y) * VALUE_MOVE_CREW * 6.0f;
+		g_crew[i].m_pos.y += SinDeg(g_crew[i].m_rot.x) * VALUE_MOVE_CREW * 6.0f;
+		g_crew[i].m_pos.z -= CosDeg(g_crew[i].m_rot.y) * VALUE_MOVE_CREW * 6.0f;
+
+		
+		if (hit2) {
+			
+			g_crew[i].m_rotDest.y = XMConvertToDegrees(atan2f(-g_crew[i].m_move.x, -g_crew[i].m_move.z));
+
+		}
+
 	}
 	return i,hit;
 }

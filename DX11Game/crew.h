@@ -16,4 +16,5 @@ void UninitCrew(void);
 void UpdateCrew(void);
 void DrawCrew(void);
 
-int StartChase(int i, XMFLOAT3 pos, float radius);
+int StartChase(int i, XMFLOAT3 pos);
+
