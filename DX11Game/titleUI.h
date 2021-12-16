@@ -1,26 +1,18 @@
 //=============================================================================
 //
 // タイトルUI処理 [titleUI.h]
-// Author :鈴木拓巳
+// Author : 鈴木拓巳
 //
 //=============================================================================
-
 #pragma once
 
 #include "main.h"
 #include "fade.h"
 
-class TitleUI
-{
-public:
-	TitleUI();
-	~TitleUI();
-	HRESULT Init();
-	void Uninit();
-	void Update();
-	void Draw();
-
-private:
-
-	Fade* m_pFade;
-};
+//*****************************************************************************
+// プロトタイプ宣言
+//*****************************************************************************
+HRESULT InitTitleBG(void);
+void UninitTitleBG(void);
+void UpdateTitleBG(void);
+void DrawTitleBG(void);

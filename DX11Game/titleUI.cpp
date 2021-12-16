@@ -9,80 +9,121 @@
 #include "sceneBase.h"
 #include "stageSelectScene.h"
 
+//*****************************************************************************
+// マクロ定義
+//*****************************************************************************
+#define BG_POS_X
+#define BG_POS_Y
+#define BG_WIDTH  SCREEN_WIDTH
+#define BG_HEIGHT SCREEN_HEIGHT
+
+#define LOGO_POS_X   0.0f
+#define LOGO_POS_Y   0.0f
+#define LOGO_WIDTH   800
+#define LOGO_HEIGHT  640
+
+#define TEX_BG       0
+#define TEX_LOGO     1
+#define MAX_TEXTURE  2
+
+//*****************************************************************************
+// グローバル変数
+//*****************************************************************************
+static LPCWSTR g_pszTexName[] =
+{
+	L"data/texture/sky001.png",
+	L"data/texture/sky001.png",
+};
+static ID3D11ShaderResourceView* g_pTexture[MAX_TEXTURE];
+
 //=============================================================================
-// コンストラクタ
+// 初期化
 //=============================================================================
-TitleUI::TitleUI()
+HRESULT InitTitleBG()
 {
 
-}
-//=============================================================================
-// デストラクタ
-//=============================================================================
-TitleUI::~TitleUI()
-{
-
-}
-//=============================================================================
-// 初期化処理
-//=============================================================================
-HRESULT TitleUI::Init()
-{
 	HRESULT hr = S_OK;
+	ID3D11Device* pDevice = GetDevice();
+
+	// テクスチャ読み込み
+	for (int i = 0; i < MAX_TEXTURE; ++i)
+	{
+		hr = CreateTextureFromFile(pDevice,
+			g_pszTexName[i], &g_pTexture[i]);
+		if (FAILED(hr))
+		{
+			return hr;
+		}
+	}
+
+	// BGM再生
 
 
 
-	return hr;
 }
 //=============================================================================
 // 終了処理
 //=============================================================================
-void TitleUI::Uninit()
+void UninitTitleBG()
 {
+	// BGM再生停止
 
 
-}
-//=============================================================================
-// 更新処理
-//=============================================================================
-void TitleUI::Update()
-{
 
 
-	//次のシーンへ移る条件
-	if (GetAsyncKeyState(VK_RETURN) & 0x8000)
+
+	// テクスチャ解放
+	for (int i = 0; i < MAX_TEXTURE; ++i)
 	{
-
-		StartFadeOut(SCENE_GAME);
+		SAFE_RELEASE(g_pTexture[i]);
 	}
-
-
-#if _DEBUG
-	//デバック用文字列
-	PrintDebugProc("****** TitleUI ******\n");
-	PrintDebugProc("\n");
-
-#else 
-
-#endif
-
 }
 //=============================================================================
-// 描画処理
+// 更新
 //=============================================================================
-void TitleUI::Draw()
+void UpdateTitleBG()
 {
-	// 2D描画
-	// Zバッファ無効(Zチェック無&Z更新無)
-	SetZBuffer(false);
 
-	// 3D描画
-	// Zバッファ無効(Zチェック無&Z更新無)
-	SetZBuffer(true);
-
-	// 2D描画
-	// Zバッファ無効(Zチェック無&Z更新無)
-	SetZBuffer(false);
-
-
+	// Enter or Spaceキー押下
+	if (GetKeyRelease(VK_RETURN)) ||
+		GetKeyRelease(VK_SPACE){
+		// ゲーム画面へ
+		SetScene(SCENE_GAME);
+		return;
+    }
 }
+//=============================================================================
+// 描画
+//=============================================================================
+void DrawTitleBG()
+{
+	ID3D11DeviceContext* pDC = GetDeviceContext();
+
+	SetPolygonSize(BG_WIDTH, BG_HEIGHT);
+	SetPolygonPos(LOGO_POS_X, LOGO_POS_Y);
+	SetPolygonTexture(g_pTexture[TEX_LOGO]);
+	DrawPolygon(pDC);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

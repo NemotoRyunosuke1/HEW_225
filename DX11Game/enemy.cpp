@@ -10,6 +10,7 @@
 #include "debugproc.h"
 #include "shadow.h"
 #include "model.h"
+#include "collision.h"
 
 
 //*****************************************************************************
@@ -27,7 +28,7 @@
 #define ENEMY_WIDTH			64.0f
 #define ENEMY_HEIGHT		64.0f
 
-#define MAX_ENEMY			(10)        // 敵の最大数
+#define MAX_ENEMY			(50)        // 敵の最大数
 
 #define COLLISION_WIDH      30.0f
 #define COLLISION_HELIGHT   24.0f
@@ -57,15 +58,6 @@ typedef struct D3DXVECTOR3 {
 struct ANIM_PAT {	// アニメーション データ
 	int nFrame;			// 表示枠No. (-1で終了)
 	int nCount;			// 表示フレーム数
-};
-
-struct ENEMY  // 敵の情報
-{
-	XMFLOAT2 vPos;
-	int      nAnimFrame;
-	int      nFrameCount;
-	int      nAnimPar;
-	int      nDir;
 };
 
 //*****************************************************************************
@@ -101,9 +93,9 @@ HRESULT InitEnemy(void)
 
 	for (int i = 0; i < MAX_ENEMY; ++i) {
 		// 位置・回転・スケールの初期設定
-		g_enemy[i].m_pos = XMFLOAT3(rand() % 620 - 310.0f,
-									20.0f,
-									rand() % 620 - 310.0f);
+		g_enemy[i].m_pos = XMFLOAT3(rand() % 10000 - 6000.0f,
+			rand() % 20000 + 1500.0f,
+			rand() % 10000 - 6000.0f);
 		g_enemy[i].m_rot = XMFLOAT3(0.0f, rand() % 360 - 180.0f, 0.0f);
 		g_enemy[i].m_rotDest = g_enemy[i].m_rot;
 		g_enemy[i].m_move = XMFLOAT3(
@@ -230,7 +222,7 @@ void UpdateEnemy(void)
 		MoveShadow(g_enemy[i].m_nShadow, g_enemy[i].m_pos);
 	}
 }
-	/*
+
 	// 敵との当たり判定
 	struct ENEMY
 	{
@@ -267,24 +259,30 @@ void UpdateEnemy(void)
 			return true;
 		}
 	};
-	*/
 
 // 当たり判定
-int CollisionEnemy(XMFLOAT2 vCenter,
-	XMFLOAT2 vRect, float fDamage)
-{
-	XMFLOAT2 vEnemyPos;
-	XMFLOAT2 vEnemyRect(COLLISION_WIDH,
-		COLLISION_HELIGHT);
-}
-
-
-
+//int CollisionEnemy(XMFLOAT2 vCenter,
+//	XMFLOAT2 vRect, float fDamage)
+//{
+//	XMFLOAT2 vEnemyPos;
+//	XMFLOAT2 vEnemyRect(COLLISION_WIDH,
+//		COLLISION_HELIGHT);
+//	ENEMY* pEnemy = g_enemy;
+//	for (int i = 0; i < g_nEnemy;
+//	++i, ++pEnemy) 
+//	{
+//	vEnemyPos.x = pEnemy->vPos.x +
+//		COLLISION_OFFSETX;
+//	vEnemyPos.y = pEnemy->vPos.y +
+//		COLLISION_OFFSETX;
+//	 	return i;
+//    }
+//}
 
 //=============================================================================
 // 描画処理
 //=============================================================================
-	void DrawEnemy (void)
+	void DrawEnemy (void)	
 	{
 		ID3D11DeviceContext* pDC = GetDeviceContext();
 

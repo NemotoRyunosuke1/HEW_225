@@ -16,4 +16,4 @@ void UninitEnemy(void);
 void UpdateEnemy(void);
 void DrawEnemy(void);
 
-int StartChase();
+int EnemyStartChase();
