@@ -21,7 +21,7 @@
 GameScene::GameScene()
 {
 	// メッシュフィールド初期化
-	InitMeshField(16, 16, 800.0f, 800.0f);
+	InitMeshField(50, 50, 100.0f, 100.0f);
 
 	// モデル初期化
 	InitModel();
