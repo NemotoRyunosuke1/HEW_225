@@ -160,6 +160,7 @@
   <ItemGroup>
     <ClCompile Include="AssimpModel.cpp" />
     <ClCompile Include="bg.cpp" />
+    <ClCompile Include="button.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="collision.cpp" />
     <ClCompile Include="crew.cpp" />
@@ -195,6 +196,7 @@
   <ItemGroup>
     <ClInclude Include="AssimpModel.h" />
     <ClInclude Include="bg.h" />
+    <ClInclude Include="button.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="collision.h" />
     <ClInclude Include="crew.h" />
