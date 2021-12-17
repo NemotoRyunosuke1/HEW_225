@@ -17,7 +17,7 @@
 //*****************************************************************************
 #define MODEL_CREW			"data/model/mukudori1.fbx"
 
-#define	VALUE_MOVE_CREW	    (2.80f)		// 移動速度
+#define	VALUE_MOVE_CREW	    (2.00f)		// 移動速度
 #define	RATE_MOVE_CREW		(0.20f)		// 移動慣性係数
 #define	VALUE_ROTATE_CREW	(7.0f)		// 回転速度
 #define	RATE_ROTATE_CREW	(0.20f)		// 回転慣性係数
@@ -66,7 +66,7 @@ HRESULT InitCrew(void)
 	for (int i = 0; i < MAX_CREW; ++i) {
 		// 位置・回転・スケールの初期設定
 		g_crew[i].m_pos = XMFLOAT3(rand() % MAP_HIROSA - MAP_HIROSA/2,
-			rand() % 1000 + 500.0f,
+			rand() % 1000 + 100.0f,
 			rand() % MAP_HIROSA - MAP_HIROSA / 2);
 		g_crew[i].m_rot = XMFLOAT3(0.0f, rand() % 360 - 180.0f, 0.0f);
 		g_crew[i].m_rotDest = g_crew[i].m_rot;
@@ -105,18 +105,21 @@ void UpdateCrew(void)
 
 	XMFLOAT3 g_modelPos = GetModelPos();
 
+	
+	int cnt = 0;
+
 	for (int i = 0; i < MAX_CREW; ++i) {
 		// 移動
 		StartChase(i,g_modelPos);
 		
 		
 
-		int cnt = 0;
+		
 		if (g_crew[i].m_catch)
 		{
 			cnt++;
 		}
-
+		
 		
 
 		g_crew[i].m_pos.x += g_crew[i].m_move.x;
@@ -220,6 +223,11 @@ void UpdateCrew(void)
 		// 丸影の移動
 		MoveShadow(g_crew[i].m_nShadow, g_crew[i].m_pos);
 	}
+#if _DEBUG
+	PrintDebugProc("[ﾐｶﾀ : (%d)]\n", cnt);
+
+#endif
+	
 }
 
 //=============================================================================
@@ -250,7 +258,7 @@ int StartChase(int i, XMFLOAT3 pos)
 	
 	bool hit = CollisionSphere(g_crew[i].m_pos, CREW_RADIUS, pos, 500.0f);
 
-	bool hit2 = CollisionSphere(g_crew[i].m_pos, CREW_RADIUS, pos, 100.0f);
+	bool hit2 = CollisionSphere(g_crew[i].m_pos, CREW_RADIUS, pos, 150.0f);
 
 	if (hit)
 	{
