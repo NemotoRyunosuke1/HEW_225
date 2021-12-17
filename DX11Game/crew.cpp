@@ -17,7 +17,7 @@
 //*****************************************************************************
 #define MODEL_CREW			"data/model/helicopter000.fbx"
 
-#define	VALUE_MOVE_CREW	    (0.40f)		// à⁄ìÆë¨ìx
+#define	VALUE_MOVE_CREW	    (2.80f)		// à⁄ìÆë¨ìx
 #define	RATE_MOVE_CREW		(0.20f)		// à⁄ìÆäµê´åWêî
 #define	VALUE_ROTATE_CREW	(7.0f)		// âÒì]ë¨ìx
 #define	RATE_ROTATE_CREW	(0.20f)		// âÒì]äµê´åWêî
@@ -248,7 +248,7 @@ int StartChase(int i, XMFLOAT3 pos)
 {
 	XMFLOAT3 g_modelPos = GetModelPos();
 	
-	bool hit = CollisionSphere(g_crew[i].m_pos, CREW_RADIUS, pos, 200.0f);
+	bool hit = CollisionSphere(g_crew[i].m_pos, CREW_RADIUS, pos, 500.0f);
 
 	bool hit2 = CollisionSphere(g_crew[i].m_pos, CREW_RADIUS, pos, 100.0f);
 
@@ -312,9 +312,9 @@ int StartChase(int i, XMFLOAT3 pos)
 			g_crew[i].m_rotDest.y = 0;
 		}
 
-		g_crew[i].m_pos.x -= SinDeg(g_crew[i].m_rot.y) * VALUE_MOVE_CREW * 6.0f;
-		g_crew[i].m_pos.y += SinDeg(g_crew[i].m_rot.x) * VALUE_MOVE_CREW * 6.0f;
-		g_crew[i].m_pos.z -= CosDeg(g_crew[i].m_rot.y) * VALUE_MOVE_CREW * 6.0f;
+		g_crew[i].m_pos.x -= SinDeg(g_crew[i].m_rot.y) * VALUE_MOVE_CREW * GetModelAcc().x;
+		g_crew[i].m_pos.y += SinDeg(g_crew[i].m_rot.x) * VALUE_MOVE_CREW * GetModelAcc().y;
+		g_crew[i].m_pos.z -= CosDeg(g_crew[i].m_rot.y) * VALUE_MOVE_CREW * GetModelAcc().z;
 
 		
 		if (hit2) {
