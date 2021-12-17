@@ -22,14 +22,14 @@ namespace {
 	const float VIEW_ANGLE = 80.0f;					// ビュー平面の視野角
 	const float VIEW_ASPECT = (float)SCREEN_WIDTH / SCREEN_HEIGHT;	// ビュー平面のアスペクト比
 	const float VIEW_NEAR_Z = 10.0f;				// ビュー平面のNearZ値
-	const float VIEW_FAR_Z = 3000.0f;				// ビュー平面のFarZ値
+	const float VIEW_FAR_Z = 8000.0f;				// ビュー平面のFarZ値
 	const float VALUE_MOVE_CAMERA = 2.0f;			// カメラの移動量
 	const float VALUE_ROTATE_CAMERA = 1.8f;			// カメラの回転量
-	const float RATE_ROTATE_CAMERA = 0.02f;			// カメラの注視点への補正係数
+	const float RATE_ROTATE_CAMERA = 0.002f;			// カメラの注視点への補正係数
 
 	const float INTERVAL_CAMERA_R = 1.5f;			// モデルの視線の先までの距離
 	const float RATE_CHASE_CAMERA_P = 0.35f;		// カメラの視点への補正係数
-	const float RATE_CHASE_CAMERA_R = 0.0020f;		// カメラの注視点への補正係数
+	const float RATE_CHASE_CAMERA_R = 0.20f;		// カメラの注視点への補正係数
 
 	const float CHASE_HEIGHT_P = 100.0f;			// 追跡時の視点の高さ
 	const float CHASE_HEIGHT_R = 10.0f;				// 追跡時の注視点の高さ
