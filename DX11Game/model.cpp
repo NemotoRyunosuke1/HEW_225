@@ -18,13 +18,19 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-#define MODEL_PLANE			"data/model/mukudori1.fbx"
+#define MODEL_PLANE			"data/model/mukudorianime2.fbx"
 
 
 #define	VALUE_MOVE_MODEL	(0.50f)		// 移動速度
 #define	RATE_MOVE_MODEL		(0.20f)		// 移動慣性係数
 #define	VALUE_ROTATE_MODEL	(3.0f)		// 回転速度
-#define	RATE_ROTATE_MODEL	(0.065f)		// 回転慣性係数
+#define	RATE_ROTATE_MODEL	(0.065f)	// 回転慣性係数
+
+#define AUTO_FALL_ROT	(-20)	// 自動落下時の角度
+
+#define MAX_ACC (5.5f)			// 加速度の上限
+
+#define MAX_FLY_Y (2000)	// 最高高度		
 
 //*****************************************************************************
 // グローバル変数
@@ -43,11 +49,12 @@ static XMFLOAT3		g_sclModel;
 static int			g_nShadow;		// 丸影番号
 
 static CLight g_light;
- 
+static bool bFlg;
 static bool bWind;
 static bool bWind1[10];
 static XMFLOAT3 WindVec[10];
 static float g_stm;
+static int g_frameCnt;
 //=============================================================================
 // 初期化処理
 //=============================================================================
@@ -71,10 +78,12 @@ HRESULT InitModel(void)
 		return E_FAIL;
 	}
 	
+	GetJoyState(0);
+
 	// 丸影の生成
 	g_nShadow = CreateShadow(g_posModel, 12.0f);
 
-	
+	bFlg = false;
 	//風の移動量？の初期化？
 	bWind = false;
 	for (int i = 0; i < 10; i++) {
@@ -82,6 +91,7 @@ HRESULT InitModel(void)
 		WindVec[i] = XMFLOAT3(0.0f,0.0f,0.0f);
 	}
 	g_stm = 100; // スタミナ
+	g_frameCnt = 0;
 	return hr;
 }
 
@@ -102,10 +112,10 @@ void UninitModel(void)
 void UpdateModel(void)
 {
 	 
-
 	
 	LONG stickX = GetJoyLX(0);
 	LONG stickY = GetJoyLY(0);
+
 
 	if ((stickX < STICK_DEAD_ZONE && stickX > -STICK_DEAD_ZONE) &&
 		(stickY < STICK_DEAD_ZONE && stickY > -STICK_DEAD_ZONE))
@@ -130,19 +140,28 @@ void UpdateModel(void)
 		// 風に乗ったときの処理
 		if (bWind1[i])
 		{
-			g_accModel.x  += 0.8f * WindVec[i].x;
-			g_accModel.y  += 0.8f * WindVec[i].y;
-			g_accModel.z  += 0.8f * WindVec[i].z;
-			g_rotDestModel.x += 10 * WindVec[i].y;
-			//g_rotDestModel.y = 90 * WindVec[i].x;
-			//g_rotDestModel.y = 90 * WindVec[i].z;
-			if (g_rotDestModel.x >= 90)
+			if (!bFlg)
 			{
-				g_rotDestModel.x = 90;
+				g_accModel.x = 5.0f * WindVec[i].x + 1.1f;
+				g_accModel.y = 5.0f * WindVec[i].y + 1.1f;
+				g_accModel.z = 5.0f * WindVec[i].z + 1.1f;
+				g_rotDestModel.x = 90 * WindVec[i].y;
+				g_rotDestModel.y = 90 * WindVec[i].x;
+				g_rotDestModel.y = 90 * WindVec[i].z;
+				if (g_rotDestModel.x >= 90)
+				{
+					g_rotDestModel.x = 90;
+					
+				}
+				bFlg = true;
 				bWind = true;
-			}
+		    }
+			
+			
+			
 			
 		}
+		
 	}
 	
 
@@ -152,14 +171,22 @@ void UpdateModel(void)
 		// 機体のロール
 		g_rotDestModel.z = -30.0f;
 		g_rotDestModel.y -=  2.0f;
+		if (GetKeyPress(VK_SPACE))
+		{
+			g_rotDestModel.y -= 2.0f;
+		}
+
 		
 	}
 	else if ((GetKeyPress(VK_RIGHT) || GetKeyPress(VK_D)) && !bWind)
 	{
 		// 機体のロール
 		g_rotDestModel.z = 30.0f;
-		g_rotDestModel.y += 2;
-	
+		g_rotDestModel.y += 2.0f;
+		if (GetKeyPress(VK_SPACE))
+		{
+			g_rotDestModel.y += 2.0f;
+		}
 	} 
 	
 	
@@ -185,7 +212,7 @@ void UpdateModel(void)
 		if (stickY > 0 && !bWind)
 		{
 			//g_rotDestModel.x = -30;
-			g_rotDestModel.x = 5 * (float)stickY / 8000;	 // 機体の傾き
+			g_rotDestModel.x = 5 * (float)stickY / 1500;	 // 機体の傾き
 		}
 	}
 	
@@ -200,7 +227,7 @@ void UpdateModel(void)
 	}
 	
 
-	if (GetKeyPress(VK_SPACE) )
+	if (GetKeyTrigger(VK_SPACE) )
 	{
 		g_accModel.x += 3;
 		g_accModel.y += 3;
@@ -216,25 +243,62 @@ void UpdateModel(void)
 		g_accModel.z -= 0.01f;
 		if (g_accModel.z <= 1)
 		{
+			// 風解除
+			for (int i = 0; i < 10; i++)
+			{
+				//使用していなかったらスキップ
+				if (!bWind1[i])
+				{
+					continue;
+				}
+
+				bWind1[i] = false;
+			}
+
 			bWind = false;
+			bFlg = false;
 			g_accModel.z = 1;
 		}
 	}
 	if (g_accModel.y > 1)
 	{
 		g_accModel.y -= 0.71f;
-		if (g_accModel.y < 1)
+		if (g_accModel.y <= 1)
 		{
+			// 風解除
+			for (int i = 0; i < 10; i++)
+			{
+				//使用していなかったらスキップ
+				if (!bWind1[i])
+				{
+					continue;
+				}
+
+				bWind1[i] = false;
+			}
 			bWind = false;
+			bFlg = false;
 			g_accModel.y = 1;
 		}
 	}
 	if (g_accModel.x > 1)
 	{
 		g_accModel.x -= 0.01f;
-		if (g_accModel.x < 1)
+		if (g_accModel.x <= 1)
 		{
+			// 風解除
+			for (int i = 0; i < 10; i++)
+			{
+				//使用していなかったらスキップ
+				if (!bWind1[i])
+				{
+					continue;
+				}
+
+				bWind1[i] = false;
+			}
 			bWind = false;
+			bFlg = false;
 			g_accModel.x = 1;
 		}
 	}
@@ -253,17 +317,17 @@ void UpdateModel(void)
 	}
 	
 	// 加速度の上限
-	if (g_accModel.y > 5.5f)
+	if (g_accModel.y > MAX_ACC)
 	{
-		g_accModel.y = 5.5f;
+		g_accModel.y = MAX_ACC;
 	}
-	if (g_accModel.x > 5.5f)
+	if (g_accModel.x > MAX_ACC)
 	{
-		g_accModel.x = 5.5f;
+		g_accModel.x = MAX_ACC;
 	}
-	if (g_accModel.z > 5.5f)
+	if (g_accModel.z > MAX_ACC)
 	{
-		g_accModel.z = 5.5f;
+		g_accModel.z = MAX_ACC;
 	}
 
 	// 自動前移動
@@ -274,20 +338,22 @@ void UpdateModel(void)
 	// 上昇&下降処理
 	
 	// 機体の傾きリセット
-	if (g_rotDestModel.x > 0)
+	if (g_rotDestModel.x > AUTO_FALL_ROT)
 	{
 		g_rotDestModel.x -= 0.5f;
 		if (g_rotDestModel.x < 0.5f && g_rotDestModel.x > 0.5f)
 		{
-			g_rotDestModel.x = 0;
+			bWind = false;
+			g_rotDestModel.x = AUTO_FALL_ROT;
 		}
 	}
-	if (g_rotDestModel.x < 0)
+	if (g_rotDestModel.x < AUTO_FALL_ROT)
 	{
 		g_rotDestModel.x += 0.5f;
 		if (g_rotDestModel.x > 0.5f && g_rotDestModel.x < 0.5f)
 		{
-			g_rotDestModel.x = 0;
+			bWind = false;
+			g_rotDestModel.x = AUTO_FALL_ROT;
 		}
 	}
 
@@ -387,6 +453,10 @@ void UpdateModel(void)
 	{
 		g_posModel.y = 0.0f;
 	}
+	if (g_posModel.y > MAX_FLY_Y)	// 地面 
+	{
+		g_posModel.y = MAX_FLY_Y;
+	}
 	/*if (g_posModel.x < -310.0f) {
 		g_posModel.x = -310.0f;
 	}
@@ -470,7 +540,9 @@ void UpdateModel(void)
 	// デバック用文字列
 	PrintDebugProc("[ﾋｺｳｷ ｲﾁ : (%f : %f : %f)]\n", g_posModel.x, g_posModel.y, g_posModel.z);
 	PrintDebugProc("[ﾓﾃﾞﾙﾑｷ : (%f : %f : %f)]\n", g_rotDestModel.x, g_posModel.y, g_posModel.z);
-	PrintDebugProc("[ﾓﾃﾞﾙｶｿｸ : (%d : %f : %f)]\n",g_accModel.x, WindVec[1].y, g_accModel.z);
+	PrintDebugProc("[ﾓﾃﾞﾙｶｿｸ : (%f : %f : %f)]\n",g_accModel.x, g_accModel.y, g_accModel.z);
+	PrintDebugProc("[ｶｾﾞﾙｶｿｸ : (%f : %f : %f)]\n", WindVec[1].x, WindVec[1].y, WindVec[1].z);
+	PrintDebugProc("[ｶｾﾞｱﾀﾘﾊﾝﾃｲ : (%d: %d )]\n", bWind1[0], bWind1[1]);
 	//PrintDebugProc("\n");
 	PrintDebugProc("*** ﾋｺｳｷ ｿｳｻ ***\n");
 	PrintDebugProc("ﾏｴ   ｲﾄﾞｳ : \x1e\n");//↑

@@ -159,6 +159,15 @@
     <ClCompile Include="collision.cpp">
       <Filter>ソース ファイル\scene\gameScene</Filter>
     </ClCompile>
+    <ClCompile Include="button.cpp">
+      <Filter>ソース ファイル\scene\system</Filter>
+    </ClCompile>
+    <ClCompile Include="stageButton.cpp">
+      <Filter>ソース ファイル\scene\stageSelectScene</Filter>
+    </ClCompile>
+    <ClCompile Include="buliding1.cpp">
+      <Filter>ソース ファイル\scene\gameScene\object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -259,6 +268,15 @@
     </ClInclude>
     <ClInclude Include="collision.h">
       <Filter>ヘッダー ファイル\scene\gameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="button.h">
+      <Filter>ヘッダー ファイル\scene\system</Filter>
+    </ClInclude>
+    <ClInclude Include="stageButton.h">
+      <Filter>ヘッダー ファイル\scene\stageSelectScene</Filter>
+    </ClInclude>
+    <ClInclude Include="buliding1.h">
+      <Filter>ヘッダー ファイル\scene\gameScene\object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
