@@ -16,4 +16,4 @@ void UninitEnemy(void);
 void UpdateEnemy(void);
 void DrawEnemy(void);
 
-int EnemyStartChase();
+int EnemyStartChase(int i, XMFLOAT3 pos);

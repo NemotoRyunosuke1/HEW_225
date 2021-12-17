@@ -8,6 +8,13 @@
 #include "debugproc.h"
 #include "sceneBase.h"
 #include "stageSelectScene.h"
+#include "fade.h"
+
+#include "input.h"
+#include <Windows.h>
+
+#pragma comment(lib, "dinput8.lib")
+#pragma comment(lib, "dxguid.lib")
 
 //*****************************************************************************
 // マクロ定義
@@ -26,6 +33,8 @@
 #define TEX_LOGO     1
 #define MAX_TEXTURE  2
 
+#define Release(x) { if((x) != nullptr) (x)->Release(); (x) = nullptr;}
+
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
@@ -37,73 +46,100 @@ static LPCWSTR g_pszTexName[] =
 static ID3D11ShaderResourceView* g_pTexture[MAX_TEXTURE];
 
 //=============================================================================
-// 初期化
+// コンストラクタ
 //=============================================================================
-HRESULT InitTitleBG()
+Input::Input(Window* win) :
+	win(win), result(S_OK), input(nullptr), key(nullptr)
 {
+	memset(&keys, 0, sizeof(keys));
+	memset(&olds, 0, sizeof(keys));
 
-	HRESULT hr = S_OK;
-	ID3D11Device* pDevice = GetDevice();
+	CreateInput();
+	CreateKey();
+	SetKeyFormat();
+	SetKeyCooperative();
+}
 
-	// テクスチャ読み込み
-	for (int i = 0; i < MAX_TEXTURE; ++i)
+// デストラクタ
+Input::~Input()
+{
+	Release(key);
+	Release(input);
+	delete win;
+}
+
+// インプットの生成
+HRESULT Input::CreateInput(void)
+{
+	result = DirectInput8Create(GetModuleHandle(0), DIRECTINPUT_VERSION, IID_IDirectInput8,
+		(void**)(&input), NULL);
+
+	return result;
+}
+
+// キーデバイスの生成
+HRESULT Input::CreateKey(void)
+{
+	result = input->CreateDevice(GUID_SysKeyboard, &key, NULL);
+
+	return result;
+}
+
+// キーフォーマットのセット
+HRESULT Input::SetKeyFormat(void)
+{
+	result = key->SetDataFormat(&c_dfDIKeyboard);
+
+	return result;
+}
+
+// キーの協調レベルのセット
+HRESULT Input::SetKeyCooperative(void)
+{
+	//result = key->SetCooperativeLevel(win->GetHandle(), DISCL_NONEXCLUSIVE | DISCL_BACKGROUND);
+
+	// 入力デバイスへのアクセス
+	key->Acquire();
+
+	return result;
+}
+
+// キー入力
+bool Input::CheckKey(UINT index)
+{
+	// チェックフラグ
+	bool flag = false;
+
+	// キー情報を取得
+	key->GetDeviceState(sizeof(keys), &keys);
+	if (keys[index] & 0x80)
 	{
-		hr = CreateTextureFromFile(pDevice,
-			g_pszTexName[i], &g_pTexture[i]);
-		if (FAILED(hr))
-		{
-			return hr;
-		}
+		flag = true;
 	}
 
-	// BGM再生
+	olds[index] = keys[index];
 
-
+	return flag;
 
 }
-//=============================================================================
-// 終了処理
-//=============================================================================
-void UninitTitleBG()
+
+// トリガーの取得
+bool Input::TriggerKey(UINT index)
 {
-	// BGM再生停止
+	// チェックフラグ
+	bool flag = false;
 
-
-
-
-
-	// テクスチャ解放
-	for (int i = 0; i < MAX_TEXTURE; ++i)
+	// キー情報を取得
+	key->GetDeviceState(sizeof(keys), &keys);
+	if ((keys[index] & 0x80) && !(olds[index] & 0x80))
 	{
-		SAFE_RELEASE(g_pTexture[i]);
+		flag = true;
 	}
-}
-//=============================================================================
-// 更新
-//=============================================================================
-void UpdateTitleBG()
-{
+	olds[index] = keys[index];
 
-	// Enter or Spaceキー押下
-	//if (GetKeyRelease(VK_RETURN)) ||
-	//	GetKeyRelease(VK_SPACE){
-	//	// ゲーム画面へ
-	//	SetScene(SCENE_GAME);
-	//	return;
- //   }
+	return flag;
 }
-//=============================================================================
-// 描画
-//=============================================================================
-void DrawTitleBG()
-{
-	ID3D11DeviceContext* pDC = GetDeviceContext();
 
-	SetPolygonSize(BG_WIDTH, BG_HEIGHT);
-	SetPolygonPos(LOGO_POS_X, LOGO_POS_Y);
-	SetPolygonTexture(g_pTexture[TEX_LOGO]);
-	DrawPolygon(pDC);
-}
 
 
 

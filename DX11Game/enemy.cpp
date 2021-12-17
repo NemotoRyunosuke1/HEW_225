@@ -16,7 +16,7 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-#define MODEL_ENEMY			"data/model/helicopter000.fbx"
+#define MODEL_ENEMY			"data/model/mukudori1.fbx"
 
 #define	VALUE_MOVE_ENEMY	(0.40f)		// 移動速度
 #define	RATE_MOVE_ENEMY		(0.20f)		// 移動慣性係数
@@ -98,6 +98,7 @@ HRESULT InitEnemy(void)
 			0.0f,
 			-CosDeg(g_enemy[i].m_rot.y) * VALUE_MOVE_ENEMY);
 		g_enemy[i].m_catch = false;
+
 		// 丸影の生成
 		g_enemy[i].m_nShadow = CreateShadow(g_enemy[i].m_pos, 12.0f);
 	}
@@ -196,8 +197,6 @@ void UpdateEnemy(void)
 		if (fDiffRotY < -180.0f) {
 			fDiffRotY += 360.0f;
 		}
-
-
 
 
 		// 目的の角度まで慣性をかける
