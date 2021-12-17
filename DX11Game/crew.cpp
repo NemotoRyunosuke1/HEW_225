@@ -15,7 +15,7 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-#define MODEL_CREW			"data/model/helicopter000.fbx"
+#define MODEL_CREW			"data/model/mukudori1.fbx"
 
 #define	VALUE_MOVE_CREW	    (0.40f)		// 移動速度
 #define	RATE_MOVE_CREW		(0.20f)		// 移動慣性係数
