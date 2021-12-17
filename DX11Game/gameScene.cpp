@@ -14,6 +14,7 @@
 #include "crew.h"
 #include "enemy.h"
 
+#define MAX_BULIDING (100)
 
 //=============================================================================
 // 初期化処理
@@ -43,6 +44,13 @@ GameScene::GameScene()
 
 	// スタミナゲージ初期化
 	m_pStaminaBar = new StaminaBar;
+
+	// ビル初期化
+	m_pBuliding = new Buliding[MAX_BULIDING];
+	for (int i = 0; i < MAX_BULIDING; i++)
+	{
+		m_pBuliding[i].Create(XMFLOAT3((float)(rand() % 800), 100, (float)(rand() % 800)), XMFLOAT3(300.0f, 2000.0f, 300.0f));
+	}
 }
 
 //=============================================================================
@@ -73,6 +81,9 @@ GameScene::~GameScene()
 
 	// スタミナゲージ終了
 	delete m_pStaminaBar;
+
+	// ビル終了処理
+	delete[] m_pBuliding;
 }
 
 //=============================================================================
@@ -107,6 +118,12 @@ void GameScene::Update()
 	// ゴール更新
 	m_pGoal->Update();
 
+	// ビル更新
+	for (int i = 0; i < MAX_BULIDING; i++)
+	{
+		m_pBuliding[i].Update();
+	}
+	
 	// 風とプレイヤーの当たり判定
 	for (int i = 0; i < MAX_WIND; ++i)
 	{
@@ -125,15 +142,17 @@ void GameScene::Update()
 			GetModelPos().z + GetModelCollisionSize().z / 2 > m_pWindManager->GetPos(i).z - m_pWindManager->GetSize(i).z / 2 && GetModelPos().z - GetModelCollisionSize().z / 2 < m_pWindManager->GetPos(i).z + m_pWindManager->GetSize(i).z / 2
 			)
 		{
-			SetWindCollision(true);
+		
 			SetModelWindCollision(true, i,m_pWindManager->GetVec(i));
 		}
 		else
 		{
-			SetModelWindCollision(false, i,XMFLOAT3(1.0f,1.0f,1.0f));
+			SetModelWindCollision(false, i, m_pWindManager->GetVec(i));
+			continue;
 		}
+		
 
-	
+		
 
 	}
 
@@ -186,6 +205,12 @@ void GameScene::Draw()
 
 	// ゴール描画
 	m_pGoal->Draw();
+
+	// ビル描画
+	for (int i = 0; i < MAX_BULIDING; i++)
+	{
+		m_pBuliding[i].Draw();
+	}
 
 	// 2D描画
 	// Zバッファ無効(Zチェック無&Z更新無)

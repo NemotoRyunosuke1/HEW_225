@@ -223,9 +223,9 @@ void CCamera::Update()
 
 #if _DEBUG
 	// デバック用文字列
-	PrintDebugProc("[ｶﾒﾗ ｲﾁ : (%d)(%d)]\n", mouseX,mouseY);
-	PrintDebugProc("[ｶﾒﾗ ｲﾁ : (%f, %f, %f)]\n", m_vAngle.x, m_vAngle.y, m_vAngle.z);
-	PrintDebugProc("[ｶﾒﾗ ｲﾁ : (%f, %f, %f)]\n", stickX, stickY, m_vPos.z);
+	//PrintDebugProc("[ｶﾒﾗ ｲﾁ : (%d)(%d)]\n", mouseX,mouseY);
+	//PrintDebugProc("[ｶﾒﾗ ｲﾁ : (%f, %f, %f)]\n", m_vAngle.x, m_vAngle.y, m_vAngle.z);
+	//PrintDebugProc("[ｶﾒﾗ ｲﾁ : (%f, %f, %f)]\n", stickX, stickY, m_vPos.z);
 	//PrintDebugProc("[ﾁｭｳｼﾃﾝ : (%f, %f, %f)]\n", m_vTarget.x, m_vTarget.y, m_vTarget.z);
 	//PrintDebugProc("\n");
 

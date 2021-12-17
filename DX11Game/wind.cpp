@@ -19,7 +19,7 @@ Wind::Wind()
 	m_pos  = XMFLOAT3(0.0f,50.0f,0.0f);	// 位置
 	m_size = XMFLOAT3(300.0f,2000.0f,300.0f);	// サイズ
 	m_rot  = XMFLOAT3(0.0f,0.0f,0.0f);	// 向き
-	m_vec  = XMFLOAT3(0.0f,1.0f,0.0f);	// 向き
+	m_vec  = XMFLOAT3(1.0f,0.0f,0.0f);	// 向き
 
 	m_use  = false;
 
@@ -121,7 +121,7 @@ void Wind::Create(XMFLOAT3 pos, XMFLOAT3 size, XMFLOAT3 vec)
 {
 	m_pos = pos;
 	m_size = size;
-	m_rot = vec;
+	m_vec = vec;
 	m_use = true;
 }
 XMFLOAT3 Wind::GetPos()
