@@ -606,6 +606,10 @@ XMFLOAT3& GetModelCollisionSize()
 {
 	return g_collisionSize;
 }
+XMFLOAT3& GetModelAcc()
+{
+	return g_accModel;
+}
 void SetWindCollision(bool flg)
 {																		 
 	bWind = flg;
