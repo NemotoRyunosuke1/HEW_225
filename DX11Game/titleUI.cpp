@@ -85,12 +85,12 @@ void UpdateTitleBG()
 {
 
 	// Enter or Spaceキー押下
-	if (GetKeyRelease(VK_RETURN)) ||
-		GetKeyRelease(VK_SPACE){
-		// ゲーム画面へ
-		SetScene(SCENE_GAME);
-		return;
-    }
+	//if (GetKeyRelease(VK_RETURN)) ||
+	//	GetKeyRelease(VK_SPACE){
+	//	// ゲーム画面へ
+	//	SetScene(SCENE_GAME);
+	//	return;
+ //   }
 }
 //=============================================================================
 // 描画
