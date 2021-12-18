@@ -1,6 +1,7 @@
 #pragma once
 
 #include "sceneBase.h"
+#include "stageButton.h"
 
 class StageSlectScene : public SceneBase
 {
@@ -12,5 +13,6 @@ public:
 	void Draw();
 
 private:
-
+	
+	StageButton* m_pStageButton;
 };

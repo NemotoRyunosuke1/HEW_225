@@ -160,6 +160,7 @@
   <ItemGroup>
     <ClCompile Include="AssimpModel.cpp" />
     <ClCompile Include="bg.cpp" />
+    <ClCompile Include="buliding1.cpp" />
     <ClCompile Include="button.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="collision.cpp" />
@@ -183,6 +184,7 @@
     <ClCompile Include="sceneBase.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="shadow.cpp" />
+    <ClCompile Include="stageButton.cpp" />
     <ClCompile Include="stageSelectScene.cpp" />
     <ClCompile Include="staminaBar.cpp" />
     <ClCompile Include="Texture.cpp" />
@@ -196,6 +198,7 @@
   <ItemGroup>
     <ClInclude Include="AssimpModel.h" />
     <ClInclude Include="bg.h" />
+    <ClInclude Include="buliding1.h" />
     <ClInclude Include="button.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="collision.h" />
@@ -220,6 +223,7 @@
     <ClInclude Include="sceneBase.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="shadow.h" />
+    <ClInclude Include="stageButton.h" />
     <ClInclude Include="stageSelectScene.h" />
     <ClInclude Include="staminaBar.h" />
     <ClInclude Include="Texture.h" />

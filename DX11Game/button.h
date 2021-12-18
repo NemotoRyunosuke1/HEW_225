@@ -13,9 +13,9 @@ public:
 	bool GetFlg();
 	void SetFlg(bool);
 	void SetPos(XMFLOAT3 );
-	Size GetSize();
-	Pos GetPos();
-	void CreateButton(XMFLOAT3 size, XMFLOAT3 pos, bool use);
+	XMFLOAT3 GetSize();
+	XMFLOAT3 GetPos();
+	void CreateButton(XMFLOAT3 size, XMFLOAT3 pos);
 	bool GetUse();
 	void SetFrameNum(int);
 	void SetSelect(bool);
