@@ -40,6 +40,7 @@ static CAssimpModel	g_model;		// モデル
 static XMFLOAT3		g_posModel;		// 現在の位置
 static XMFLOAT3		g_rotModel;		// 現在の向き
 static XMFLOAT3		g_rotDestModel;	// 目的の向き
+static XMFLOAT3		g_rotLightModel;	// 目的の向き
 static XMFLOAT3		g_moveModel;	// 移動量
 static XMFLOAT3		g_accModel;	// 加速度
 static XMFLOAT3		g_collisionSize;	// 当たり判定サイズ
@@ -57,6 +58,7 @@ static float g_stm;
 static int g_frameCnt;
 static double d = 0;
 static bool g_bDebugMode;
+static bool g_bOverHeart;
 //=============================================================================
 // 初期化処理
 //=============================================================================
@@ -67,13 +69,14 @@ HRESULT InitModel(void)
 	ID3D11DeviceContext* pDeviceContext = GetDeviceContext();
 
 	// 位置・回転・スケールの初期設定
-	g_posModel = XMFLOAT3(0.0f, 300.0f, -2000.0f);
+	g_posModel = XMFLOAT3(-1000.0f, 300.0f, -2000.0f);
 	g_moveModel = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	g_rotModel = XMFLOAT3(0.0f, 180.0f, 0.0f);
 	g_rotDestModel = XMFLOAT3(0.0f, 180.0f, 0.0f);
 	g_accModel = XMFLOAT3(1.0f, 1.0f, 1.0f);
 	g_sclModel = XMFLOAT3(5.1f, 5.1f, 5.1f);
 	g_collisionSize = XMFLOAT3(100.1f, 100.1f, 100.1f);
+	g_rotLightModel = XMFLOAT3(0.0f, -1.0f, 1.0f);
 	// モデルデータの読み込み
 	if (!g_model.Load(pDevice, pDeviceContext, MODEL_PLANE)) {
 		MessageBoxA(GetMainWnd(), "モデルデータ読み込みエラー", "InitModel", MB_OK);
@@ -95,6 +98,7 @@ HRESULT InitModel(void)
 	g_stm = 100; // スタミナ
 	g_frameCnt = 0;
 	g_bDebugMode = false;
+	g_bOverHeart = false;
 	return hr;
 }
 
@@ -144,6 +148,10 @@ void UpdateModel(void)
 	// アニメーション更新
 	d+= 0.02f;
 	g_model.SetAnimTime(d);
+	if (d > 100000000)
+	{
+		d -= 100000000;
+	}
 
 	// コントローラースティック情報取得
 	LONG stickX = GetJoyLX(0);
@@ -324,8 +332,9 @@ void UpdateModel(void)
 				g_rotDestModel.y = 90 * WindVec[i].x +  180 * ((1 + WindVec[i].z)/2);
 				//g_rotDestModel.y = 90 * WindVec[i].z ;
 				
-				bFlg = true;
+				bFlg  = true;
 				bWind = true;
+				g_stm += 0.5f;
 		    }			
 		}
 	}
@@ -337,8 +346,9 @@ void UpdateModel(void)
 		// 機体のロール
 		g_rotDestModel.z = -30.0f;
 		g_rotDestModel.y -=  2.0f;
-		if (GetKeyPress(VK_SPACE))
+		if (GetKeyPress(VK_SPACE) && !g_bOverHeart)
 		{
+			g_stm -= 0.3f;	// スタミナ減少
 			g_rotDestModel.y -= 2.0f;
 		}
 
@@ -349,8 +359,9 @@ void UpdateModel(void)
 		// 機体のロール
 		g_rotDestModel.z = 30.0f;
 		g_rotDestModel.y += 2.0f;
-		if (GetKeyPress(VK_SPACE))
+		if (GetKeyPress(VK_SPACE) && !g_bOverHeart)
 		{
+			g_stm -= 0.3f;	// スタミナ減少
 			g_rotDestModel.y += 2.0f;
 		}
 	} 
@@ -364,7 +375,7 @@ void UpdateModel(void)
 		//g_rotDestModel.x += 30.0f * state.Gamepad.sThumbLY / 10000;	// 機体の傾き
 
 		// 羽ばたきｶｿｸ
-		if (GetJoyButton(0, JOYSTICKID6))
+		if (GetJoyButton(0, JOYSTICKID6) && !g_bOverHeart)
 		{
 			g_stm -= 0.3f;	// スタミナ減少
 			g_rotDestModel.y += 1.0f * stickX / 8000;
@@ -377,7 +388,7 @@ void UpdateModel(void)
 			g_rotDestModel.x = 5 * (float)stickY / 3000;	// 機体の傾き
 		}
 		// 上昇
-		if (stickY > 0 && !bWind)
+		if (stickY > 0 && !bWind && !g_bOverHeart)
 		{
 			
 			g_rotDestModel.x = 5 * (float)stickY / 1500;	 // 機体の傾き
@@ -385,17 +396,18 @@ void UpdateModel(void)
 	}
 	
 	// LBボタンはばたき
-	if (GetJoyRelease(0, JOYSTICKID6))
+	if (GetJoyRelease(0, JOYSTICKID6) && !g_bOverHeart)
 	{
 		g_accModel.x += 3;
 		g_accModel.y += 6;
 		g_accModel.z += 3;
 		//g_rotDestModel.y += 1.0f * stickX /80 ;
 		g_rotDestModel.z += 30;
+		g_stm -= 10.0f;	// スタミナ減少
 	}
 
 	// スペースキー羽ばたき
-	if (GetKeyTrigger(VK_SPACE) )
+	if (GetKeyTrigger(VK_SPACE) && !g_bOverHeart)
 	{
 		g_accModel.x += 3;
 		g_accModel.y += 3;
@@ -529,27 +541,28 @@ void UpdateModel(void)
 
 	// キーボード
 	// 上昇
-	if ((GetKeyPress(VK_DOWN) || GetKeyPress(VK_S) ) && !bWind)
+	if ((GetKeyPress(VK_DOWN) || GetKeyPress(VK_S) ) && !bWind && !g_bOverHeart)
 	{
-		// 前移動
-		g_rotDestModel.x = 30;
+		// 上を向く
+		g_rotDestModel.x += 5;
+		if (g_rotDestModel.x > 90)
+		{
+			g_rotDestModel.x = 90;
+		}
+
 	}
-	if (GetKeyPress(VK_I) )
-	{
-		g_rotDestModel.x = 30;
-		
-	}
+	
 	// 下降
 	if ((GetKeyPress(VK_UP) || GetKeyPress(VK_W) ) && !bWind)
 	{
-		// 前移動
-		g_rotDestModel.x = -50;
+		// 下を向く
+		g_rotDestModel.x -= 5;
+		if (g_rotDestModel.x < -90)
+		{
+			g_rotDestModel.x = -90;
+		}
 	}
-	if (GetKeyPress(VK_K) )
-	{
-		g_rotDestModel.x = -30;
-		
-	}
+	
 
 	if (g_rotDestModel.y >= 360)
 	{
@@ -647,16 +660,35 @@ void UpdateModel(void)
 	// スタミナ処理
 	if (g_rotModel.x > 3)
 	{
-		if(!bWind)
+		// スタミナ減少
+		if(!bWind)	// 風に乗ってないとき
 		g_stm -= 0.1f * g_rotModel.x/45;
+
+		// オーバーヒート
+		if (g_stm <= 0.0f)
+		{
+			g_bOverHeart = true;
+			g_stm = 0.0f;
+		}
+
 	}
 	else
 	{
+		// スタミナ回復
+		if (!bWind)	// 風に乗ってないとき
+		{
+			g_stm += 0.1f;
 
-		g_stm += 0.1f;
+		}
+		else 	// 風に乗ってる時
+		{
+			g_stm += 0.5f;
+		}
+	
 		if (g_stm > 100)
 		{
-			g_stm = 100;
+			g_stm = 100;	// スタミナ上限
+			g_bOverHeart = false;	// オーバーヒート解除
 		}
 	}
 
@@ -671,6 +703,8 @@ void UpdateModel(void)
 		
 	}
 
+	g_rotLightModel.x = -SinDeg(g_rotModel.y);
+	g_rotLightModel.z = -CosDeg(g_rotModel.y);
 
 
 #if _DEBUG
@@ -777,4 +811,8 @@ float GetSTM()
 XMFLOAT3 GetMoveModel()
 {
 	return g_moveModel;
+}
+XMFLOAT3& GetModelRotLight()
+{
+	return g_rotLightModel;
 }

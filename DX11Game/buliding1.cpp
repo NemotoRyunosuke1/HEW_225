@@ -1,6 +1,6 @@
 #include "buliding1.h"
 
-#define MODEL_PLANE			"data/model/buliding1.fbx"
+#define MODEL_PLANE			"data/model/buliding2.fbx"
 
 
 Buliding::Buliding()

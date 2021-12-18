@@ -23,5 +23,6 @@ private:
 	Buliding* m_pBuliding;
 
 	bool m_bDebugMode;
+	bool m_bPause;
 };
 
