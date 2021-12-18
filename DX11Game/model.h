@@ -25,3 +25,4 @@ XMFLOAT3& GetModelAcc();
 void SetWindCollision(bool );
 void SetModelWindCollision(bool ,int ,XMFLOAT3 vec);
 float GetSTM();
+XMFLOAT3 GetMoveModel();

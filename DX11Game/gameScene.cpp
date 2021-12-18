@@ -13,6 +13,7 @@
 #include "shadow.h"
 #include "crew.h"
 #include "enemy.h"
+#include "input.h"
 
 #define MAX_BULIDING (10)
 
@@ -22,7 +23,7 @@
 GameScene::GameScene()
 {
 	// メッシュフィールド初期化
-	InitMeshField(50, 50, 100.0f, 100.0f);
+	InitMeshField(10, 10, 2000.0f, 2000.0f);
 
 	// モデル初期化
 	InitModel();
@@ -49,8 +50,11 @@ GameScene::GameScene()
 	m_pBuliding = new Buliding[MAX_BULIDING];
 	for (int i = 0; i < MAX_BULIDING; i++)
 	{
-		m_pBuliding[i].Create(XMFLOAT3((float)(rand() % 8000), 10, (float)(rand() % 8000)), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		m_pBuliding[i].Create(XMFLOAT3(i * 800 -3000, 10, 0), XMFLOAT3(10.0f, 10.0f + rand()%3, 10.0f));
 	}
+
+	// 変数初期化
+	m_bDebugMode = false;
 }
 
 //=============================================================================
@@ -93,6 +97,27 @@ void GameScene::Update()
 {
 	// カメラ更新
 	CCamera::Get()->Update();
+
+	// デバックモード
+#if _DEBUG
+	if (GetKeyTrigger(VK_F12))
+	{
+		if (m_bDebugMode)
+		{
+			m_bDebugMode = false;
+		}	
+		else
+		{
+			m_bDebugMode = true;
+		}
+	
+
+	}
+
+
+	if (m_bDebugMode)return;
+#endif
+
 
 	// メッシュフィールド更新
 	UpdateMeshField();

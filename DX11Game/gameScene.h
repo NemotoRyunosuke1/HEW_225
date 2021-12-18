@@ -21,5 +21,7 @@ private:
 	Goal* m_pGoal;
 	StaminaBar* m_pStaminaBar;
 	Buliding* m_pBuliding;
+
+	bool m_bDebugMode;
 };
 
