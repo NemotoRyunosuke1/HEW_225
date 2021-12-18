@@ -48,7 +48,7 @@ static ID3D11ShaderResourceView* g_pTexture[MAX_TEXTURE];
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-Input::Input(Window* win) :
+Input::Input(Window* win):
 	win(win), result(S_OK), input(nullptr), key(nullptr)
 {
 	memset(&keys, 0, sizeof(keys));
@@ -96,6 +96,7 @@ HRESULT Input::SetKeyFormat(void)
 // キーの協調レベルのセット
 HRESULT Input::SetKeyCooperative(void)
 {
+	// ↓エラーになる
 	//result = key->SetCooperativeLevel(win->GetHandle(), DISCL_NONEXCLUSIVE | DISCL_BACKGROUND);
 
 	// 入力デバイスへのアクセス
