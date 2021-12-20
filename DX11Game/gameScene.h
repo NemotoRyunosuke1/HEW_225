@@ -5,6 +5,7 @@
 #include "goal.h"
 #include "staminaBar.h"
 #include "buliding1.h"
+#include "ScoreUI.h"
 
 class GameScene :public SceneBase
 {
@@ -21,6 +22,7 @@ private:
 	Goal* m_pGoal;
 	StaminaBar* m_pStaminaBar;
 	Buliding* m_pBuliding;
+	ScoreUI* m_pScoreUI;
 
 	bool m_bDebugMode;
 	bool m_bPause;
