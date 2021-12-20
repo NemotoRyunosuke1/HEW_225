@@ -13,8 +13,9 @@
 #include "shadow.h"
 #include "crew.h"
 #include "enemy.h"
+#include "input.h"
 
-#define MAX_BULIDING (100)
+#define MAX_BULIDING (400)
 
 //=============================================================================
 // 初期化処理
@@ -22,7 +23,7 @@
 GameScene::GameScene()
 {
 	// メッシュフィールド初期化
-	InitMeshField(50, 50, 100.0f, 100.0f);
+	InitMeshField(10, 10, 2000.0f, 2000.0f);
 
 	// モデル初期化
 	InitModel();
@@ -47,10 +48,107 @@ GameScene::GameScene()
 
 	// ビル初期化
 	m_pBuliding = new Buliding[MAX_BULIDING];
-	for (int i = 0; i < MAX_BULIDING; i++)
+
+
+	/*for (int j = 0; j < 4; j++)
 	{
-		m_pBuliding[i].Create(XMFLOAT3((float)(rand() % 800), 100, (float)(rand() % 800)), XMFLOAT3(300.0f, 2000.0f, 300.0f));
+		for (int i = 0; i < 4; i++)
+		{
+			m_pBuliding[i + j * 4].Create(XMFLOAT3(80 - 300 * i, 10, 0+ j * 300), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
+
+		}
 	}
+	for (int j = 0; j < 4; j++)
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			m_pBuliding[i + j * 4 + 16].Create(XMFLOAT3(-1800 - 300 * i, 10, 0 + j * 300), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
+
+		}
+	}
+	for (int j = 0; j < 4; j++)
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			m_pBuliding[i + j * 4 + 32].Create(XMFLOAT3(-1800 - 300 * i, 10, 0 + j * 300 + 1800), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
+
+		}
+	}
+	for (int j = 0; j < 4; j++)
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			m_pBuliding[i + j * 4 + 48].Create(XMFLOAT3(80 - 300 * i, 10, 0 + j * 300 + 1800), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
+
+		}
+	}
+	for (int j = 0; j < 4; j++)
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			m_pBuliding[i + j * 4 + 64].Create(XMFLOAT3(1880 - 300 * i, 10, 0 + j * 300 ), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
+
+		}
+	}
+	for (int j = 0; j < 4; j++)
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			m_pBuliding[i + j * 4 + 80].Create(XMFLOAT3(1880 - 300 * i, 10, 1880 + j * 300), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
+
+		}
+	}
+	for (int j = 0; j < 4; j++)
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			m_pBuliding[i + j * 4 + 96].Create(XMFLOAT3(-3680 - 300 * i, 10, 0 + j * 300), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
+
+		}
+	}
+	for (int j = 0; j < 4; j++)
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			m_pBuliding[i + j * 4 + 112].Create(XMFLOAT3(-3680 - 300 * i, 10, 1880 + j * 300), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
+
+		}
+	}
+	for (int j = 0; j < 4; j++)
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			m_pBuliding[i + j * 4 + 128].Create(XMFLOAT3(-3680 - 300 * i, 10, 1880 + j * 300), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
+
+		}
+	}*/
+	for (int k = 0; k < MAX_BULIDING / 16 / 5; k++)
+	{
+		for (int l = 0; l < MAX_BULIDING / 16 / 5; l++)
+		{
+			for (int j = 0; j < 4; j++)
+			{
+				for (int i = 0; i < 4; i++)
+				{
+					m_pBuliding[i + j * 4 + 80 * k +l * 16].Create(XMFLOAT3(-3800 - 330 * i + 2000 * l, 10, 2000 * k + j * 330), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
+
+				}
+			}
+		}
+		
+	}
+	/*m_pBuliding[0].Create(XMFLOAT3(80, 10, 00), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
+	m_pBuliding[1].Create(XMFLOAT3(80, 10, 300), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
+	m_pBuliding[2].Create(XMFLOAT3(80, 10, 600), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
+	m_pBuliding[3].Create(XMFLOAT3(80, 10, 900), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
+	m_pBuliding[4].Create(XMFLOAT3(1110, 10, 00), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
+	m_pBuliding[5].Create(XMFLOAT3(1110, 10, 300), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
+	m_pBuliding[6].Create(XMFLOAT3(1110, 10, 600), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
+	m_pBuliding[7].Create(XMFLOAT3(1110, 10, 900), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
+*/
+	// 変数初期化
+	m_bDebugMode = false;
+	m_bPause = false;
 }
 
 //=============================================================================
@@ -91,8 +189,50 @@ GameScene::~GameScene()
 //=============================================================================
 void GameScene::Update()
 {
+	// ポーズ
+	if (GetJoyRelease(0, JOYSTICKID8))	// コントローラーSTARTボタン
+	{
+		if (m_bPause)
+		{
+			m_bPause = false;
+		}
+		else
+		{
+			m_bPause = true;
+		}
+
+	}
+
+	// ポーズ中の処理
+	if (m_bPause)
+	{
+		return;
+	}
+
+
 	// カメラ更新
 	CCamera::Get()->Update();
+
+	// デバックモード
+#if _DEBUG
+	if (GetKeyTrigger(VK_F12))
+	{
+		if (m_bDebugMode)
+		{
+			m_bDebugMode = false;
+		}	
+		else
+		{
+			m_bDebugMode = true;
+		}
+	
+
+	}
+
+
+	if (m_bDebugMode)return;
+#endif
+
 
 	// メッシュフィールド更新
 	UpdateMeshField();

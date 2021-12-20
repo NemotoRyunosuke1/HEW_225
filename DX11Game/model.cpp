@@ -40,6 +40,7 @@ static CAssimpModel	g_model;		// モデル
 static XMFLOAT3		g_posModel;		// 現在の位置
 static XMFLOAT3		g_rotModel;		// 現在の向き
 static XMFLOAT3		g_rotDestModel;	// 目的の向き
+static XMFLOAT3		g_rotLightModel;	// 目的の向き
 static XMFLOAT3		g_moveModel;	// 移動量
 static XMFLOAT3		g_accModel;	// 加速度
 static XMFLOAT3		g_collisionSize;	// 当たり判定サイズ
@@ -55,6 +56,9 @@ static bool bWind1[10];
 static XMFLOAT3 WindVec[10];
 static float g_stm;
 static int g_frameCnt;
+static double d = 0;
+static bool g_bDebugMode;
+static bool g_bOverHeart;
 //=============================================================================
 // 初期化処理
 //=============================================================================
@@ -65,13 +69,14 @@ HRESULT InitModel(void)
 	ID3D11DeviceContext* pDeviceContext = GetDeviceContext();
 
 	// 位置・回転・スケールの初期設定
-	g_posModel = XMFLOAT3(0.0f, 100.0f, 0.0f);
+	g_posModel = XMFLOAT3(-1000.0f, 300.0f, -2000.0f);
 	g_moveModel = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	g_rotModel = XMFLOAT3(0.0f, 180.0f, 0.0f);
-	g_rotDestModel = XMFLOAT3(0.0f, 0.0f, 0.0f);
+	g_rotDestModel = XMFLOAT3(0.0f, 180.0f, 0.0f);
 	g_accModel = XMFLOAT3(1.0f, 1.0f, 1.0f);
 	g_sclModel = XMFLOAT3(5.1f, 5.1f, 5.1f);
 	g_collisionSize = XMFLOAT3(100.1f, 100.1f, 100.1f);
+	g_rotLightModel = XMFLOAT3(0.0f, -1.0f, 1.0f);
 	// モデルデータの読み込み
 	if (!g_model.Load(pDevice, pDeviceContext, MODEL_PLANE)) {
 		MessageBoxA(GetMainWnd(), "モデルデータ読み込みエラー", "InitModel", MB_OK);
@@ -92,6 +97,8 @@ HRESULT InitModel(void)
 	}
 	g_stm = 100; // スタミナ
 	g_frameCnt = 0;
+	g_bDebugMode = false;
+	g_bOverHeart = false;
 	return hr;
 }
 
@@ -109,14 +116,48 @@ void UninitModel(void)
 //=============================================================================
 // 更新処理
 //=============================================================================
+
 void UpdateModel(void)
 {
-	 
-	
+	XMMATRIX mtxWorld, mtxRot, mtxScl, mtxTranslate;
+
+	// ワールドマトリックスの初期化
+	mtxWorld = XMMatrixIdentity();
+
+	//スケール反映
+	mtxScl = XMMatrixScaling(g_sclModel.x, g_sclModel.y, g_sclModel.z);
+	mtxWorld = XMMatrixMultiply(mtxWorld, mtxScl);
+
+
+	// 回転を反映
+	mtxRot = XMMatrixRotationRollPitchYaw(XMConvertToRadians(g_rotModel.x),
+		XMConvertToRadians(g_rotModel.y), XMConvertToRadians(g_rotModel.z));
+	mtxWorld = XMMatrixMultiply(mtxWorld, mtxRot);
+
+	// 移動を反映
+	mtxTranslate = XMMatrixTranslation(g_posModel.x, g_posModel.y, g_posModel.z);
+	mtxWorld = XMMatrixMultiply(mtxWorld, mtxTranslate);
+
+	// ワールドマトリックス設定
+	XMStoreFloat4x4(&g_mtxWorld, mtxWorld);
+
+	// 丸影の移動
+	MoveShadow(g_nShadow, g_posModel);
+
+
+	// アニメーション更新
+	d+= 0.02f;
+	g_model.SetAnimTime(d);
+	if (d > 100000000)
+	{
+		d -= 100000000;
+	}
+
+	// コントローラースティック情報取得
 	LONG stickX = GetJoyLX(0);
 	LONG stickY = GetJoyLY(0);
 
-
+	// デッドゾーン処理
 	if ((stickX < STICK_DEAD_ZONE && stickX > -STICK_DEAD_ZONE) &&
 		(stickY < STICK_DEAD_ZONE && stickY > -STICK_DEAD_ZONE))
 	{
@@ -126,9 +167,151 @@ void UpdateModel(void)
 	// カメラの向き取得
 	XMFLOAT3 rotCamera = CCamera::Get()->GetAngle();
 
+
+
+   // デバックモード
+#if  _DEBUG
+	if (GetJoyRelease(0, JOYSTICKID7))	// コントローラーBACKボタン
+	{
+		if (g_bDebugMode)
+		{
+			g_bDebugMode = false;
+		}
+		else
+		{
+			g_bDebugMode = true;
+		}
+
+	}
+	
+	if (g_bDebugMode)
+	{
+		// 機体の傾きリセット
+		g_rotDestModel.x = 0;
+
+		// 前移動
+		if (GetJoyButton(0, JOYSTICKID6))
+		{
+			g_moveModel.z = -CosDeg(g_rotModel.y) * 5.1f;
+			g_moveModel.x = -SinDeg(g_rotModel.y) * 5.1f;
+			g_moveModel.y = SinDeg(g_rotModel.x) * 5.1f;
+
+		}
+		else if (GetJoyButton(0, JOYSTICKID5))
+		{
+			g_moveModel.z = CosDeg(g_rotModel.y) * 5.1f;
+			g_moveModel.x = SinDeg(g_rotModel.y) * 5.1f;
+			g_moveModel.y = SinDeg(g_rotModel.x) * 5.1f;
+
+		}
+		else if (GetJoyButton(0, JOYSTICKID11))
+		{
+			g_moveModel.z = -CosDeg(g_rotModel.y) * 5.1f;
+			g_moveModel.x = -SinDeg(g_rotModel.y) * 5.1f;
+			g_moveModel.y = SinDeg(g_rotModel.x) * 5.1f;
+
+		}
+		else
+		{
+			g_moveModel.z = 0.0f;
+			g_moveModel.x = 0.0f;
+			g_moveModel.y = 0.0f;
+		}
+
+		
+
+		if (GetJoyCount() > 0)
+		{
+			// 左アナログスティック旋回
+			g_rotDestModel.y += 1.0f * stickX / 20000;
+			
+			// ゲームパッド
+		 // 下降
+			if (stickY < 0 )
+			{
+
+				g_rotDestModel.x = 5 * (float)stickY / 3000;	// 機体の傾き
+			}
+			// 上昇
+			if (stickY > 0 )
+			{
+
+				g_rotDestModel.x = 5 * (float)stickY / 1500;	 // 機体の傾き
+			}
+		}
+
+		// 位置移動
+		g_posModel.x += g_moveModel.x;
+		g_posModel.y += g_moveModel.y;
+		g_posModel.z += g_moveModel.z;
+
+		if (g_rotDestModel.y >= 360)
+		{
+			g_rotDestModel.y -= 360.0f;
+		}
+		if (g_rotDestModel.y <= 0)
+		{
+			g_rotDestModel.y += +360.0f;
+		}
+
+		// 目的の角度までの差分
+		float fDiffRotY = g_rotDestModel.y - g_rotModel.y;
+		float fDiffRotX = g_rotDestModel.x - g_rotModel.x;
+		float fDiffRotZ = g_rotDestModel.z - g_rotModel.z;
+		if (fDiffRotY >= 180.0f) {
+			fDiffRotY -= 360.0f;
+		}
+		if (fDiffRotY < -180.0f) {
+			fDiffRotY += 360.0f;
+		}
+		if (fDiffRotX >= 180.0f) {
+			fDiffRotX -= 360.0f;
+		}
+		if (fDiffRotX < -180.0f) {
+			fDiffRotX += 360.0f;
+		}
+		if (fDiffRotZ >= 180.0f) {
+			fDiffRotZ -= 360.0f;
+		}
+		if (fDiffRotZ < -180.0f) {
+			fDiffRotZ += 360.0f;
+		}
+
+		// 目的の角度まで慣性をかける
+		g_rotModel.y += fDiffRotY * RATE_ROTATE_MODEL;
+		g_rotModel.x += fDiffRotX * RATE_ROTATE_MODEL;
+		g_rotModel.z += fDiffRotZ * RATE_ROTATE_MODEL;
+		if (g_rotModel.y >= 180.0f) {
+			g_rotModel.y -= 360.0f;
+		}
+		if (g_rotModel.y < -180.0f) {
+			g_rotModel.y += 360.0f;
+		}
+		if (g_rotModel.x >= 180.0f) {
+			g_rotModel.x -= 360.0f;
+		}
+		if (g_rotModel.x < -180.0f) {
+			g_rotModel.x += 360.0f;
+		}
+		if (g_rotModel.z >= 180.0f) {
+			g_rotModel.z -= 360.0f;
+		}
+		if (g_rotModel.z < -180.0f) {
+			g_rotModel.z += 360.0f;
+		}
+
+		PrintDebugProc("[ﾓﾃﾞﾙ ｲﾁ : (%f : %f : %f)]\n", g_posModel.x, g_posModel.y, g_posModel.z);
+
+		return;
+	}
+#endif
+
+
+
 	// 機体の傾きリセット
 	g_rotDestModel.z = 0;  
 
+	// 風との当たり判定
 	for (int i = 0; i < 10; i++)
 	{
 		//使用していなかったらスキップ
@@ -142,26 +325,18 @@ void UpdateModel(void)
 		{
 			if (!bFlg)
 			{
-				g_accModel.x = 5.0f * WindVec[i].x + 1.1f;
-				g_accModel.y = 5.0f * WindVec[i].y + 1.1f;
-				g_accModel.z = 5.0f * WindVec[i].z + 1.1f;
+				g_accModel.x = 5.0f * (unsigned)WindVec[i].x + 1.1f;
+				g_accModel.y = 5.0f * (unsigned)WindVec[i].y + 1.1f;
+				g_accModel.z = 5.0f * (unsigned)WindVec[i].z + 1.1f;
 				g_rotDestModel.x = 90 * WindVec[i].y;
-				g_rotDestModel.y = 90 * WindVec[i].x;
-				g_rotDestModel.y = 90 * WindVec[i].z;
-				if (g_rotDestModel.x >= 90)
-				{
-					g_rotDestModel.x = 90;
-					
-				}
-				bFlg = true;
+				g_rotDestModel.y = 90 * WindVec[i].x +  180 * ((1 + WindVec[i].z)/2);
+				//g_rotDestModel.y = 90 * WindVec[i].z ;
+				
+				bFlg  = true;
 				bWind = true;
-		    }
-			
-			
-			
-			
+				g_stm += 0.5f;
+		    }			
 		}
-		
 	}
 	
 
@@ -171,8 +346,9 @@ void UpdateModel(void)
 		// 機体のロール
 		g_rotDestModel.z = -30.0f;
 		g_rotDestModel.y -=  2.0f;
-		if (GetKeyPress(VK_SPACE))
+		if (GetKeyPress(VK_SPACE) && !g_bOverHeart)
 		{
+			g_stm -= 0.3f;	// スタミナ減少
 			g_rotDestModel.y -= 2.0f;
 		}
 
@@ -183,8 +359,9 @@ void UpdateModel(void)
 		// 機体のロール
 		g_rotDestModel.z = 30.0f;
 		g_rotDestModel.y += 2.0f;
-		if (GetKeyPress(VK_SPACE))
+		if (GetKeyPress(VK_SPACE) && !g_bOverHeart)
 		{
+			g_stm -= 0.3f;	// スタミナ減少
 			g_rotDestModel.y += 2.0f;
 		}
 	} 
@@ -196,38 +373,41 @@ void UpdateModel(void)
 		g_rotDestModel.y +=  1.0f * stickX / 20000;
 		g_rotDestModel.z += 30.0f * stickX / 20000;
 		//g_rotDestModel.x += 30.0f * state.Gamepad.sThumbLY / 10000;	// 機体の傾き
-		if (GetJoyButton(0, JOYSTICKID6))
+
+		// 羽ばたきｶｿｸ
+		if (GetJoyButton(0, JOYSTICKID6) && !g_bOverHeart)
 		{
-			g_stm -= 0.3f;
+			g_stm -= 0.3f;	// スタミナ減少
 			g_rotDestModel.y += 1.0f * stickX / 8000;
 		}
 		// ゲームパッド
 	 // 下降
 		if (stickY < 0 && !bWind)
 		{
-			//g_rotDestModel.x = 30;
+			
 			g_rotDestModel.x = 5 * (float)stickY / 3000;	// 機体の傾き
 		}
 		// 上昇
-		if (stickY > 0 && !bWind)
+		if (stickY > 0 && !bWind && !g_bOverHeart)
 		{
-			//g_rotDestModel.x = -30;
+			
 			g_rotDestModel.x = 5 * (float)stickY / 1500;	 // 機体の傾き
 		}
 	}
 	
 	// LBボタンはばたき
-	if (GetJoyRelease(0, JOYSTICKID6))
+	if (GetJoyRelease(0, JOYSTICKID6) && !g_bOverHeart)
 	{
 		g_accModel.x += 3;
 		g_accModel.y += 6;
 		g_accModel.z += 3;
 		//g_rotDestModel.y += 1.0f * stickX /80 ;
-	
+		g_rotDestModel.z += 30;
+		g_stm -= 10.0f;	// スタミナ減少
 	}
-	
 
-	if (GetKeyTrigger(VK_SPACE) )
+	// スペースキー羽ばたき
+	if (GetKeyTrigger(VK_SPACE) && !g_bOverHeart)
 	{
 		g_accModel.x += 3;
 		g_accModel.y += 3;
@@ -262,7 +442,7 @@ void UpdateModel(void)
 	}
 	if (g_accModel.y > 1)
 	{
-		g_accModel.y -= 0.71f;
+		g_accModel.y -= 0.31f;
 		if (g_accModel.y <= 1)
 		{
 			// 風解除
@@ -361,27 +541,28 @@ void UpdateModel(void)
 
 	// キーボード
 	// 上昇
-	if ((GetKeyPress(VK_DOWN) || GetKeyPress(VK_S) ) && !bWind)
+	if ((GetKeyPress(VK_DOWN) || GetKeyPress(VK_S) ) && !bWind && !g_bOverHeart)
 	{
-		// 前移動
-		g_rotDestModel.x = 30;
+		// 上を向く
+		g_rotDestModel.x += 5;
+		if (g_rotDestModel.x > 90)
+		{
+			g_rotDestModel.x = 90;
+		}
+
 	}
-	if (GetKeyPress(VK_I) )
-	{
-		g_rotDestModel.x = 30;
-		
-	}
+	
 	// 下降
 	if ((GetKeyPress(VK_UP) || GetKeyPress(VK_W) ) && !bWind)
 	{
-		// 前移動
-		g_rotDestModel.x = -50;
+		// 下を向く
+		g_rotDestModel.x -= 5;
+		if (g_rotDestModel.x < -90)
+		{
+			g_rotDestModel.x = -90;
+		}
 	}
-	if (GetKeyPress(VK_K) )
-	{
-		g_rotDestModel.x = -30;
-		
-	}
+	
 
 	if (g_rotDestModel.y >= 360)
 	{
@@ -479,16 +660,35 @@ void UpdateModel(void)
 	// スタミナ処理
 	if (g_rotModel.x > 3)
 	{
-		if(!bWind)
-		g_stm -= 0.1f;
+		// スタミナ減少
+		if(!bWind)	// 風に乗ってないとき
+		g_stm -= 0.1f * g_rotModel.x/45;
+
+		// オーバーヒート
+		if (g_stm <= 0.0f)
+		{
+			g_bOverHeart = true;
+			g_stm = 0.0f;
+		}
+
 	}
 	else
 	{
+		// スタミナ回復
+		if (!bWind)	// 風に乗ってないとき
+		{
+			g_stm += 0.1f;
 
-		g_stm += 0.1f;
+		}
+		else 	// 風に乗ってる時
+		{
+			g_stm += 0.5f;
+		}
+	
 		if (g_stm > 100)
 		{
-			g_stm = 100;
+			g_stm = 100;	// スタミナ上限
+			g_bOverHeart = false;	// オーバーヒート解除
 		}
 	}
 
@@ -503,30 +703,8 @@ void UpdateModel(void)
 		
 	}
 
-	XMMATRIX mtxWorld, mtxRot, mtxScl, mtxTranslate;
-
-	// ワールドマトリックスの初期化
-	mtxWorld = XMMatrixIdentity();
-
-	//スケール反映
-	mtxScl = XMMatrixScaling(g_sclModel.x, g_sclModel.y, g_sclModel.z);
-	mtxWorld = XMMatrixMultiply(mtxWorld, mtxScl);
-
-
-	// 回転を反映
-	mtxRot = XMMatrixRotationRollPitchYaw(XMConvertToRadians(g_rotModel.x),
-		XMConvertToRadians(g_rotModel.y), XMConvertToRadians(g_rotModel.z));
-	mtxWorld = XMMatrixMultiply(mtxWorld, mtxRot);
-
-	// 移動を反映
-	mtxTranslate = XMMatrixTranslation(g_posModel.x, g_posModel.y, g_posModel.z);
-	mtxWorld = XMMatrixMultiply(mtxWorld, mtxTranslate);
-
-	// ワールドマトリックス設定
-	XMStoreFloat4x4(&g_mtxWorld, mtxWorld);
-
-	// 丸影の移動
-	MoveShadow(g_nShadow, g_posModel);
+	g_rotLightModel.x = -SinDeg(g_rotModel.y);
+	g_rotLightModel.z = -CosDeg(g_rotModel.y);
 
 
 #if _DEBUG
@@ -629,4 +807,12 @@ void SetModelWindCollision(bool flg, int i,XMFLOAT3 vec)
 float GetSTM()
 {
 	return g_stm;
+}
+XMFLOAT3 GetMoveModel()
+{
+	return g_moveModel;
+}
+XMFLOAT3& GetModelRotLight()
+{
+	return g_rotLightModel;
 }

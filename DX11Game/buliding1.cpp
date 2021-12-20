@@ -1,13 +1,14 @@
 #include "buliding1.h"
 
-#define MODEL_PLANE			"data/model/buliding1.fbx"
+#define MODEL_PLANE			"data/model/buliding2.fbx"
 
 
 Buliding::Buliding()
 {
 	m_pos = XMFLOAT3(300.0f, 50.0f,300.0f);	// 位置
-	m_size = XMFLOAT3(300.0f, 2000.0f, 300.0f);	// サイズ
-	m_use = true;
+	m_size = XMFLOAT3(10.0f, 10.0f, 10.0f);	// サイズ
+	m_rot = XMFLOAT3(0.0f, 0.0f, 0.0f);		// 現在の向き
+	m_use = false;
 
 	ID3D11Device* pDevice = GetDevice();
 	ID3D11DeviceContext* pDeviceContext = GetDeviceContext();
