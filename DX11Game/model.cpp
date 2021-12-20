@@ -55,6 +55,8 @@ static bool bWind1[10];
 static XMFLOAT3 WindVec[10];
 static float g_stm;
 static int g_frameCnt;
+static double d = 0;
+
 //=============================================================================
 // 初期化処理
 //=============================================================================
@@ -65,10 +67,10 @@ HRESULT InitModel(void)
 	ID3D11DeviceContext* pDeviceContext = GetDeviceContext();
 
 	// 位置・回転・スケールの初期設定
-	g_posModel = XMFLOAT3(0.0f, 100.0f, 0.0f);
+	g_posModel = XMFLOAT3(0.0f, 300.0f, -2000.0f);
 	g_moveModel = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	g_rotModel = XMFLOAT3(0.0f, 180.0f, 0.0f);
-	g_rotDestModel = XMFLOAT3(0.0f, 0.0f, 0.0f);
+	g_rotDestModel = XMFLOAT3(0.0f, 180.0f, 0.0f);
 	g_accModel = XMFLOAT3(1.0f, 1.0f, 1.0f);
 	g_sclModel = XMFLOAT3(5.1f, 5.1f, 5.1f);
 	g_collisionSize = XMFLOAT3(100.1f, 100.1f, 100.1f);
@@ -109,10 +111,11 @@ void UninitModel(void)
 //=============================================================================
 // 更新処理
 //=============================================================================
+
 void UpdateModel(void)
 {
-	 
-	
+	d+= 0.02f;
+	g_model.SetAnimTime(d);
 	LONG stickX = GetJoyLX(0);
 	LONG stickY = GetJoyLY(0);
 
@@ -142,26 +145,17 @@ void UpdateModel(void)
 		{
 			if (!bFlg)
 			{
-				g_accModel.x = 5.0f * WindVec[i].x + 1.1f;
-				g_accModel.y = 5.0f * WindVec[i].y + 1.1f;
-				g_accModel.z = 5.0f * WindVec[i].z + 1.1f;
+				g_accModel.x = 5.0f * (unsigned)WindVec[i].x + 1.1f;
+				g_accModel.y = 5.0f * (unsigned)WindVec[i].y + 1.1f;
+				g_accModel.z = 5.0f * (unsigned)WindVec[i].z + 1.1f;
 				g_rotDestModel.x = 90 * WindVec[i].y;
 				g_rotDestModel.y = 90 * WindVec[i].x;
 				g_rotDestModel.y = 90 * WindVec[i].z;
-				if (g_rotDestModel.x >= 90)
-				{
-					g_rotDestModel.x = 90;
-					
-				}
+				
 				bFlg = true;
 				bWind = true;
-		    }
-			
-			
-			
-			
+		    }			
 		}
-		
 	}
 	
 
@@ -198,20 +192,20 @@ void UpdateModel(void)
 		//g_rotDestModel.x += 30.0f * state.Gamepad.sThumbLY / 10000;	// 機体の傾き
 		if (GetJoyButton(0, JOYSTICKID6))
 		{
-			g_stm -= 0.3f;
+			g_stm -= 0.3f;	// スタミナ減少
 			g_rotDestModel.y += 1.0f * stickX / 8000;
 		}
 		// ゲームパッド
 	 // 下降
 		if (stickY < 0 && !bWind)
 		{
-			//g_rotDestModel.x = 30;
+			
 			g_rotDestModel.x = 5 * (float)stickY / 3000;	// 機体の傾き
 		}
 		// 上昇
 		if (stickY > 0 && !bWind)
 		{
-			//g_rotDestModel.x = -30;
+			
 			g_rotDestModel.x = 5 * (float)stickY / 1500;	 // 機体の傾き
 		}
 	}
@@ -223,9 +217,9 @@ void UpdateModel(void)
 		g_accModel.y += 6;
 		g_accModel.z += 3;
 		//g_rotDestModel.y += 1.0f * stickX /80 ;
-	
+		g_rotDestModel.z += 30;
 	}
-	
+
 
 	if (GetKeyTrigger(VK_SPACE) )
 	{
@@ -262,7 +256,7 @@ void UpdateModel(void)
 	}
 	if (g_accModel.y > 1)
 	{
-		g_accModel.y -= 0.71f;
+		g_accModel.y -= 0.31f;
 		if (g_accModel.y <= 1)
 		{
 			// 風解除
@@ -480,7 +474,7 @@ void UpdateModel(void)
 	if (g_rotModel.x > 3)
 	{
 		if(!bWind)
-		g_stm -= 0.1f;
+		g_stm -= 0.1f * g_rotModel.x/45;
 	}
 	else
 	{
@@ -611,6 +605,10 @@ XMFLOAT3& GetModelRot()
 XMFLOAT3& GetModelCollisionSize()
 {
 	return g_collisionSize;
+}
+XMFLOAT3& GetModelAcc()
+{
+	return g_accModel;
 }
 void SetWindCollision(bool flg)
 {																		 

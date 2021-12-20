@@ -14,7 +14,7 @@
 #include "crew.h"
 #include "enemy.h"
 
-#define MAX_BULIDING (100)
+#define MAX_BULIDING (10)
 
 //=============================================================================
 // ‰Šú‰»ˆ—
@@ -49,7 +49,7 @@ GameScene::GameScene()
 	m_pBuliding = new Buliding[MAX_BULIDING];
 	for (int i = 0; i < MAX_BULIDING; i++)
 	{
-		m_pBuliding[i].Create(XMFLOAT3((float)(rand() % 800), 100, (float)(rand() % 800)), XMFLOAT3(300.0f, 2000.0f, 300.0f));
+		m_pBuliding[i].Create(XMFLOAT3((float)(rand() % 8000), 10, (float)(rand() % 8000)), XMFLOAT3(10.0f, 10.0f, 10.0f));
 	}
 }
 
