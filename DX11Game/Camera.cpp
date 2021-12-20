@@ -1,7 +1,7 @@
 //=============================================================================
 //
 // カメラ クラス [Camera.cpp]
-// Author : 押久保日菜
+// Author : HINA OSHIKUBO
 //
 //=============================================================================
 #include "Camera.h"
@@ -15,21 +15,21 @@
 namespace {
 	const float CAM_POS_P_X = 0.0f;					// カメラの視点初期位置(X座標)
 	const float CAM_POS_P_Y = 25.0f;				// カメラの視点初期位置(Y座標)
-	const float CAM_POS_P_Z = 0.0f;				    // カメラの視点初期位置(Z座標)
+	const float CAM_POS_P_Z = 0.0f;				// カメラの視点初期位置(Z座標)
 	const float CAM_POS_R_X = 0.0f;					// カメラの注視点初期位置(X座標)
-	const float CAM_POS_R_Y = 10.0f;				// カメラの注視点初期位置(Y座標)
-	const float CAM_POS_R_Z = -50.0f;				// カメラの注視点初期位置(Z座標)
+	const float CAM_POS_R_Y = 10.0f;				    // カメラの注視点初期位置(Y座標)
+	const float CAM_POS_R_Z = -90.0f;				    // カメラの注視点初期位置(Z座標)
 	const float VIEW_ANGLE = 80.0f;					// ビュー平面の視野角
 	const float VIEW_ASPECT = (float)SCREEN_WIDTH / SCREEN_HEIGHT;	// ビュー平面のアスペクト比
 	const float VIEW_NEAR_Z = 10.0f;				// ビュー平面のNearZ値
-	const float VIEW_FAR_Z = 3000.0f;				// ビュー平面のFarZ値
+	const float VIEW_FAR_Z = 8000.0f;				// ビュー平面のFarZ値
 	const float VALUE_MOVE_CAMERA = 2.0f;			// カメラの移動量
 	const float VALUE_ROTATE_CAMERA = 1.8f;			// カメラの回転量
-	const float RATE_ROTATE_CAMERA = 0.02f;			// カメラの注視点への補正係数
+	const float RATE_ROTATE_CAMERA = 0.002f;			// カメラの注視点への補正係数
 
-	const float INTERVAL_CAMERA_R = 1.5f;			// モデルの視線の先までの距離
+	const float INTERVAL_CAMERA_R = 10.5f;			// モデルの視線の先までの距離
 	const float RATE_CHASE_CAMERA_P = 0.35f;		// カメラの視点への補正係数
-	const float RATE_CHASE_CAMERA_R = 0.0020f;		// カメラの注視点への補正係数
+	const float RATE_CHASE_CAMERA_R = 0.20f;		// カメラの注視点への補正係数
 
 	const float CHASE_HEIGHT_P = 100.0f;			// 追跡時の視点の高さ
 	const float CHASE_HEIGHT_R = 10.0f;				// 追跡時の注視点の高さ
@@ -38,9 +38,8 @@ namespace {
 }
 
 CCamera* CCamera::m_pCamera = &g_camera;			// 現在のカメラ
-
-LONG g_mouseX = GetMousePosition()->x;              // マウスカーソルポジション取得(X)
-LONG g_mouseY = GetMousePosition()->y;              // マウスカーソルポジション取得(Y)
+LONG g_mouseX = GetMousePosition()->x;
+LONG g_mouseY = GetMousePosition()->y;
 
 // コンストラクタ
 CCamera::CCamera()
@@ -51,9 +50,9 @@ CCamera::CCamera()
 // 初期化
 void CCamera::Init()
 {
-	m_vPos = XMFLOAT3(CAM_POS_P_X, CAM_POS_P_Y, CAM_POS_P_Z);	  // 視点
-	m_vTarget = XMFLOAT3(CAM_POS_R_X, CAM_POS_R_Y, CAM_POS_R_Z);  // 注視点
-	m_vUp = XMFLOAT3(0.0f, 1.0f, 0.0f);							  // 上方ベクトル
+	m_vPos = XMFLOAT3(CAM_POS_P_X, CAM_POS_P_Y, CAM_POS_P_Z);	// 視点
+	m_vTarget = XMFLOAT3(CAM_POS_R_X, CAM_POS_R_Y, CAM_POS_R_Z);// 注視点
+	m_vUp = XMFLOAT3(0.0f, 1.0f, 0.0f);							// 上方ベクトル
 	m_vSrcPos = m_vPos;
 	m_vDestPos = m_vPos;
 	m_vDestTarget = m_vTarget;
@@ -197,6 +196,8 @@ void CCamera::Update()
 		m_vDestAngle.x = -90.0f;
 	}
 
+	
+
 	//m_vSrcPos.x = SinDeg(m_vDestAngle.y) * m_fLengthInterval + CAM_POS_P_X;
 	//m_vSrcPos.y = -SinDeg(m_vDestAngle.x) * m_fLengthInterval + CAM_POS_P_Y;
 	//m_vSrcPos.z = CosDeg(m_vDestAngle.y) * m_fLengthInterval + CAM_POS_P_Z;
@@ -222,13 +223,15 @@ void CCamera::Update()
 
 #if _DEBUG
 	// デバック用文字列
-	PrintDebugProc("[ｶﾒﾗ ｲﾁ : (%d)(%d)]\n", mouseX,mouseY);
-	PrintDebugProc("[ｶﾒﾗ ｲﾁ : (%f, %f, %f)]\n", m_vAngle.x, m_vAngle.y, m_vAngle.z);
-	PrintDebugProc("[ｶﾒﾗ ｲﾁ : (%f, %f, %f)]\n", stickX, stickY, m_vPos.z);
+	//PrintDebugProc("[ｶﾒﾗ ｲﾁ : (%d)(%d)]\n", mouseX,mouseY);
+	//PrintDebugProc("[ｶﾒﾗ ｲﾁ : (%f, %f, %f)]\n", m_vAngle.x, m_vAngle.y, m_vAngle.z);
+	//PrintDebugProc("[ｶﾒﾗ ｲﾁ : (%f, %f, %f)]\n", stickX, stickY, m_vPos.z);
 	//PrintDebugProc("[ﾁｭｳｼﾃﾝ : (%f, %f, %f)]\n", m_vTarget.x, m_vTarget.y, m_vTarget.z);
 	//PrintDebugProc("\n");
 
 #endif // _DEBUG
+
+	
 }
 
 // ビュー/プロジェクション マトリックス更新
