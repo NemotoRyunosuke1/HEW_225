@@ -28,7 +28,7 @@
 
 #define AUTO_FALL_ROT	(-20)	// 自動落下時の角度
 
-#define MAX_ACC (5.5f)			// 加速度の上限
+#define MAX_ACC (3.5f)			// 加速度の上限
 
 #define MAX_FLY_Y (2000)	// 最高高度		
 

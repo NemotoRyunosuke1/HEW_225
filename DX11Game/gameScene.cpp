@@ -15,7 +15,14 @@
 #include "enemy.h"
 #include "input.h"
 
+#if _DEBUG
+#define MAX_BULIDING (16)
+
+#else
 #define MAX_BULIDING (400)
+
+#endif
+
 
 //=============================================================================
 // 初期化処理
@@ -49,6 +56,8 @@ GameScene::GameScene()
 	// ビル初期化
 	m_pBuliding = new Buliding[MAX_BULIDING];
 
+	// スコアUI初期化
+	m_pScoreUI = new ScoreUI;
 
 	/*for (int j = 0; j < 4; j++)
 	{
@@ -122,6 +131,8 @@ GameScene::GameScene()
 
 		}
 	}*/
+
+	// ビルの生成
 	for (int k = 0; k < MAX_BULIDING / 16 / 5; k++)
 	{
 		for (int l = 0; l < MAX_BULIDING / 16 / 5; l++)
@@ -182,6 +193,9 @@ GameScene::~GameScene()
 
 	// ビル終了処理
 	delete[] m_pBuliding;
+
+	// スコアUI終了処理
+	delete m_pScoreUI;
 }
 
 //=============================================================================
@@ -257,6 +271,9 @@ void GameScene::Update()
 
 	// ゴール更新
 	m_pGoal->Update();
+
+	// スコアUI更新
+	m_pScoreUI->Update();
 
 	// ビル更新
 	for (int i = 0; i < MAX_BULIDING; i++)
@@ -357,4 +374,7 @@ void GameScene::Draw()
 	SetZBuffer(false);
 
 	m_pStaminaBar->Draw();
+
+	// スコアUI描画
+	//m_pScoreUI->Draw();
 }
