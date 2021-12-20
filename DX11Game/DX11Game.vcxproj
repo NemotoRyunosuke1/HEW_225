@@ -160,6 +160,8 @@
   <ItemGroup>
     <ClCompile Include="AssimpModel.cpp" />
     <ClCompile Include="bg.cpp" />
+    <ClCompile Include="buliding1.cpp" />
+    <ClCompile Include="button.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="collision.cpp" />
     <ClCompile Include="crew.cpp" />
@@ -180,13 +182,16 @@
     <ClCompile Include="resultScene.cpp" />
     <ClCompile Include="scene.cpp" />
     <ClCompile Include="sceneBase.cpp" />
+    <ClCompile Include="ScoreUI.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="shadow.cpp" />
+    <ClCompile Include="stageButton.cpp" />
     <ClCompile Include="stageSelectScene.cpp" />
     <ClCompile Include="staminaBar.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="titleBG.cpp" />
     <ClCompile Include="titleScene.cpp" />
+    <ClCompile Include="titleUI.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="wind.cpp" />
     <ClCompile Include="windManager.cpp" />
@@ -194,6 +199,8 @@
   <ItemGroup>
     <ClInclude Include="AssimpModel.h" />
     <ClInclude Include="bg.h" />
+    <ClInclude Include="buliding1.h" />
+    <ClInclude Include="button.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="collision.h" />
     <ClInclude Include="crew.h" />
@@ -215,13 +222,16 @@
     <ClInclude Include="resultScene.h" />
     <ClInclude Include="scene.h" />
     <ClInclude Include="sceneBase.h" />
+    <ClInclude Include="ScoreUI.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="shadow.h" />
+    <ClInclude Include="stageButton.h" />
     <ClInclude Include="stageSelectScene.h" />
     <ClInclude Include="staminaBar.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="titleBG.h" />
     <ClInclude Include="titleScene.h" />
+    <ClInclude Include="titleUI.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="wind.h" />
     <ClInclude Include="windManager.h" />

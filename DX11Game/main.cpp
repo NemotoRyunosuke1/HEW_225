@@ -13,7 +13,6 @@
 #include "bg.h"
 #include "scene.h"
 
-#include "enemy.h"
 
 
 //-------- ライブラリのリンク
@@ -24,8 +23,7 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-#define CLASS_NAME		_T("AppClass")			// ウインドウのクラス名
-#define WINDOW_NAME		_T("「ムレキドリ」プロトタイプ")	// ウインドウのキャプション名
+
 
 //*****************************************************************************
 // プロトタイプ宣言
@@ -130,7 +128,7 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdL
 	UpdateWindow(g_hWnd);
 	
 	// DirectXの初期化(ウィンドウを作成してから行う)
-	if (FAILED(Init(g_hWnd, false))) {
+	if (FAILED(Init(g_hWnd, true))) {
 		return -1;
 	}
 
@@ -401,11 +399,7 @@ HRESULT Init(HWND hWnd, BOOL bWindow)
 	if (FAILED(hr))
 		return hr;
 
-	// 敵の初期化
-	hr = InitEnemy();
-	if (FAILED(hr))
-		return hr;
-
+	InitBG();
 
 	// シーン初期化
 	m_pScene = new Scene;
@@ -442,10 +436,6 @@ void Uninit(void)
 	
 	// シーン処理終了
 	delete m_pScene;
-
-	// 敵の終了処理
-	UninitEnemy();
-
 	
 
 	// メッシュ終了処理
@@ -509,16 +499,12 @@ void Update(void)
 
 #endif
 
-	// 敵の更新
-	UpdateEnemy();
 
 	// シーン更新
 	m_pScene->Update();
 
 	
-	// カメラ更新
-	CCamera::Get()->Update();
-
+	
 	
 }
 
@@ -539,9 +525,6 @@ void Draw(void)
 
 	// 背景描画
 	DrawBG();
-
-	// 敵の描画
-	DrawEnemy();
 
 	// 3D描画
 	// Zバッファ有効(Zチェック有&Z更新有)

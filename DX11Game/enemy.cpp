@@ -10,19 +10,31 @@
 #include "debugproc.h"
 #include "shadow.h"
 #include "model.h"
+#include "collision.h"
+
 
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-#define MODEL_ENEMY			"data/model/helicopter000.fbx"
+#define MODEL_ENEMY			"data/model/mukudori1.fbx"
 
 #define	VALUE_MOVE_ENEMY	(0.40f)		// 移動速度
 #define	RATE_MOVE_ENEMY		(0.20f)		// 移動慣性係数
 #define	VALUE_ROTATE_ENEMY	(7.0f)		// 回転速度
 #define	RATE_ROTATE_ENEMY	(0.20f)		// 回転慣性係数
 
-#define MAX_ENEMY			(10)        // 敵の最大数
+#define MAP_AMPLITUDE         (8000)      // マップの広さ
 #define ENEMY_RADIUS        (50.0f)     // 境界球半径
+#define ENEMY_SPEED			3.0f
+#define ENEMY_WIDTH			64.0f
+#define ENEMY_HEIGHT		64.0f
+
+#define MAX_ENEMY			(50)        // 敵の最大数
+
+#define COLLISION_WIDH      30.0f
+#define COLLISION_HELIGHT   24.0f
+#define COLLISION_OFFSETX   0.0f
+#define COLLISION_OFFSTY    -8.0f
 
 //*****************************************************************************
 // 構造体定義
@@ -36,6 +48,8 @@ struct TEnemy {
 	XMFLOAT4X4	m_mtxWorld;	// ワールドマトリックス
 
 	int			m_nShadow;	// 丸影番号
+
+	bool m_catch;
 };
 
 typedef struct D3DXVECTOR3 {
@@ -44,11 +58,18 @@ typedef struct D3DXVECTOR3 {
 	FLOAT z;
 } D3DXVECTOR3, *LPD3DXVECTOR3;
 
+struct ANIM_PAT {	// アニメーション データ
+	int nFrame;			// 表示枠No. (-1で終了)
+	int nCount;			// 表示フレーム数
+};
+
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
-static CAssimpModel	g_model;			// モデル
-static TEnemy		g_enemy[MAX_ENEMY];	// 敵の情報
+static CAssimpModel	g_model;			      // モデル
+static TEnemy		g_enemy[MAX_ENEMY];	      // 敵の情報
+static ID3D11ShaderResourceView* g_pTexture;
+static int		g_nEnemy;			          // 敵現在数
 
 //=============================================================================
 // 初期化処理
@@ -67,19 +88,21 @@ HRESULT InitEnemy(void)
 
 	for (int i = 0; i < MAX_ENEMY; ++i) {
 		// 位置・回転・スケールの初期設定
-		g_enemy[i].m_pos = XMFLOAT3(rand() % 620 - 310.0f,
-									20.0f,
-									rand() % 620 - 310.0f);
+		g_enemy[i].m_pos = XMFLOAT3(rand() % MAP_AMPLITUDE - MAP_AMPLITUDE/2,
+			rand() % 1000 + 550.0f,
+			rand() % MAP_AMPLITUDE - MAP_AMPLITUDE / 2);
 		g_enemy[i].m_rot = XMFLOAT3(0.0f, rand() % 360 - 180.0f, 0.0f);
 		g_enemy[i].m_rotDest = g_enemy[i].m_rot;
 		g_enemy[i].m_move = XMFLOAT3(
 			-SinDeg(g_enemy[i].m_rot.y) * VALUE_MOVE_ENEMY,
 			0.0f,
 			-CosDeg(g_enemy[i].m_rot.y) * VALUE_MOVE_ENEMY);
+		g_enemy[i].m_catch = false;
 
 		// 丸影の生成
 		g_enemy[i].m_nShadow = CreateShadow(g_enemy[i].m_pos, 12.0f);
 	}
+
 
 	return hr;
 }
@@ -103,38 +126,49 @@ void UninitEnemy(void)
 //=============================================================================
 void UpdateEnemy(void)
 {
+	
 	XMMATRIX mtxWorld, mtxRot, mtxTranslate;
+
+	XMFLOAT3 g_modelPos = GetModelPos();
 
 	for (int i = 0; i < MAX_ENEMY; ++i)
 	{
 		// 移動
+		EnemyStartChase(i,g_modelPos);
+
+		int cnt = 0;
+		if (g_enemy[i].m_catch)
+		{
+			cnt++;
+		}
+
 		g_enemy[i].m_pos.x += g_enemy[i].m_move.x;
 		g_enemy[i].m_pos.y += g_enemy[i].m_move.y;
 		g_enemy[i].m_pos.z += g_enemy[i].m_move.z;
 
 		// 壁にぶつかった
 		bool lr = false, fb = false;
-		if (g_enemy[i].m_pos.x < -310.0f) {
-			g_enemy[i].m_pos.x = -310.0f;
+		if (g_enemy[i].m_pos.x < -MAP_AMPLITUDE / 2) {
+			g_enemy[i].m_pos.x = -MAP_AMPLITUDE / 2;
 			lr = true;
 		}
-		if (g_enemy[i].m_pos.x > 310.0f) {
-			g_enemy[i].m_pos.x = 310.0f;
+		if (g_enemy[i].m_pos.x > MAP_AMPLITUDE / 2) {
+			g_enemy[i].m_pos.x = MAP_AMPLITUDE / 2;
 			lr = true;
 		}
-		if (g_enemy[i].m_pos.z < -310.0f) {
-			g_enemy[i].m_pos.z = -310.0f;
+		if (g_enemy[i].m_pos.z < -MAP_AMPLITUDE / 2) {
+			g_enemy[i].m_pos.z = -MAP_AMPLITUDE / 2;
 			fb = true;
 		}
-		if (g_enemy[i].m_pos.z > 310.0f) {
-			g_enemy[i].m_pos.z = 310.0f;
+		if (g_enemy[i].m_pos.z > MAP_AMPLITUDE / 2) {
+			g_enemy[i].m_pos.z = MAP_AMPLITUDE / 2;
 			fb = true;
 		}
 		if (g_enemy[i].m_pos.y < 0.0f) {
 			g_enemy[i].m_pos.y = 0.0f;
 		}
-		if (g_enemy[i].m_pos.y > 80.0f) {
-			g_enemy[i].m_pos.y = 80.0f;
+		if (g_enemy[i].m_pos.y > 2000.0f) {
+			g_enemy[i].m_pos.y = 2000.0f;
 		}
 		if (fabsf(g_enemy[i].m_rot.y - g_enemy[i].m_rotDest.y) < 0.0001f) {
 			if (lr) {
@@ -149,6 +183,13 @@ void UpdateEnemy(void)
 		}
 
 		// 目的の角度までの差分
+		float fDiffRotX = g_enemy[i].m_rotDest.y - g_enemy[i].m_rot.y;
+		if (fDiffRotX >= 180.0f) {
+			fDiffRotX -= 360.0f;
+		}
+		if (fDiffRotX < -180.0f) {
+			fDiffRotX += 360.0f;
+		}
 		float fDiffRotY = g_enemy[i].m_rotDest.y - g_enemy[i].m_rot.y;
 		if (fDiffRotY >= 180.0f) {
 			fDiffRotY -= 360.0f;
@@ -157,7 +198,15 @@ void UpdateEnemy(void)
 			fDiffRotY += 360.0f;
 		}
 
+
 		// 目的の角度まで慣性をかける
+		g_enemy[i].m_rot.y += fDiffRotY * RATE_ROTATE_ENEMY;
+		if (g_enemy[i].m_rot.y >= 180.0f) {
+			g_enemy[i].m_rot.y -= 360.0f;
+		}
+		if (g_enemy[i].m_rot.y < -180.0f) {
+			g_enemy[i].m_rot.y += 360.0f;
+		}
 		g_enemy[i].m_rot.y += fDiffRotY * RATE_ROTATE_ENEMY;
 		if (g_enemy[i].m_rot.y >= 180.0f) {
 			g_enemy[i].m_rot.y -= 360.0f;
@@ -194,7 +243,8 @@ void UpdateEnemy(void)
 		MoveShadow(g_enemy[i].m_nShadow, g_enemy[i].m_pos);
 	}
 }
-	// 敵との当たり判定
+
+	/*/ 敵との当たり判定
 	struct ENEMY
 	{
 		D3DXVECTOR3 min;         // 最大値
@@ -229,12 +279,31 @@ void UpdateEnemy(void)
 
 			return true;
 		}
-	};
+	};*/
+
+// 当たり判定
+//int CollisionEnemy(XMFLOAT2 vCenter,
+//	XMFLOAT2 vRect, float fDamage)
+//{
+//	XMFLOAT2 vEnemyPos;
+//	XMFLOAT2 vEnemyRect(COLLISION_WIDH,
+//		COLLISION_HELIGHT);
+//	ENEMY* pEnemy = g_enemy;
+//	for (int i = 0; i < g_nEnemy;
+//	++i, ++pEnemy) 
+//	{
+//	vEnemyPos.x = pEnemy->vPos.x +
+//		COLLISION_OFFSETX;
+//	vEnemyPos.y = pEnemy->vPos.y +
+//		COLLISION_OFFSETX;
+//	 	return i;
+//    }
+//}
 
 //=============================================================================
 // 描画処理
 //=============================================================================
-	void DrawEnemy (void)
+	void DrawEnemy (void)	
 	{
 		ID3D11DeviceContext* pDC = GetDeviceContext();
 
@@ -253,14 +322,85 @@ void UpdateEnemy(void)
 		}
 	}
 
-	int EnemyStartChase()
+	int EnemyStartChase(int i, XMFLOAT3 pos)
 	{
-		for (int i = 0; i < MAX_ENEMY; ++i)
+		XMFLOAT3 g_modelPos = GetModelPos();
+
+		bool hit = CollisionSphere(g_enemy[i].m_pos, ENEMY_RADIUS, pos, 200.0f);
+
+		bool hit2 = CollisionSphere(g_enemy[i].m_pos, ENEMY_RADIUS, pos, 100.0f);
+
+		if (hit)
 		{
-			g_enemy[i].m_pos = GetModelPos();
-			g_enemy[i].m_rotDest = GetModelPos();
-			return i;
+			g_enemy[i].m_catch = true;
+			if (g_modelPos.y - g_enemy[i].m_pos.y > 20.0f)
+			{
+				//上
+				g_enemy[i].m_rotDest.x = 30.0f;
+			}
+			else if (g_modelPos.y - g_enemy[i].m_pos.y < -20.0f)
+			{
+				//下
+				g_enemy[i].m_rotDest.x = -30.0f;
+			}
+			else
+			{
+				//水平
+				g_enemy[i].m_rotDest.x = 0;
+			}
+
+			if (g_modelPos.x - g_enemy[i].m_pos.x > 0 && g_modelPos.z - g_enemy[i].m_pos.z > 0)
+			{
+				// 左後
+				g_enemy[i].m_rotDest.y = -135.0f;
+			}
+			else if (g_modelPos.x - g_enemy[i].m_pos.x < -0 && g_modelPos.z - g_enemy[i].m_pos.z > 0)
+			{
+				// 右後
+				g_enemy[i].m_rotDest.y = 135.0f;
+			}
+			else if (g_modelPos.x - g_enemy[i].m_pos.x > 0 && g_modelPos.z - g_enemy[i].m_pos.z < -0)
+			{
+				// 左前
+				g_enemy[i].m_rotDest.y = -45.0f;
+			}
+			else if (g_modelPos.x - g_enemy[i].m_pos.x < -0 && g_modelPos.z - g_enemy[i].m_pos.z < -0)
+			{
+				// 右前
+				g_enemy[i].m_rotDest.y = 45.0f;
+			}
+			else if (g_modelPos.x - g_enemy[i].m_pos.x > 0)
+			{
+				// 左
+				g_enemy[i].m_rotDest.y = -90.0f;
+			}
+			else if (g_modelPos.x - g_enemy[i].m_pos.x < 0)
+			{
+				// 右
+				g_enemy[i].m_rotDest.y = 90.0f;
+			}
+			else if (g_modelPos.z - g_enemy[i].m_pos.z > 0)
+			{
+				// 後
+				g_enemy[i].m_rotDest.y = 180.0f;
+			}
+			else
+			{
+				// 前
+				g_enemy[i].m_rotDest.y = 0;
+			}
+
+			g_enemy[i].m_pos.x -= SinDeg(g_enemy[i].m_rot.y) * VALUE_MOVE_ENEMY * 6.0f;
+			g_enemy[i].m_pos.y += SinDeg(g_enemy[i].m_rot.x) * VALUE_MOVE_ENEMY * 6.0f;
+			g_enemy[i].m_pos.z -= CosDeg(g_enemy[i].m_rot.y) * VALUE_MOVE_ENEMY * 6.0f;
+
+			if (hit2) {
+
+				g_enemy[i].m_rotDest.y = XMConvertToDegrees(atan2f(-g_enemy[i].m_move.x, -g_enemy[i].m_move.z));
+
+			}
 		}
-		return 0;
+
+		return i, hit;
 	}
 

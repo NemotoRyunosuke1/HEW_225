@@ -13,7 +13,7 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-#define	TEXTURE_FILENAME	L"data/texture/field004.jpg"	// テクスチャファイル名
+#define	TEXTURE_FILENAME	L"data/texture/ASPHALT.PNG"	// テクスチャファイル名
 
 #define M_DIFFUSE			XMFLOAT4(1.0f,1.0f,1.0f,1.0f)
 #define M_SPECULAR			XMFLOAT4(0.0f,0.0f,0.0f,1.0f)
@@ -23,6 +23,7 @@
 
 #define	VALUE_MOVE			(5.0f)							// 移動量
 #define	VALUE_ROTATE		(0.2f)							// 回転量
+#define MAX_FIELED	(8000)
 
 //*****************************************************************************
 // プロトタイプ宣言

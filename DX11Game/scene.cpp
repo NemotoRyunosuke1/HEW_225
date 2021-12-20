@@ -123,6 +123,25 @@ void Scene::Update()
 		break;
 	}
 
+#if _DEBUG
+	// シーン切り替え
+	if (GetAsyncKeyState(VK_F1) & 0x8000)
+	{
+		StartFadeOut(SCENE_TITLE);
+	}
+	if (GetAsyncKeyState(VK_F2) & 0x8000)
+	{
+		StartFadeOut(SCENE_STAGE_SELECT);
+	}
+	if (GetAsyncKeyState(VK_F3) & 0x8000)
+	{
+		StartFadeOut(SCENE_GAME);
+	}
+	if (GetAsyncKeyState(VK_F4) & 0x8000)
+	{
+		StartFadeOut(SCENE_RESULT);
+	}
+#endif
 	// フェード更新
 	UpdateFade();
 }
@@ -139,7 +158,7 @@ void Scene::Draw()
 		break;
 
 	case SCENE_STAGE_SELECT:
-		m_pResultScene->Draw();
+		m_pStageSelectScene->Draw();
 		break;
 
 	case SCENE_GAME:

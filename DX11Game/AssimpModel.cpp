@@ -7,6 +7,7 @@
 #include "Texture.h"
 #include "Shader.h"
 #include "main.h"
+#include "model.h"
 
 #ifdef _DEBUG
 #pragma comment(lib, "assimp-vc141-mtd")
@@ -520,7 +521,8 @@ void CAssimpMesh::Draw(ID3D11DeviceContext* pDC, XMFLOAT4X4& m44World, EByOpacit
 		sg.mWVP = XMMatrixTranspose(sg.mWVP);
 		sg.vEye = XMLoadFloat3(&pCamera->GetPos());
 		CLight* pLight = CLight::Get();
-		sg.vLightDir = XMLoadFloat3(&pLight->GetDir());
+		//sg.vLightDir = XMLoadFloat3(&pLight->GetDir());
+		sg.vLightDir = XMLoadFloat3(&GetModelRotLight());
 		sg.vLd = XMLoadFloat4(&pLight->GetDiffuse());
 		sg.vLa = XMLoadFloat4(&pLight->GetAmbient());
 		sg.vLs = XMLoadFloat4(&pLight->GetSpecular());
