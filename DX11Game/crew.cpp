@@ -258,7 +258,7 @@ int StartChase(int i, XMFLOAT3 pos)
 	
 	bool hit = CollisionSphere(g_crew[i].m_pos, CREW_RADIUS, pos, 500.0f);
 
-	bool hit2 = CollisionSphere(g_crew[i].m_pos, CREW_RADIUS, pos, 150.0f);
+	bool hit2 = CollisionSphere(g_crew[i].m_pos, CREW_RADIUS, pos, 80.0f);
 
 	if (hit)
 	{
