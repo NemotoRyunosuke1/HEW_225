@@ -24,7 +24,7 @@ WindManager::WindManager()
 	//}
 	m_pWind[0].Create(XMFLOAT3(0.0f, 50.0f, 0.0f), XMFLOAT3(300.0f, 1000.0f, 300.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));
 	m_pWind[1].Create(XMFLOAT3(600.0f, 600.0f, 600.0f), XMFLOAT3(3000.0f, 200.0f, 300.0f), XMFLOAT3(0.0f, 0.0f, 1.0f));
-	//m_pWind[2].Create(XMFLOAT3(500.0f, 100.0f, 0.0f), XMFLOAT3(300.0f, 2000.0f, 300.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));
+	//m_pWind[2].Create(XMFLOAT3(500.0f, 100.0f, 0.0f), XMFLOAT3(300.0f, 2000.0f, 300.0f), XMFLOAT3(0.0f, 0.0f, 1.0f));
 
 }
 //=======================================================
