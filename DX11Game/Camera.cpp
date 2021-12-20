@@ -1,7 +1,7 @@
 //=============================================================================
 //
 // カメラ クラス [Camera.cpp]
-// Author : HINA OSHIKUBO
+// Author : 押久保日菜
 //
 //=============================================================================
 #include "Camera.h"
@@ -38,8 +38,9 @@ namespace {
 }
 
 CCamera* CCamera::m_pCamera = &g_camera;			// 現在のカメラ
-LONG g_mouseX = GetMousePosition()->x;
-LONG g_mouseY = GetMousePosition()->y;
+
+LONG g_mouseX = GetMousePosition()->x;              // マウスカーソルポジション取得(X)
+LONG g_mouseY = GetMousePosition()->y;              // マウスカーソルポジション取得(Y)
 
 // コンストラクタ
 CCamera::CCamera()
