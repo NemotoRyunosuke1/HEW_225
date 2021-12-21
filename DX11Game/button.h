@@ -15,7 +15,7 @@ public:
 	void SetPos(XMFLOAT3 );
 	XMFLOAT3 GetSize();
 	XMFLOAT3 GetPos();
-	void CreateButton(XMFLOAT3 size, XMFLOAT3 pos);
+	void CreateButton(XMFLOAT3 size, XMFLOAT3 pos,int textureNum);
 	bool GetUse();
 	void SetFrameNum(int);
 	void SetSelect(bool);
@@ -26,5 +26,8 @@ private:
 	bool m_use;
 	bool m_select;
 	int m_frameNum;
+	ID3D11ShaderResourceView* m_pTexture1;
+	ID3D11ShaderResourceView* m_pTexture2;
+	ID3D11ShaderResourceView* m_pTexture3;
 };
 

@@ -19,9 +19,9 @@ StageButton::StageButton()
 {
 	// ボタンメモリ確保
 	m_pButton = new Button[MAX_BUTTON];
-	m_pButton[0].CreateButton(XMFLOAT3(300.0f, 300.0f,0.0f), XMFLOAT3(0.0f, 0.0f, 0.0f));
-	m_pButton[1].CreateButton(XMFLOAT3(300.0f, 300.0f,0.0f), XMFLOAT3(-400.0f, 0.0f, 0.0f));
-	m_pButton[2].CreateButton(XMFLOAT3(300.0f, 300.0f,0.0f), XMFLOAT3( 400.0f, 0.0f, 0.0f));
+	m_pButton[0].CreateButton(XMFLOAT3(300.0f, 300.0f,0.0f), XMFLOAT3(0.0f, 0.0f, 0.0f)   ,0);
+	m_pButton[1].CreateButton(XMFLOAT3(300.0f, 300.0f,0.0f), XMFLOAT3(-400.0f, 0.0f, 0.0f),1);
+	m_pButton[2].CreateButton(XMFLOAT3(300.0f, 300.0f,0.0f), XMFLOAT3( 400.0f, 0.0f, 0.0f),2);
 }
 //=============================================================================
 // デストラクタ

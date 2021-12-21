@@ -1,0 +1,18 @@
+// BGM/SE定義 (SoundData.hpp)
+
+LPCWSTR g_pszFileBGM[MAX_BGM] = {
+	//L"MusMus-BGM-087.mp3",	//タイトルBGM
+	//L"MusMus-BGM-123.mp3",			//メニューBGM
+	L"Greens.mp3",		//ゲームBGM
+	//L"MusMus-BGM-088.mp3",		//リザルトBGM
+	//L"MusMus-BGM-051.mp3",		//ゲームBGM2
+	//L"MusMus-BGM-067.mp3"		//ゲームBGM2
+
+};
+
+LPCWSTR g_pszFileSE[MAX_SE] = {
+	L"decide000.wav",						// 決定音
+	//L"cancel000.wav",						// キャンセル音
+	//L"select000.wav",						// 選択音
+
+};

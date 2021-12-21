@@ -376,5 +376,5 @@ void GameScene::Draw()
 	m_pStaminaBar->Draw();
 
 	// ƒXƒRƒAUI•`‰æ
-	//m_pScoreUI->Draw();
+	m_pScoreUI->Draw();
 }

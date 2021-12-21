@@ -544,7 +544,7 @@ void UpdateModel(void)
 	if ((GetKeyPress(VK_DOWN) || GetKeyPress(VK_S) ) && !bWind && !g_bOverHeart)
 	{
 		// ã‚ðŒü‚­
-		g_rotDestModel.x += 5;
+		g_rotDestModel.x += 2;
 		if (g_rotDestModel.x > 90)
 		{
 			g_rotDestModel.x = 90;
@@ -556,7 +556,7 @@ void UpdateModel(void)
 	if ((GetKeyPress(VK_UP) || GetKeyPress(VK_W) ) && !bWind)
 	{
 		// ‰º‚ðŒü‚­
-		g_rotDestModel.x -= 5;
+		g_rotDestModel.x -= 2;
 		if (g_rotDestModel.x < -90)
 		{
 			g_rotDestModel.x = -90;
