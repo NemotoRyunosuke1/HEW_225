@@ -185,6 +185,7 @@
     <ClCompile Include="ScoreUI.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="shadow.cpp" />
+    <ClCompile Include="Sound.cpp" />
     <ClCompile Include="stageButton.cpp" />
     <ClCompile Include="stageSelectScene.cpp" />
     <ClCompile Include="staminaBar.cpp" />
@@ -225,6 +226,9 @@
     <ClInclude Include="ScoreUI.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="shadow.h" />
+    <ClInclude Include="Sound.h" />
+    <ClInclude Include="SoundData.h" />
+    <ClInclude Include="SoundData.hpp" />
     <ClInclude Include="stageButton.h" />
     <ClInclude Include="stageSelectScene.h" />
     <ClInclude Include="staminaBar.h" />
