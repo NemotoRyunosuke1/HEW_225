@@ -76,7 +76,7 @@ void Button::Update()
 	if (m_use)
 	{
 		//カーソルがあわされた時
-		if ((GetMousePosition()->x > (long)(m_pos.x - m_size.x / 2 + SCREEN_WIDTH / 2)) && (GetMousePosition()->x < (long)(m_pos.x + m_size.x / 2 + SCREEN_WIDTH / 2)) && (-GetMousePosition()->y < (long)(m_pos.y + m_size.y / 2 - SCREEN_HEIGHT / 2)) && (-GetMousePosition()->y > (long)(m_pos.y - m_size.y / 2 - SCREEN_HEIGHT / 2)))
+		if ((GetMousePosition()->x > (long)(m_pos.x - m_size.x / 2 + FULLSCREEN_WIDTH / 2)) && (GetMousePosition()->x < (long)(m_pos.x + m_size.x / 2 + FULLSCREEN_WIDTH / 2)) && (-GetMousePosition()->y < (long)(m_pos.y + m_size.y / 2 - FULLSCREEN_HEIGHT / 2)) && (-GetMousePosition()->y > (long)(m_pos.y - m_size.y / 2 - FULLSCREEN_HEIGHT / 2)))
 		{
 
 
@@ -116,9 +116,9 @@ void Button::Draw()
 	SetBlendState(BS_ALPHABLEND);	// アルファブレンド有効		
 	if (m_use)
 	{
-		if (((GetMousePosition()->x > (long)(m_pos.x - m_size.x / 2 + SCREEN_WIDTH / 2)) && (GetMousePosition()->x < (long)(m_pos.x + m_size.x / 2 + SCREEN_WIDTH / 2)) && (-GetMousePosition()->y < (long)(m_pos.y + m_size.y / 2 - SCREEN_HEIGHT / 2)) && (-GetMousePosition()->y > (long)(m_pos.y - m_size.y / 2 - SCREEN_HEIGHT / 2))) || (m_select))
+		if (((GetMousePosition()->x > (long)(m_pos.x - m_size.x / 2 + FULLSCREEN_WIDTH / 2)) && (GetMousePosition()->x < (long)(m_pos.x + m_size.x / 2 + FULLSCREEN_WIDTH / 2)) && (-GetMousePosition()->y < (long)(m_pos.y + m_size.y / 2 - FULLSCREEN_HEIGHT / 2)) && (-GetMousePosition()->y > (long)(m_pos.y - m_size.y / 2 - FULLSCREEN_HEIGHT / 2))) || (m_select))
 		{
-			SetPolygonColor(0.5f, 0.5f, 0.5f);	//ポリゴンカラー
+			SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
 		}
 		else
 		{

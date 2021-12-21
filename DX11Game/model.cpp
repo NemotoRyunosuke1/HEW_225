@@ -12,7 +12,7 @@
 #include "debugproc.h"
 #include "shadow.h"
 #include "fade.h"
-
+#include "windManager.h"
 
 
 //*****************************************************************************
@@ -52,8 +52,8 @@ static int			g_nShadow;		// 丸影番号
 static CLight g_light;
 static bool bFlg;
 static bool bWind;
-static bool bWind1[10];
-static XMFLOAT3 WindVec[10];
+static bool bWind1[MAX_WIND];
+static XMFLOAT3 WindVec[MAX_WIND];
 static float g_stm;
 static int g_frameCnt;
 static double d = 0;
@@ -69,7 +69,7 @@ HRESULT InitModel(void)
 	ID3D11DeviceContext* pDeviceContext = GetDeviceContext();
 
 	// 位置・回転・スケールの初期設定
-	g_posModel = XMFLOAT3(-1000.0f, 300.0f, -2000.0f);
+	g_posModel = XMFLOAT3(-1000.0f, 600.0f, -2000.0f);
 	g_moveModel = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	g_rotModel = XMFLOAT3(0.0f, 180.0f, 0.0f);
 	g_rotDestModel = XMFLOAT3(0.0f, 180.0f, 0.0f);
@@ -91,7 +91,7 @@ HRESULT InitModel(void)
 	bFlg = false;
 	//風の移動量？の初期化？
 	bWind = false;
-	for (int i = 0; i < 10; i++) {
+	for (int i = 0; i < MAX_WIND; i++) {
 		bWind1[i] = false;
 		WindVec[i] = XMFLOAT3(0.0f,0.0f,0.0f);
 	}
@@ -312,7 +312,7 @@ void UpdateModel(void)
 	g_rotDestModel.z = 0;  
 
 	// 風との当たり判定
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < MAX_WIND; i++)
 	{
 		//使用していなかったらスキップ
 		if (!bWind1[i])
@@ -403,7 +403,7 @@ void UpdateModel(void)
 		g_accModel.z += 3;
 		//g_rotDestModel.y += 1.0f * stickX /80 ;
 		g_rotDestModel.z += 30;
-		g_stm -= 10.0f;	// スタミナ減少
+		//g_stm -= 10.0f;	// スタミナ減少
 	}
 
 	// スペースキー羽ばたき
@@ -662,7 +662,7 @@ void UpdateModel(void)
 	{
 		// スタミナ減少
 		if(!bWind)	// 風に乗ってないとき
-		g_stm -= 0.1f * g_rotModel.x/45;
+		g_stm -= 0.1f * g_rotModel.x / 45;
 
 		// オーバーヒート
 		if (g_stm <= 0.0f)
@@ -698,7 +698,7 @@ void UpdateModel(void)
 #if  _DEBUG
 		StartFadeOut(SCENE_GAME);
 #else
-		StartFadeOut(SCENE_GAME);
+		StartFadeOut(SCENE_RESULT);
 #endif
 		
 	}
