@@ -17,13 +17,13 @@
 //*****************************************************************************
 #define MODEL_CREW			"data/model/mukudori1.fbx"
 
-#define	VALUE_MOVE_CREW	    (2.00f)		// 移動速度
+#define	VALUE_MOVE_CREW	    (3.00f)		// 移動速度
 #define	RATE_MOVE_CREW		(0.20f)		// 移動慣性係数
 #define	VALUE_ROTATE_CREW	(7.0f)		// 回転速度
 #define	RATE_ROTATE_CREW	(0.20f)		// 回転慣性係数
 
 #define MAX_CREW			(100)		// 味方最大数
-#define	CREW_RADIUS		    (20.0f)    // 境界球半径
+#define	CREW_RADIUS		    (20.0f)     // 境界球半径
 #define MAP_HIROSA          (8000)      // マップの広さ
 
 //*****************************************************************************
@@ -40,6 +40,7 @@ struct TCrew {
 	int			m_nShadow;	// 丸影番号
 
 	bool m_catch;
+	bool m_use;
 };
 
 //*****************************************************************************
@@ -47,6 +48,8 @@ struct TCrew {
 //*****************************************************************************
 static CAssimpModel	g_model;			// モデル
 static TCrew		g_crew[MAX_CREW];	// 味方情報
+static int CrewCnt;
+
 
 //=============================================================================
 // 初期化処理
@@ -71,10 +74,11 @@ HRESULT InitCrew(void)
 		g_crew[i].m_rot = XMFLOAT3(0.0f, rand() % 360 - 180.0f, 0.0f);
 		g_crew[i].m_rotDest = g_crew[i].m_rot;
 		g_crew[i].m_move = XMFLOAT3(
-			-SinDeg(g_crew[i].m_rot.y) * VALUE_MOVE_CREW,
+			-SinDeg(g_crew[i].m_rot.y) * VALUE_MOVE_CREW * 0.0f,
 			0.0f,
-			-CosDeg(g_crew[i].m_rot.y) * VALUE_MOVE_CREW);
+			-CosDeg(g_crew[i].m_rot.y) * VALUE_MOVE_CREW * 0.0f);
 		g_crew[i].m_catch = false;
+		g_crew[i].m_use = false;
 		// 丸影の生成
 		g_crew[i].m_nShadow = CreateShadow(g_crew[i].m_pos, 12.0f);
 	}
@@ -101,7 +105,9 @@ void UninitCrew(void)
 //=============================================================================
 void UpdateCrew(void)
 {
-	XMMATRIX mtxWorld, mtxRot, mtxTranslate;
+	
+
+	XMMATRIX mtxWorld, mtxRot, mtxScl, mtxTranslate;
 
 	XMFLOAT3 g_modelPos = GetModelPos();
 
@@ -109,17 +115,42 @@ void UpdateCrew(void)
 	int cnt = 0;
 
 	for (int i = 0; i < MAX_CREW; ++i) {
+
+		if (!g_crew[i].m_use)
+		{
+			continue;
+		}
 		// 移動
 		StartChase(i,g_modelPos);
 		
-		
+		bool hit2[MAX_CREW];
+		int j;
+		for (j = 0; j < MAX_CREW; ++j)
+		{
+			hit2[j] = false;
+		}
+		for (j = 0; j < MAX_CREW; ++j)
+		{
+			if (i != j)
+			{
+				hit2[j] = CollisionSphere(g_crew[i].m_pos, 40.0f, g_crew[j].m_pos, 40.0f);
+			}
 
+		}
+		
+		for (j = 0; j < MAX_CREW; ++j)
+		{
+			if (hit2[j])
+			{
+				g_crew[i].m_rotDest.y = XMConvertToDegrees(atan2f(-g_crew[i].m_move.x, -g_crew[i].m_move.z));
+			}
+		}
 		
 		if (g_crew[i].m_catch)
 		{
 			cnt++;
 		}
-		
+		CrewCnt = cnt;
 		
 
 		g_crew[i].m_pos.x += g_crew[i].m_move.x;
@@ -195,13 +226,18 @@ void UpdateCrew(void)
 			g_crew[i].m_rot.y += 360.0f;
 		}
 		g_crew[i].m_move = XMFLOAT3(
-			-SinDeg(g_crew[i].m_rot.y) * VALUE_MOVE_CREW,
+			-SinDeg(g_crew[i].m_rot.y) * VALUE_MOVE_CREW * 0.0f,
 			0.0f,
-			-CosDeg(g_crew[i].m_rot.y) * VALUE_MOVE_CREW);
+			-CosDeg(g_crew[i].m_rot.y) * VALUE_MOVE_CREW * 0.0f);
 		
 
 		// ワールドマトリックスの初期化
 		mtxWorld = XMMatrixIdentity();
+
+		
+		//スケール反映
+		mtxScl = XMMatrixScaling(3.0f, 3.0f, 3.0f);
+		mtxWorld = XMMatrixMultiply(mtxWorld, mtxScl);
 
 		// 回転を反映
 		mtxRot = XMMatrixRotationRollPitchYaw(
@@ -238,12 +274,22 @@ void DrawCrew(void)
 	ID3D11DeviceContext* pDC = GetDeviceContext();
 
 	// 不透明部分を描画
-	for (int i = 0; i < MAX_CREW; ++i) {
+	for (int i = 0; i < MAX_CREW; ++i) 
+	{
+		if (!g_crew[i].m_use)
+		{
+			continue;
+		}
 		g_model.Draw(pDC, g_crew[i].m_mtxWorld, eOpacityOnly);
 	}
 
 	// 半透明部分を描画
-	for (int i = 0; i < MAX_CREW; ++i) {
+	for (int i = 0; i < MAX_CREW; ++i) 
+	{
+		if (!g_crew[i].m_use)
+		{
+			continue;
+		}
 		SetBlendState(BS_ALPHABLEND);	// アルファブレンド有効
 		SetZWrite(false);				// Zバッファ更新しない
 		g_model.Draw(pDC, g_crew[i].m_mtxWorld, eTransparentOnly);
@@ -256,19 +302,19 @@ int StartChase(int i, XMFLOAT3 pos)
 {
 	XMFLOAT3 g_modelPos = GetModelPos();
 	
-	bool hit = CollisionSphere(g_crew[i].m_pos, CREW_RADIUS, pos, 500.0f);
+	// 察知範囲
+	bool hit = CollisionSphere(g_crew[i].m_pos, CREW_RADIUS, pos, 100.0f);
 
-	bool hit2 = CollisionSphere(g_crew[i].m_pos, CREW_RADIUS, pos, 80.0f);
-
-	if (hit)
+	
+	if (hit  || g_crew[i].m_catch)
 	{
 		g_crew[i].m_catch = true;
-		if (g_modelPos.y - g_crew[i].m_pos.y > 20.0f)
+		if (g_modelPos.y - g_crew[i].m_pos.y > 50.0f)
 		{
 			//上
 			g_crew[i].m_rotDest.x = 30.0f;
 		}
-		else if (g_modelPos.y - g_crew[i].m_pos.y < -20.0f)
+		else if (g_modelPos.y - g_crew[i].m_pos.y < -50.0f)
 		{
 			//下
 			g_crew[i].m_rotDest.x = -30.0f;
@@ -284,17 +330,17 @@ int StartChase(int i, XMFLOAT3 pos)
 			//左後ろ
 			g_crew[i].m_rotDest.y = -135.0f;
 		}
-		else if (g_modelPos.x - g_crew[i].m_pos.x < -0 && g_modelPos.z - g_crew[i].m_pos.z > 0)
+		else if (g_modelPos.x - g_crew[i].m_pos.x < 0 && g_modelPos.z - g_crew[i].m_pos.z > 0)
 		{
 			//右後ろ
 			g_crew[i].m_rotDest.y = 135.0f;
 		}
-		else if (g_modelPos.x - g_crew[i].m_pos.x > 0 && g_modelPos.z - g_crew[i].m_pos.z < -0)
+		else if (g_modelPos.x - g_crew[i].m_pos.x > 0 && g_modelPos.z - g_crew[i].m_pos.z < 0)
 		{
 			//左前
 			g_crew[i].m_rotDest.y = -45.0f;
 		}
-		else if (g_modelPos.x - g_crew[i].m_pos.x < -0 && g_modelPos.z - g_crew[i].m_pos.z < -0)
+		else if (g_modelPos.x - g_crew[i].m_pos.x < 0 && g_modelPos.z - g_crew[i].m_pos.z < 0)
 		{
 			//右前
 			g_crew[i].m_rotDest.y = 45.0f;
@@ -320,17 +366,137 @@ int StartChase(int i, XMFLOAT3 pos)
 			g_crew[i].m_rotDest.y = 0;
 		}
 
-		g_crew[i].m_pos.x -= SinDeg(g_crew[i].m_rot.y) * VALUE_MOVE_CREW * GetModelAcc().x;
-		g_crew[i].m_pos.y += SinDeg(g_crew[i].m_rot.x) * VALUE_MOVE_CREW * GetModelAcc().y;
-		g_crew[i].m_pos.z -= CosDeg(g_crew[i].m_rot.y) * VALUE_MOVE_CREW * GetModelAcc().z;
-
+		g_crew[i].m_pos.x -= SinDeg(g_crew[i].m_rot.y) * VALUE_MOVE_CREW ;
+		g_crew[i].m_pos.y += SinDeg(g_crew[i].m_rot.x) * VALUE_MOVE_CREW ;
+		g_crew[i].m_pos.z -= CosDeg(g_crew[i].m_rot.y) * VALUE_MOVE_CREW ;
 		
-		if (hit2) {
-			
+		if (hit)
+		{
+			// プレイヤーから離る
 			g_crew[i].m_rotDest.y = XMConvertToDegrees(atan2f(-g_crew[i].m_move.x, -g_crew[i].m_move.z));
-
 		}
 
 	}
 	return i,hit;
+}
+
+int& GetCrewCnt()
+{
+	return CrewCnt;
+}
+
+
+void CrewCreate(XMFLOAT3 pos1, XMFLOAT3 pos2, XMFLOAT3 pos3, XMFLOAT3 pos4, XMFLOAT3 pos5,
+	            XMFLOAT3 pos6, XMFLOAT3 pos7, XMFLOAT3 pos8, XMFLOAT3 pos9, XMFLOAT3 pos10)
+{
+	for (int i = 0; i < MAX_CREW; ++i)
+	{
+		if (g_crew[i].m_use)
+		{
+			continue;
+		}
+		g_crew[i].m_pos = pos1;
+		g_crew[i].m_use = true;
+		
+		break;
+	}
+	for (int i = 0; i < MAX_CREW; ++i)
+	{
+		if (g_crew[i].m_use)
+		{
+			continue;
+		}
+		g_crew[i].m_pos = pos2;
+		g_crew[i].m_use = true;
+
+		break;
+	}
+	for (int i = 0; i < MAX_CREW; ++i)
+	{
+		if (g_crew[i].m_use)
+		{
+			continue;
+		}
+		g_crew[i].m_pos = pos3;
+		g_crew[i].m_use = true;
+
+		break;
+	}
+	for (int i = 0; i < MAX_CREW; ++i)
+	{
+		if (g_crew[i].m_use)
+		{
+			continue;
+		}
+		g_crew[i].m_pos = pos4;
+		g_crew[i].m_use = true;
+
+		break;
+	}
+	for (int i = 0; i < MAX_CREW; ++i)
+	{
+		if (g_crew[i].m_use)
+		{
+			continue;
+		}
+		g_crew[i].m_pos = pos5;
+		g_crew[i].m_use = true;
+
+		break;
+	}
+	for (int i = 0; i < MAX_CREW; ++i)
+	{
+		if (g_crew[i].m_use)
+		{
+			continue;
+		}
+		g_crew[i].m_pos = pos6;
+		g_crew[i].m_use = true;
+
+		break;
+	}
+	for (int i = 0; i < MAX_CREW; ++i)
+	{
+		if (g_crew[i].m_use)
+		{
+			continue;
+		}
+		g_crew[i].m_pos = pos7;
+		g_crew[i].m_use = true;
+
+		break;
+	}
+	for (int i = 0; i < MAX_CREW; ++i)
+	{
+		if (g_crew[i].m_use)
+		{
+			continue;
+		}
+		g_crew[i].m_pos = pos8;
+		g_crew[i].m_use = true;
+
+		break;
+	}
+	for (int i = 0; i < MAX_CREW; ++i)
+	{
+		if (g_crew[i].m_use)
+		{
+			continue;
+		}
+		g_crew[i].m_pos = pos9;
+		g_crew[i].m_use = true;
+
+		break;
+	}
+	for (int i = 0; i < MAX_CREW; ++i)
+	{
+		if (g_crew[i].m_use)
+		{
+			continue;
+		}
+		g_crew[i].m_pos = pos10;
+		g_crew[i].m_use = true;
+
+		break;
+	}
 }

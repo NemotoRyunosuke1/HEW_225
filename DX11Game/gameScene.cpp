@@ -41,6 +41,19 @@ GameScene::GameScene()
 	// ñ°ï˚èâä˙âª
 	InitCrew();
 
+	CrewCreate(
+		XMFLOAT3(-1000.0f, 500.0f, -500.0f),// 1
+		XMFLOAT3( -900.0f, 500.0f, -400.0f),// 2
+		XMFLOAT3(-1100.0f, 500.0f, -400.0f),// 3
+		XMFLOAT3( -800.0f, 500.0f, -300.0f),// 4
+		XMFLOAT3(-1200.0f, 500.0f, -300.0f),// 5
+		XMFLOAT3( -700.0f, 500.0f, -200.0f),// 6
+		XMFLOAT3(-1300.0f, 500.0f, -200.0f),// 7
+		XMFLOAT3(-1000.0f, 500.0f,  500.0f),// 8
+		XMFLOAT3(-1000.0f, 500.0f,  700.0f),// 9
+		XMFLOAT3(-1000.0f, 500.0f,  900.0f) // 10
+		);
+
 	// ìGèâä˙âª
 	InitEnemy();
 
