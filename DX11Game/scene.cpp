@@ -111,10 +111,12 @@ void Scene::Update()
 	switch (m_eScene)
 	{
 	case SCENE_TITLE:
+		CSound::Play(BGM_000); //タイトルBGM
 		m_pTitleScene->Update();
 		break;
 
 	case SCENE_STAGE_SELECT:
+		//CSound::Play(BGM_004);//セレクトBGM
 		m_pStageSelectScene->Update();
 		break;
 
@@ -124,6 +126,7 @@ void Scene::Update()
 		break;
 
 	case SCENE_RESULT:
+		//CSound::Play(BGM_003);//リザルトBGM
 		m_pResultScene->Update();
 		break;
 

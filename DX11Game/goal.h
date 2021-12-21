@@ -8,7 +8,8 @@ class Goal
 public:
 	Goal();
 	~Goal();
-	
+
+
 	void Update();
 	void Draw();
 
