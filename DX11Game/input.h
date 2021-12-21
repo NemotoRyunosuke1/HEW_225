@@ -60,9 +60,9 @@
 #define JOYSTICKID10	9 // RStickâüÇµçûÇ› 
 #define JOYSTICKID11	10  //
 #define JOYSTICKID12	11
-#define JOYSTICKID13	12
+#define JOYSTICKID13	12 //
 #define JOYSTICKID14	13
-#define JOYSTICKID15	14
+#define JOYSTICKID15	14 //
 #define JOYSTICKID16	15
 
 #define MOUSEBUTTON_L	0

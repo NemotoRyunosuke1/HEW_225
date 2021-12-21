@@ -1,7 +1,7 @@
 //=============================================================================
 //
 // タイトルシーン処理 [titleScene.cpp]
-// Author : 
+// Author :
 //
 //=============================================================================
 #include "scene.h"
@@ -52,8 +52,14 @@ void TitleScene::Update()
 	//次のシーンへ移る条件
 	if (GetAsyncKeyState(VK_RETURN) & 0x8000)
 	{
-
+#if _DEBUG
 		StartFadeOut(SCENE_GAME);
+
+#else 
+		StartFadeOut(SCENE_STAGE_SELECT);
+
+#endif
+		
 	}
 	
 

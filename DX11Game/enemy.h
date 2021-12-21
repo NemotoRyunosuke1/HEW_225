@@ -1,7 +1,7 @@
 //=============================================================================
 //
-// ìGã@èàóù [enemy.h]
-// Author : HIROHIKO HAMAYA
+// ìGÇÃê∂ê¨ [enemy.h]
+// Author : óÈñÿëÒñ§
 //
 //=============================================================================
 #pragma once
@@ -15,3 +15,5 @@ HRESULT InitEnemy(void);
 void UninitEnemy(void);
 void UpdateEnemy(void);
 void DrawEnemy(void);
+
+int EnemyStartChase(int i, XMFLOAT3 pos);

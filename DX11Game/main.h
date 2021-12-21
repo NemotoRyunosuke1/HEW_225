@@ -45,6 +45,9 @@ using namespace DirectX;
 #define SinDeg(degree)	sinf(XMConvertToRadians(degree))
 #define CosDeg(degree)	cosf(XMConvertToRadians(degree))
 
+#define CLASS_NAME		_T("AppClass")			// ウインドウのクラス名
+#define WINDOW_NAME		_T("「ムレキドリ」プロトタイプ")	// ウインドウのキャプション名
+
 enum EBlendState {
 	BS_NONE = 0,							// 半透明合成無し
 	BS_ALPHABLEND,							// 半透明合成

@@ -14,6 +14,7 @@
 #include "scene.h"
 
 
+
 //-------- ライブラリのリンク
 #pragma comment(lib, "winmm")
 #pragma comment(lib, "imm32")
@@ -22,8 +23,7 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-#define CLASS_NAME		_T("AppClass")			// ウインドウのクラス名
-#define WINDOW_NAME		_T("「ムレキドリ」プロトタイプ")	// ウインドウのキャプション名
+
 
 //*****************************************************************************
 // プロトタイプ宣言
@@ -399,6 +399,8 @@ HRESULT Init(HWND hWnd, BOOL bWindow)
 	if (FAILED(hr))
 		return hr;
 
+	InitBG();
+
 	// シーン初期化
 	m_pScene = new Scene;
 	
@@ -434,7 +436,6 @@ void Uninit(void)
 	
 	// シーン処理終了
 	delete m_pScene;
-
 	
 
 	// メッシュ終了処理
@@ -498,13 +499,12 @@ void Update(void)
 
 #endif
 
+
 	// シーン更新
 	m_pScene->Update();
 
 	
-	// カメラ更新
-	CCamera::Get()->Update();
-
+	
 	
 }
 
