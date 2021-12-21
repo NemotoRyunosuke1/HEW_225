@@ -10,7 +10,7 @@
 
 Goal::Goal()
 {
-	m_pos = XMFLOAT3(0.0f, 50.0f, 600.0f);	// 位置
+	m_pos = XMFLOAT3(-1000.0f, 1000.0f, 6000.0f);	// 位置
 	m_size = XMFLOAT3(300.0f, 200.0f, 300.0f);	// サイズ
 	m_rot = XMFLOAT3(0.0f, 0.0f, 0.0f);	// 向き
 	
