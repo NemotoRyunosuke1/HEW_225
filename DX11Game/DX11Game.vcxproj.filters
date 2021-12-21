@@ -168,9 +168,6 @@
     <ClCompile Include="buliding1.cpp">
       <Filter>ソース ファイル\scene\gameScene\object</Filter>
     </ClCompile>
-    <ClCompile Include="titleUI.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="ScoreUI.cpp">
       <Filter>ソース ファイル\scene\gameScene\object</Filter>
     </ClCompile>
@@ -182,6 +179,9 @@
     </ClCompile>
     <ClCompile Include="cloudManagercpp.cpp">
       <Filter>ソース ファイル\scene\gameScene\object</Filter>
+    </ClCompile>
+    <ClCompile Include="titleUI.cpp">
+      <Filter>ソース ファイル\scene\titleScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -293,9 +293,6 @@
     <ClInclude Include="buliding1.h">
       <Filter>ヘッダー ファイル\scene\gameScene\object</Filter>
     </ClInclude>
-    <ClInclude Include="titleUI.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="ScoreUI.h">
       <Filter>ヘッダー ファイル\scene\gameScene\object</Filter>
     </ClInclude>
@@ -313,6 +310,9 @@
     </ClInclude>
     <ClInclude Include="cloudManager.h">
       <Filter>ヘッダー ファイル\scene\gameScene\object</Filter>
+    </ClInclude>
+    <ClInclude Include="titleUI.h">
+      <Filter>ヘッダー ファイル\scene\titleScene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

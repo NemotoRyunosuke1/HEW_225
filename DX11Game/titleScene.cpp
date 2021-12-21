@@ -7,7 +7,7 @@
 #include "scene.h"
 #include "debugproc.h"
 #include "Sound.h"
-
+#include "input.h"
 
 //=============================================================================
 // コンストラクタ
@@ -50,9 +50,9 @@ void TitleScene::Update()
 	
 
 	//次のシーンへ移る条件
-	if (GetAsyncKeyState(VK_RETURN) & 0x8000)
+	if (GetKeyTrigger(VK_RETURN))
 	{
-		CSound::SetVolume(SE_SELECT,1.0f);
+		CSound::SetVolume(SE_SELECT, 1.0f);
 		CSound::Play(SE_SELECT);
 #if _DEBUG
 		StartFadeOut(SCENE_GAME);
@@ -61,7 +61,6 @@ void TitleScene::Update()
 		StartFadeOut(SCENE_STAGE_SELECT);
 
 #endif
-		
 	}
 	
 
