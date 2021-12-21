@@ -14,6 +14,6 @@ LPCWSTR g_pszFileBGM[MAX_BGM] = {
 LPCWSTR g_pszFileSE[MAX_SE] = {
 	L"decide000.wav",						// 決定音
 	//L"cancel000.wav",						// キャンセル音
-	//L"select000.wav",						// 選択音
+	L"select.mp3",						// 選択音
 
 };
