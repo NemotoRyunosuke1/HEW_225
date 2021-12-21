@@ -14,6 +14,7 @@
 #include "crew.h"
 #include "enemy.h"
 #include "input.h"
+#include "collision.h"
 
 #if _DEBUG
 #define MAX_BULIDING (16)
@@ -316,13 +317,22 @@ void GameScene::Update()
 	
 
 	//次のシーンへ移る条件
+	if (GetModelPos().x + GetModelCollisionSize().x / 2 > m_pGoal->GetPos().x - m_pGoal->GetSize().x / 2 && GetModelPos().x - GetModelCollisionSize().x / 2 < m_pGoal->GetPos().x + m_pGoal->GetSize().x / 2 &&
+		GetModelPos().y + GetModelCollisionSize().y / 2 > m_pGoal->GetPos().y - m_pGoal->GetSize().y / 2 && GetModelPos().y - GetModelCollisionSize().y / 2 < m_pGoal->GetPos().y + m_pGoal->GetSize().y / 2 &&
+		GetModelPos().z + GetModelCollisionSize().z / 2 > m_pGoal->GetPos().z - m_pGoal->GetSize().z / 2 && GetModelPos().z - GetModelCollisionSize().z / 2 < m_pGoal->GetPos().z + m_pGoal->GetSize().z / 2
+		)
+	{
+		// ゴールについたとき
+		StartFadeOut(SCENE_RESULT);
+	}
+
+#if _DEBUG
 	if (GetAsyncKeyState(VK_RETURN) & 0x8000)
 	{
 
 		StartFadeOut(SCENE_RESULT);
 	}
 
-#if _DEBUG
 	// デバック用文字列
 	PrintDebugProc("****** GameScene ******\n");
 	PrintDebugProc("\n");

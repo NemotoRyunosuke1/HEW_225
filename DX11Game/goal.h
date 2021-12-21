@@ -13,6 +13,9 @@ public:
 	void Update();
 	void Draw();
 
+	XMFLOAT3 GetPos();
+	XMFLOAT3 GetSize();
+
 private:
 	CAssimpModel m_model;	// ƒ‚ƒfƒ‹
 	XMFLOAT3 m_pos;		// ˆÊ’u
