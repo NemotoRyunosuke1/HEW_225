@@ -29,7 +29,7 @@ Scene::Scene()
 
 #else
 	// ゲームの開始するときのシーン
-	m_eScene = SCENE_TITLE;
+	m_eScene = SCENE_RESULT;
 
 #endif
 	
