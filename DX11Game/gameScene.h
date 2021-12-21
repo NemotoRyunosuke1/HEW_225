@@ -6,7 +6,7 @@
 #include "staminaBar.h"
 #include "buliding1.h"
 #include "ScoreUI.h"
-#include "resultScene.h"
+#include "cloudManager.h"
 
 class GameScene :public SceneBase
 {
@@ -24,10 +24,9 @@ private:
 	StaminaBar* m_pStaminaBar;
 	Buliding* m_pBuliding;
 	ScoreUI* m_pScoreUI;
-	ResultScene* m_pResult;
+	CloudManager* m_pCloudManager;
 
 	bool m_bDebugMode;
 	bool m_bPause;
-	bool m_bGoal;
 };
 

@@ -1,20 +1,20 @@
 //=============================================================================
 //
-// 風マネージャー処理 [windManager.h]
+// 雲マネージャー処理 [cloudManager.h]
 // Author : 
 //
 //=============================================================================
 #pragma once
 
-#include "wind.h"
+#include "cloud.h"
 
-#define MAX_WIND (30)
+#define MAX_CLOUD (30)
 
-class WindManager
+class CloudManager
 {
 public:
-	WindManager();
-	~WindManager();
+	CloudManager();
+	~CloudManager();
 
 	void Update();
 	void Draw();
@@ -26,6 +26,6 @@ public:
 	bool GetUse(int num);		// 使用フラグ取得
 
 private:
-	Wind* m_pWind;
+	Cloud* m_pCloud;
 
 };

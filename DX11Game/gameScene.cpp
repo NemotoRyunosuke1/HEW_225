@@ -48,6 +48,9 @@ GameScene::GameScene()
 	// 風マネージャー初期化
 	m_pWindManager = new WindManager;
 
+	// 雲マネージャー初期化
+	m_pCloudManager = new CloudManager;
+
 	// ゴール初期化
 	m_pGoal = new Goal;
 
@@ -192,6 +195,9 @@ GameScene::~GameScene()
 	// 風マネージャー終了
 	delete m_pWindManager;
 
+	// 雲マネージャー終了
+	delete m_pCloudManager;
+
 	// ゴール終了
 	delete m_pGoal;
 
@@ -278,6 +284,9 @@ void GameScene::Update()
 
 	// 風マネージャー更新
 	m_pWindManager->Update();
+
+	// 雲マネージャー更新
+	m_pCloudManager->Update();
 
 	// ゴール更新
 	m_pGoal->Update();
@@ -383,6 +392,9 @@ void GameScene::Draw()
 
 	// 風マネージャー描画
 	m_pWindManager->Draw();
+
+	// 雲マネージャー描画
+	m_pCloudManager->Draw();
 
 	// ゴール描画
 	m_pGoal->Draw();
