@@ -7,6 +7,7 @@
 #include "scene.h"
 #include "debugproc.h"
 #include "fade.h"
+#include "Sound.h"
 
 //*****************************************************************************
 // グローバル変数
@@ -32,6 +33,9 @@ Scene::Scene()
 
 #endif
 	
+	// サウンド初期化
+	CSound::Init();
+
 	switch (m_eScene)
 	{
 	case SCENE_TITLE:
@@ -99,6 +103,11 @@ Scene::~Scene()
 //=============================================================================
 void Scene::Update() 
 {
+	// サウンド更新
+	CSound::Update();
+	
+
+
 	switch (m_eScene)
 	{
 	case SCENE_TITLE:
@@ -110,6 +119,7 @@ void Scene::Update()
 		break;
 
 	case SCENE_GAME:
+		CSound::Play(GAME_BGM_001);
 		m_pGameScene->Update();
 		break;
 

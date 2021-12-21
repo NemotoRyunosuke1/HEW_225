@@ -13,10 +13,10 @@
 ScoreUI::ScoreUI()
 {	
 	// 変数初期化
-	m_pos  = XMFLOAT3(600, 300, 0);
-	m_size = XMFLOAT3(100, 100, 0);
-	m_IconPos  = XMFLOAT3(600, 220, 0);		// 位置
-	m_Iconsize = XMFLOAT3(100, 60, 0);	// サイズ
+	m_pos  = XMFLOAT3(550, -300, 0);
+	m_size = XMFLOAT3(150, 50, 0);
+	m_IconPos  = XMFLOAT3(550, -220, 0);		// 位置
+	m_Iconsize = XMFLOAT3(100, 100, 0);	// サイズ
 
 
 	// テクスチャ読み込み
@@ -40,18 +40,18 @@ void ScoreUI::Draw()
 {
 	ID3D11DeviceContext*  pBC = GetDeviceContext();
 
-	//枠
+	//アイコン
 	SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
-	SetPolygonSize(m_size.x, m_size.y);
-	SetPolygonPos(m_pos.x, m_pos.y);
+	SetPolygonSize(m_Iconsize.x, m_Iconsize.y);
+	SetPolygonPos(m_IconPos.x, m_IconPos.y);
 	SetPolygonTexture(nullptr);
 	SetPolygonUV(0.0f, 0.0f);
 	DrawPolygon(pBC);
 
 	//残りの数
 	SetPolygonColor(1, 1, 1);	//ポリゴンカラー
-	SetPolygonSize(m_IconPos.x, m_IconPos.y);
-	SetPolygonPos(m_Iconsize.x, m_Iconsize.y);
+	SetPolygonSize(m_size.x, m_size.y);
+	SetPolygonPos(m_pos.x, m_pos.y);
 	SetPolygonTexture(nullptr);
 	SetPolygonUV(0.0f, 0.0f);
 	DrawPolygon(pBC);
