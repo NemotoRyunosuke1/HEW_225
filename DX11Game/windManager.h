@@ -8,7 +8,7 @@
 
 #include "wind.h"
 
-#define MAX_WIND (10)
+#define MAX_WIND (30)
 
 class WindManager
 {
