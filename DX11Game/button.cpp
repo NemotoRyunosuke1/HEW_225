@@ -6,7 +6,7 @@
 // 
 //*****************************************************************************
 
-//#define PATH_BUTTON_TEXTURE L"data/texture/button.bmp"
+#define PATH_BUTTON_TEXTURE L"data/texture/button.bmp"
 #define NUMBER_COUNT_X (4)	//テクスチャコマ数(X)
 #define NUMBER_COUNT_Y (4)	//テクスチャコマ数(Y)
 
