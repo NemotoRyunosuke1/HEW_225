@@ -60,6 +60,9 @@ GameScene::GameScene()
 	// スコアUI初期化
 	m_pScoreUI = new ScoreUI;
 
+	// リザルトシーン初期化
+	m_pResult = new ResultScene;
+
 	/*for (int j = 0; j < 4; j++)
 	{
 		for (int i = 0; i < 4; i++)
@@ -158,9 +161,12 @@ GameScene::GameScene()
 	m_pBuliding[6].Create(XMFLOAT3(1110, 10, 600), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
 	m_pBuliding[7].Create(XMFLOAT3(1110, 10, 900), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
 */
+
+
 	// 変数初期化
 	m_bDebugMode = false;
 	m_bPause = false;
+	m_bGoal = false;
 }
 
 //=============================================================================
@@ -197,6 +203,9 @@ GameScene::~GameScene()
 
 	// スコアUI終了処理
 	delete m_pScoreUI;
+
+	// リザルト終了処理
+	delete m_pResult;
 }
 
 //=============================================================================
@@ -323,7 +332,12 @@ void GameScene::Update()
 		)
 	{
 		// ゴールについたとき
-		StartFadeOut(SCENE_RESULT);
+		m_bGoal = true;
+	}
+
+	if (m_bGoal)
+	{
+		m_pResult->Update();
 	}
 
 #if _DEBUG
@@ -387,4 +401,8 @@ void GameScene::Draw()
 
 	// スコアUI描画
 	m_pScoreUI->Draw();
+	if (m_bGoal)
+	{
+		m_pResult->Draw();
+	}
 }
