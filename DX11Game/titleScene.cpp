@@ -6,7 +6,7 @@
 //=============================================================================
 #include "scene.h"
 #include "debugproc.h"
-
+#include "Sound.h"
 
 
 //=============================================================================
@@ -52,6 +52,8 @@ void TitleScene::Update()
 	//Ÿ‚ÌƒV[ƒ“‚ÖˆÚ‚éğŒ
 	if (GetAsyncKeyState(VK_RETURN) & 0x8000)
 	{
+		CSound::SetVolume(SE_SELECT,1.0f);
+		CSound::Play(SE_SELECT);
 #if _DEBUG
 		StartFadeOut(SCENE_GAME);
 
