@@ -15,6 +15,7 @@ LPCWSTR g_pszFileSE[MAX_SE] = {
 	L"decide000.wav",						// Œˆ’è‰¹
 	//L"cancel000.wav",						// ƒLƒƒƒ“ƒZƒ‹‰¹
 	L"select.mp3",						// ‘I‘ð‰¹
+	L"wind.mp3",						// •—
 	L"habataki.mp3",						// ‚Í‚Î‚½‚«‰¹
 
 };

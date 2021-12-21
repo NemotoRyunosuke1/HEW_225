@@ -33,6 +33,7 @@
 
 #define MAX_FLY_Y (2000)	// 最高高度		
 
+
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
@@ -60,6 +61,7 @@ static int g_frameCnt;
 static double d = 0;
 static bool g_bDebugMode;
 static bool g_bOverHeart;
+static float Wind;
 //=============================================================================
 // 初期化処理
 //=============================================================================
@@ -100,6 +102,7 @@ HRESULT InitModel(void)
 	g_frameCnt = 0;
 	g_bDebugMode = false;
 	g_bOverHeart = false;
+	Wind = 0;
 	return hr;
 }
 
@@ -339,11 +342,21 @@ void UpdateModel(void)
 				g_rotDestModel.x = 90 * WindVec[i].y;
 				g_rotDestModel.y = 90 * WindVec[i].x +  180 * ((1 + WindVec[i].z)/2);
 				//g_rotDestModel.y = 90 * WindVec[i].z ;
-				
+
+				CSound::SetVolume(SE_WIND, 1.0f);
+				CSound::Play(SE_WIND);
+
 				bFlg  = true;
 				bWind = true;
 				g_stm += 0.5f;
 		    }			
+		}
+		else
+		{
+			Wind -= 0.5f;
+			CSound::SetVolume(SE_WIND,Wind);
+
+
 		}
 	}
 	

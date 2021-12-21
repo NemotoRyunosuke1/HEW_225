@@ -74,6 +74,8 @@ void Wind::Update()
 	// ワールドマトリックス設定
 	XMStoreFloat4x4(&m_mtxWorld, mtxWorld);
 
+
+
 #if _DEBUG
 	
 	// デバック用文字列
