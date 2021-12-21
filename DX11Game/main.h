@@ -39,6 +39,9 @@ using namespace DirectX;
 #define SCREEN_CENTER_X	(SCREEN_WIDTH/2)	// ウインドウの中心Ｘ座標
 #define SCREEN_CENTER_Y	(SCREEN_HEIGHT/2)	// ウインドウの中心Ｙ座標
 
+#define FULLSCREEN_WIDTH (1920)
+#define FULLSCREEN_HEIGHT (1080)
+
 #define	NUM_VERTEX		(4)					// 頂点数
 #define	NUM_POLYGON		(2)					// ポリゴン数
 
