@@ -2,6 +2,7 @@
 
 #include "main.h"
 #include "AssimpModel.h"
+#include "resultScene.h"
 
 class Goal 
 {
@@ -13,6 +14,9 @@ public:
 	void Update();
 	void Draw();
 
+	XMFLOAT3 GetPos();
+	XMFLOAT3 GetSize();
+
 private:
 	CAssimpModel m_model;	// モデル
 	XMFLOAT3 m_pos;		// 位置
@@ -22,5 +26,7 @@ private:
 	bool m_use;			// 使用フラグ
 
 	XMFLOAT4X4	m_mtxWorld;		// ワールドマトリックス
+
+	ResultScene* m_pResultScean;
 
 };

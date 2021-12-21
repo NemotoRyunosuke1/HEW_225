@@ -10,8 +10,8 @@
 
 Goal::Goal()
 {
-	m_pos = XMFLOAT3(-1000.0f, 1000.0f, 6000.0f);	// 位置
-	m_size = XMFLOAT3(300.0f, 200.0f, 300.0f);	// サイズ
+	m_pos = XMFLOAT3(-1000.0f, 1000.0f, 9000.0f);	// 位置
+	m_size = XMFLOAT3(1000.0f, 2000.0f, 300.0f);	// サイズ
 	m_rot = XMFLOAT3(0.0f, 0.0f, 0.0f);	// 向き
 	
 	m_use = false;
@@ -75,4 +75,12 @@ void Goal::Draw()
 	m_model.Draw(pDC, m_mtxWorld, eTransparentOnly);
 	SetZWrite(true);				// Zバッファ更新する
 	SetBlendState(BS_NONE);			// アルファブレンド無効
+}
+XMFLOAT3 Goal::GetPos()
+{
+	return m_pos;
+}
+XMFLOAT3 Goal::GetSize()
+{
+	return m_size;
 }

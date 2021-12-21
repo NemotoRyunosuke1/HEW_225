@@ -33,7 +33,6 @@
 
 #define MAX_FLY_Y (2000)	// 最高高度		
 
-
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
@@ -61,7 +60,7 @@ static int g_frameCnt;
 static double d = 0;
 static bool g_bDebugMode;
 static bool g_bOverHeart;
-static float Wind;
+static bool g_bWing;
 //=============================================================================
 // 初期化処理
 //=============================================================================
@@ -102,7 +101,8 @@ HRESULT InitModel(void)
 	g_frameCnt = 0;
 	g_bDebugMode = false;
 	g_bOverHeart = false;
-	Wind = 0;
+	d = 0.1;
+	g_bWing = false;
 	return hr;
 }
 
@@ -150,20 +150,28 @@ void UpdateModel(void)
 
 
 	// アニメーション更新
-	d+= 0.02f;
+	//d+= 0.02f;
 	g_model.SetAnimTime(d);
-	if (d > 0.7f)
+	if (d > 1.4f)  // 羽ばたきは1周期0.7f
 	{
-		CSound::SetVolume(SE_SWING, 2.0f);
-		CSound::Play(SE_SWING);
-		d = 0;
+	
+		g_bWing = false;
+		d = 0.0f;
 	}
-
-	if (d > 100000000)
+	
+	if (g_bWing)
 	{
-		d -= 100000000;
+		d += 0.04f;
 	}
+	else
+	{
 
+		d += 0.04f;
+		if (d > 0.1f)
+		{
+			d = 0.1f;
+		}
+	}
 	// コントローラースティック情報取得
 	LONG stickX = GetJoyLX(0);
 	LONG stickY = GetJoyLY(0);
@@ -340,23 +348,13 @@ void UpdateModel(void)
 				g_accModel.y = 5.0f * (unsigned)WindVec[i].y + 1.1f;
 				g_accModel.z = 5.0f * (unsigned)WindVec[i].z + 1.1f;
 				g_rotDestModel.x = 90 * WindVec[i].y;
-				g_rotDestModel.y = 90 * WindVec[i].x +  180 * ((1 + WindVec[i].z)/2);
+				g_rotDestModel.y = 90 * WindVec[i].x + 180 * ((1 + WindVec[i].z) / 2);// +(int)((2 - (unsigned)WindVec[i].z) / 2)*(int)((2 - (unsigned)WindVec[i].x) / 2)* g_rotModel.y;
 				//g_rotDestModel.y = 90 * WindVec[i].z ;
-
-				CSound::SetVolume(SE_WIND, 1.0f);
-				CSound::Play(SE_WIND);
-
+				
 				bFlg  = true;
 				bWind = true;
 				g_stm += 0.5f;
 		    }			
-		}
-		else
-		{
-			Wind -= 0.5f;
-			CSound::SetVolume(SE_WIND,Wind);
-
-
 		}
 	}
 	
@@ -412,7 +410,7 @@ void UpdateModel(void)
 		if (stickY > 0 && !bWind && !g_bOverHeart)
 		{
 			
-			g_rotDestModel.x = 5 * (float)stickY / 1500;	 // 機体の傾き
+			g_rotDestModel.x = 3 * (float)stickY / 1500;	 // 機体の傾き
 		}
 	}
 	
@@ -424,9 +422,9 @@ void UpdateModel(void)
 		g_accModel.z += 3;
 		//g_rotDestModel.y += 1.0f * stickX /80 ;
 		g_rotDestModel.z += 30;
-
-		//CSound::Play(SE_SWING);
-
+		CSound::SetVolume(SE_SWING, 2.0f);
+		CSound::Play(SE_SWING);
+		g_bWing = true;
 		//g_stm -= 10.0f;	// スタミナ減少
 	}
 
@@ -689,7 +687,7 @@ void UpdateModel(void)
 	{
 		// スタミナ減少
 		if(!bWind)	// 風に乗ってないとき
-		g_stm -= 0.1f * g_rotModel.x / 45;
+		g_stm -= 0.2f * g_rotModel.x / 45;
 
 		// オーバーヒート
 		if (g_stm <= 0.0f)
@@ -725,7 +723,7 @@ void UpdateModel(void)
 #if  _DEBUG
 		StartFadeOut(SCENE_GAME);
 #else
-		StartFadeOut(SCENE_RESULT);
+		StartFadeOut(SCENE_GAME);
 #endif
 		
 	}

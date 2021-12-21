@@ -14,6 +14,7 @@
 #include "crew.h"
 #include "enemy.h"
 #include "input.h"
+#include "collision.h"
 
 #if _DEBUG
 #define MAX_BULIDING (16)
@@ -47,6 +48,9 @@ GameScene::GameScene()
 	// 風マネージャー初期化
 	m_pWindManager = new WindManager;
 
+	// 雲マネージャー初期化
+	m_pCloudManager = new CloudManager;
+
 	// ゴール初期化
 	m_pGoal = new Goal;
 
@@ -58,6 +62,9 @@ GameScene::GameScene()
 
 	// スコアUI初期化
 	m_pScoreUI = new ScoreUI;
+
+	// リザルトシーン初期化
+	m_pResult = new ResultScene;
 
 	/*for (int j = 0; j < 4; j++)
 	{
@@ -157,9 +164,12 @@ GameScene::GameScene()
 	m_pBuliding[6].Create(XMFLOAT3(1110, 10, 600), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
 	m_pBuliding[7].Create(XMFLOAT3(1110, 10, 900), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
 */
+
+
 	// 変数初期化
 	m_bDebugMode = false;
 	m_bPause = false;
+	m_bGoal = false;
 }
 
 //=============================================================================
@@ -185,6 +195,9 @@ GameScene::~GameScene()
 	// 風マネージャー終了
 	delete m_pWindManager;
 
+	// 雲マネージャー終了
+	delete m_pCloudManager;
+
 	// ゴール終了
 	delete m_pGoal;
 
@@ -196,6 +209,9 @@ GameScene::~GameScene()
 
 	// スコアUI終了処理
 	delete m_pScoreUI;
+
+	// リザルト終了処理
+	delete m_pResult;
 }
 
 //=============================================================================
@@ -269,6 +285,9 @@ void GameScene::Update()
 	// 風マネージャー更新
 	m_pWindManager->Update();
 
+	// 雲マネージャー更新
+	m_pCloudManager->Update();
+
 	// ゴール更新
 	m_pGoal->Update();
 
@@ -316,13 +335,27 @@ void GameScene::Update()
 	
 
 	//次のシーンへ移る条件
+	if (GetModelPos().x + GetModelCollisionSize().x / 2 > m_pGoal->GetPos().x - m_pGoal->GetSize().x / 2 && GetModelPos().x - GetModelCollisionSize().x / 2 < m_pGoal->GetPos().x + m_pGoal->GetSize().x / 2 &&
+		GetModelPos().y + GetModelCollisionSize().y / 2 > m_pGoal->GetPos().y - m_pGoal->GetSize().y / 2 && GetModelPos().y - GetModelCollisionSize().y / 2 < m_pGoal->GetPos().y + m_pGoal->GetSize().y / 2 &&
+		GetModelPos().z + GetModelCollisionSize().z / 2 > m_pGoal->GetPos().z - m_pGoal->GetSize().z / 2 && GetModelPos().z - GetModelCollisionSize().z / 2 < m_pGoal->GetPos().z + m_pGoal->GetSize().z / 2
+		)
+	{
+		// ゴールについたとき
+		m_bGoal = true;
+	}
+
+	if (m_bGoal)
+	{
+		m_pResult->Update();
+	}
+
+#if _DEBUG
 	if (GetAsyncKeyState(VK_RETURN) & 0x8000)
 	{
 
 		StartFadeOut(SCENE_RESULT);
 	}
 
-#if _DEBUG
 	// デバック用文字列
 	PrintDebugProc("****** GameScene ******\n");
 	PrintDebugProc("\n");
@@ -360,6 +393,9 @@ void GameScene::Draw()
 	// 風マネージャー描画
 	m_pWindManager->Draw();
 
+	// 雲マネージャー描画
+	m_pCloudManager->Draw();
+
 	// ゴール描画
 	m_pGoal->Draw();
 
@@ -377,4 +413,8 @@ void GameScene::Draw()
 
 	// スコアUI描画
 	m_pScoreUI->Draw();
+	if (m_bGoal)
+	{
+		m_pResult->Draw();
+	}
 }

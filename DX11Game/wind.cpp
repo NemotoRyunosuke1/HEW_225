@@ -75,6 +75,10 @@ void Wind::Update()
 	XMStoreFloat4x4(&m_mtxWorld, mtxWorld);
 
 
+	
+
+
+
 
 #if _DEBUG
 	

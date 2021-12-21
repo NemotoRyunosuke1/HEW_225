@@ -177,6 +177,12 @@
     <ClCompile Include="Sound.cpp">
       <Filter>ソース ファイル\scene\system</Filter>
     </ClCompile>
+    <ClCompile Include="cloud.cpp">
+      <Filter>ソース ファイル\scene\gameScene\object</Filter>
+    </ClCompile>
+    <ClCompile Include="cloudManagercpp.cpp">
+      <Filter>ソース ファイル\scene\gameScene\object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -301,6 +307,12 @@
     </ClInclude>
     <ClInclude Include="SoundData.hpp">
       <Filter>ヘッダー ファイル\scene\system</Filter>
+    </ClInclude>
+    <ClInclude Include="cloud.h">
+      <Filter>ヘッダー ファイル\scene\gameScene\object</Filter>
+    </ClInclude>
+    <ClInclude Include="cloudManager.h">
+      <Filter>ヘッダー ファイル\scene\gameScene\object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
