@@ -24,7 +24,7 @@ Goal::Goal()
 		MessageBoxA(GetMainWnd(), "モデルデータ読み込みエラー", "InitModel", MB_OK);
 	}
 
-	m_pResultScean = new ResultScene;
+	
 
 }
 Goal::~Goal()
@@ -32,7 +32,7 @@ Goal::~Goal()
 	// モデルの解放
 	m_model.Release();
 
-	delete m_pResultScean;
+	
 }
 
 void Goal::Update()
@@ -82,15 +82,7 @@ void Goal::Draw()
 	SetZWrite(true);				// Zバッファ更新する
 	SetBlendState(BS_NONE);			// アルファブレンド無効
 
-	if (1) //ゴールに入ったら
-	{
-		m_pResultScean->Update();     //ステージセレクトへ戻る
-
-		m_pResultScean->Draw();
-
-
-
-	}
+	
 
 
 
