@@ -329,7 +329,7 @@ void UpdateModel(void)
 				g_accModel.y = 5.0f * (unsigned)WindVec[i].y + 1.1f;
 				g_accModel.z = 5.0f * (unsigned)WindVec[i].z + 1.1f;
 				g_rotDestModel.x = 90 * WindVec[i].y;
-				g_rotDestModel.y = 90 * WindVec[i].x +  180 * ((1 + WindVec[i].z)/2);
+				g_rotDestModel.y = 90 * WindVec[i].x + 180 * ((1 + WindVec[i].z) / 2) + (int)((2 - (unsigned)WindVec[i].z) / 2)*(int)((2 - (unsigned)WindVec[i].x) / 2)* g_rotModel.y;
 				//g_rotDestModel.y = 90 * WindVec[i].z ;
 				
 				bFlg  = true;
@@ -391,7 +391,7 @@ void UpdateModel(void)
 		if (stickY > 0 && !bWind && !g_bOverHeart)
 		{
 			
-			g_rotDestModel.x = 5 * (float)stickY / 1500;	 // 機体の傾き
+			g_rotDestModel.x = 3 * (float)stickY / 1500;	 // 機体の傾き
 		}
 	}
 	
@@ -662,7 +662,7 @@ void UpdateModel(void)
 	{
 		// スタミナ減少
 		if(!bWind)	// 風に乗ってないとき
-		g_stm -= 0.1f * g_rotModel.x / 45;
+		g_stm -= 0.2f * g_rotModel.x / 45;
 
 		// オーバーヒート
 		if (g_stm <= 0.0f)
@@ -698,7 +698,7 @@ void UpdateModel(void)
 #if  _DEBUG
 		StartFadeOut(SCENE_GAME);
 #else
-		StartFadeOut(SCENE_RESULT);
+		StartFadeOut(SCENE_GAME);
 #endif
 		
 	}
