@@ -69,7 +69,7 @@ HRESULT InitModel(void)
 	ID3D11DeviceContext* pDeviceContext = GetDeviceContext();
 
 	// 位置・回転・スケールの初期設定
-	g_posModel = XMFLOAT3(-1000.0f, 300.0f, -2000.0f);
+	g_posModel = XMFLOAT3(-1000.0f, 600.0f, -2000.0f);
 	g_moveModel = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	g_rotModel = XMFLOAT3(0.0f, 180.0f, 0.0f);
 	g_rotDestModel = XMFLOAT3(0.0f, 180.0f, 0.0f);
