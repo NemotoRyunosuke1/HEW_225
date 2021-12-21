@@ -2,7 +2,7 @@
 
 #include "main.h"
 #include "fade.h"
-#include "titleUI.h"
+#include "titleBG.h"
 
 class TitleScene
 {
@@ -15,7 +15,6 @@ public:
 	void Draw();
 
 private:
-	
+	TitleBG* m_pTitleBG;
 	Fade* m_pFade;
-	TitleUI* m_pTitleUI;
 };

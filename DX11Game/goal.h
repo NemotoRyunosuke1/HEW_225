@@ -2,15 +2,20 @@
 
 #include "main.h"
 #include "AssimpModel.h"
+#include "resultScene.h"
 
 class Goal 
 {
 public:
 	Goal();
 	~Goal();
-	
+
+
 	void Update();
 	void Draw();
+
+	XMFLOAT3 GetPos();
+	XMFLOAT3 GetSize();
 
 private:
 	CAssimpModel m_model;	// モデル
@@ -21,5 +26,7 @@ private:
 	bool m_use;			// 使用フラグ
 
 	XMFLOAT4X4	m_mtxWorld;		// ワールドマトリックス
+
+	ResultScene* m_pResultScean;
 
 };

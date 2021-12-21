@@ -6,7 +6,7 @@
 //=============================================================================
 #include "scene.h"
 #include "debugproc.h"
-#include "titleUI.h"
+#include "Sound.h"
 
 
 //=============================================================================
@@ -14,16 +14,14 @@
 //=============================================================================
 TitleScene::TitleScene()
 {
-	// タイトルUI初期化
-	m_pTitleUI = new TitleUI;
+
 }
 //=============================================================================
 // デストラクタ
 //=============================================================================
 TitleScene::~TitleScene()
 {
-	// タイトルUI終了
-	delete m_pTitleUI;
+
 }
 //=============================================================================
 // 初期化処理
@@ -32,8 +30,7 @@ HRESULT TitleScene::Init()
 {
 	HRESULT hr = S_OK;
 
-	// タイトルUI初期化
-	m_pTitleUI = new TitleUI;
+	
 
 	return hr;
 }
@@ -43,8 +40,6 @@ HRESULT TitleScene::Init()
 void TitleScene::Uninit()
 {
 	
-	// タイトルUI終了
-	delete m_pTitleUI;
 
 }
 //=============================================================================
@@ -57,6 +52,8 @@ void TitleScene::Update()
 	//次のシーンへ移る条件
 	if (GetAsyncKeyState(VK_RETURN) & 0x8000)
 	{
+		CSound::SetVolume(SE_SELECT,1.0f);
+		CSound::Play(SE_SELECT);
 #if _DEBUG
 		StartFadeOut(SCENE_GAME);
 
@@ -76,10 +73,7 @@ void TitleScene::Update()
 #else 
 
 #endif
-
-	// タイトルUI更新
-	m_pTitleUI->Update();
-
+	
 }
 //=============================================================================
 // 描画処理
@@ -98,7 +92,5 @@ void TitleScene::Draw()
 	// Zバッファ無効(Zチェック無&Z更新無)
 	SetZBuffer(false);
 	
-	// タイトルUI描画
-	m_pTitleUI->Draw();
 	
 }
