@@ -6,7 +6,9 @@
 // 
 //*****************************************************************************
 
-//#define PATH_BUTTON_TEXTURE L"data/texture/button.bmp"
+#define PATH_BUTTON_TEXTURE L"data/texture/ステージセレクト1-1.png"
+#define PATH_BUTTON_TEXTURE1 L"data/texture/ステージセレクト1-2.png"
+#define PATH_BUTTON_TEXTURE2 L"data/texture/ステージセレクト1-3.png"
 #define NUMBER_COUNT_X (4)	//テクスチャコマ数(X)
 #define NUMBER_COUNT_Y (4)	//テクスチャコマ数(Y)
 
@@ -17,12 +19,14 @@ bool g_bButton = false;
 //****************************************
 Button::Button()
 {
-	m_pos = XMFLOAT3(0.0f, 0.0f, 0.0f);
+	m_pos  = XMFLOAT3(  0.0f,  0.0f, 0.0f);
 	m_size = XMFLOAT3(100.0f, 50.0f, 0.0f);
 	m_flg = false;
 	m_use = false;
 	m_frameNum = 0;
 	m_select = false;
+	ID3D11Device* pDevice = GetDevice();
+	CreateTextureFromFile(pDevice, PATH_BUTTON_TEXTURE, &m_pTexture);
 }
 
 //****************************************
@@ -31,7 +35,7 @@ Button::Button()
 Button::~Button()
 {
 	//テクスチャ解放
-	//SAFE_RELEASE(m_pTexture);
+	SAFE_RELEASE(m_pTexture);
 }
 
 //****************************************
@@ -51,11 +55,11 @@ HRESULT Button::Init()
 	m_select = false;
 
 	//ボタンテクスチャ読み込み
-	//hr = CreateTextureFromFile(pDevice, PATH_BUTTON_TEXTURE, &m_pTexture);
-	//if (FAILED(hr))
-	//{
-	//	return hr;
-	//}
+	/*hr = CreateTextureFromFile(pDevice, PATH_BUTTON_TEXTURE, &m_pTexture);
+	if (FAILED(hr))
+	{
+		return hr;
+	}*/
 
 	return hr;
 }
@@ -72,7 +76,7 @@ void Button::Update()
 	if (m_use)
 	{
 		//カーソルがあわされた時
-		if ((GetMousePosition()->x > (long)(m_pos.x - m_size.x / 2 + SCREEN_WIDTH / 2)) && (GetMousePosition()->x < (long)(m_pos.x + m_size.x / 2 + SCREEN_WIDTH / 2)) && (-GetMousePosition()->y < (long)(m_pos.y + m_size.y / 2 - SCREEN_HEIGHT / 2)) && (-GetMousePosition()->y > (long)(m_pos.y - m_size.y / 2 - SCREEN_HEIGHT / 2)))
+		if ((GetMousePosition()->x > (long)(m_pos.x - m_size.x / 2 + FULLSCREEN_WIDTH / 2)) && (GetMousePosition()->x < (long)(m_pos.x + m_size.x / 2 + FULLSCREEN_WIDTH / 2)) && (-GetMousePosition()->y < (long)(m_pos.y + m_size.y / 2 - FULLSCREEN_HEIGHT / 2)) && (-GetMousePosition()->y > (long)(m_pos.y - m_size.y / 2 - FULLSCREEN_HEIGHT / 2)))
 		{
 
 
@@ -109,11 +113,12 @@ void Button::Update()
 void Button::Draw()
 {
 	ID3D11DeviceContext*  pBC = GetDeviceContext();
+	SetBlendState(BS_ALPHABLEND);	// アルファブレンド有効		
 	if (m_use)
 	{
-		if (((GetMousePosition()->x > (long)(m_pos.x - m_size.x / 2 + SCREEN_WIDTH / 2)) && (GetMousePosition()->x < (long)(m_pos.x + m_size.x / 2 + SCREEN_WIDTH / 2)) && (-GetMousePosition()->y < (long)(m_pos.y + m_size.y / 2 - SCREEN_HEIGHT / 2)) && (-GetMousePosition()->y > (long)(m_pos.y - m_size.y / 2 - SCREEN_HEIGHT / 2))) || (m_select))
+		if (((GetMousePosition()->x > (long)(m_pos.x - m_size.x / 2 + FULLSCREEN_WIDTH / 2)) && (GetMousePosition()->x < (long)(m_pos.x + m_size.x / 2 + FULLSCREEN_WIDTH / 2)) && (-GetMousePosition()->y < (long)(m_pos.y + m_size.y / 2 - FULLSCREEN_HEIGHT / 2)) && (-GetMousePosition()->y > (long)(m_pos.y - m_size.y / 2 - FULLSCREEN_HEIGHT / 2))) || (m_select))
 		{
-			SetPolygonColor(0.5f, 0.5f, 0.5f);	//ポリゴンカラー
+			SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
 		}
 		else
 		{
@@ -126,16 +131,32 @@ void Button::Draw()
 		//SetPolygonUV((m_frameNum % NUMBER_COUNT_X) / (float)NUMBER_COUNT_X,
 		//	(m_frameNum / NUMBER_COUNT_X) / (float)NUMBER_COUNT_Y);
 		//SetPolygonFrameSize(1.0f / 4, 1.0f / 4);
-		SetPolygonTexture(nullptr);
+		SetPolygonTexture(m_pTexture);
 		DrawPolygon(pBC);
 	}
-	
+	SetBlendState(BS_NONE);
 }
-void Button::CreateButton(XMFLOAT3 size, XMFLOAT3 pos)
+void Button::CreateButton(XMFLOAT3 size, XMFLOAT3 pos, int textureNum)
 {
 	m_size = size;
 	m_pos = pos;
 	m_use = true;
+	ID3D11Device* pDevice = GetDevice();
+
+	switch (textureNum)
+	{
+	case 0:
+		CreateTextureFromFile(pDevice, PATH_BUTTON_TEXTURE, &m_pTexture);
+		break;
+	case 1:
+		CreateTextureFromFile(pDevice, PATH_BUTTON_TEXTURE1, &m_pTexture);
+		break;
+	case 2:
+		CreateTextureFromFile(pDevice, PATH_BUTTON_TEXTURE2, &m_pTexture);
+		break;
+	default:
+		break;
+	}
 }
 //bool Button::GetFlg()
 //{

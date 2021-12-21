@@ -6,6 +6,7 @@
 //=============================================================================
 #include "stageSelectScene.h"
 #include "debugproc.h"
+#include "Sound.h"
 
 //=============================================================================
 // コンストラクタ
@@ -34,6 +35,7 @@ void StageSlectScene::Update()
 	//次のシーンへ移る条件
 	if (GetAsyncKeyState(VK_RETURN) & 0x8000)
 	{
+		CSound::Play(SE_SELECT);
 #if _DEBUG
 		StartFadeOut(SCENE_GAME);
 #endif

@@ -163,6 +163,8 @@
     <ClCompile Include="buliding1.cpp" />
     <ClCompile Include="button.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="cloud.cpp" />
+    <ClCompile Include="cloudManagercpp.cpp" />
     <ClCompile Include="collision.cpp" />
     <ClCompile Include="crew.cpp" />
     <ClCompile Include="debugproc.cpp" />
@@ -185,6 +187,7 @@
     <ClCompile Include="ScoreUI.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="shadow.cpp" />
+    <ClCompile Include="Sound.cpp" />
     <ClCompile Include="stageButton.cpp" />
     <ClCompile Include="stageSelectScene.cpp" />
     <ClCompile Include="staminaBar.cpp" />
@@ -202,6 +205,8 @@
     <ClInclude Include="buliding1.h" />
     <ClInclude Include="button.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="cloud.h" />
+    <ClInclude Include="cloudManager.h" />
     <ClInclude Include="collision.h" />
     <ClInclude Include="crew.h" />
     <ClInclude Include="debugproc.h" />
@@ -225,6 +230,9 @@
     <ClInclude Include="ScoreUI.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="shadow.h" />
+    <ClInclude Include="Sound.h" />
+    <ClInclude Include="SoundData.h" />
+    <ClInclude Include="SoundData.hpp" />
     <ClInclude Include="stageButton.h" />
     <ClInclude Include="stageSelectScene.h" />
     <ClInclude Include="staminaBar.h" />

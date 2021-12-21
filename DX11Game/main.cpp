@@ -128,7 +128,7 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdL
 	UpdateWindow(g_hWnd);
 	
 	// DirectXの初期化(ウィンドウを作成してから行う)
-	if (FAILED(Init(g_hWnd, true))) {
+	if (FAILED(Init(g_hWnd, false))) {
 		return -1;
 	}
 
@@ -404,7 +404,7 @@ HRESULT Init(HWND hWnd, BOOL bWindow)
 	// シーン初期化
 	m_pScene = new Scene;
 	
-
+	
 	
 
 	return hr;
