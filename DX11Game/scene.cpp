@@ -7,6 +7,7 @@
 #include "scene.h"
 #include "debugproc.h"
 #include "fade.h"
+#include "Sound.h"
 
 //*****************************************************************************
 // グローバル変数
@@ -28,10 +29,13 @@ Scene::Scene()
 
 #else
 	// ゲームの開始するときのシーン
-	m_eScene = SCENE_RESULT;
+	m_eScene = SCENE_TITLE;
 
 #endif
 	
+	// サウンド初期化
+	CSound::Init();
+
 	switch (m_eScene)
 	{
 	case SCENE_TITLE:
@@ -99,21 +103,30 @@ Scene::~Scene()
 //=============================================================================
 void Scene::Update() 
 {
+	// サウンド更新
+	CSound::Update();
+	
+
+
 	switch (m_eScene)
 	{
 	case SCENE_TITLE:
+		CSound::Play(BGM_000); //タイトルBGM
 		m_pTitleScene->Update();
 		break;
 
 	case SCENE_STAGE_SELECT:
+		//CSound::Play(BGM_004);//セレクトBGM
 		m_pStageSelectScene->Update();
 		break;
 
 	case SCENE_GAME:
+		CSound::Play(GAME_BGM_001);
 		m_pGameScene->Update();
 		break;
 
 	case SCENE_RESULT:
+		//CSound::Play(BGM_003);//リザルトBGM
 		m_pResultScene->Update();
 		break;
 

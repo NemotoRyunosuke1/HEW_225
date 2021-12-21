@@ -9,9 +9,13 @@ class Goal
 public:
 	Goal();
 	~Goal();
-	
+
+
 	void Update();
 	void Draw();
+
+	XMFLOAT3 GetPos();
+	XMFLOAT3 GetSize();
 
 private:
 	CAssimpModel m_model;	// ƒ‚ƒfƒ‹

@@ -12,7 +12,7 @@
 #include "debugproc.h"
 #include "shadow.h"
 #include "fade.h"
-
+#include "windManager.h"
 
 
 //*****************************************************************************
@@ -52,8 +52,8 @@ static int			g_nShadow;		// 丸影番号
 static CLight g_light;
 static bool bFlg;
 static bool bWind;
-static bool bWind1[10];
-static XMFLOAT3 WindVec[10];
+static bool bWind1[MAX_WIND];
+static XMFLOAT3 WindVec[MAX_WIND];
 static float g_stm;
 static int g_frameCnt;
 static double d = 0;
@@ -69,7 +69,7 @@ HRESULT InitModel(void)
 	ID3D11DeviceContext* pDeviceContext = GetDeviceContext();
 
 	// 位置・回転・スケールの初期設定
-	g_posModel = XMFLOAT3(-1000.0f, 300.0f, -2000.0f);
+	g_posModel = XMFLOAT3(-1000.0f, 600.0f, -2000.0f);
 	g_moveModel = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	g_rotModel = XMFLOAT3(0.0f, 180.0f, 0.0f);
 	g_rotDestModel = XMFLOAT3(0.0f, 180.0f, 0.0f);
@@ -91,7 +91,7 @@ HRESULT InitModel(void)
 	bFlg = false;
 	//風の移動量？の初期化？
 	bWind = false;
-	for (int i = 0; i < 10; i++) {
+	for (int i = 0; i < MAX_WIND; i++) {
 		bWind1[i] = false;
 		WindVec[i] = XMFLOAT3(0.0f,0.0f,0.0f);
 	}
@@ -312,7 +312,7 @@ void UpdateModel(void)
 	g_rotDestModel.z = 0;  
 
 	// 風との当たり判定
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < MAX_WIND; i++)
 	{
 		//使用していなかったらスキップ
 		if (!bWind1[i])
@@ -329,7 +329,7 @@ void UpdateModel(void)
 				g_accModel.y = 5.0f * (unsigned)WindVec[i].y + 1.1f;
 				g_accModel.z = 5.0f * (unsigned)WindVec[i].z + 1.1f;
 				g_rotDestModel.x = 90 * WindVec[i].y;
-				g_rotDestModel.y = 90 * WindVec[i].x +  180 * ((1 + WindVec[i].z)/2);
+				g_rotDestModel.y = 90 * WindVec[i].x + 180 * ((1 + WindVec[i].z) / 2) + (int)((2 - (unsigned)WindVec[i].z) / 2)*(int)((2 - (unsigned)WindVec[i].x) / 2)* g_rotModel.y;
 				//g_rotDestModel.y = 90 * WindVec[i].z ;
 				
 				bFlg  = true;
@@ -391,7 +391,7 @@ void UpdateModel(void)
 		if (stickY > 0 && !bWind && !g_bOverHeart)
 		{
 			
-			g_rotDestModel.x = 5 * (float)stickY / 1500;	 // 機体の傾き
+			g_rotDestModel.x = 3 * (float)stickY / 1500;	 // 機体の傾き
 		}
 	}
 	
@@ -403,7 +403,7 @@ void UpdateModel(void)
 		g_accModel.z += 3;
 		//g_rotDestModel.y += 1.0f * stickX /80 ;
 		g_rotDestModel.z += 30;
-		g_stm -= 10.0f;	// スタミナ減少
+		//g_stm -= 10.0f;	// スタミナ減少
 	}
 
 	// スペースキー羽ばたき
@@ -544,7 +544,7 @@ void UpdateModel(void)
 	if ((GetKeyPress(VK_DOWN) || GetKeyPress(VK_S) ) && !bWind && !g_bOverHeart)
 	{
 		// 上を向く
-		g_rotDestModel.x += 5;
+		g_rotDestModel.x += 2;
 		if (g_rotDestModel.x > 90)
 		{
 			g_rotDestModel.x = 90;
@@ -556,7 +556,7 @@ void UpdateModel(void)
 	if ((GetKeyPress(VK_UP) || GetKeyPress(VK_W) ) && !bWind)
 	{
 		// 下を向く
-		g_rotDestModel.x -= 5;
+		g_rotDestModel.x -= 2;
 		if (g_rotDestModel.x < -90)
 		{
 			g_rotDestModel.x = -90;
@@ -662,7 +662,7 @@ void UpdateModel(void)
 	{
 		// スタミナ減少
 		if(!bWind)	// 風に乗ってないとき
-		g_stm -= 0.1f * g_rotModel.x/45;
+		g_stm -= 0.2f * g_rotModel.x / 45;
 
 		// オーバーヒート
 		if (g_stm <= 0.0f)
