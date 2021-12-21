@@ -35,15 +35,15 @@ TitleUI::TitleUI()
 {
 	ID3D11Device* pDevice = GetDevice();
 	CreateTextureFromFile(pDevice, ENTER, &m_pTecture);
+
 	{
 	m_init = false;
-	m_pos = XMFLOAT3(10, 10, 10);
-	m_size = XMFLOAT3(200, 200, 0);
-	r = 1.0f;
+	m_pos = XMFLOAT3(10, 5, 10);
+	m_size = XMFLOAT3(250, 250, 250);
+	r = 0.0f;
 	g = 0.0f;
-	b = 0.0f;
+	b = 1.0f;
 	}
-
 }
 
 // デストラクタ
@@ -52,9 +52,22 @@ TitleUI::~TitleUI()
 	SAFE_RELEASE(m_pTecture)
 }
 
+// 更新
 void TitleUI::Update()
 {
-	
+	// 点滅制御
+	--g_nBlink;
+	if (g_nBlink <= 0) {
+		g_nBlink = (g_nStart) ? BLINK_START_TIMER
+			: BLINK_TIMER;
+	}
+
+	if (GetKeyRelease(VK_RETURN) || GetKeyRelease(VK_SPACE)) {
+		StartFadeOut(SCENE_GAME);
+		g_nStart = 1;
+		g_nBlink = BLINK_START_TIMER;
+		return;
+	}
 }
 void TitleUI::Draw()
 {
@@ -74,10 +87,9 @@ void TitleUI::Draw()
 	SetPolygonPos(m_pos.x - (m_size.x - m_size.x * m_currentSTM / m_maxSTM) / 2, m_pos.y);
 	SetPolygonTexture(m_pTecture);
 	SetPolygonUV(0.0f, 0.0f);
-	DrawPolygon(pBC);
-
-	
+	DrawPolygon(pBC);	
 }
+
 void TitleUI::Create(float stm, XMFLOAT3 pos, XMFLOAT3 size, XMFLOAT3 color)
 {
 

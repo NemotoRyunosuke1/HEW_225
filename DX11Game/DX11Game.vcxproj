@@ -165,6 +165,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="collision.cpp" />
     <ClCompile Include="crew.cpp" />
+    <ClCompile Include="Cunt.cpp" />
     <ClCompile Include="debugproc.cpp" />
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="fade.cpp" />
@@ -203,6 +204,7 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="collision.h" />
     <ClInclude Include="crew.h" />
+    <ClInclude Include="Cunt.h" />
     <ClInclude Include="debugproc.h" />
     <ClInclude Include="enemy.h" />
     <ClInclude Include="fade.h" />
