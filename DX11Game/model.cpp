@@ -13,6 +13,7 @@
 #include "shadow.h"
 #include "fade.h"
 #include "windManager.h"
+#include "Sound.h"
 
 
 //*****************************************************************************
@@ -148,6 +149,13 @@ void UpdateModel(void)
 	// アニメーション更新
 	d+= 0.02f;
 	g_model.SetAnimTime(d);
+	if (d > 0.7f)
+	{
+		CSound::SetVolume(SE_SWING, 2.0f);
+		CSound::Play(SE_SWING);
+		d = 0;
+	}
+
 	if (d > 100000000)
 	{
 		d -= 100000000;
@@ -403,15 +411,21 @@ void UpdateModel(void)
 		g_accModel.z += 3;
 		//g_rotDestModel.y += 1.0f * stickX /80 ;
 		g_rotDestModel.z += 30;
+
+		//CSound::Play(SE_SWING);
+
 		//g_stm -= 10.0f;	// スタミナ減少
 	}
 
-	// スペースキー羽ばたき
+	// スペースキー羽ばた
 	if (GetKeyTrigger(VK_SPACE) && !g_bOverHeart)
 	{
 		g_accModel.x += 3;
 		g_accModel.y += 3;
 		g_accModel.z += 3;
+
+		/*CSound::SetVolume(SE_SWING, 5.0f);
+		CSound::Play(SE_SWING);*/
 		//g_rotDestModel.y += 1.0f;// *g_rotDestModel.y / 10;
 	}
 
