@@ -141,7 +141,7 @@ GameScene::GameScene()
 			{
 				for (int i = 0; i < 4; i++)
 				{
-					m_pBuliding[i + j * 4 + 80 * k +l * 16].Create(XMFLOAT3(-3800 - 330 * i + 2000 * l, 10, 2000 * k + j * 330), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
+					m_pBuliding[i + j * 4 + 80 * k + l * 16].Create(XMFLOAT3(-3800 - 330 * i + 2000 * l, 10, 2000 * k + j * 330), XMFLOAT3(10.0f, 7.0f + rand() % 3  , 10.0f));
 
 				}
 			}
