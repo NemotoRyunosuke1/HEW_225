@@ -43,6 +43,19 @@ GameScene::GameScene()
 	// 味方初期化
 	InitCrew();
 
+	CrewCreate(
+		XMFLOAT3(-1000.0f, 500.0f, -500.0f),// 1
+		XMFLOAT3( -900.0f, 500.0f, -400.0f),// 2
+		XMFLOAT3(-1100.0f, 500.0f, -400.0f),// 3
+		XMFLOAT3( -800.0f, 500.0f, -300.0f),// 4
+		XMFLOAT3(-1200.0f, 500.0f, -300.0f),// 5
+		XMFLOAT3( -700.0f, 500.0f, -200.0f),// 6
+		XMFLOAT3(-1300.0f, 500.0f, -200.0f),// 7
+		XMFLOAT3(-1000.0f, 500.0f,  500.0f),// 8
+		XMFLOAT3(-1000.0f, 500.0f,  700.0f),// 9
+		XMFLOAT3(-1000.0f, 500.0f,  900.0f) // 10
+		);
+
 	// 敵初期化
 	InitEnemy();
 
@@ -64,84 +77,15 @@ GameScene::GameScene()
 	// ビル初期化
 	m_pBuliding = new Buliding[MAX_BULIDING];
 
+	
+
 	// スコアUI初期化
 	m_pScoreUI = new ScoreUI;
 
 	// リザルトシーン初期化
 	//m_pResult = new ResultScene;
 
-	/*for (int j = 0; j < 4; j++)
-	{
-		for (int i = 0; i < 4; i++)
-		{
-			m_pBuliding[i + j * 4].Create(XMFLOAT3(80 - 300 * i, 10, 0+ j * 300), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
-
-		}
-	}
-	for (int j = 0; j < 4; j++)
-	{
-		for (int i = 0; i < 4; i++)
-		{
-			m_pBuliding[i + j * 4 + 16].Create(XMFLOAT3(-1800 - 300 * i, 10, 0 + j * 300), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
-
-		}
-	}
-	for (int j = 0; j < 4; j++)
-	{
-		for (int i = 0; i < 4; i++)
-		{
-			m_pBuliding[i + j * 4 + 32].Create(XMFLOAT3(-1800 - 300 * i, 10, 0 + j * 300 + 1800), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
-
-		}
-	}
-	for (int j = 0; j < 4; j++)
-	{
-		for (int i = 0; i < 4; i++)
-		{
-			m_pBuliding[i + j * 4 + 48].Create(XMFLOAT3(80 - 300 * i, 10, 0 + j * 300 + 1800), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
-
-		}
-	}
-	for (int j = 0; j < 4; j++)
-	{
-		for (int i = 0; i < 4; i++)
-		{
-			m_pBuliding[i + j * 4 + 64].Create(XMFLOAT3(1880 - 300 * i, 10, 0 + j * 300 ), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
-
-		}
-	}
-	for (int j = 0; j < 4; j++)
-	{
-		for (int i = 0; i < 4; i++)
-		{
-			m_pBuliding[i + j * 4 + 80].Create(XMFLOAT3(1880 - 300 * i, 10, 1880 + j * 300), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
-
-		}
-	}
-	for (int j = 0; j < 4; j++)
-	{
-		for (int i = 0; i < 4; i++)
-		{
-			m_pBuliding[i + j * 4 + 96].Create(XMFLOAT3(-3680 - 300 * i, 10, 0 + j * 300), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
-
-		}
-	}
-	for (int j = 0; j < 4; j++)
-	{
-		for (int i = 0; i < 4; i++)
-		{
-			m_pBuliding[i + j * 4 + 112].Create(XMFLOAT3(-3680 - 300 * i, 10, 1880 + j * 300), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
-
-		}
-	}
-	for (int j = 0; j < 4; j++)
-	{
-		for (int i = 0; i < 4; i++)
-		{
-			m_pBuliding[i + j * 4 + 128].Create(XMFLOAT3(-3680 - 300 * i, 10, 1880 + j * 300), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
-
-		}
-	}*/
+	
 
 	// ビルの生成
 	for (int k = 0; k < MAX_BULIDING / 16 / 5; k++)
@@ -152,13 +96,18 @@ GameScene::GameScene()
 			{
 				for (int i = 0; i < 4; i++)
 				{
-					m_pBuliding[i + j * 4 + 80 * k + l * 16].Create(XMFLOAT3(-3800 - 330 * i + 2000 * l, 10, 2000 * k + j * 330), XMFLOAT3(10.0f, 7.0f + rand() % 3  , 10.0f));
+					m_pBuliding[i + j * 4 + 80 * k + l * 16].Create(XMFLOAT3(-3900 - 330 * i + 2000 * l, 10, 2000 * k + j * 350), XMFLOAT3(10.0f, 7.0f + rand() % 3  , 10.0f));
 
 				}
 			}
 		}
 		
 	}
+#if _DEBUG
+	m_pBuliding[0].Create(XMFLOAT3(-800.0f, 0.0f, -1000.0f), XMFLOAT3(9.0f, 7.0f , 9.0f));
+
+#endif
+	
 	/*m_pBuliding[0].Create(XMFLOAT3(80, 10, 00), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
 	m_pBuliding[1].Create(XMFLOAT3(80, 10, 300), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
 	m_pBuliding[2].Create(XMFLOAT3(80, 10, 600), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
@@ -342,7 +291,23 @@ void GameScene::Update()
 
 	}
 
-	
+	// ビルとの当たり判定
+	for (int i = 0; i < MAX_BULIDING; i++)
+	{
+
+		
+		if (GetModelPos().x + GetModelCollisionSize().x / 2 > m_pBuliding[i].GetPos().x + 400 - 80 && GetModelPos().x - GetModelCollisionSize().x / 2 < m_pBuliding[i].GetPos().x + 400 + 100 &&
+			GetModelPos().y + GetModelCollisionSize().y / 2 > 0 && GetModelPos().y - GetModelCollisionSize().y / 2 < m_pBuliding[i].GetPos().y + m_pBuliding[i].GetSize().y * 100  -50&&
+			GetModelPos().z + GetModelCollisionSize().z / 2 > m_pBuliding[i].GetPos().z - 500 - 150 && GetModelPos().z - GetModelCollisionSize().z / 2 < m_pBuliding[i].GetPos().z - 500 + 100
+			)
+		{
+			StartFadeOut(SCENE_GAME);
+																															 
+		}
+
+	}
+
+
 
 	//次のシーンへ移る条件
 	if (GetModelPos().x + GetModelCollisionSize().x / 2 > m_pGoal->GetPos().x - m_pGoal->GetSize().x / 2 && GetModelPos().x - GetModelCollisionSize().x / 2 < m_pGoal->GetPos().x + m_pGoal->GetSize().x / 2 &&
@@ -368,6 +333,8 @@ void GameScene::Update()
 
 	// デバック用文字列
 	PrintDebugProc("****** GameScene ******\n");
+	PrintDebugProc("%f,%f,%f\n",m_pBuliding[0].GetPos().x, m_pBuliding[0].GetPos().y, m_pBuliding[0].GetPos().z);
+	PrintDebugProc("\n");
 	PrintDebugProc("\n");
 #endif
 }

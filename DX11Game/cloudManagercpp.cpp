@@ -1,7 +1,7 @@
 //=============================================================================
 //
 // 雲マネージャー処理 [cloudManager.cpp]
-// Author : Nao Ito
+// Author : 押久保日菜
 //
 //=============================================================================
 #include "cloudManager.h"
@@ -24,26 +24,26 @@ CloudManager::CloudManager()
 	//}
 
 	// ステージ1
-	m_pCloud[0].Create(XMFLOAT3(rand() % 10000 - 5000, 1800.0f, rand() % 9999), XMFLOAT3(500.0f, 200.0f, 500.0f), XMFLOAT3(0.0f, 0.0f, 0.0f));
-	m_pCloud[1].Create(XMFLOAT3(rand() % 10000 - 5000, 1800.0f, rand() % 9999), XMFLOAT3(500.0f, 200.0f, 500.0f), XMFLOAT3(0.0f, 0.0f, 0.0f));
-	m_pCloud[2].Create(XMFLOAT3(rand() % 10000 - 5000, 1800.0f, rand() % 9999), XMFLOAT3(500.0f, 200.0f, 500.0f), XMFLOAT3(0.0f, 0.0f, 0.0f));
-	m_pCloud[3].Create(XMFLOAT3(rand() % 10000 - 5000, 1800.0f, rand() % 9999), XMFLOAT3(500.0f, 200.0f, 500.0f), XMFLOAT3(0.0f, 0.0f, 0.0f));
-	m_pCloud[4].Create(XMFLOAT3(rand() % 10000 - 5000, 1800.0f, rand() % 9999), XMFLOAT3(500.0f, 200.0f, 500.0f), XMFLOAT3(0.0f, 0.0f, 0.0f));
-	m_pCloud[5].Create(XMFLOAT3(rand() % 10000 - 5000, 1800.0f, rand() % 9999), XMFLOAT3(500.0f, 200.0f, 500.0f), XMFLOAT3(0.0f, 0.0f, 0.0f));
-	m_pCloud[6].Create(XMFLOAT3(rand() % 10000 - 5000, 1800.0f, rand() % 9999), XMFLOAT3(500.0f, 200.0f, 500.0f), XMFLOAT3(0.0f, 0.0f, 0.0f));
-	m_pCloud[7].Create(XMFLOAT3(rand() % 10000 - 5000, 1800.0f, rand() % 9999), XMFLOAT3(500.0f, 200.0f, 500.0f), XMFLOAT3(0.0f, 0.0f, 0.0f));
-	m_pCloud[8].Create(XMFLOAT3(rand() % 10000 - 5000, 1800.0f, rand() % 9999), XMFLOAT3(500.0f, 200.0f, 500.0f), XMFLOAT3(0.0f, 0.0f, 0.0f));
-	m_pCloud[9].Create(XMFLOAT3(rand() % 10000 - 5000, 1800.0f, rand() % 9999), XMFLOAT3(500.0f, 200.0f, 500.0f), XMFLOAT3(0.0f, 0.0f, 0.0f));
-	m_pCloud[10].Create(XMFLOAT3(rand() % 10000 - 5000, 1800.0f, rand() % 9999), XMFLOAT3(500.0f, 200.0f, 500.0f), XMFLOAT3(0.0f, 0.0f, 0.0f));
-	m_pCloud[12].Create(XMFLOAT3(rand() % 10000 - 5000, 1800.0f, rand() % 9999), XMFLOAT3(500.0f, 200.0f, 500.0f), XMFLOAT3(0.0f, 0.0f, 0.0f));
-	m_pCloud[13].Create(XMFLOAT3(rand() % 10000 - 5000, 1800.0f, rand() % 9999), XMFLOAT3(500.0f, 200.0f, 500.0f), XMFLOAT3(0.0f, 0.0f, 0.0f));
-	m_pCloud[14].Create(XMFLOAT3(rand() % 10000 - 5000, 1800.0f, rand() % 9999), XMFLOAT3(500.0f, 200.0f, 500.0f), XMFLOAT3(0.0f, 0.0f, 0.0f));
-	m_pCloud[15].Create(XMFLOAT3(rand() % 10000 - 5000, 1800.0f, rand() % 9999), XMFLOAT3(500.0f, 200.0f, 500.0f), XMFLOAT3(0.0f, 0.0f, 0.0f));
-	m_pCloud[16].Create(XMFLOAT3(rand() % 10000 - 5000, 1800.0f, rand() % 9999), XMFLOAT3(500.0f, 200.0f, 500.0f), XMFLOAT3(0.0f, 0.0f, 0.0f));
-	m_pCloud[17].Create(XMFLOAT3(rand() % 10000 - 5000, 1800.0f, rand() % 9999), XMFLOAT3(500.0f, 200.0f, 500.0f), XMFLOAT3(0.0f, 0.0f, 0.0f));
-	m_pCloud[18].Create(XMFLOAT3(rand() % 10000 - 5000, 1800.0f, rand() % 9999), XMFLOAT3(500.0f, 200.0f, 500.0f), XMFLOAT3(0.0f, 0.0f, 0.0f));
-	m_pCloud[19].Create(XMFLOAT3(rand() % 10000 - 5000, 1800.0f, rand() % 9999), XMFLOAT3(500.0f, 200.0f, 500.0f), XMFLOAT3(0.0f, 0.0f, 0.0f));
-	m_pCloud[20].Create(XMFLOAT3(rand() % 10000 - 5000, 1800.0f, rand() % 9999), XMFLOAT3(500.0f, 200.0f, 500.0f), XMFLOAT3(0.0f, 0.0f, 0.0f));
+	m_pCloud[0]. Create(XMFLOAT3(rand() % 10000 - 5000, 1800.0f, rand() % 9999), XMFLOAT3(600.0f, 200.0f, 600.0f), XMFLOAT3(0.0f, 0.0f, 0.0f));
+	m_pCloud[1]. Create(XMFLOAT3(rand() % 10000 - 5000, 1800.0f, rand() % 9999), XMFLOAT3(600.0f, 200.0f, 600.0f), XMFLOAT3(0.0f, 0.0f, 0.0f));
+	m_pCloud[2]. Create(XMFLOAT3(rand() % 10000 - 5000, 1800.0f, rand() % 9999), XMFLOAT3(600.0f, 200.0f, 600.0f), XMFLOAT3(0.0f, 0.0f, 0.0f));
+	m_pCloud[3]. Create(XMFLOAT3(rand() % 10000 - 5000, 1800.0f, rand() % 9999), XMFLOAT3(600.0f, 200.0f, 600.0f), XMFLOAT3(0.0f, 0.0f, 0.0f));
+	m_pCloud[4]. Create(XMFLOAT3(rand() % 10000 - 5000, 1800.0f, rand() % 9999), XMFLOAT3(600.0f, 200.0f, 600.0f), XMFLOAT3(0.0f, 0.0f, 0.0f));
+	m_pCloud[5]. Create(XMFLOAT3(rand() % 10000 - 5000, 1800.0f, rand() % 9999), XMFLOAT3(600.0f, 200.0f, 600.0f), XMFLOAT3(0.0f, 0.0f, 0.0f));
+	m_pCloud[6]. Create(XMFLOAT3(rand() % 10000 - 5000, 1800.0f, rand() % 9999), XMFLOAT3(600.0f, 200.0f, 600.0f), XMFLOAT3(0.0f, 0.0f, 0.0f));
+	m_pCloud[7]. Create(XMFLOAT3(rand() % 10000 - 5000, 1800.0f, rand() % 9999), XMFLOAT3(600.0f, 200.0f, 600.0f), XMFLOAT3(0.0f, 0.0f, 0.0f));
+	m_pCloud[8]. Create(XMFLOAT3(rand() % 10000 - 5000, 1800.0f, rand() % 9999), XMFLOAT3(600.0f, 200.0f, 600.0f), XMFLOAT3(0.0f, 0.0f, 0.0f));
+	m_pCloud[9]. Create(XMFLOAT3(rand() % 10000 - 5000, 1800.0f, rand() % 9999), XMFLOAT3(600.0f, 200.0f, 600.0f), XMFLOAT3(0.0f, 0.0f, 0.0f));
+	m_pCloud[10].Create(XMFLOAT3(rand() % 10000 - 5000, 1800.0f, rand() % 9999), XMFLOAT3(600.0f, 200.0f, 600.0f), XMFLOAT3(0.0f, 0.0f, 0.0f));
+	m_pCloud[12].Create(XMFLOAT3(rand() % 10000 - 5000, 1800.0f, rand() % 9999), XMFLOAT3(600.0f, 200.0f, 600.0f), XMFLOAT3(0.0f, 0.0f, 0.0f));
+	m_pCloud[13].Create(XMFLOAT3(rand() % 10000 - 5000, 1800.0f, rand() % 9999), XMFLOAT3(600.0f, 200.0f, 600.0f), XMFLOAT3(0.0f, 0.0f, 0.0f));
+	m_pCloud[14].Create(XMFLOAT3(rand() % 10000 - 5000, 1800.0f, rand() % 9999), XMFLOAT3(600.0f, 200.0f, 600.0f), XMFLOAT3(0.0f, 0.0f, 0.0f));
+	m_pCloud[20].Create(XMFLOAT3(rand() % 10000 - 5000, 1800.0f, rand() % 9999), XMFLOAT3(600.0f, 200.0f, 600.0f), XMFLOAT3(0.0f, 0.0f, 0.0f));
+	m_pCloud[15].Create(XMFLOAT3(rand() % 10000 - 5000, 1800.0f, rand() % 9999), XMFLOAT3(600.0f, 200.0f, 600.0f), XMFLOAT3(0.0f, 0.0f, 0.0f));
+	m_pCloud[16].Create(XMFLOAT3(rand() % 10000 - 5000, 1800.0f, rand() % 9999), XMFLOAT3(600.0f, 200.0f, 600.0f), XMFLOAT3(0.0f, 0.0f, 0.0f));
+	m_pCloud[17].Create(XMFLOAT3(rand() % 10000 - 5000, 1800.0f, rand() % 9999), XMFLOAT3(600.0f, 200.0f, 600.0f), XMFLOAT3(0.0f, 0.0f, 0.0f));
+	m_pCloud[18].Create(XMFLOAT3(rand() % 10000 - 5000, 1800.0f, rand() % 9999), XMFLOAT3(600.0f, 200.0f, 600.0f), XMFLOAT3(0.0f, 0.0f, 0.0f));
+	m_pCloud[19].Create(XMFLOAT3(rand() % 10000 - 5000, 1800.0f, rand() % 9999), XMFLOAT3(600.0f, 200.0f, 600.0f), XMFLOAT3(0.0f, 0.0f, 0.0f));
 
 
 

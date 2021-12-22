@@ -7,6 +7,9 @@
 #include "scene.h"
 #include "debugproc.h"
 #include "Sound.h"
+#include "input.h"
+
+static bool SelectTrriger;
 
 
 //=============================================================================
@@ -14,7 +17,7 @@
 //=============================================================================
 TitleScene::TitleScene()
 {
-
+	SelectTrriger=false;
 }
 //=============================================================================
 // デストラクタ
@@ -50,9 +53,27 @@ void TitleScene::Update()
 	
 
 	//次のシーンへ移る条件
-	if (GetAsyncKeyState(VK_RETURN) & 0x8000)
+	if (GetKeyTrigger(VK_RETURN))
 	{
-		CSound::SetVolume(SE_SELECT,1.0f);
+		if (!SelectTrriger)
+		{
+			CSound::SetVolume(SE_SELECT, 1.0f);
+			CSound::Play(SE_SELECT);
+			SelectTrriger = true;
+		}
+		
+#if _DEBUG
+		StartFadeOut(SCENE_GAME);
+
+#else 
+		StartFadeOut(SCENE_STAGE_SELECT);
+
+#endif
+	}	
+	// コントローラースタートボタン
+	if (GetJoyRelease(0, JOYSTICKID8) )
+	{
+		CSound::SetVolume(SE_SELECT, 1.0f);
 		CSound::Play(SE_SELECT);
 #if _DEBUG
 		StartFadeOut(SCENE_GAME);
@@ -61,9 +82,7 @@ void TitleScene::Update()
 		StartFadeOut(SCENE_STAGE_SELECT);
 
 #endif
-		
 	}
-	
 
 #if _DEBUG
 	//デバック用文字列
