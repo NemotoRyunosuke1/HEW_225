@@ -22,6 +22,7 @@ public:
 private:
 	
 	WindManager* m_pWindManager;
+	Cunt* m_pCunt;
 	Goal* m_pGoal;
 	StaminaBar* m_pStaminaBar;
 	Buliding* m_pBuliding;

@@ -16,7 +16,10 @@ public:
 
 	void Update();
 	void Draw();
-	void Atumerubird();
+	static void Gatherbird(); // ゲットしたとき
+
+	/*実装予定*/
+	//static void BirdIcon2();
 
 private:
 
@@ -25,7 +28,10 @@ private:
 	XMFLOAT3 m_CuntIconPos;		// 位置
 	XMFLOAT3 m_CuntIconsize;	// サイズ
 
-	int Getbird;
+	static int Getbird;
+
+	/*実装予定*/
+	//static int BirdIcon;
 
 	bool m_use;			// 使用フラグ
 
