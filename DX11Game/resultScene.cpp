@@ -170,6 +170,7 @@ void ResultScene::Update()
 void ResultScene::Draw()
 {
 	ID3D11DeviceContext*  pBC = GetDeviceContext();
+	SetBlendState(BS_ALPHABLEND);	// アルファブレンド有効				  
 
 	//----------------
 	// 枠
@@ -250,4 +251,6 @@ void ResultScene::Draw()
 	//// 2D描画
 	//// Zバッファ無効(Zチェック無&Z更新無)
 	//SetZBuffer(false);
+	SetBlendState(BS_NONE);	// アルファブレンド無効			  
+
 }

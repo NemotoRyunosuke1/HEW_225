@@ -47,7 +47,19 @@ void StageSlectScene::Update()
 
 #endif
 	}
+	// コントローラースタートボタン
+	if (GetJoyRelease(0, JOYSTICKID8))
+	{
+		CSound::SetVolume(SE_SELECT, 1.0f);
+		CSound::Play(SE_SELECT);
+#if _DEBUG
+		StartFadeOut(SCENE_GAME);
 
+#else 
+		StartFadeOut(SCENE_GAME);
+
+#endif
+}
 	
 #if _DEBUG
 	// デバック用文字列
