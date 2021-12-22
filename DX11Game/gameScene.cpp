@@ -70,6 +70,8 @@ GameScene::GameScene()
 	// スタミナゲージ初期化
 	m_pStaminaBar = new StaminaBar;
 
+	
+
 	// ビル初期化
 	m_pBuliding = new Buliding[MAX_BULIDING];
 

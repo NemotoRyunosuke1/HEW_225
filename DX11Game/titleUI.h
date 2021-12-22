@@ -6,69 +6,31 @@
 //=============================================================================
 #pragma once
 
-#include "main.h"
-#include "fade.h"
+#include "stageButton.h"
+#include "object.h"
 
-#include <dinput.h>
-
-//*****************************************************************************
-// マクロ定義
-//*****************************************************************************
-#define DIRECTINPUT_VERSION 0x0800
-
-// キー最大数
-#define KEY_MAX 256
-
-//=============================================================================
-// クラス
-//=============================================================================
-class Window;
-class Input
+class TitleUI :public Object
 {
 public:
-	// コンストラクタ
-	Input(Window* win);
+	TitleUI();
+	~TitleUI();
 
-	// デストラクタ
-	~Input();
-
-	// キー入力
-	bool CheckKey(UINT index);
-
-	// トリガー入力
-	bool TriggerKey(UINT index);
-
+	void Update();
+	void Draw();
+	void Create(float stm, XMFLOAT3 pos, XMFLOAT3 size, XMFLOAT3 color);
+	void SetSTM(float);
+	void SetPos(XMFLOAT3);
+	void SetSize(XMFLOAT3);
+	void SetColor(float, float, float);
 private:
+	float m_maxSTM;
+	float m_currentSTM;
+	bool  m_init;
+	float r;
+	float g;
+	float b;
 
-	// インプットの生成
-	HRESULT CreateInput(void);
+	Button* m_pButton;
 
-	// キーデバイスの生成
-	HRESULT CreateKey(void);
-
-	// キーフォーマットのセット
-	HRESULT SetKeyFormat(void);
-
-	// キー協調レベルのセット
-	HRESULT SetKeyCooperative(void);
-
-
-	// ウィンドウ
-	Window* win;
-
-	// 結果
-	HRESULT result;
-
-	// インプット
-	LPDIRECTINPUT8 input;
-
-	// インプットデバイス
-	LPDIRECTINPUTDEVICE8 key;
-
-	// キー情報
-	BYTE keys[KEY_MAX];
-
-	// 前のキー入力
-	BYTE olds[KEY_MAX];
-
+	ID3D11ShaderResourceView* m_pTecture;
 };
