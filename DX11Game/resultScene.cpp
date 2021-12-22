@@ -39,10 +39,10 @@ ResultScene::ResultScene()
 	m_Iconsize2 = XMFLOAT3(100, 50, 0);	    // サイズ
 
 	//// 星３
-	//m_pos3 = XMFLOAT3(0, 100, 0);
-	//m_size3 = XMFLOAT3(100, 100, 0);
-	//m_IconPos3 = XMFLOAT3(100, 100, 0);		// 位置
-	//m_Iconsize3 = XMFLOAT3(100, 50, 0);	    // サイズ
+	m_pos3 = XMFLOAT3(300, -100, 0);
+	m_size3 = XMFLOAT3(100, 100, 0);
+	m_IconPos3 = XMFLOAT3(100, 100, 0);		// 位置
+	m_Iconsize3 = XMFLOAT3(100, 50, 0);	    // サイズ
 
 	// リザルトロゴ
 	m_pos4 = XMFLOAT3(0, 250, 0);
@@ -193,12 +193,12 @@ void ResultScene::Draw()
 	DrawPolygon(pBC);
 	//
 	////　星３ 
-	//SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
-	//SetPolygonSize(m_size3.x, m_size3.y);
-	//SetPolygonPos(m_pos3.x, m_pos3.y);
-	//SetPolygonTexture(m_pIconTexture3);
-	//SetPolygonUV(0.0f, 0.0f);
-	//DrawPolygon(pBC);
+	SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
+	SetPolygonSize(m_size3.x, m_size3.y);
+	SetPolygonPos(m_pos3.x, m_pos3.y);
+	SetPolygonTexture(m_pIconTexture1);
+	SetPolygonUV(0.0f, 0.0f);
+	DrawPolygon(pBC);
 
 	// リザルトロゴ 
 	SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
