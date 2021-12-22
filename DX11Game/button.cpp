@@ -14,6 +14,11 @@
 #define PATH_BUTTON_END_TEXTURE L"data/texture/scenesenni/title/titleend.png"
 #define PATH_BUTTON_SELECT_TEXTURE1 L"data/texture/scenesenni/stageselect/selectstage1.png"
 #define PATH_BUTTON_BACK_TEXTURE L"data/texture/scenesenni/stageselect/selectback.png"
+#define PATH_BUTTON_PAUSE_TEXTURE1 L"data/texture/scenesenni/pause/restart.png"
+#define PATH_BUTTON_PAUSE_TEXTURE2 L"data/texture/scenesenni/pause/backgame.png"
+#define PATH_BUTTON_PAUSE_TEXTURE3 L"data/texture/scenesenni/pause/backstageselect.png"
+
+
 #define NUMBER_COUNT_X (4)	//テクスチャコマ数(X)
 #define NUMBER_COUNT_Y (4)	//テクスチャコマ数(Y)
 
@@ -193,7 +198,15 @@ void Button::CreateButton(XMFLOAT3 size, XMFLOAT3 pos, int textureNum)
 	case 8:
 		CreateTextureFromFile(pDevice, PATH_BUTTON_BACK_TEXTURE, &m_pTexture);
 		break;
-
+	case 9:
+		CreateTextureFromFile(pDevice, PATH_BUTTON_PAUSE_TEXTURE1, &m_pTexture);
+		break;
+	case 10:
+		CreateTextureFromFile(pDevice, PATH_BUTTON_PAUSE_TEXTURE2, &m_pTexture);
+		break;
+	case 11:
+		CreateTextureFromFile(pDevice, PATH_BUTTON_PAUSE_TEXTURE3, &m_pTexture);
+		break;
 	default:
 		break;
 	}

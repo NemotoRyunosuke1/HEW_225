@@ -39,7 +39,7 @@ void ScoreUI::Update()
 void ScoreUI::Draw()
 {
 	ID3D11DeviceContext*  pBC = GetDeviceContext();
-	SetBlendState(BS_ALPHABLEND);	// アルファブレンド有効				  
+				  
 
 	//アイコン
 	//SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー

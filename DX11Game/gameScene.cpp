@@ -77,7 +77,8 @@ GameScene::GameScene()
 	// ビル初期化
 	m_pBuliding = new Buliding[MAX_BULIDING];
 
-	
+	// ポーズ初期化
+	m_pPause = new Pause;
 
 	// スコアUI初期化
 	m_pScoreUI = new ScoreUI;
@@ -166,6 +167,9 @@ GameScene::~GameScene()
 	// スコアUI終了処理
 	delete m_pScoreUI;
 
+	// ポーズ終了処理
+	delete m_pPause;
+	
 	// リザルト終了処理
 	//delete m_pResult;
 }
@@ -188,11 +192,31 @@ void GameScene::Update()
 		}
 
 	}
+	
 
 	// ポーズ中の処理
 	if (m_bPause)
 	{
+		m_pPause->Update();
+		if (m_pPause->GetBack())
+		{
+			m_bPause = false;
+		}
+		// リスタート
+		if (m_pPause->GetRestart())
+		{
+			StartFadeOut(SCENE_GAME);
+		}
+
+		if (m_pPause->GetStageSelect())
+		{
+			StartFadeOut(SCENE_STAGE_SELECT);
+		}
 		return;
+	}
+	else
+	{
+		m_pPause->SetBack(false);
 	}
 
 
@@ -324,6 +348,8 @@ void GameScene::Update()
 		m_pResult->Update();
 	}*/
 
+	
+
 #if _DEBUG
 	if (GetAsyncKeyState(VK_RETURN) & 0x8000)
 	{
@@ -397,4 +423,11 @@ void GameScene::Draw()
 	{
 		m_pResult->Draw();
 	}*/
+
+	// ポーズ中の処理
+	if (m_bPause)
+	{
+		m_pPause->Draw();
+		
+	}
 }

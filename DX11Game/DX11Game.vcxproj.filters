@@ -189,6 +189,12 @@
     <ClCompile Include="bg.cpp">
       <Filter>ソース ファイル\scene</Filter>
     </ClCompile>
+    <ClCompile Include="Cunt.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="pause.cpp">
+      <Filter>ソース ファイル\scene\gameScene\object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -325,6 +331,12 @@
     </ClInclude>
     <ClInclude Include="stageSelectBG.h">
       <Filter>ヘッダー ファイル\scene\stageSelectScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Cunt.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="pause.h">
+      <Filter>ヘッダー ファイル\scene\gameScene\object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
