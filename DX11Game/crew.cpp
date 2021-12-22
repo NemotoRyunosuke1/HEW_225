@@ -151,23 +151,29 @@ void UpdateCrew(void)
 			g_crew[i].m_animTime = 0.0f;
 		}
 
-
 		//for (int j = 0; j < MAX_CREW; ++j)
 		//{
+		//	if (!g_crew[j].m_use)continue;
+		//	hit2[j] = false;
+		//}
+		//for (int j = 0; j < MAX_CREW; ++j)
+		//{
+		//	if (!g_crew[j].m_use)continue;
 		//	if (i != j)
 		//	{
 		//		hit2[j] = CollisionSphere(g_crew[i].m_pos, 40.0f, g_crew[j].m_pos, 40.0f);
 		//	}
 		//
 		//}
-		//
 		//for (int j = 0; j < MAX_CREW; ++j)
 		//{
+		//	if (!g_crew[j].m_use)continue;
 		//	if (hit2[j])
 		//	{
 		//		g_crew[i].m_rotDest.y = XMConvertToDegrees(atan2f(-g_crew[i].m_move.x, -g_crew[i].m_move.z));
 		//	}
 		//}
+		
 		
 		if (g_crew[i].m_catch)
 		{
@@ -347,7 +353,7 @@ int StartChase(int i, XMFLOAT3 pos)
 		//	//水平
 		//	g_crew[i].m_rotDest.x = 0;
 		//}
-
+		//
 		//if (g_modelPos.x - g_crew[i].m_pos.x > 0 && g_modelPos.z - g_crew[i].m_pos.z > 0)
 		//{
 		//	//左後ろ
@@ -393,13 +399,12 @@ int StartChase(int i, XMFLOAT3 pos)
 		g_crew[i].m_pos.y += SinDeg(g_crew[i].m_rot.x) * VALUE_MOVE_CREW ;
 		g_crew[i].m_pos.z -= CosDeg(g_crew[i].m_rot.y) * VALUE_MOVE_CREW ;
 		
-		if (hit)
-		{
-			// プレイヤーから離る
-			 //g_crew[i].m_rotDest.y = XMConvertToDegrees(atan2f(-g_crew[i].m_move.x, -g_crew[i].m_move.z));
-
-		}
-
+		//if (hit)
+		//{
+		//	// プレイヤーから離る
+		//	g_crew[i].m_rotDest.y = XMConvertToDegrees(atan2f(-g_crew[i].m_move.x, -g_crew[i].m_move.z));
+		//}
+		
 		// 捕まった時の処理
 		if (g_crew[i].m_catch == true)
 		{
@@ -432,24 +437,26 @@ int StartChase(int i, XMFLOAT3 pos)
 
 			// プレイヤーの向いている方向へ向く
 			g_crew[i].m_rot = modelRot;
+			//int j = 0;
+			//bool hit2 = CollisionSphere(g_crew[i].m_pos, 40, g_crew[j].m_pos, 40);
 
 			// 他の仲間の鳥との当たり判定
 			for (int j = 0; j < MAX_CREW; j++)
 			{
 				// 使用されてなかったらスキップ
 				if (!g_crew[j].m_use)continue;
-
+			
 				// 同じ番号だったらスキップ
 				if (i == j)continue;
-
+			
 				// 球判定
-				if (CollisionSphere(g_crew[i].m_pos, 5, g_crew[j].m_pos, 5))
+				if (CollisionSphere(g_crew[i].m_pos, 20, g_crew[j].m_pos, 20))
 				{	// 他の仲間の鳥と当たらないとこに移動
-					//g_crew[i].m_pos.x += rand()% 140 - 70;
-					//g_crew[i].m_pos.z += rand()% 140 - 70;
+					g_crew[i].m_pos.x += rand()% 140 - 70;
+					g_crew[i].m_pos.z += rand()% 140 - 70;
 					if (g_crew[i].m_pos.x < g_crew[j].m_pos.x)
 					{
-						g_crew[i].m_pos.x = g_crew[j].m_pos.x - 20.0f;
+						g_crew[i].m_rot.y = g_crew[j].m_pos.x - 20.0f;
 					}
 					if (g_crew[i].m_pos.x > g_crew[j].m_pos.x)
 					{
@@ -463,7 +470,13 @@ int StartChase(int i, XMFLOAT3 pos)
 					{
 						g_crew[i].m_pos.z = g_crew[j].m_pos.z + 20.0f;
 					}
+					//g_crew[i].m_rot.y = -g_crew[i].m_rot.y;
+					
 				}
+				//if (hit2 = false)
+				//{
+				//	break;
+				//}
 			}
 		}
 
