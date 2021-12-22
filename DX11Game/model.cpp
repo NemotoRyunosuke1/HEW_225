@@ -62,6 +62,8 @@ static bool g_bDebugMode;
 static bool g_bOverHeart;
 static bool g_bWing;
 static bool g_bWindDelay;
+static float g_WindSound;
+static bool g_bSoundTrriger;
 //=============================================================================
 // 初期化処理
 //=============================================================================
@@ -105,6 +107,8 @@ HRESULT InitModel(void)
 	d = 0.1;
 	g_bWing = false;
 	g_bWindDelay = false;
+	g_WindSound = 2.0f;
+	g_bSoundTrriger = false;
 	return hr;
 }
 
@@ -365,8 +369,35 @@ void UpdateModel(void)
 				g_stm += 0.5f;
 		    			
 		}
+		
 	}
 	
+	// 風に乗ったときの効果音
+	if (bFlg)
+	{
+		if (!g_bSoundTrriger)
+		{
+			g_WindSound = 2.0f;
+			CSound::SetVolume(SE_WIND, g_WindSound);
+			CSound::Play(SE_WIND);
+			g_bSoundTrriger = true;
+		}
+
+		
+
+	}
+	else
+	{
+		CSound::SetVolume(SE_WIND, g_WindSound);
+		g_WindSound -= 0.02f;
+		if (g_WindSound<0)
+		{
+			CSound::Stop(SE_WIND);
+		}
+		g_bSoundTrriger = false;
+	}
+
+
 	// 機体の傾きリセット
 	if (g_rotDestModel.x > AUTO_FALL_ROT && !bFlg)
 	{
