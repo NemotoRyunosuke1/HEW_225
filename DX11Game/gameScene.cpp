@@ -345,7 +345,22 @@ void GameScene::Update()
 
 	}
 
-	
+	// ƒrƒ‹‚Æ‚Ì“–‚½‚è”»’è
+	for (int i = 0; i < MAX_BULIDING; i++)
+	{
+
+		
+		if (GetModelPos().x + GetModelCollisionSize().x / 2 > m_pBuliding[i].GetPos().x - m_pBuliding[i].GetSize().x / 2 && GetModelPos().x - GetModelCollisionSize().x / 2 < m_pBuliding[i].GetPos().x + m_pBuliding[i].GetSize().x / 2 &&
+			GetModelPos().y + GetModelCollisionSize().y / 2 > m_pBuliding[i].GetPos().y - m_pBuliding[i].GetSize().y / 2 && GetModelPos().y - GetModelCollisionSize().y / 2 < m_pBuliding[i].GetPos().y + m_pBuliding[i].GetSize().y / 2 &&
+			GetModelPos().z + GetModelCollisionSize().z / 2 > m_pBuliding[i].GetPos().z - m_pBuliding[i].GetSize().z / 2 && GetModelPos().z - GetModelCollisionSize().z / 2 < m_pBuliding[i].GetPos().z + m_pBuliding[i].GetSize().z / 2
+			)
+		{
+			StartFadeOut(SCENE_GAME);
+		}
+
+	}
+
+
 
 	//ŽŸ‚ÌƒV[ƒ“‚ÖˆÚ‚éðŒ
 	if (GetModelPos().x + GetModelCollisionSize().x / 2 > m_pGoal->GetPos().x - m_pGoal->GetSize().x / 2 && GetModelPos().x - GetModelCollisionSize().x / 2 < m_pGoal->GetPos().x + m_pGoal->GetSize().x / 2 &&
