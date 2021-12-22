@@ -15,6 +15,7 @@
 #include "enemy.h"
 #include "input.h"
 #include "collision.h"
+#include "Cunt.h"
 
 #if _DEBUG
 #define MAX_BULIDING (16)
@@ -58,6 +59,9 @@ GameScene::GameScene()
 	// 敵初期化
 	InitEnemy();
 
+	// 鳥残機カウント初期化
+	m_pCunt = new Cunt;
+
 	// 風マネージャー初期化
 	m_pWindManager = new WindManager;
 
@@ -70,8 +74,6 @@ GameScene::GameScene()
 	// スタミナゲージ初期化
 	m_pStaminaBar = new StaminaBar;
 
-	
-
 	// ビル初期化
 	m_pBuliding = new Buliding[MAX_BULIDING];
 
@@ -81,7 +83,7 @@ GameScene::GameScene()
 	m_pScoreUI = new ScoreUI;
 
 	// リザルトシーン初期化
-	m_pResult = new ResultScene;
+	//m_pResult = new ResultScene;
 
 	
 
@@ -120,7 +122,7 @@ GameScene::GameScene()
 	// 変数初期化
 	m_bDebugMode = false;
 	m_bPause = false;
-	m_bGoal = false;
+	//m_bGoal = false;
 }
 
 //=============================================================================
@@ -143,6 +145,9 @@ GameScene::~GameScene()
 	// 敵終了処理
 	UninitEnemy();
 
+	// 鳥残機カウント終了処理
+	delete m_pCunt;
+
 	// 風マネージャー終了
 	delete m_pWindManager;
 
@@ -162,7 +167,7 @@ GameScene::~GameScene()
 	delete m_pScoreUI;
 
 	// リザルト終了処理
-	delete m_pResult;
+	//delete m_pResult;
 }
 
 //=============================================================================
@@ -232,6 +237,9 @@ void GameScene::Update()
 
 	// 敵更新
 	UpdateEnemy();
+
+	// 鳥残機カウント更新
+	m_pCunt->Update();
 
 	// 風マネージャー更新
 	m_pWindManager->Update();
@@ -308,13 +316,13 @@ void GameScene::Update()
 		)
 	{
 		// ゴールについたとき
-		m_bGoal = true;
+		//m_bGoal = true;
 	}
 
-	if (m_bGoal)
+	/*if (m_bGoal)
 	{
 		m_pResult->Update();
-	}
+	}*/
 
 #if _DEBUG
 	if (GetAsyncKeyState(VK_RETURN) & 0x8000)
@@ -359,6 +367,9 @@ void GameScene::Draw()
 	// 敵描画
 	DrawEnemy();
 
+	// 鳥残機カウント描画
+	m_pCunt->Draw();
+
 	// 風マネージャー描画
 	m_pWindManager->Draw();
 
@@ -382,8 +393,8 @@ void GameScene::Draw()
 
 	// スコアUI描画
 	m_pScoreUI->Draw();
-	if (m_bGoal)
+	/*if (m_bGoal)
 	{
 		m_pResult->Draw();
-	}
+	}*/
 }
