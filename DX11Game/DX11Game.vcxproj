@@ -189,10 +189,12 @@
     <ClCompile Include="shadow.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="stageButton.cpp" />
+    <ClCompile Include="stageSelectBG.cpp" />
     <ClCompile Include="stageSelectScene.cpp" />
     <ClCompile Include="staminaBar.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="titleBG.cpp" />
+    <ClCompile Include="titleButton.cpp" />
     <ClCompile Include="titleScene.cpp" />
     <ClCompile Include="titleUI.cpp" />
     <ClCompile Include="UI.cpp" />
@@ -234,10 +236,12 @@
     <ClInclude Include="SoundData.h" />
     <ClInclude Include="SoundData.hpp" />
     <ClInclude Include="stageButton.h" />
+    <ClInclude Include="stageSelectBG.h" />
     <ClInclude Include="stageSelectScene.h" />
     <ClInclude Include="staminaBar.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="titleBG.h" />
+    <ClInclude Include="titleButton.h" />
     <ClInclude Include="titleScene.h" />
     <ClInclude Include="titleUI.h" />
     <ClInclude Include="UI.h" />

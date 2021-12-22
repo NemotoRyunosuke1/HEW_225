@@ -26,6 +26,7 @@ private:
 	bool m_use;
 	bool m_select;
 	int m_frameNum;
+	XMFLOAT3 m_sizeUpDown;
 	ID3D11ShaderResourceView* m_pTexture1;
 	ID3D11ShaderResourceView* m_pTexture2;
 	ID3D11ShaderResourceView* m_pTexture3;

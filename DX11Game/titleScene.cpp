@@ -18,13 +18,17 @@ static bool SelectTrriger;
 TitleScene::TitleScene()
 {
 	SelectTrriger=false;
+
+	m_pTitleBG = new TitleBG;
+	m_pTitleButton = new TitleButton;
 }
 //=============================================================================
 // デストラクタ
 //=============================================================================
 TitleScene::~TitleScene()
 {
-
+	delete m_pTitleBG;
+	delete m_pTitleButton;
 }
 //=============================================================================
 // 初期化処理
@@ -50,7 +54,10 @@ void TitleScene::Uninit()
 //=============================================================================
 void TitleScene::Update()
 {
-	
+	// タイトルBG更新
+	m_pTitleBG->Update();
+
+	m_pTitleButton->Update();
 
 	//次のシーンへ移る条件
 	if (GetKeyTrigger(VK_RETURN))
@@ -83,6 +90,29 @@ void TitleScene::Update()
 
 #endif
 	}
+	if (m_pTitleButton->GetNextScene())
+	{
+#if _DEBUG
+		StartFadeOut(SCENE_GAME);
+
+#else 
+		StartFadeOut(SCENE_STAGE_SELECT);
+
+#endif
+
+	}
+
+	// オプションボタン
+	if (m_pTitleButton->GetOption())
+	{
+
+	}
+
+	// エンドボタン
+	if (m_pTitleButton->GetEnd())
+	{
+		PostQuitMessage(0);	// ゲーム終了
+	}
 
 #if _DEBUG
 	//デバック用文字列
@@ -110,6 +140,6 @@ void TitleScene::Draw()
 	// 2D描画
 	// Zバッファ無効(Zチェック無&Z更新無)
 	SetZBuffer(false);
-	
-	
+	m_pTitleBG->Draw();
+	m_pTitleButton->Draw();
 }

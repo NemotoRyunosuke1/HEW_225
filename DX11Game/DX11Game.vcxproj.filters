@@ -117,9 +117,6 @@
     <ClCompile Include="stageSelectScene.cpp">
       <Filter>ソース ファイル\scene\stageSelectScene</Filter>
     </ClCompile>
-    <ClCompile Include="bg.cpp">
-      <Filter>ソース ファイル\scene\titleScene</Filter>
-    </ClCompile>
     <ClCompile Include="player.cpp">
       <Filter>ソース ファイル\scene\gameScene\player</Filter>
     </ClCompile>
@@ -182,6 +179,15 @@
     </ClCompile>
     <ClCompile Include="titleUI.cpp">
       <Filter>ソース ファイル\scene\titleScene</Filter>
+    </ClCompile>
+    <ClCompile Include="titleButton.cpp">
+      <Filter>ソース ファイル\scene\titleScene</Filter>
+    </ClCompile>
+    <ClCompile Include="stageSelectBG.cpp">
+      <Filter>ソース ファイル\scene\stageSelectScene</Filter>
+    </ClCompile>
+    <ClCompile Include="bg.cpp">
+      <Filter>ソース ファイル\scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -313,6 +319,12 @@
     </ClInclude>
     <ClInclude Include="titleUI.h">
       <Filter>ヘッダー ファイル\scene\titleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="titleButton.h">
+      <Filter>ヘッダー ファイル\scene\titleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="stageSelectBG.h">
+      <Filter>ヘッダー ファイル\scene\stageSelectScene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

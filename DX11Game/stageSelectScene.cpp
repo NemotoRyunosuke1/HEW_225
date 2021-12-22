@@ -20,6 +20,7 @@ StageSlectScene::StageSlectScene()
 	m_pStageButton = new StageButton;
 	StageTrrger = false;
 	
+	m_pStageSelectBG = new StageSelectBG;
 }
 //=============================================================================
 // デストラクト
@@ -28,6 +29,8 @@ StageSlectScene::~StageSlectScene()
 {
 	// ボタン終了処理
 	delete m_pStageButton;
+
+	delete m_pStageSelectBG;
 }
 //=============================================================================
 // 更新処理
@@ -94,5 +97,6 @@ void StageSlectScene::Draw()
 	SetZBuffer(false);
 
 	// ボタン描画
+	m_pStageSelectBG->Draw();
 	m_pStageButton->Draw();
 }
