@@ -43,12 +43,14 @@ struct TEnemy {
 	XMFLOAT3	m_rot;		// 現在の向き
 	XMFLOAT3	m_rotDest;	// 目的の向き
 	XMFLOAT3	m_move;		// 移動量
+	XMFLOAT3	m_scr;		// スケール
 
 	XMFLOAT4X4	m_mtxWorld;	// ワールドマトリックス
 
 	int			m_nShadow;	// 丸影番号
 
 	bool m_catch;
+	bool m_use;
 };
 
 typedef struct D3DXVECTOR3 {
@@ -100,6 +102,8 @@ HRESULT InitEnemy(void)
 
 		// 丸影の生成
 		g_enemy[i].m_nShadow = CreateShadow(g_enemy[i].m_pos, 12.0f);
+		g_enemy[i].m_scr = XMFLOAT3(10.0f,10.0f,10.0f);
+		g_enemy[i].m_use = false;
 	}
 
 
@@ -126,12 +130,13 @@ void UninitEnemy(void)
 void UpdateEnemy(void)
 {
 	
-	XMMATRIX mtxWorld, mtxRot, mtxTranslate;
+	XMMATRIX mtxWorld, mtxRot, mtxTranslate, mtxScl;
 
 	XMFLOAT3 g_modelPos = GetModelPos();
 
 	for (int i = 0; i < MAX_ENEMY; ++i)
 	{
+		if (!g_enemy[i].m_use)continue;
 		// 移動
 		EnemyStartChase(i,g_modelPos);
 
@@ -141,45 +146,45 @@ void UpdateEnemy(void)
 			cnt++;
 		}
 
-		g_enemy[i].m_pos.x += g_enemy[i].m_move.x;
+		/*g_enemy[i].m_pos.x += g_enemy[i].m_move.x;
 		g_enemy[i].m_pos.y += g_enemy[i].m_move.y;
 		g_enemy[i].m_pos.z += g_enemy[i].m_move.z;
-
-		// 壁にぶつかった
-		bool lr = false, fb = false;
-		if (g_enemy[i].m_pos.x < -MAP_AMPLITUDE / 2) {
-			g_enemy[i].m_pos.x = -MAP_AMPLITUDE / 2;
-			lr = true;
-		}
-		if (g_enemy[i].m_pos.x > MAP_AMPLITUDE / 2) {
-			g_enemy[i].m_pos.x = MAP_AMPLITUDE / 2;
-			lr = true;
-		}
-		if (g_enemy[i].m_pos.z < -MAP_AMPLITUDE / 2) {
-			g_enemy[i].m_pos.z = -MAP_AMPLITUDE / 2;
-			fb = true;
-		}
-		if (g_enemy[i].m_pos.z > MAP_AMPLITUDE / 2) {
-			g_enemy[i].m_pos.z = MAP_AMPLITUDE / 2;
-			fb = true;
-		}
-		if (g_enemy[i].m_pos.y < 0.0f) {
-			g_enemy[i].m_pos.y = 0.0f;
-		}
-		if (g_enemy[i].m_pos.y > 2000.0f) {
-			g_enemy[i].m_pos.y = 2000.0f;
-		}
-		if (fabsf(g_enemy[i].m_rot.y - g_enemy[i].m_rotDest.y) < 0.0001f) {
-			if (lr) {
-				g_enemy[i].m_move.x *= -1.0f;
-			}
-			if (fb) {
-				g_enemy[i].m_move.z *= -1.0f;
-			}
-			if (lr || fb) {
-				g_enemy[i].m_rotDest.y = XMConvertToDegrees(atan2f(-g_enemy[i].m_move.x, -g_enemy[i].m_move.z));
-			}
-		}
+*/
+		//// 壁にぶつかった
+		//bool lr = false, fb = false;
+		//if (g_enemy[i].m_pos.x < -MAP_AMPLITUDE / 2) {
+		//	g_enemy[i].m_pos.x = -MAP_AMPLITUDE / 2;
+		//	lr = true;
+		//}
+		//if (g_enemy[i].m_pos.x > MAP_AMPLITUDE / 2) {
+		//	g_enemy[i].m_pos.x = MAP_AMPLITUDE / 2;
+		//	lr = true;
+		//}
+		//if (g_enemy[i].m_pos.z < -MAP_AMPLITUDE / 2) {
+		//	g_enemy[i].m_pos.z = -MAP_AMPLITUDE / 2;
+		//	fb = true;
+		//}
+		//if (g_enemy[i].m_pos.z > MAP_AMPLITUDE / 2) {
+		//	g_enemy[i].m_pos.z = MAP_AMPLITUDE / 2;
+		//	fb = true;
+		//}
+		//if (g_enemy[i].m_pos.y < 0.0f) {
+		//	g_enemy[i].m_pos.y = 0.0f;
+		//}
+		//if (g_enemy[i].m_pos.y > 2000.0f) {
+		//	g_enemy[i].m_pos.y = 2000.0f;
+		//}
+		//if (fabsf(g_enemy[i].m_rot.y - g_enemy[i].m_rotDest.y) < 0.0001f) {
+		//	if (lr) {
+		//		g_enemy[i].m_move.x *= -1.0f;
+		//	}
+		//	if (fb) {
+		//		g_enemy[i].m_move.z *= -1.0f;
+		//	}
+		//	if (lr || fb) {
+		//		g_enemy[i].m_rotDest.y = XMConvertToDegrees(atan2f(-g_enemy[i].m_move.x, -g_enemy[i].m_move.z));
+		//	}
+		//}
 
 		// 目的の角度までの差分
 		float fDiffRotX = g_enemy[i].m_rotDest.y - g_enemy[i].m_rot.y;
@@ -220,6 +225,11 @@ void UpdateEnemy(void)
 
 		// ワールドマトリックスの初期化
 		mtxWorld = XMMatrixIdentity();
+
+		//スケール反映
+		mtxScl = XMMatrixScaling(g_enemy[i].m_scr.x, g_enemy[i].m_scr.y, g_enemy[i].m_scr.z);
+		mtxWorld = XMMatrixMultiply(mtxWorld, mtxScl);
+
 
 		// 回転を反映
 		mtxRot = XMMatrixRotationRollPitchYaw(
@@ -288,12 +298,15 @@ void UpdateEnemy(void)
 		ID3D11DeviceContext* pDC = GetDeviceContext();
 
 		// 不透明部分を描画
-		for (int i = 0; i < MAX_ENEMY; ++i) {
+		for (int i = 0; i < MAX_ENEMY; ++i) 
+		{
+			if (!g_enemy[i].m_use)continue;
 			g_model.Draw(pDC, g_enemy[i].m_mtxWorld, eOpacityOnly);
 		}
 
 		// 半透明部分を描画
 		for (int i = 0; i < MAX_ENEMY; ++i) {
+			if (!g_enemy[i].m_use)continue;
 			SetBlendState(BS_ALPHABLEND);	// アルファブレンド有効
 			SetZWrite(false);				// Zバッファ更新しない
 			g_model.Draw(pDC, g_enemy[i].m_mtxWorld, eTransparentOnly);
@@ -384,3 +397,15 @@ void UpdateEnemy(void)
 		return i, hit;
 	}
 
+	void CreateEnemy(XMFLOAT3 pos)
+	{
+		for (int i = 0; i < MAX_ENEMY; i++)
+		{
+			if (!g_enemy[i].m_use)continue;
+			g_enemy[i].m_pos = pos;
+			g_enemy[i].m_use = true;
+
+			break;
+		}
+		
+	}
