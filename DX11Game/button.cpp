@@ -12,6 +12,8 @@
 #define PATH_BUTTON_SELECT_TEXTURE L"data/texture/scenesenni/title/titlestageselect.png"
 #define PATH_BUTTON_OPTION_TEXTURE L"data/texture/scenesenni/title/titleoption.png"
 #define PATH_BUTTON_END_TEXTURE L"data/texture/scenesenni/title/titleend.png"
+#define PATH_BUTTON_SELECT_TEXTURE1 L"data/texture/scenesenni/stageselect/selectstage1.png"
+#define PATH_BUTTON_BACK_TEXTURE L"data/texture/scenesenni/stageselect/selectback.png"
 #define NUMBER_COUNT_X (4)	//テクスチャコマ数(X)
 #define NUMBER_COUNT_Y (4)	//テクスチャコマ数(Y)
 
@@ -116,7 +118,8 @@ void Button::Update()
 		}
 		else
 		{
-
+			m_size.x = m_sizeUpDown.x;
+			m_size.y = m_sizeUpDown.y;
 		}
 	}
 #if _DEBUG
@@ -184,7 +187,13 @@ void Button::CreateButton(XMFLOAT3 size, XMFLOAT3 pos, int textureNum)
 	case 6:
 		CreateTextureFromFile(pDevice, PATH_BUTTON_END_TEXTURE, &m_pTexture);
 		break;
-		
+	case 7:
+		CreateTextureFromFile(pDevice, PATH_BUTTON_SELECT_TEXTURE1, &m_pTexture);
+		break;
+	case 8:
+		CreateTextureFromFile(pDevice, PATH_BUTTON_BACK_TEXTURE, &m_pTexture);
+		break;
+
 	default:
 		break;
 	}
@@ -229,5 +238,9 @@ bool Button::GetSelect()
 void Button::SetSize(XMFLOAT3 size)
 {
 	m_size = size;
+}
+XMFLOAT3 Button::GetOriginSize()
+{
+	return m_sizeUpDown;
 }
 

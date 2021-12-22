@@ -72,7 +72,31 @@ void StageSlectScene::Update()
 
 #endif
 }
-	
+	// ステージ1へ
+	if (m_pStageButton->GetStage1())
+	{
+		if (!StageTrrger)
+		{
+			CSound::SetVolume(SE_SELECT, 1.0f);
+			CSound::Play(SE_SELECT);
+			StageTrrger = true;
+		}
+		StartFadeOut(SCENE_GAME);
+	}
+
+	// 戻る
+	if (m_pStageButton->GetBack())
+	{
+		if (!StageTrrger)
+		{
+			CSound::SetVolume(SE_SELECT, 1.0f);
+			CSound::Play(SE_SELECT);
+			StageTrrger = true;
+		}
+		StartFadeOut(SCENE_TITLE);
+	}
+
+
 #if _DEBUG
 	// デバック用文字列
 	PrintDebugProc("****** StageSelectScene ******\n");

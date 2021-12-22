@@ -70,7 +70,7 @@ void TitleScene::Update()
 		}
 		
 #if _DEBUG
-		StartFadeOut(SCENE_GAME);
+		StartFadeOut(SCENE_STAGE_SELECT);
 
 #else 
 		StartFadeOut(SCENE_STAGE_SELECT);
@@ -83,17 +83,25 @@ void TitleScene::Update()
 		CSound::SetVolume(SE_SELECT, 1.0f);
 		CSound::Play(SE_SELECT);
 #if _DEBUG
-		StartFadeOut(SCENE_GAME);
+		StartFadeOut(SCENE_STAGE_SELECT);
 
 #else 
 		StartFadeOut(SCENE_STAGE_SELECT);
 
 #endif
 	}
+
+	// ゲーム内ボタンスタート
 	if (m_pTitleButton->GetNextScene())
 	{
+		if (!SelectTrriger)
+		{
+			CSound::SetVolume(SE_SELECT, 1.0f);
+			CSound::Play(SE_SELECT);
+			SelectTrriger = true;
+	}
 #if _DEBUG
-		StartFadeOut(SCENE_GAME);
+		StartFadeOut(SCENE_STAGE_SELECT);
 
 #else 
 		StartFadeOut(SCENE_STAGE_SELECT);

@@ -21,6 +21,7 @@ public:
 	void SetSelect(bool);
 	bool GetSelect();
 	void SetSize(XMFLOAT3);
+	XMFLOAT3 GetOriginSize();
 private:
 	bool m_flg;
 	bool m_use;

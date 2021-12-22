@@ -47,7 +47,7 @@ void TitleButton::Update()
 		stickRY = 0;
 		m_Trigger = false;
 	}
-	else if (stickLY > 0 || stickRY > 0)
+	else if (stickLY > 20000 || stickRY > 20000)
 	{
 		if (!m_Trigger)
 		{
@@ -56,7 +56,7 @@ void TitleButton::Update()
 			if (m_cnt > 2) m_cnt = 0;
 		}
 	}
-	else if (stickLY < 0 ||  stickRY < 0)
+	else if (stickLY < -20000 ||  stickRY < -20000)
 	{
 		if (!m_Trigger)
 		{
