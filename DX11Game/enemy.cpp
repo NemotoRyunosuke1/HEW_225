@@ -12,7 +12,6 @@
 #include "model.h"
 #include "collision.h"
 
-
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
@@ -244,7 +243,7 @@ void UpdateEnemy(void)
 	}
 }
 
-	/*/ 敵との当たり判定
+	// 敵との当たり判定
 	struct ENEMY
 	{
 		D3DXVECTOR3 min;         // 最大値
@@ -279,26 +278,7 @@ void UpdateEnemy(void)
 
 			return true;
 		}
-	};*/
-
-// 当たり判定
-//int CollisionEnemy(XMFLOAT2 vCenter,
-//	XMFLOAT2 vRect, float fDamage)
-//{
-//	XMFLOAT2 vEnemyPos;
-//	XMFLOAT2 vEnemyRect(COLLISION_WIDH,
-//		COLLISION_HELIGHT);
-//	ENEMY* pEnemy = g_enemy;
-//	for (int i = 0; i < g_nEnemy;
-//	++i, ++pEnemy) 
-//	{
-//	vEnemyPos.x = pEnemy->vPos.x +
-//		COLLISION_OFFSETX;
-//	vEnemyPos.y = pEnemy->vPos.y +
-//		COLLISION_OFFSETX;
-//	 	return i;
-//    }
-//}
+	};
 
 //=============================================================================
 // 描画処理

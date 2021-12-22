@@ -28,6 +28,7 @@ private:
 	CAssimpModel m_model;	// モデル
 	XMFLOAT3 m_pos;		// 位置
 	XMFLOAT3 m_size;	// サイズ
+	XMFLOAT3 m_collisionSize;	// サイズ
 	XMFLOAT3 m_rot;		// 現在の向き
 	
 	bool m_use;			// 使用フラグ

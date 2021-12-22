@@ -116,11 +116,13 @@ void Scene::Update()
 		break;
 
 	case SCENE_STAGE_SELECT:
+		CSound::Play(BGM_000); //タイトルBGM
 		//CSound::Play(BGM_004);//セレクトBGM
 		m_pStageSelectScene->Update();
 		break;
 
 	case SCENE_GAME:
+		CSound::SetVolume(GAME_BGM_001, 0.2f);
 		CSound::Play(GAME_BGM_001);
 		m_pGameScene->Update();
 		break;
@@ -199,7 +201,8 @@ void Scene::Draw()
 
 //=============================================================================
 // セットシーン
-//=============================================================================
+//=============================================================================」
+
 void Scene::SetScene(EScene eScene)
 {	
 	
@@ -207,18 +210,23 @@ void Scene::SetScene(EScene eScene)
 	switch (m_eScene)
 	{
 	case SCENE_TITLE://タイトルシーン
+		CSound::Stop(BGM_000); //タイトルBGMストップ
 		delete m_pTitleScene;
 		break;
 
 	case SCENE_STAGE_SELECT://メニューシーン
+		CSound::Stop(BGM_000); //タイトルBGMストップ
+		//CSound::Stop(BGM_004);//セレクトBGMストップ
 		delete m_pStageSelectScene;
 		break;
 
 	case SCENE_GAME://ゲームシーン
+		CSound::Stop(GAME_BGM_001);//ゲームBGMストップ
 		delete m_pGameScene;
 		break;
 
 	case SCENE_RESULT://リザルトシーン
+		//CSound::Play(BGM_003);//リザルトBGMストップ
 		delete m_pResultScene;
 		break;
 
