@@ -157,22 +157,22 @@ void UpdateCrew(void)
 		}
 
 
-		for (int j = 0; j < MAX_CREW; ++j)
-		{
-			if (i != j)
-			{
-				hit2[j] = CollisionSphere(g_crew[i].m_pos, 40.0f, g_crew[j].m_pos, 40.0f);
-			}
-
-		}
-		
-		for (int j = 0; j < MAX_CREW; ++j)
-		{
-			if (hit2[j])
-			{
-				g_crew[i].m_rotDest.y = XMConvertToDegrees(atan2f(-g_crew[i].m_move.x, -g_crew[i].m_move.z));
-			}
-		}
+		//for (int j = 0; j < MAX_CREW; ++j)
+		//{
+		//	if (i != j)
+		//	{
+		//		hit2[j] = CollisionSphere(g_crew[i].m_pos, 40.0f, g_crew[j].m_pos, 40.0f);
+		//	}
+		//
+		//}
+		//
+		//for (int j = 0; j < MAX_CREW; ++j)
+		//{
+		//	if (hit2[j])
+		//	{
+		//		g_crew[i].m_rotDest.y = XMConvertToDegrees(atan2f(-g_crew[i].m_move.x, -g_crew[i].m_move.z));
+		//	}
+		//}
 		
 		if (g_crew[i].m_catch)
 		{
@@ -331,7 +331,7 @@ int StartChase(int i, XMFLOAT3 pos)
 	XMFLOAT3 g_modelPos = GetModelPos();
 	XMFLOAT3 modelRot = GetModelRot();
 	// Ž@’m”ÍˆÍ
-	bool hit = CollisionSphere(g_crew[i].m_pos, CREW_RADIUS, pos, 100.0f);
+	bool hit = CollisionSphere(g_crew[i].m_pos, CREW_RADIUS, pos, 50.0f);
 
 	
 	if (hit  || g_crew[i].m_catch)
@@ -455,10 +455,26 @@ int StartChase(int i, XMFLOAT3 pos)
 				if (i == j)continue;
 
 				// ‹…”»’è
-				if (CollisionSphere(g_crew[i].m_pos, 10, g_crew[j].m_pos, 10))
+				if (CollisionSphere(g_crew[i].m_pos, 5, g_crew[j].m_pos, 5))
 				{	// ‘¼‚Ì’‡ŠÔ‚Ì’¹‚Æ“–‚½‚ç‚È‚¢‚Æ‚±‚ÉˆÚ“®
-					g_crew[i].m_pos.x += rand()% 140 - 70;
-					g_crew[i].m_pos.z += rand()% 140 - 70;
+					//g_crew[i].m_pos.x += rand()% 140 - 70;
+					//g_crew[i].m_pos.z += rand()% 140 - 70;
+					if (g_crew[i].m_pos.x < g_crew[j].m_pos.x)
+					{
+						g_crew[i].m_pos.x = g_crew[j].m_pos.x - 20.0f;
+					}
+					if (g_crew[i].m_pos.x > g_crew[j].m_pos.x)
+					{
+						g_crew[i].m_pos.x = g_crew[j].m_pos.x + 20.0f;
+					}
+					if (g_crew[i].m_pos.z < g_crew[j].m_pos.z)
+					{
+						g_crew[i].m_pos.z = g_crew[j].m_pos.z - 20.0f;
+					}
+					if (g_crew[i].m_pos.x > g_crew[j].m_pos.x)
+					{
+						g_crew[i].m_pos.z = g_crew[j].m_pos.z + 20.0f;
+					}
 				}
 			}
 		}
