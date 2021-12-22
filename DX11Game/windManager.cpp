@@ -24,18 +24,18 @@ WindManager::WindManager()
 	//}
 
 	// ステージ1
-	m_pWind[0].Create(XMFLOAT3(1000.0f, 600.0f, -150.0f), XMFLOAT3(250.0f, 250.0f, 1100.0f), XMFLOAT3(0.0f, 0.0f, 1.0f));      // 右側追い風
-	m_pWind[1].Create(XMFLOAT3(-3000.0f, 600.0f, -150.0f), XMFLOAT3(250.0f, 250.0f, 1100.0f), XMFLOAT3(0.0f, 0.0f, 1.0f));     // 左側追い風
-	m_pWind[2].Create(XMFLOAT3(-1000.0f, 600.0f, 0.0f), XMFLOAT3(250.0f, 250.0f, 1200.0f), XMFLOAT3(0.0f, 0.0f, -1.0f));    // 真ん中向かい風
-	m_pWind[3].Create(XMFLOAT3(-5000.0f, 600.0f,3000.0f), XMFLOAT3(250.0f, 1200.0f, 250.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));   // 左側上昇気流
-	m_pWind[4].Create(XMFLOAT3(3000.0f, 600.0f, 3000.0f), XMFLOAT3(250.0f, 1200.0f, 250.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));   // 右側上昇気流
-	m_pWind[5].Create(XMFLOAT3(-2000.0f, 600.0f, 1000.0f), XMFLOAT3(250.0f, 1200.0f, 250.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));  // 左側建物後ろ上昇気流
-	m_pWind[6].Create(XMFLOAT3(0.0f, 600.0f, 1000.0f), XMFLOAT3(250.0f, 1200.0f, 250.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));      // 右側建物後ろ上昇気流
-	m_pWind[7].Create(XMFLOAT3(-1200.0f, 1200.0f, 7000.0f), XMFLOAT3(250.0f, 250.0f, 300.0f), XMFLOAT3(0.0f, 0.0f, 1.0f));   // ゴール前手前左追い風
-	m_pWind[8].Create(XMFLOAT3(-800.0f, 1200.0f, 7000.0f), XMFLOAT3(250.0f, 250.0f, 300.0f), XMFLOAT3(0.0f, 0.0f, 1.0f));    // ゴール前手前右追い風
-	m_pWind[9].Create(XMFLOAT3(-1200.0f, 1200.0f, 8500.0f), XMFLOAT3(250.0f, 250.0f, 500.0f), XMFLOAT3(0.0f, 0.0f, 1.0f));   // ゴール前奥左追い風
-	m_pWind[10].Create(XMFLOAT3(-800.0f, 1200.0f, 8500.0f), XMFLOAT3(250.0f, 250.0f, 500.0f), XMFLOAT3(0.0f, 0.0f, 1.0f));   // ゴール前奥右追い風
-
+	m_pWind[0]. Create(XMFLOAT3(-3000.0f,  500.0f, -150.0f), XMFLOAT3(500.0f,  250.0f, 1100.0f), XMFLOAT3(0.0f, 0.0f,  1.0f));  // 左側追い風
+	m_pWind[1]. Create(XMFLOAT3(-1000.0f,  600.0f,    0.0f), XMFLOAT3(500.0f, 1000.0f, 1200.0f), XMFLOAT3(0.0f, 0.0f, -1.0f));  // 真ん中向かい風
+	m_pWind[2]. Create(XMFLOAT3( 1000.0f,  500.0f, -150.0f), XMFLOAT3(500.0f,  250.0f, 1100.0f), XMFLOAT3(0.0f, 0.0f,  1.0f));  // 右側追い風
+	m_pWind[3]. Create(XMFLOAT3(-5000.0f,  600.0f, 3000.0f), XMFLOAT3(500.0f, 1200.0f,  500.0f), XMFLOAT3(0.0f, 1.0f,  0.0f));  // 左側上昇気流
+	m_pWind[4]. Create(XMFLOAT3(-2000.0f,  600.0f, 1000.0f), XMFLOAT3(500.0f, 1200.0f,  500.0f), XMFLOAT3(0.0f, 1.0f,  0.0f));  // 左側建物後ろ上昇気流
+	m_pWind[5]. Create(XMFLOAT3(    0.0f,  600.0f, 1000.0f), XMFLOAT3(500.0f, 1200.0f,  500.0f), XMFLOAT3(0.0f, 1.0f,  0.0f));  // 右側建物後ろ上昇気流
+	m_pWind[6]. Create(XMFLOAT3( 3000.0f,  600.0f, 3000.0f), XMFLOAT3(500.0f, 1200.0f,  500.0f), XMFLOAT3(0.0f, 1.0f,  0.0f));  // 右側上昇気流
+	m_pWind[7]. Create(XMFLOAT3(-1400.0f, 1200.0f, 7000.0f), XMFLOAT3(500.0f,  250.0f,  300.0f), XMFLOAT3(0.0f, 0.0f,  1.0f));  // ゴール前手前左追い風
+	m_pWind[8]. Create(XMFLOAT3( -600.0f, 1200.0f, 7000.0f), XMFLOAT3(500.0f,  250.0f,  300.0f), XMFLOAT3(0.0f, 0.0f,  1.0f));  // ゴール前手前右追い風
+	m_pWind[9]. Create(XMFLOAT3(-1400.0f, 1200.0f, 8500.0f), XMFLOAT3(500.0f,  250.0f,  500.0f), XMFLOAT3(0.0f, 0.0f,  1.0f));  // ゴール前奥左追い風
+	m_pWind[10].Create(XMFLOAT3( -600.0f, 1200.0f, 8500.0f), XMFLOAT3(500.0f,  250.0f,  500.0f), XMFLOAT3(0.0f, 0.0f,  1.0f));  // ゴール前奥右追い風
+	
 
 }
 //=======================================================
