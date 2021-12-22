@@ -73,84 +73,15 @@ GameScene::GameScene()
 	// ビル初期化
 	m_pBuliding = new Buliding[MAX_BULIDING];
 
+	
+
 	// スコアUI初期化
 	m_pScoreUI = new ScoreUI;
 
 	// リザルトシーン初期化
 	m_pResult = new ResultScene;
 
-	/*for (int j = 0; j < 4; j++)
-	{
-		for (int i = 0; i < 4; i++)
-		{
-			m_pBuliding[i + j * 4].Create(XMFLOAT3(80 - 300 * i, 10, 0+ j * 300), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
-
-		}
-	}
-	for (int j = 0; j < 4; j++)
-	{
-		for (int i = 0; i < 4; i++)
-		{
-			m_pBuliding[i + j * 4 + 16].Create(XMFLOAT3(-1800 - 300 * i, 10, 0 + j * 300), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
-
-		}
-	}
-	for (int j = 0; j < 4; j++)
-	{
-		for (int i = 0; i < 4; i++)
-		{
-			m_pBuliding[i + j * 4 + 32].Create(XMFLOAT3(-1800 - 300 * i, 10, 0 + j * 300 + 1800), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
-
-		}
-	}
-	for (int j = 0; j < 4; j++)
-	{
-		for (int i = 0; i < 4; i++)
-		{
-			m_pBuliding[i + j * 4 + 48].Create(XMFLOAT3(80 - 300 * i, 10, 0 + j * 300 + 1800), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
-
-		}
-	}
-	for (int j = 0; j < 4; j++)
-	{
-		for (int i = 0; i < 4; i++)
-		{
-			m_pBuliding[i + j * 4 + 64].Create(XMFLOAT3(1880 - 300 * i, 10, 0 + j * 300 ), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
-
-		}
-	}
-	for (int j = 0; j < 4; j++)
-	{
-		for (int i = 0; i < 4; i++)
-		{
-			m_pBuliding[i + j * 4 + 80].Create(XMFLOAT3(1880 - 300 * i, 10, 1880 + j * 300), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
-
-		}
-	}
-	for (int j = 0; j < 4; j++)
-	{
-		for (int i = 0; i < 4; i++)
-		{
-			m_pBuliding[i + j * 4 + 96].Create(XMFLOAT3(-3680 - 300 * i, 10, 0 + j * 300), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
-
-		}
-	}
-	for (int j = 0; j < 4; j++)
-	{
-		for (int i = 0; i < 4; i++)
-		{
-			m_pBuliding[i + j * 4 + 112].Create(XMFLOAT3(-3680 - 300 * i, 10, 1880 + j * 300), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
-
-		}
-	}
-	for (int j = 0; j < 4; j++)
-	{
-		for (int i = 0; i < 4; i++)
-		{
-			m_pBuliding[i + j * 4 + 128].Create(XMFLOAT3(-3680 - 300 * i, 10, 1880 + j * 300), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
-
-		}
-	}*/
+	
 
 	// ビルの生成
 	for (int k = 0; k < MAX_BULIDING / 16 / 5; k++)
@@ -168,6 +99,11 @@ GameScene::GameScene()
 		}
 		
 	}
+#if _DEBUG
+	m_pBuliding[0].Create(XMFLOAT3(-800.0f, 0.0f, -1000.0f), XMFLOAT3(9.0f, 7.0f , 9.0f));
+
+#endif
+	
 	/*m_pBuliding[0].Create(XMFLOAT3(80, 10, 00), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
 	m_pBuliding[1].Create(XMFLOAT3(80, 10, 300), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
 	m_pBuliding[2].Create(XMFLOAT3(80, 10, 600), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
@@ -350,12 +286,13 @@ void GameScene::Update()
 	{
 
 		
-		if (GetModelPos().x + GetModelCollisionSize().x / 2 > m_pBuliding[i].GetPos().x - m_pBuliding[i].GetSize().x / 2 && GetModelPos().x - GetModelCollisionSize().x / 2 < m_pBuliding[i].GetPos().x + m_pBuliding[i].GetSize().x / 2 &&
-			GetModelPos().y + GetModelCollisionSize().y / 2 > m_pBuliding[i].GetPos().y - m_pBuliding[i].GetSize().y / 2 && GetModelPos().y - GetModelCollisionSize().y / 2 < m_pBuliding[i].GetPos().y + m_pBuliding[i].GetSize().y / 2 &&
-			GetModelPos().z + GetModelCollisionSize().z / 2 > m_pBuliding[i].GetPos().z - m_pBuliding[i].GetSize().z / 2 && GetModelPos().z - GetModelCollisionSize().z / 2 < m_pBuliding[i].GetPos().z + m_pBuliding[i].GetSize().z / 2
+		if (GetModelPos().x + GetModelCollisionSize().x / 2 > m_pBuliding[i].GetPos().x + 400 - 150 && GetModelPos().x - GetModelCollisionSize().x / 2 < m_pBuliding[i].GetPos().x + 400 + 150 &&
+			GetModelPos().y + GetModelCollisionSize().y / 2 > 0 && GetModelPos().y - GetModelCollisionSize().y / 2 < m_pBuliding[i].GetPos().y + m_pBuliding[i].GetSize().y * 100  -50&&
+			GetModelPos().z + GetModelCollisionSize().z / 2 > m_pBuliding[i].GetPos().z - 500 - 150 && GetModelPos().z - GetModelCollisionSize().z / 2 < m_pBuliding[i].GetPos().z - 500 + 150
 			)
 		{
 			StartFadeOut(SCENE_GAME);
+																															 
 		}
 
 	}
@@ -386,6 +323,8 @@ void GameScene::Update()
 
 	// デバック用文字列
 	PrintDebugProc("****** GameScene ******\n");
+	PrintDebugProc("%f,%f,%f\n",m_pBuliding[0].GetPos().x, m_pBuliding[0].GetPos().y, m_pBuliding[0].GetPos().z);
+	PrintDebugProc("\n");
 	PrintDebugProc("\n");
 #endif
 }
