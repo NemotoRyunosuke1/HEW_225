@@ -7,7 +7,7 @@
 
 
 #include "debugproc.h"
-#define MODEL_PLANE			"data/model/box1.fbx"
+#define MODEL_PLANE			"data/model/Cloud_1.fbx"
 #include "cloud.h"
 
 //=======================================================
