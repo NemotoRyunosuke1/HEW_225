@@ -20,7 +20,7 @@ enum eSE {
 	SE_COLLECT, 	//‰ñŽû‰¹
 	SE_WIND,		// •—
 	SE_SWING,		// ‚Í‚Î‚½‚«‰¹
-	//SE_JUMP,		// ƒWƒƒƒ“ƒv‰¹
+	SE_DAMAGE,		// ”í’e‰¹
 	
 
 	MAX_SE

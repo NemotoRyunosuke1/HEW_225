@@ -116,6 +116,7 @@ void Scene::Update()
 		break;
 
 	case SCENE_STAGE_SELECT:
+		CSound::Play(BGM_000); //タイトルBGM
 		//CSound::Play(BGM_004);//セレクトBGM
 		m_pStageSelectScene->Update();
 		break;
@@ -214,6 +215,7 @@ void Scene::SetScene(EScene eScene)
 		break;
 
 	case SCENE_STAGE_SELECT://メニューシーン
+		CSound::Stop(BGM_000); //タイトルBGMストップ
 		//CSound::Stop(BGM_004);//セレクトBGMストップ
 		delete m_pStageSelectScene;
 		break;

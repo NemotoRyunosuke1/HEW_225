@@ -9,6 +9,8 @@
 #include "Sound.h"
 #include "input.h"
 
+static bool StageTrrger;
+
 //=============================================================================
 // コンストラクタ
 //=============================================================================
@@ -16,6 +18,8 @@ StageSlectScene::StageSlectScene()
 {
 	// ボタン初期化
 	m_pStageButton = new StageButton;
+	StageTrrger = false;
+	
 }
 //=============================================================================
 // デストラクト
@@ -37,8 +41,13 @@ void StageSlectScene::Update()
 	//次のシーンへ移る条件
 	if (GetKeyTrigger(VK_RETURN))
 	{
-		CSound::SetVolume(SE_SELECT, 1.0f);
-		CSound::Play(SE_SELECT);
+		if (!StageTrrger)
+		{
+			CSound::SetVolume(SE_SELECT, 1.0f);
+			CSound::Play(SE_SELECT);
+			StageTrrger = true;
+		}
+		
 #if _DEBUG
 		StartFadeOut(SCENE_GAME);
 

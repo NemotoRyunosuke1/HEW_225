@@ -9,12 +9,15 @@
 #include "Sound.h"
 #include "input.h"
 
+static bool SelectTrriger;
+
+
 //=============================================================================
 // コンストラクタ
 //=============================================================================
 TitleScene::TitleScene()
 {
-
+	SelectTrriger=false;
 }
 //=============================================================================
 // デストラクタ
@@ -52,8 +55,13 @@ void TitleScene::Update()
 	//次のシーンへ移る条件
 	if (GetKeyTrigger(VK_RETURN))
 	{
-		CSound::SetVolume(SE_SELECT, 1.0f);
-		CSound::Play(SE_SELECT);
+		if (!SelectTrriger)
+		{
+			CSound::SetVolume(SE_SELECT, 1.0f);
+			CSound::Play(SE_SELECT);
+			SelectTrriger = true;
+		}
+		
 #if _DEBUG
 		StartFadeOut(SCENE_GAME);
 
