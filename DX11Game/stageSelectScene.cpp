@@ -7,13 +7,14 @@
 #include "stageSelectScene.h"
 #include "debugproc.h"
 #include "Sound.h"
+#include "input.h"
 
 //=============================================================================
 // コンストラクタ
 //=============================================================================
 StageSlectScene::StageSlectScene() 
 {
-	
+	// ボタン初期化
 	m_pStageButton = new StageButton;
 }
 //=============================================================================
@@ -21,7 +22,7 @@ StageSlectScene::StageSlectScene()
 //=============================================================================
 StageSlectScene::~StageSlectScene()
 {
-	
+	// ボタン終了処理
 	delete m_pStageButton;
 }
 //=============================================================================
@@ -29,19 +30,37 @@ StageSlectScene::~StageSlectScene()
 //=============================================================================
 void StageSlectScene::Update()
 {
+	// ボタン更新
 	m_pStageButton->Update();
 
 
 	//次のシーンへ移る条件
-	if (GetAsyncKeyState(VK_RETURN) & 0x8000)
+	if (GetKeyTrigger(VK_RETURN))
 	{
+		CSound::SetVolume(SE_SELECT, 1.0f);
 		CSound::Play(SE_SELECT);
 #if _DEBUG
 		StartFadeOut(SCENE_GAME);
-#endif
-		StartFadeOut(SCENE_GAME);
-	}
 
+#else 
+		StartFadeOut(SCENE_GAME);
+
+#endif
+	}
+	// コントローラースタートボタン
+	if (GetJoyRelease(0, JOYSTICKID8))
+	{
+		CSound::SetVolume(SE_SELECT, 1.0f);
+		CSound::Play(SE_SELECT);
+#if _DEBUG
+		StartFadeOut(SCENE_GAME);
+
+#else 
+		StartFadeOut(SCENE_GAME);
+
+#endif
+}
+	
 #if _DEBUG
 	// デバック用文字列
 	PrintDebugProc("****** StageSelectScene ******\n");
@@ -65,5 +84,6 @@ void StageSlectScene::Draw()
 	// Zバッファ無効(Zチェック無&Z更新無)
 	SetZBuffer(false);
 
+	// ボタン描画
 	m_pStageButton->Draw();
 }

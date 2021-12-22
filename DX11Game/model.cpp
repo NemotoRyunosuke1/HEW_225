@@ -14,7 +14,7 @@
 #include "fade.h"
 #include "windManager.h"
 #include "Sound.h"
-
+#include <stdlib.h>
 
 //*****************************************************************************
 // マクロ定義
@@ -61,6 +61,7 @@ static double d = 0;
 static bool g_bDebugMode;
 static bool g_bOverHeart;
 static bool g_bWing;
+static bool g_bWindDelay;
 //=============================================================================
 // 初期化処理
 //=============================================================================
@@ -103,6 +104,7 @@ HRESULT InitModel(void)
 	g_bOverHeart = false;
 	d = 0.1;
 	g_bWing = false;
+	g_bWindDelay = false;
 	return hr;
 }
 
@@ -148,19 +150,26 @@ void UpdateModel(void)
 	// 丸影の移動
 	MoveShadow(g_nShadow, g_posModel);
 
+	// 効果音　音量
+	CSound::SetVolume(SE_SWING, 1.0f);
 
 	// アニメーション更新
 	//d+= 0.02f;
 	g_model.SetAnimTime(d);
 	if (d > 1.4f)  // 羽ばたきは1周期0.7f
 	{
-	
 		g_bWing = false;
-		d = 0.0f;
+		d = 0.0f;	
 	}
 	
 	if (g_bWing)
 	{
+		if (d >= 0.8f && d <= 0.84f)
+		{
+		
+			CSound::Play(SE_SWING);
+		}
+		
 		d += 0.04f;
 	}
 	else
@@ -342,23 +351,41 @@ void UpdateModel(void)
 		// 風に乗ったときの処理
 		if (bWind1[i])
 		{
-			if (!bFlg)
-			{
+			
 				g_accModel.x = 5.0f * (unsigned)WindVec[i].x + 1.1f;
 				g_accModel.y = 5.0f * (unsigned)WindVec[i].y + 1.1f;
 				g_accModel.z = 5.0f * (unsigned)WindVec[i].z + 1.1f;
-				g_rotDestModel.x = 90 * WindVec[i].y;
-				g_rotDestModel.y = 90 * WindVec[i].x + 180 * ((1 + WindVec[i].z) / 2);// +(int)((2 - (unsigned)WindVec[i].z) / 2)*(int)((2 - (unsigned)WindVec[i].x) / 2)* g_rotModel.y;
+				g_rotDestModel.x = 130 * WindVec[i].y;
+				g_rotDestModel.y = 90 * WindVec[i].x + 180 * ((1 + WindVec[i].z) / 2) + ((2 - (int)fabsf(WindVec[i].z)) / 2) *  ((2 - (int)fabsf(WindVec[i].z)) / 2) * 90;// +(int)((2 - (unsigned)WindVec[i].z) / 2)*(int)((2 - (unsigned)WindVec[i].x) / 2)* g_rotModel.y;
 				//g_rotDestModel.y = 90 * WindVec[i].z ;
 				
 				bFlg  = true;
 				bWind = true;
+				g_bWindDelay = true;
 				g_stm += 0.5f;
-		    }			
+		    			
 		}
 	}
 	
-
+	// 機体の傾きリセット
+	if (g_rotDestModel.x > AUTO_FALL_ROT && !bFlg)
+	{
+		g_rotDestModel.x -= 0.5f;
+		if (g_rotDestModel.x < 0.5f && g_rotDestModel.x > 0.5f)
+		{
+			g_bWindDelay = false;
+			g_rotDestModel.x = AUTO_FALL_ROT;
+		}
+	}
+	if (g_rotDestModel.x < AUTO_FALL_ROT && !bFlg)
+	{
+		g_rotDestModel.x += 0.5f;
+		if (g_rotDestModel.x > 0.5f && g_rotDestModel.x < 0.5f)
+		{
+			g_bWindDelay = false;
+			g_rotDestModel.x = AUTO_FALL_ROT;
+		}
+	}
 	// キー旋回
 	if ((GetKeyPress(VK_LEFT )|| GetKeyPress(VK_A))&& !bWind )
 	{	
@@ -397,44 +424,44 @@ void UpdateModel(void)
 		if (GetJoyButton(0, JOYSTICKID6) && !g_bOverHeart)
 		{
 			g_stm -= 0.3f;	// スタミナ減少
-			g_rotDestModel.y += 1.0f * stickX / 8000;
+			g_rotDestModel.y += 1.0f * stickX / 9000;
 		}
 		// ゲームパッド
 	 // 下降
 		if (stickY < 0 && !bWind)
 		{
-			
+			g_bWindDelay = false;
 			g_rotDestModel.x = 5 * (float)stickY / 3000;	// 機体の傾き
 		}
 		// 上昇
 		if (stickY > 0 && !bWind && !g_bOverHeart)
 		{
-			
+			g_bWindDelay = false;
 			g_rotDestModel.x = 3 * (float)stickY / 1500;	 // 機体の傾き
 		}
 	}
 	
 	// LBボタンはばたき
-	if (GetJoyRelease(0, JOYSTICKID6) && !g_bOverHeart)
+	if (GetJoyRelease(0, JOYSTICKID6) && !g_bOverHeart && !g_bWing)
 	{
 		g_accModel.x += 3;
 		g_accModel.y += 6;
 		g_accModel.z += 3;
 		//g_rotDestModel.y += 1.0f * stickX /80 ;
 		g_rotDestModel.z += 30;
-		CSound::SetVolume(SE_SWING, 2.0f);
 		CSound::Play(SE_SWING);
 		g_bWing = true;
 		//g_stm -= 10.0f;	// スタミナ減少
 	}
 
 	// スペースキー羽ばた
-	if (GetKeyTrigger(VK_SPACE) && !g_bOverHeart)
+	if (GetKeyTrigger(VK_SPACE) && !g_bOverHeart && !g_bWing)
 	{
 		g_accModel.x += 3;
 		g_accModel.y += 3;
 		g_accModel.z += 3;
-
+		CSound::Play(SE_SWING);
+		g_bWing = true;
 		/*CSound::SetVolume(SE_SWING, 5.0f);
 		CSound::Play(SE_SWING);*/
 		//g_rotDestModel.y += 1.0f;// *g_rotDestModel.y / 10;
@@ -542,25 +569,7 @@ void UpdateModel(void)
 	
 	// 上昇&下降処理
 	
-	// 機体の傾きリセット
-	if (g_rotDestModel.x > AUTO_FALL_ROT)
-	{
-		g_rotDestModel.x -= 0.5f;
-		if (g_rotDestModel.x < 0.5f && g_rotDestModel.x > 0.5f)
-		{
-			bWind = false;
-			g_rotDestModel.x = AUTO_FALL_ROT;
-		}
-	}
-	if (g_rotDestModel.x < AUTO_FALL_ROT)
-	{
-		g_rotDestModel.x += 0.5f;
-		if (g_rotDestModel.x > 0.5f && g_rotDestModel.x < 0.5f)
-		{
-			bWind = false;
-			g_rotDestModel.x = AUTO_FALL_ROT;
-		}
-	}
+	
 
 	
 
@@ -574,7 +583,7 @@ void UpdateModel(void)
 		{
 			g_rotDestModel.x = 90;
 		}
-
+		g_bWindDelay = false;
 	}
 	
 	// 下降
@@ -586,6 +595,7 @@ void UpdateModel(void)
 		{
 			g_rotDestModel.x = -90;
 		}
+		g_bWindDelay = false;
 	}
 	
 
@@ -683,7 +693,7 @@ void UpdateModel(void)
 	}*/
 
 	// スタミナ処理
-	if (g_rotModel.x > 3)
+	if (g_rotModel.x > 3 && !g_bWindDelay)
 	{
 		// スタミナ減少
 		if(!bWind)	// 風に乗ってないとき
@@ -709,14 +719,13 @@ void UpdateModel(void)
 		{
 			g_stm += 0.5f;
 		}
-	
-		if (g_stm > 100)
-		{
-			g_stm = 100;	// スタミナ上限
-			g_bOverHeart = false;	// オーバーヒート解除
-		}
+		
 	}
-
+	if (g_stm > 100)
+	{
+		g_stm = 100;	// スタミナ上限
+		g_bOverHeart = false;	// オーバーヒート解除
+	}
 	 // 死亡条件
 	if (g_posModel.y <= 0.0f)	// 地面 
 	{
@@ -745,7 +754,7 @@ void UpdateModel(void)
 	PrintDebugProc("[ﾓﾃﾞﾙﾑｷ : (%f : %f : %f)]\n", g_rotDestModel.x, g_posModel.y, g_posModel.z);
 	PrintDebugProc("[ﾓﾃﾞﾙｶｿｸ : (%f : %f : %f)]\n",g_accModel.x, g_accModel.y, g_accModel.z);
 	PrintDebugProc("[ｶｾﾞﾙｶｿｸ : (%f : %f : %f)]\n", WindVec[1].x, WindVec[1].y, WindVec[1].z);
-	PrintDebugProc("[ｶｾﾞｱﾀﾘﾊﾝﾃｲ : (%d: %d )]\n", bWind1[0], bWind1[1]);
+	PrintDebugProc("[ｶｾﾞｱﾀﾘﾊﾝﾃｲ : (%d: %d )]\n", bFlg, bWind1[1]);
 	//PrintDebugProc("\n");
 	PrintDebugProc("*** ﾋｺｳｷ ｿｳｻ ***\n");
 	PrintDebugProc("ﾏｴ   ｲﾄﾞｳ : \x1e\n");//↑

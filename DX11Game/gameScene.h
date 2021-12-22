@@ -7,6 +7,7 @@
 #include "buliding1.h"
 #include "ScoreUI.h"
 #include "cloudManager.h"
+#include "resultScene.h"
 
 class GameScene :public SceneBase
 {
@@ -25,8 +26,9 @@ private:
 	Buliding* m_pBuliding;
 	ScoreUI* m_pScoreUI;
 	CloudManager* m_pCloudManager;
-
+	ResultScene* m_pResult;
 	bool m_bDebugMode;
-	bool m_bPause;
+	bool m_bPause;	 
+	bool m_bGoal;
 };
 
