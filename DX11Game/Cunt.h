@@ -6,12 +6,29 @@
 //=============================================================================
 #pragma once
 
-#include "gameScene.h"
+#include "object.h"
 
-HRESULT InitCunt();
-void UninitCunt();
-void UpdateCunt();
-void DrawCunt();
+class Cunt
+{
+public:
+	Cunt();
+	~Cunt();
 
-void AddCunt(int nCunt = 10);
-int GetCunt();
+	void Update();
+	void Draw();
+	void Atumerubird();
+
+private:
+
+	XMFLOAT3 m_Cuntpos;		// 位置
+	XMFLOAT3 m_Cuntsize;	// サイズ
+	XMFLOAT3 m_CuntIconPos;		// 位置
+	XMFLOAT3 m_CuntIconsize;	// サイズ
+
+	int Getbird;
+
+	bool m_use;			// 使用フラグ
+
+	ID3D11ShaderResourceView* m_pCuntTexture;
+	ID3D11ShaderResourceView* m_CuntpIconTexture;
+};
