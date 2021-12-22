@@ -24,8 +24,8 @@ WindManager::WindManager()
 	//}
 
 	// ステージ1
-	m_pWind[0].Create(XMFLOAT3(1000.0f, 600.0f, 0.0f), XMFLOAT3(250.0f, 250.0f, 1200.0f), XMFLOAT3(0.0f, 0.0f, 1.0f));      // 右側追い風
-	m_pWind[1].Create(XMFLOAT3(-3000.0f, 600.0f, 0.0f), XMFLOAT3(250.0f, 250.0f, 1200.0f), XMFLOAT3(0.0f, 0.0f, 1.0f));     // 左側追い風
+	m_pWind[0].Create(XMFLOAT3(1000.0f, 600.0f, -150.0f), XMFLOAT3(250.0f, 250.0f, 1100.0f), XMFLOAT3(0.0f, 0.0f, 1.0f));      // 右側追い風
+	m_pWind[1].Create(XMFLOAT3(-3000.0f, 600.0f, -150.0f), XMFLOAT3(250.0f, 250.0f, 1100.0f), XMFLOAT3(0.0f, 0.0f, 1.0f));     // 左側追い風
 	m_pWind[2].Create(XMFLOAT3(-1000.0f, 600.0f, 0.0f), XMFLOAT3(250.0f, 250.0f, 1200.0f), XMFLOAT3(0.0f, 0.0f, -1.0f));    // 真ん中向かい風
 	m_pWind[3].Create(XMFLOAT3(-5000.0f, 600.0f,3000.0f), XMFLOAT3(250.0f, 1200.0f, 250.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));   // 左側上昇気流
 	m_pWind[4].Create(XMFLOAT3(3000.0f, 600.0f, 3000.0f), XMFLOAT3(250.0f, 1200.0f, 250.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));   // 右側上昇気流
