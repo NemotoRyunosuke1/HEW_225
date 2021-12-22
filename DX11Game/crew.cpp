@@ -11,6 +11,7 @@
 #include "shadow.h"
 #include "model.h"
 #include "collision.h"
+#include "Sound.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -52,6 +53,7 @@ struct TCrew {
 
 	bool m_catch;
 	bool m_use;
+	bool m_CollectTrriger;
 	CAssimpModel	m_model;			// モデル
 };
 
@@ -64,6 +66,7 @@ static int CrewCnt;
 
 static bool hit2[MAX_CREW];
 
+static bool g_CollectTrriger;
 
 //=============================================================================
 // 初期化処理
@@ -98,6 +101,8 @@ HRESULT InitCrew(void)
 		hit2[i] = false;
 
 		g_crew[i].m_animTime = 0;	// アニメーションタイム
+
+		g_crew[i].m_CollectTrriger = false;
 	}
 
 	return hr;
@@ -403,7 +408,14 @@ int StartChase(int i, XMFLOAT3 pos)
 		// 捕まった時の処理
 		if (g_crew[i].m_catch == true)
 		{
-			
+			if (!g_crew[i].m_CollectTrriger)
+			{
+
+				CSound::SetVolume(SE_COLLECT,3.0f);
+				CSound::Play(SE_COLLECT);
+
+				g_crew[i].m_CollectTrriger = true;
+			}
 			//プレイヤーから一定範囲内にいさせる処理
 			if (g_modelPos.x + CREW_LENGHT < g_crew[i].m_pos.x)
 			{
