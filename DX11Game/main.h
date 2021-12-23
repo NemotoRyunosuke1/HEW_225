@@ -49,7 +49,7 @@ using namespace DirectX;
 #define CosDeg(degree)	cosf(XMConvertToRadians(degree))
 
 #define CLASS_NAME		_T("AppClass")			// ウインドウのクラス名
-#define WINDOW_NAME		_T("「ムレキドリ」プロトタイプ")	// ウインドウのキャプション名
+#define WINDOW_NAME		_T("「ムレキドリ」")	// ウインドウのキャプション名
 
 #define PI (3.141592653589793)	//　円周率
 

@@ -1,384 +1,380 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="ソース ファイル">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="ヘッダー ファイル">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="リソース ファイル">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="ソース ファイル\scene">
-      <UniqueIdentifier>{3464d907-b3b1-41b5-96ac-9b40a56608c7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\scene\titleScene">
-      <UniqueIdentifier>{4d4a4af1-f099-42f2-91a5-d9229aedefe3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\scene\gameScene">
-      <UniqueIdentifier>{b889b316-533c-4a13-b448-9f57764cd628}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\scene\system">
-      <UniqueIdentifier>{c4ca1793-9347-4f4d-ad32-0bb458dbc3c9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\scene">
-      <UniqueIdentifier>{ae49b6eb-28e6-4525-9b2d-b5ea36a4223c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\scene\gameScene">
-      <UniqueIdentifier>{8cd18965-3341-4720-a87c-aef57dfe35f2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\scene\titleScene">
-      <UniqueIdentifier>{7ead6678-26e5-47b6-a36b-4fd158ae2753}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\scene\system">
-      <UniqueIdentifier>{00b127fb-0db7-4aab-99f9-9ac9315926ae}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\scene\gameScene\player">
-      <UniqueIdentifier>{f25d2646-6ca3-443c-8c4d-52cddb300e67}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\scene\gameScene\player">
-      <UniqueIdentifier>{6d34b9bc-adee-41b8-8656-f5dba02835f2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\scene\stageSelectScene">
-      <UniqueIdentifier>{dc456fb7-03dc-44f1-b23d-60257aed7eea}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\scene\stageSelectScene">
-      <UniqueIdentifier>{7014d5e2-e51b-470d-8784-874a5430bcc4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\scene\resultScene">
-      <UniqueIdentifier>{c53d094e-2e5d-4985-9a72-37ac8375e353}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\scene\resultScene">
-      <UniqueIdentifier>{6b2f4976-2c90-4d6b-a6ce-8cba4fad4418}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\scene\gameScene\object">
-      <UniqueIdentifier>{d5196915-2740-4ffb-bd08-de40ca87880d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\scene\gameScene\object">
-      <UniqueIdentifier>{6931e12a-b42e-4fd8-9aee-7bbd3a1fbf6b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\scene\gameScene\UI">
-      <UniqueIdentifier>{65ade58c-079e-4bb0-9258-ddc006877c36}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\scene\gameScene\UI">
-      <UniqueIdentifier>{3a54a9ab-2fbf-4f88-86b3-aa8bb9291fe7}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="scene.cpp">
-      <Filter>ソース ファイル\scene</Filter>
-    </ClCompile>
-    <ClCompile Include="mesh.cpp">
-      <Filter>ソース ファイル\scene\system</Filter>
-    </ClCompile>
-    <ClCompile Include="Shader.cpp">
-      <Filter>ソース ファイル\scene\system</Filter>
-    </ClCompile>
-    <ClCompile Include="Texture.cpp">
-      <Filter>ソース ファイル\scene\system</Filter>
-    </ClCompile>
-    <ClCompile Include="shadow.cpp">
-      <Filter>ソース ファイル\scene\system</Filter>
-    </ClCompile>
-    <ClCompile Include="polygon.cpp">
-      <Filter>ソース ファイル\scene\system</Filter>
-    </ClCompile>
-    <ClCompile Include="Light.cpp">
-      <Filter>ソース ファイル\scene\system</Filter>
-    </ClCompile>
-    <ClCompile Include="AssimpModel.cpp">
-      <Filter>ソース ファイル\scene\system</Filter>
-    </ClCompile>
-    <ClCompile Include="debugproc.cpp">
-      <Filter>ソース ファイル\scene\system</Filter>
-    </ClCompile>
-    <ClCompile Include="input.cpp">
-      <Filter>ソース ファイル\scene\system</Filter>
-    </ClCompile>
-    <ClCompile Include="fade.cpp">
-      <Filter>ソース ファイル\scene</Filter>
-    </ClCompile>
-    <ClCompile Include="object.cpp">
-      <Filter>ソース ファイル\scene</Filter>
-    </ClCompile>
-    <ClCompile Include="titleScene.cpp">
-      <Filter>ソース ファイル\scene\titleScene</Filter>
-    </ClCompile>
-    <ClCompile Include="gameScene.cpp">
-      <Filter>ソース ファイル\scene\gameScene</Filter>
-    </ClCompile>
-    <ClCompile Include="titleBG.cpp">
-      <Filter>ソース ファイル\scene\titleScene</Filter>
-    </ClCompile>
-    <ClCompile Include="sceneBase.cpp">
-      <Filter>ソース ファイル\scene</Filter>
-    </ClCompile>
-    <ClCompile Include="stageSelectScene.cpp">
-      <Filter>ソース ファイル\scene\stageSelectScene</Filter>
-    </ClCompile>
-    <ClCompile Include="player.cpp">
-      <Filter>ソース ファイル\scene\gameScene\player</Filter>
-    </ClCompile>
-    <ClCompile Include="resultScene.cpp">
-      <Filter>ソース ファイル\scene\resultScene</Filter>
-    </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>ソース ファイル\scene\gameScene\player</Filter>
-    </ClCompile>
-    <ClCompile Include="model.cpp">
-      <Filter>ソース ファイル\scene\gameScene\player</Filter>
-    </ClCompile>
-    <ClCompile Include="wind.cpp">
-      <Filter>ソース ファイル\scene\gameScene\object</Filter>
-    </ClCompile>
-    <ClCompile Include="windManager.cpp">
-      <Filter>ソース ファイル\scene\gameScene\object</Filter>
-    </ClCompile>
-    <ClCompile Include="meshfield.cpp">
-      <Filter>ソース ファイル\scene\gameScene\object</Filter>
-    </ClCompile>
-    <ClCompile Include="enemy.cpp">
-      <Filter>ソース ファイル\scene\gameScene\object</Filter>
-    </ClCompile>
-    <ClCompile Include="crew.cpp">
-      <Filter>ソース ファイル\scene\gameScene\object</Filter>
-    </ClCompile>
-    <ClCompile Include="goal.cpp">
-      <Filter>ソース ファイル\scene\gameScene\object</Filter>
-    </ClCompile>
-    <ClCompile Include="UI.cpp">
-      <Filter>ソース ファイル\scene\system</Filter>
-    </ClCompile>
-    <ClCompile Include="staminaBar.cpp">
-      <Filter>ソース ファイル\scene\gameScene\player</Filter>
-    </ClCompile>
-    <ClCompile Include="collision.cpp">
-      <Filter>ソース ファイル\scene\gameScene</Filter>
-    </ClCompile>
-    <ClCompile Include="button.cpp">
-      <Filter>ソース ファイル\scene\system</Filter>
-    </ClCompile>
-    <ClCompile Include="stageButton.cpp">
-      <Filter>ソース ファイル\scene\stageSelectScene</Filter>
-    </ClCompile>
-    <ClCompile Include="buliding1.cpp">
-      <Filter>ソース ファイル\scene\gameScene\object</Filter>
-    </ClCompile>
-    <ClCompile Include="Sound.cpp">
-      <Filter>ソース ファイル\scene\system</Filter>
-    </ClCompile>
-    <ClCompile Include="cloud.cpp">
-      <Filter>ソース ファイル\scene\gameScene\object</Filter>
-    </ClCompile>
-    <ClCompile Include="cloudManagercpp.cpp">
-      <Filter>ソース ファイル\scene\gameScene\object</Filter>
-    </ClCompile>
-    <ClCompile Include="titleUI.cpp">
-      <Filter>ソース ファイル\scene\titleScene</Filter>
-    </ClCompile>
-    <ClCompile Include="titleButton.cpp">
-      <Filter>ソース ファイル\scene\titleScene</Filter>
-    </ClCompile>
-    <ClCompile Include="stageSelectBG.cpp">
-      <Filter>ソース ファイル\scene\stageSelectScene</Filter>
-    </ClCompile>
-    <ClCompile Include="bg.cpp">
-      <Filter>ソース ファイル\scene</Filter>
-    </ClCompile>
-    <ClCompile Include="lever.cpp">
-      <Filter>ソース ファイル\scene\gameScene\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="pause.cpp">
-      <Filter>ソース ファイル\scene\gameScene\object</Filter>
-    </ClCompile>
-    <ClCompile Include="ScoreUI.cpp">
-      <Filter>ソース ファイル\scene\gameScene\object</Filter>
-    </ClCompile>
-    <ClCompile Include="Cunt.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="main.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="AssimpModel.h">
-      <Filter>ヘッダー ファイル\scene\system</Filter>
-    </ClInclude>
-    <ClInclude Include="debugproc.h">
-      <Filter>ヘッダー ファイル\scene\system</Filter>
-    </ClInclude>
-    <ClInclude Include="input.h">
-      <Filter>ヘッダー ファイル\scene\system</Filter>
-    </ClInclude>
-    <ClInclude Include="mesh.h">
-      <Filter>ヘッダー ファイル\scene\system</Filter>
-    </ClInclude>
-    <ClInclude Include="Light.h">
-      <Filter>ヘッダー ファイル\scene\system</Filter>
-    </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>ヘッダー ファイル\scene\system</Filter>
-    </ClInclude>
-    <ClInclude Include="Shader.h">
-      <Filter>ヘッダー ファイル\scene\system</Filter>
-    </ClInclude>
-    <ClInclude Include="scene.h">
-      <Filter>ヘッダー ファイル\scene</Filter>
-    </ClInclude>
-    <ClInclude Include="polygon.h">
-      <Filter>ヘッダー ファイル\scene\system</Filter>
-    </ClInclude>
-    <ClInclude Include="Texture.h">
-      <Filter>ヘッダー ファイル\scene\system</Filter>
-    </ClInclude>
-    <ClInclude Include="shadow.h">
-      <Filter>ヘッダー ファイル\scene\system</Filter>
-    </ClInclude>
-    <ClInclude Include="bg.h">
-      <Filter>ヘッダー ファイル\scene</Filter>
-    </ClInclude>
-    <ClInclude Include="fade.h">
-      <Filter>ヘッダー ファイル\scene</Filter>
-    </ClInclude>
-    <ClInclude Include="object.h">
-      <Filter>ヘッダー ファイル\scene</Filter>
-    </ClInclude>
-    <ClInclude Include="titleScene.h">
-      <Filter>ヘッダー ファイル\scene\titleScene</Filter>
-    </ClInclude>
-    <ClInclude Include="gameScene.h">
-      <Filter>ヘッダー ファイル\scene\gameScene</Filter>
-    </ClInclude>
-    <ClInclude Include="titleBG.h">
-      <Filter>ヘッダー ファイル\scene\titleScene</Filter>
-    </ClInclude>
-    <ClInclude Include="sceneBase.h">
-      <Filter>ヘッダー ファイル\scene</Filter>
-    </ClInclude>
-    <ClInclude Include="stageSelectScene.h">
-      <Filter>ヘッダー ファイル\scene\stageSelectScene</Filter>
-    </ClInclude>
-    <ClInclude Include="player.h">
-      <Filter>ヘッダー ファイル\scene\gameScene\player</Filter>
-    </ClInclude>
-    <ClInclude Include="resultScene.h">
-      <Filter>ヘッダー ファイル\scene\resultScene</Filter>
-    </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>ヘッダー ファイル\scene\gameScene\player</Filter>
-    </ClInclude>
-    <ClInclude Include="crew.h">
-      <Filter>ヘッダー ファイル\scene\gameScene\object</Filter>
-    </ClInclude>
-    <ClInclude Include="enemy.h">
-      <Filter>ヘッダー ファイル\scene\gameScene\object</Filter>
-    </ClInclude>
-    <ClInclude Include="meshfield.h">
-      <Filter>ヘッダー ファイル\scene\gameScene\object</Filter>
-    </ClInclude>
-    <ClInclude Include="model.h">
-      <Filter>ヘッダー ファイル\scene\gameScene\player</Filter>
-    </ClInclude>
-    <ClInclude Include="wind.h">
-      <Filter>ヘッダー ファイル\scene\gameScene\object</Filter>
-    </ClInclude>
-    <ClInclude Include="windManager.h">
-      <Filter>ヘッダー ファイル\scene\gameScene\object</Filter>
-    </ClInclude>
-    <ClInclude Include="goal.h">
-      <Filter>ヘッダー ファイル\scene\gameScene\object</Filter>
-    </ClInclude>
-    <ClInclude Include="UI.h">
-      <Filter>ヘッダー ファイル\scene\system</Filter>
-    </ClInclude>
-    <ClInclude Include="staminaBar.h">
-      <Filter>ヘッダー ファイル\scene\gameScene\player</Filter>
-    </ClInclude>
-    <ClInclude Include="collision.h">
-      <Filter>ヘッダー ファイル\scene\gameScene</Filter>
-    </ClInclude>
-    <ClInclude Include="button.h">
-      <Filter>ヘッダー ファイル\scene\system</Filter>
-    </ClInclude>
-    <ClInclude Include="stageButton.h">
-      <Filter>ヘッダー ファイル\scene\stageSelectScene</Filter>
-    </ClInclude>
-    <ClInclude Include="buliding1.h">
-      <Filter>ヘッダー ファイル\scene\gameScene\object</Filter>
-    </ClInclude>
-    <ClInclude Include="Sound.h">
-      <Filter>ヘッダー ファイル\scene\system</Filter>
-    </ClInclude>
-    <ClInclude Include="SoundData.h">
-      <Filter>ヘッダー ファイル\scene\system</Filter>
-    </ClInclude>
-    <ClInclude Include="SoundData.hpp">
-      <Filter>ヘッダー ファイル\scene\system</Filter>
-    </ClInclude>
-    <ClInclude Include="cloud.h">
-      <Filter>ヘッダー ファイル\scene\gameScene\object</Filter>
-    </ClInclude>
-    <ClInclude Include="cloudManager.h">
-      <Filter>ヘッダー ファイル\scene\gameScene\object</Filter>
-    </ClInclude>
-    <ClInclude Include="titleUI.h">
-      <Filter>ヘッダー ファイル\scene\titleScene</Filter>
-    </ClInclude>
-    <ClInclude Include="titleButton.h">
-      <Filter>ヘッダー ファイル\scene\titleScene</Filter>
-    </ClInclude>
-    <ClInclude Include="stageSelectBG.h">
-      <Filter>ヘッダー ファイル\scene\stageSelectScene</Filter>
-    </ClInclude>
-    <ClInclude Include="lever.h">
-      <Filter>ヘッダー ファイル\scene\gameScene\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="ScoreUI.h">
-      <Filter>ヘッダー ファイル\scene\gameScene\object</Filter>
-    </ClInclude>
-    <ClInclude Include="Cunt.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="pause.h">
-      <Filter>ヘッダー ファイル\scene\gameScene\object</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="Pixel.hlsl">
-      <Filter>ソース ファイル\scene\system</Filter>
-    </FxCompile>
-    <FxCompile Include="Pixel2D.hlsl">
-      <Filter>ソース ファイル\scene\system</Filter>
-    </FxCompile>
-    <FxCompile Include="Vertex.hlsl">
-      <Filter>ソース ファイル\scene\system</Filter>
-    </FxCompile>
-    <FxCompile Include="Vertex2D.hlsl">
-      <Filter>ソース ファイル\scene\system</Filter>
-    </FxCompile>
     <FxCompile Include="AssimpPixel.hlsl">
-      <Filter>ソース ファイル\scene\system</Filter>
+      <Filter>ソースファイル\system</Filter>
     </FxCompile>
     <FxCompile Include="AssimpVertex.hlsl">
-      <Filter>ソース ファイル\scene\system</Filter>
+      <Filter>ソースファイル\system</Filter>
+    </FxCompile>
+    <FxCompile Include="Pixel.hlsl">
+      <Filter>ソースファイル\system</Filter>
+    </FxCompile>
+    <FxCompile Include="Pixel2D.hlsl">
+      <Filter>ソースファイル\system</Filter>
+    </FxCompile>
+    <FxCompile Include="Vertex.hlsl">
+      <Filter>ソースファイル\system</Filter>
+    </FxCompile>
+    <FxCompile Include="Vertex2D.hlsl">
+      <Filter>ソースファイル\system</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="DX11Game.rc">
-      <Filter>リソース ファイル</Filter>
-    </ResourceCompile>
+    <ClCompile Include="AssimpModel.cpp">
+      <Filter>ソースファイル\system</Filter>
+    </ClCompile>
+    <ClCompile Include="button.cpp">
+      <Filter>ソースファイル\system</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>ソースファイル\scene\gameScene\player</Filter>
+    </ClCompile>
+    <ClCompile Include="buliding1.cpp">
+      <Filter>ソースファイル\scene\gameScene\object</Filter>
+    </ClCompile>
+    <ClCompile Include="cloud.cpp">
+      <Filter>ソースファイル\scene\gameScene\object</Filter>
+    </ClCompile>
+    <ClCompile Include="cloudManagercpp.cpp">
+      <Filter>ソースファイル\scene\gameScene\object</Filter>
+    </ClCompile>
+    <ClCompile Include="collision.cpp">
+      <Filter>ソースファイル\system</Filter>
+    </ClCompile>
+    <ClCompile Include="crew.cpp">
+      <Filter>ソースファイル\scene\gameScene\object</Filter>
+    </ClCompile>
+    <ClCompile Include="bg.cpp">
+      <Filter>ソースファイル\scene\gameScene\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Cunt.cpp">
+      <Filter>ソースファイル\scene\gameScene\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="debugproc.cpp">
+      <Filter>ソースファイル\system</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectManager.cpp">
+      <Filter>ソースファイル\system</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectTest.cpp">
+      <Filter>ソースファイル\system</Filter>
+    </ClCompile>
+    <ClCompile Include="enemy.cpp">
+      <Filter>ソースファイル\scene\gameScene\object</Filter>
+    </ClCompile>
+    <ClCompile Include="fade.cpp">
+      <Filter>ソースファイル\system</Filter>
+    </ClCompile>
+    <ClCompile Include="gameScene.cpp">
+      <Filter>ソースファイル\scene\gameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="goal.cpp">
+      <Filter>ソースファイル\scene\gameScene\object</Filter>
+    </ClCompile>
+    <ClCompile Include="input.cpp">
+      <Filter>ソースファイル\system</Filter>
+    </ClCompile>
+    <ClCompile Include="lever.cpp">
+      <Filter>ソースファイル\scene\gameScene\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Light.cpp">
+      <Filter>ソースファイル\system</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>ソースファイル\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="mesh.cpp">
+      <Filter>ソースファイル\system</Filter>
+    </ClCompile>
+    <ClCompile Include="meshfield.cpp">
+      <Filter>ソースファイル\scene\gameScene\object</Filter>
+    </ClCompile>
+    <ClCompile Include="model.cpp">
+      <Filter>ソースファイル\scene\gameScene\player</Filter>
+    </ClCompile>
+    <ClCompile Include="object.cpp">
+      <Filter>ソースファイル\system</Filter>
+    </ClCompile>
+    <ClCompile Include="pause.cpp">
+      <Filter>ソースファイル\scene\gameScene\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="player.cpp">
+      <Filter>ソースファイル\scene\gameScene\player</Filter>
+    </ClCompile>
+    <ClCompile Include="polygon.cpp">
+      <Filter>ソースファイル\system</Filter>
+    </ClCompile>
+    <ClCompile Include="resultScene.cpp">
+      <Filter>ソースファイル\scene\gameScene\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="scene.cpp">
+      <Filter>ソースファイル\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="sceneBase.cpp">
+      <Filter>ソースファイル\system</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreUI.cpp">
+      <Filter>ソースファイル\scene\gameScene\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>ソースファイル\system</Filter>
+    </ClCompile>
+    <ClCompile Include="shadow.cpp">
+      <Filter>ソースファイル\system</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound.cpp">
+      <Filter>ソースファイル\system</Filter>
+    </ClCompile>
+    <ClCompile Include="stageButton.cpp">
+      <Filter>ソースファイル\scene\stageSelectScene</Filter>
+    </ClCompile>
+    <ClCompile Include="stageSelectBG.cpp">
+      <Filter>ソースファイル\scene\stageSelectScene</Filter>
+    </ClCompile>
+    <ClCompile Include="stageSelectScene.cpp">
+      <Filter>ソースファイル\scene\stageSelectScene</Filter>
+    </ClCompile>
+    <ClCompile Include="staminaBar.cpp">
+      <Filter>ソースファイル\scene\gameScene\player</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>ソースファイル\system</Filter>
+    </ClCompile>
+    <ClCompile Include="titleBG.cpp">
+      <Filter>ソースファイル\scene\titleScene</Filter>
+    </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>ソースファイル\system</Filter>
+    </ClCompile>
+    <ClCompile Include="titleButton.cpp">
+      <Filter>ソースファイル\scene\titleScene</Filter>
+    </ClCompile>
+    <ClCompile Include="titleScene.cpp">
+      <Filter>ソースファイル\scene\titleScene</Filter>
+    </ClCompile>
+    <ClCompile Include="titleUI.cpp">
+      <Filter>ソースファイル\scene\titleScene</Filter>
+    </ClCompile>
+    <ClCompile Include="wind.cpp">
+      <Filter>ソースファイル\scene\gameScene\object</Filter>
+    </ClCompile>
+    <ClCompile Include="windManager.cpp">
+      <Filter>ソースファイル\scene\gameScene\object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="res\directx9.ico">
-      <Filter>リソース ファイル</Filter>
-    </Image>
+    <ClInclude Include="AssimpModel.h">
+      <Filter>ヘッダーファイル\system</Filter>
+    </ClInclude>
+    <ClInclude Include="button.h">
+      <Filter>ヘッダーファイル\system</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>ヘッダーファイル\scene\gameScene\player</Filter>
+    </ClInclude>
+    <ClInclude Include="collision.h">
+      <Filter>ヘッダーファイル\system</Filter>
+    </ClInclude>
+    <ClInclude Include="buliding1.h">
+      <Filter>ヘッダーファイル\scene\gameScene\object</Filter>
+    </ClInclude>
+    <ClInclude Include="cloud.h">
+      <Filter>ヘッダーファイル\scene\gameScene\object</Filter>
+    </ClInclude>
+    <ClInclude Include="cloudManager.h">
+      <Filter>ヘッダーファイル\scene\gameScene\object</Filter>
+    </ClInclude>
+    <ClInclude Include="crew.h">
+      <Filter>ヘッダーファイル\scene\gameScene\object</Filter>
+    </ClInclude>
+    <ClInclude Include="bg.h">
+      <Filter>ヘッダーファイル\scene\gameScene\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Cunt.h">
+      <Filter>ヘッダーファイル\scene\gameScene\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="debugproc.h">
+      <Filter>ヘッダーファイル\system</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectManager.h">
+      <Filter>ヘッダーファイル\system</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectTest.h">
+      <Filter>ヘッダーファイル\system</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy.h">
+      <Filter>ヘッダーファイル\scene\gameScene\object</Filter>
+    </ClInclude>
+    <ClInclude Include="fade.h">
+      <Filter>ヘッダーファイル\system</Filter>
+    </ClInclude>
+    <ClInclude Include="gameScene.h">
+      <Filter>ヘッダーファイル\scene\gameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="goal.h">
+      <Filter>ヘッダーファイル\scene\gameScene\object</Filter>
+    </ClInclude>
+    <ClInclude Include="input.h">
+      <Filter>ヘッダーファイル\system</Filter>
+    </ClInclude>
+    <ClInclude Include="lever.h">
+      <Filter>ヘッダーファイル\scene\gameScene\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>ヘッダーファイル\system</Filter>
+    </ClInclude>
+    <ClInclude Include="main.h">
+      <Filter>ヘッダーファイル\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="mesh.h">
+      <Filter>ヘッダーファイル\system</Filter>
+    </ClInclude>
+    <ClInclude Include="meshfield.h">
+      <Filter>ヘッダーファイル\scene\gameScene\object</Filter>
+    </ClInclude>
+    <ClInclude Include="model.h">
+      <Filter>ヘッダーファイル\scene\gameScene\player</Filter>
+    </ClInclude>
+    <ClInclude Include="object.h">
+      <Filter>ヘッダーファイル\system</Filter>
+    </ClInclude>
+    <ClInclude Include="pause.h">
+      <Filter>ヘッダーファイル\scene\gameScene\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="player.h">
+      <Filter>ヘッダーファイル\scene\gameScene\player</Filter>
+    </ClInclude>
+    <ClInclude Include="polygon.h">
+      <Filter>ヘッダーファイル\system</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>ヘッダーファイル\system</Filter>
+    </ClInclude>
+    <ClInclude Include="resultScene.h">
+      <Filter>ヘッダーファイル\scene\gameScene\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="scene.h">
+      <Filter>ヘッダーファイル\scene</Filter>
+    </ClInclude>
+    <ClInclude Include="sceneBase.h">
+      <Filter>ヘッダーファイル\system</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreUI.h">
+      <Filter>ヘッダーファイル\scene\gameScene\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>ヘッダーファイル\system</Filter>
+    </ClInclude>
+    <ClInclude Include="shadow.h">
+      <Filter>ヘッダーファイル\system</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound.h">
+      <Filter>ヘッダーファイル\system</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundData.hpp">
+      <Filter>ヘッダーファイル\system</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundData.h">
+      <Filter>ヘッダーファイル\system</Filter>
+    </ClInclude>
+    <ClInclude Include="stageButton.h">
+      <Filter>ヘッダーファイル\scene\stageSelect</Filter>
+    </ClInclude>
+    <ClInclude Include="stageSelectBG.h">
+      <Filter>ヘッダーファイル\scene\stageSelect</Filter>
+    </ClInclude>
+    <ClInclude Include="stageSelectScene.h">
+      <Filter>ヘッダーファイル\scene\stageSelect</Filter>
+    </ClInclude>
+    <ClInclude Include="staminaBar.h">
+      <Filter>ヘッダーファイル\scene\gameScene\player</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>ヘッダーファイル\system</Filter>
+    </ClInclude>
+    <ClInclude Include="titleBG.h">
+      <Filter>ヘッダーファイル\scene\titleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="titleButton.h">
+      <Filter>ヘッダーファイル\scene\titleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="titleScene.h">
+      <Filter>ヘッダーファイル\scene\titleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>ヘッダーファイル\system</Filter>
+    </ClInclude>
+    <ClInclude Include="wind.h">
+      <Filter>ヘッダーファイル\scene\gameScene\object</Filter>
+    </ClInclude>
+    <ClInclude Include="windManager.h">
+      <Filter>ヘッダーファイル\scene\gameScene\object</Filter>
+    </ClInclude>
+    <ClInclude Include="titleUI.h">
+      <Filter>ヘッダーファイル\scene\titleScene</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="DX11Game.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\directx9.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="ソースファイル">
+      <UniqueIdentifier>{f4aa00e2-5d48-4f4d-9405-710c201a0a72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソースファイル\scene">
+      <UniqueIdentifier>{60b8035d-ef5e-4916-a294-be7c9a0131a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソースファイル\scene\gameScene">
+      <UniqueIdentifier>{f37f2d75-098c-4ff9-8952-e3105086fa82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソースファイル\scene\stageSelectScene">
+      <UniqueIdentifier>{985715c9-e045-4118-bb58-c30e54fc6e61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソースファイル\scene\titleScene">
+      <UniqueIdentifier>{8703762b-5bc6-469d-b5ee-b2a79ccd5d51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダーファイル">
+      <UniqueIdentifier>{0f43b5d8-b288-4fa8-aa8b-accc2d130ce1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソースファイル\system">
+      <UniqueIdentifier>{97b431d8-ce18-46fd-867f-61be045e4a42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダーファイル\system">
+      <UniqueIdentifier>{3ab942a5-13e3-4b91-99ae-06444057e75d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダーファイル\scene">
+      <UniqueIdentifier>{a58d5296-605e-4043-a0e7-e1dd3164ee12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダーファイル\scene\gameScene">
+      <UniqueIdentifier>{165de882-65dc-4baa-817e-068f5abc247c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソースファイル\scene\gameScene\player">
+      <UniqueIdentifier>{9425556f-2204-4a54-b3ce-5dfa29f5342f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソースファイル\scene\gameScene\object">
+      <UniqueIdentifier>{40cbc38f-b1e0-4026-8597-ccd884175611}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダーファイル\scene\gameScene\player">
+      <UniqueIdentifier>{661885f3-4dca-443e-9111-8f80b359ccdc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダーファイル\scene\gameScene\object">
+      <UniqueIdentifier>{979dc368-e77a-4780-9c41-f736a40cb815}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソースファイル\scene\gameScene\UI">
+      <UniqueIdentifier>{4f687d2b-2405-42dc-ac3d-961dc1c82638}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダーファイル\scene\gameScene\UI">
+      <UniqueIdentifier>{b4117378-e627-4d7b-a4e4-e5ec62db9a49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダーファイル\scene\stageSelect">
+      <UniqueIdentifier>{5fd15b29-4958-433c-8d58-31b4b3dc725c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダーファイル\scene\titleScene">
+      <UniqueIdentifier>{2be88ccb-97b4-4329-8881-652ee05d5e56}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

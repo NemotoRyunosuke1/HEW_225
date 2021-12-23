@@ -123,6 +123,8 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdL
 	dwExecLastTime = dwFPSLastTime = timeGetTime();
 	dwCurrentTime = dwFrameCount = 0;
 
+	
+
 	// ウインドウの表示(初期化処理の後に呼ばないと駄目)
 	ShowWindow(g_hWnd, nCmdShow);
 	UpdateWindow(g_hWnd);
@@ -194,7 +196,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	case WM_KEYDOWN:				//----- キーボードが押された
 		switch (wParam) {
 		case VK_ESCAPE:					// [ESC]キーが押された
-			PostMessage(hWnd, WM_CLOSE, 0, 0);	// [x]が押されたように振舞う
+#if _DEBUG
+		   PostMessage(hWnd, WM_CLOSE, 0, 0);	// [x]が押されたように振舞う
+#endif // DEBUG
+		
 			return 0;
 		}
 		break;
