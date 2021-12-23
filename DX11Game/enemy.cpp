@@ -11,11 +11,12 @@
 #include "shadow.h"
 #include "model.h"
 #include "collision.h"
+#include <stdlib.h>
 
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-#define MODEL_ENEMY			"data/model/mukudori1.fbx"
+#define MODEL_ENEMY			"data/model/mukudorianime7.fbx"
 
 #define	VALUE_MOVE_ENEMY	(0.40f)		// 移動速度
 #define	RATE_MOVE_ENEMY		(0.20f)		// 移動慣性係数
@@ -39,6 +40,8 @@
 // 構造体定義
 //*****************************************************************************
 struct TEnemy {
+	CAssimpModel	model;			      // モデル
+
 	XMFLOAT3	m_pos;		// 現在の位置
 	XMFLOAT3	m_initPos;	// 初期の位置
 	XMFLOAT3	m_rot;		// 現在の向き
@@ -52,6 +55,8 @@ struct TEnemy {
 
 	bool m_catch;
 	bool m_use;
+
+	double dAnimTime;
 };
 
 typedef struct D3DXVECTOR3 {
@@ -89,6 +94,7 @@ HRESULT InitEnemy(void)
 	}
 
 	for (int i = 0; i < MAX_ENEMY; ++i) {
+		
 		// 位置・回転・スケールの初期設定
 		g_enemy[i].m_pos = XMFLOAT3(rand() % MAP_AMPLITUDE - MAP_AMPLITUDE/2,
 			rand() % 1000 + 550.0f,
@@ -105,7 +111,8 @@ HRESULT InitEnemy(void)
 		g_enemy[i].m_nShadow = CreateShadow(g_enemy[i].m_pos, 12.0f);
 		g_enemy[i].m_scr = XMFLOAT3(100.0f,100.0f,100.0f);
 		g_enemy[i].m_use = false;
-		g_enemy[i].collisionSize = 800;
+		g_enemy[i].collisionSize = 2000;
+		g_enemy[i].dAnimTime = 0.0f;
 	}
 	
 	CreateEnemy(XMFLOAT3(0.0f, 500.0f, 0.0f));
@@ -143,10 +150,14 @@ void UpdateEnemy(void)
 		// プレイヤーとの当たり判定
 		int a = EnemyStartChase(i,modelPos);
 
-		g_enemy[i].m_pos.x += g_enemy[i].m_move.x;
+		// アニメーション更新
+		//g_enemy[i].dAnimTime += 0.04f;
+		g_enemy[i].model.SetAnimTime(g_enemy[i].dAnimTime);
+
+	/*	g_enemy[i].m_pos.x += g_enemy[i].m_move.x;
 		g_enemy[i].m_pos.y += g_enemy[i].m_move.y;
 		g_enemy[i].m_pos.z += g_enemy[i].m_move.z;
-
+*/
 		bool hit = CollisionSphere(g_enemy[i].m_pos, g_enemy[i].collisionSize, modelPos, 50.0f);
 		
 
@@ -187,7 +198,7 @@ void UpdateEnemy(void)
 		//}
 
 		// 目的の角度までの差分
-		float fDiffRotX = g_enemy[i].m_rotDest.y - g_enemy[i].m_rot.y;
+		float fDiffRotX = g_enemy[i].m_rotDest.x - g_enemy[i].m_rot.x;
 		if (fDiffRotX >= 180.0f) {
 			fDiffRotX -= 360.0f;
 		}
@@ -204,12 +215,12 @@ void UpdateEnemy(void)
 
 
 		// 目的の角度まで慣性をかける
-		g_enemy[i].m_rot.y += fDiffRotY * RATE_ROTATE_ENEMY;
-		if (g_enemy[i].m_rot.y >= 180.0f) {
-			g_enemy[i].m_rot.y -= 360.0f;
+		g_enemy[i].m_rot.x += fDiffRotX * RATE_ROTATE_ENEMY;
+		if (g_enemy[i].m_rot.x >= 180.0f) {
+			g_enemy[i].m_rot.x -= 360.0f;
 		}
-		if (g_enemy[i].m_rot.y < -180.0f) {
-			g_enemy[i].m_rot.y += 360.0f;
+		if (g_enemy[i].m_rot.x < -180.0f) {
+			g_enemy[i].m_rot.x += 360.0f;
 		}
 		g_enemy[i].m_rot.y += fDiffRotY * RATE_ROTATE_ENEMY;
 		if (g_enemy[i].m_rot.y >= 180.0f) {
@@ -251,9 +262,13 @@ void UpdateEnemy(void)
 
 
 		// デバック用文字列
-		PrintDebugProc("[ﾃｷｱﾀﾘﾊﾝﾃｲ : (%d )]\n", hit);
-		PrintDebugProc("[ﾃｷｱﾀﾘﾊﾝﾃｲ : (%f )]\n", g_enemy[i].m_pos.x);
-		
+		PrintDebugProc("[ﾃｷｻｸﾃｷﾊﾝｲ : (%d )]\n", hit);
+		PrintDebugProc("[ﾃｷ ﾑｷ Yｼﾞｸ: (%f )]\n", g_enemy[i].m_rotDest.y);
+		PrintDebugProc("[ﾃｷ ﾑｷ Xｼﾞｸ: (%f )]\n", g_enemy[i].m_rotDest.x);
+		PrintDebugProc("[ﾃｷ ｲﾁ     : (%f,%f,%f )]\n", g_enemy[i].m_pos.x, g_enemy[i].m_pos.y, g_enemy[i].m_pos.z);
+		PrintDebugProc("[ﾃｷ ｲﾁ     : (%f,%f,%f )]\n", g_enemy[i].m_initPos.x, g_enemy[i].m_initPos.y, g_enemy[i].m_initPos.z);
+		PrintDebugProc("[ﾃｷ ｲﾄﾞｳ   : (%f,%f,%f )]\n", g_enemy[i].m_move.x, g_enemy[i].m_pos.y, g_enemy[i].m_pos.z);
+
 
 #endif
 
@@ -274,7 +289,7 @@ void UpdateEnemy(void)
 		for (int i = 0; i < MAX_ENEMY; ++i) 
 		{
 			if (!g_enemy[i].m_use)continue;
-			g_model.Draw(pDC, g_enemy[i].m_mtxWorld, eOpacityOnly);
+			g_enemy[i].model.Draw(pDC, g_enemy[i].m_mtxWorld, eOpacityOnly);
 		}
 
 		// 半透明部分を描画
@@ -282,7 +297,7 @@ void UpdateEnemy(void)
 			if (!g_enemy[i].m_use)continue;
 			SetBlendState(BS_ALPHABLEND);	// アルファブレンド有効
 			SetZWrite(false);				// Zバッファ更新しない
-			g_model.Draw(pDC, g_enemy[i].m_mtxWorld, eTransparentOnly);
+			g_enemy[i].model.Draw(pDC, g_enemy[i].m_mtxWorld, eTransparentOnly);
 			SetZWrite(true);				// Zバッファ更新する
 			SetBlendState(BS_NONE);			// アルファブレンド無効
 		}
@@ -292,29 +307,110 @@ void UpdateEnemy(void)
 	{
 		//XMFLOAT3 g_modelPos = GetModelPos();
 
-		bool hit = CollisionSphere(g_enemy[i].m_pos, g_enemy[i].collisionSize, pos, 50.0f);
+		// 索敵範囲
+		bool hit = CollisionSphere(g_enemy[i].m_initPos, g_enemy[i].collisionSize, pos, 50.0f);
 
-		bool hit2 = CollisionSphere(g_enemy[i].m_pos, g_enemy[i].collisionSize, pos, 50.0f);
+		// プレイヤーとの当たり判定
+		bool hit2 = CollisionSphere(g_enemy[i].m_pos, 100, pos, 50.0f);
 
+		// プレイヤーと当たったら
+		if (hit2) 
+		{
+			// アニメーション更新
+			g_enemy[i].dAnimTime += 0.04f;
+		}
+
+		// プレイヤーが探索範囲に入ったとき
 		if (hit)
 		{
-			g_enemy[i].m_rotDest.y = XMConvertToDegrees(atan2f(-g_enemy[i].m_move.x, -g_enemy[i].m_move.z));
-
-
-			/*g_enemy[i].m_move.x -= SinDeg(g_enemy[i].m_rot.y) * VALUE_MOVE_ENEMY * 6.0f;
-			g_enemy[i].m_move.y += SinDeg(g_enemy[i].m_rot.x) * VALUE_MOVE_ENEMY * 6.0f;
-			g_enemy[i].m_move.z -= CosDeg(g_enemy[i].m_rot.y) * VALUE_MOVE_ENEMY * 6.0f;
-*/
-			if (hit2) {
-
-			//	g_enemy[i].m_rotDest.y = XMConvertToDegrees(atan2f(-g_enemy[i].m_move.x, -g_enemy[i].m_move.z));
-
+			//g_enemy[i].m_rotDest.y = XMConvertToDegrees(atan2f(-g_enemy[i].m_move.x, -g_enemy[i].m_move.z));
+			
+			// プレイヤーを見る処理
+			g_enemy[i].m_rotDest.y = atan2( g_enemy[i].m_pos.x - pos.x,g_enemy[i].m_pos.z -pos.z)* 180/ PI;
+			float radianX = -atan2( g_enemy[i].m_pos.y - pos.y + 400,  fabsf(pos.z) - g_enemy[i].m_pos.z  ) * 180 / PI;
+			if (radianX > 45)radianX = 45;
+			if (radianX < -45)radianX = -45;
+			g_enemy[i].m_rotDest.x = radianX;
+			
+			// 攻撃
+			if (CollisionSphere(pos, 1000, g_enemy[i].m_pos, 50.0f))
+			{
+				g_enemy[i].dAnimTime += 0.04f;
 			}
+			else
+			{
+				// 移動量代入
+				g_enemy[i].m_move.x = -SinDeg(g_enemy[i].m_rot.y) * VALUE_MOVE_ENEMY * 6.0f;
+				g_enemy[i].m_move.y = SinDeg(g_enemy[i].m_rot.x) * VALUE_MOVE_ENEMY * 6.0f;
+				g_enemy[i].m_move.z = -CosDeg(g_enemy[i].m_rot.y) * VALUE_MOVE_ENEMY * 6.0f;
+
+				// 前移動
+				g_enemy[i].m_pos.x += g_enemy[i].m_move.x;
+				g_enemy[i].m_pos.y += g_enemy[i].m_move.y;
+				g_enemy[i].m_pos.z += g_enemy[i].m_move.z;
+
+				g_enemy[i].dAnimTime = 0.0f;
+			}
+
+			
+			
 
 			return 1;
 		}
-		else
+		else	//　プレイヤーが探索範囲に入っていないとき
 		{
+			// 初期位置にいる時
+			if (CollisionSphere(g_enemy[i].m_initPos, 10, g_enemy[i].m_pos, 10.0f))
+			{
+				// 角度を戻す
+				// X軸
+				if (g_enemy[i].m_rotDest.x < -5)
+				{
+					g_enemy[i].m_rotDest.x += 1.0f;
+					
+				}
+				else if (g_enemy[i].m_rotDest.x > 5)
+				{
+					g_enemy[i].m_rotDest.x -= 1.0f;
+				}
+				else
+				{
+					g_enemy[i].m_rotDest.x = 0.0f;
+				}
+				// Y軸
+				if (g_enemy[i].m_rotDest.y < -5)
+				{
+					g_enemy[i].m_rotDest.y += 1.0f;
+
+				}
+				else if (g_enemy[i].m_rotDest.y > 5)
+				{
+					g_enemy[i].m_rotDest.x -= 1.0f;
+				}
+				else
+				{
+					g_enemy[i].m_rotDest.y = 0.0f;
+				}
+			}
+			else // 初期位置にいない時
+			{
+				g_enemy[i].m_rotDest.y = atan2(g_enemy[i].m_pos.x - g_enemy[i].m_initPos.x, g_enemy[i].m_pos.z - g_enemy[i].m_initPos.z) * 180 / PI;
+				float radianX = -atan2(g_enemy[i].m_pos.y - g_enemy[i].m_initPos.y , fabsf(g_enemy[i].m_initPos.z) - g_enemy[i].m_pos.z) * 180 / PI;
+				if (radianX > 45)radianX = 45;
+				if (radianX < -45)radianX = -45;
+				g_enemy[i].m_rotDest.x = radianX;
+				// 移動量代入
+				g_enemy[i].m_move.x = -SinDeg(g_enemy[i].m_rot.y) * VALUE_MOVE_ENEMY * 6.0f;
+				g_enemy[i].m_move.y = SinDeg(g_enemy[i].m_rot.x) * VALUE_MOVE_ENEMY * 6.0f;
+				g_enemy[i].m_move.z = -CosDeg(g_enemy[i].m_rot.y) * VALUE_MOVE_ENEMY * 6.0f;
+
+				// 前移動
+				g_enemy[i].m_pos.x += g_enemy[i].m_move.x;
+				g_enemy[i].m_pos.y += g_enemy[i].m_move.y;
+				g_enemy[i].m_pos.z += g_enemy[i].m_move.z;
+
+			}
+
 			return 0;
 		}
 
@@ -323,10 +419,17 @@ void UpdateEnemy(void)
 
 	void CreateEnemy(XMFLOAT3 pos)
 	{
+		ID3D11Device* pDevice = GetDevice();
+		ID3D11DeviceContext* pDeviceContext = GetDeviceContext();
+
 		for (int i = 0; i < MAX_ENEMY; i++)
 		{
 			if (g_enemy[i].m_use)continue;
-			g_enemy[i].m_pos = pos;
+			if (!g_enemy[i].model.Load(pDevice, pDeviceContext, MODEL_ENEMY)) {
+				MessageBoxA(GetMainWnd(), "モデルデータ読み込みエラー", "InitEnemy", MB_OK);
+			
+			}
+			g_enemy[i].m_pos = g_enemy[i].m_initPos = pos;
 			g_enemy[i].m_use = true;
 
 			break;

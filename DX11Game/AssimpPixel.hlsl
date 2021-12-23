@@ -10,6 +10,7 @@ cbuffer global : register(b0) {
 	float4	g_vLightAmbient;	// ŠÂ‹«Œõ
 	float4	g_vLightDiffuse;	// ŠgŽUŒõ
 	float4	g_vLightSpecular;	// ‹¾–Ê”½ŽËŒõ
+
 };
 
 // ƒ}ƒeƒŠƒAƒ‹

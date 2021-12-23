@@ -61,6 +61,12 @@
     <Filter Include="ヘッダー ファイル\scene\gameScene\object">
       <UniqueIdentifier>{6931e12a-b42e-4fd8-9aee-7bbd3a1fbf6b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\scene\gameScene\UI">
+      <UniqueIdentifier>{65ade58c-079e-4bb0-9258-ddc006877c36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\scene\gameScene\UI">
+      <UniqueIdentifier>{3a54a9ab-2fbf-4f88-86b3-aa8bb9291fe7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -165,9 +171,6 @@
     <ClCompile Include="buliding1.cpp">
       <Filter>ソース ファイル\scene\gameScene\object</Filter>
     </ClCompile>
-    <ClCompile Include="ScoreUI.cpp">
-      <Filter>ソース ファイル\scene\gameScene\object</Filter>
-    </ClCompile>
     <ClCompile Include="Sound.cpp">
       <Filter>ソース ファイル\scene\system</Filter>
     </ClCompile>
@@ -189,11 +192,17 @@
     <ClCompile Include="bg.cpp">
       <Filter>ソース ファイル\scene</Filter>
     </ClCompile>
-    <ClCompile Include="Cunt.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="ScoreUI.cpp">
+      <Filter>ソース ファイル\scene\gameScene\UI</Filter>
     </ClCompile>
     <ClCompile Include="pause.cpp">
-      <Filter>ソース ファイル\scene\gameScene\object</Filter>
+      <Filter>ソース ファイル\scene\gameScene\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="lever.cpp">
+      <Filter>ソース ファイル\scene\gameScene\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Cunt.cpp">
+      <Filter>ソース ファイル\scene\gameScene\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -305,9 +314,6 @@
     <ClInclude Include="buliding1.h">
       <Filter>ヘッダー ファイル\scene\gameScene\object</Filter>
     </ClInclude>
-    <ClInclude Include="ScoreUI.h">
-      <Filter>ヘッダー ファイル\scene\gameScene\object</Filter>
-    </ClInclude>
     <ClInclude Include="Sound.h">
       <Filter>ヘッダー ファイル\scene\system</Filter>
     </ClInclude>
@@ -332,14 +338,17 @@
     <ClInclude Include="stageSelectBG.h">
       <Filter>ヘッダー ファイル\scene\stageSelectScene</Filter>
     </ClInclude>
-    <ClInclude Include="Cunt.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="lever.h">
+      <Filter>ヘッダー ファイル\scene\gameScene\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreUI.h">
+      <Filter>ヘッダー ファイル\scene\gameScene\UI</Filter>
     </ClInclude>
     <ClInclude Include="pause.h">
-      <Filter>ヘッダー ファイル\scene\gameScene\object</Filter>
+      <Filter>ヘッダー ファイル\scene\gameScene\UI</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyBird.h">
-      <Filter>ヘッダー ファイル\scene\gameScene\object</Filter>
+    <ClInclude Include="Cunt.h">
+      <Filter>ヘッダー ファイル\scene\gameScene\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -10,6 +10,8 @@
 #include "resultScene.h"
 #include "Cunt.h"
 #include "pause.h"
+#include "lever.h"
+
 
 class GameScene :public SceneBase
 {
@@ -31,6 +33,7 @@ private:
 	CloudManager* m_pCloudManager;
 	ResultScene* m_pResult;
 	Pause* m_pPause;
+	Lever* m_pLever;
 
 	bool m_bDebugMode;
 	bool m_bPause;

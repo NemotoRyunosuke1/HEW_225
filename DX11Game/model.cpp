@@ -27,7 +27,7 @@
 #define	VALUE_ROTATE_MODEL	(3.0f)		// 回転速度
 #define	RATE_ROTATE_MODEL	(0.065f)	// 回転慣性係数
 
-#define AUTO_FALL_ROT	(-20)	// 自動落下時の角度
+#define AUTO_FALL_ROT	(-10)	// 自動落下時の角度
 
 #define MAX_ACC (3.5f)			// 加速度の上限
 
@@ -64,6 +64,11 @@ static bool g_bWing;
 static bool g_bWindDelay;
 static float g_WindSound;
 static bool g_bSoundTrriger;
+static float g_fStanTime;	// スタン時間
+static bool g_bStan;	// スタンフラグ
+static bool g_bInvincible;	// 無敵フラグ
+static float g_fInvincible;	// 無敵時間
+static float g_fBilin;
 //=============================================================================
 // 初期化処理
 //=============================================================================
@@ -109,6 +114,11 @@ HRESULT InitModel(void)
 	g_bWindDelay = false;
 	g_WindSound = 2.0f;
 	g_bSoundTrriger = false;
+	g_bStan = false;
+	g_fStanTime = 10;
+	g_bInvincible = false;
+	g_fInvincible = 10;
+	g_fBilin = 3;
 	return hr;
 }
 
@@ -157,6 +167,42 @@ void UpdateModel(void)
 	// 効果音　音量
 	CSound::SetVolume(SE_SWING, 1.0f);
 
+	// 死亡条件
+	if (g_posModel.y <= 0.0f)	// 地面 
+	{
+#if  _DEBUG
+		StartFadeOut(SCENE_GAME);
+#else
+		StartFadeOut(SCENE_GAME);
+#endif
+
+	}
+
+	// スタン時
+	if (g_bStan)
+	{
+		g_fStanTime -= 0.1f;
+		if (g_fStanTime < 0)
+		{
+			g_bStan = false;
+			g_fStanTime = 10;
+			g_bInvincible = true;
+		}
+
+		g_posModel.y -= 1.1f;
+
+		// スタンしてる時は処理をしない
+		return;
+	}
+	if (g_bInvincible)
+	{
+		g_fInvincible -= 0.1f;
+		if (g_fInvincible < 0)
+		{
+			g_bInvincible = false;
+			g_fInvincible = 10;
+		}
+	}
 	// アニメーション更新
 	//d+= 0.02f;
 	g_model.SetAnimTime(d);
@@ -758,15 +804,7 @@ void UpdateModel(void)
 		g_bOverHeart = false;	// オーバーヒート解除
 	}
 	 // 死亡条件
-	if (g_posModel.y <= 0.0f)	// 地面 
-	{
-#if  _DEBUG
-		StartFadeOut(SCENE_GAME);
-#else
-		StartFadeOut(SCENE_GAME);
-#endif
-		
-	}
+	
 
 	g_rotLightModel.x = -SinDeg(g_rotModel.y);
 	g_rotLightModel.z = -CosDeg(g_rotModel.y);
@@ -805,6 +843,19 @@ void UpdateModel(void)
 void DrawModel(void)
 {
 	ID3D11DeviceContext* pDC = GetDeviceContext();
+
+	if (g_bInvincible || g_bStan)
+	{
+		g_fBilin -= 0.1f;
+		if (g_fBilin < 1)
+		{
+			if (g_fBilin < 0)g_fBilin = 3;
+			
+			
+			return;
+		}
+
+	}
 
 	// 不透明部分を描画
 	g_model.Draw(pDC, g_mtxWorld, eOpacityOnly);
@@ -880,4 +931,11 @@ XMFLOAT3 GetMoveModel()
 XMFLOAT3& GetModelRotLight()
 {
 	return g_rotLightModel;
+}
+void StartStanModel()
+{
+	if (!g_bInvincible)
+	{
+		g_bStan = true;
+	}
 }
