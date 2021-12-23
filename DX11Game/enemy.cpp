@@ -40,11 +40,12 @@
 //*****************************************************************************
 struct TEnemy {
 	XMFLOAT3	m_pos;		// 現在の位置
+	XMFLOAT3	m_initPos;	// 初期の位置
 	XMFLOAT3	m_rot;		// 現在の向き
 	XMFLOAT3	m_rotDest;	// 目的の向き
 	XMFLOAT3	m_move;		// 移動量
 	XMFLOAT3	m_scr;		// スケール
-
+	float collisionSize;	// 当たり判定サイズ
 	XMFLOAT4X4	m_mtxWorld;	// ワールドマトリックス
 
 	int			m_nShadow;	// 丸影番号
@@ -92,7 +93,7 @@ HRESULT InitEnemy(void)
 		g_enemy[i].m_pos = XMFLOAT3(rand() % MAP_AMPLITUDE - MAP_AMPLITUDE/2,
 			rand() % 1000 + 550.0f,
 			rand() % MAP_AMPLITUDE - MAP_AMPLITUDE / 2);
-		g_enemy[i].m_rot = XMFLOAT3(0.0f, rand() % 360 - 180.0f, 0.0f);
+		g_enemy[i].m_rot = XMFLOAT3(0.0f,0.0f, 0.0f);
 		g_enemy[i].m_rotDest = g_enemy[i].m_rot;
 		g_enemy[i].m_move = XMFLOAT3(
 			-SinDeg(g_enemy[i].m_rot.y) * VALUE_MOVE_ENEMY,
@@ -102,11 +103,12 @@ HRESULT InitEnemy(void)
 
 		// 丸影の生成
 		g_enemy[i].m_nShadow = CreateShadow(g_enemy[i].m_pos, 12.0f);
-		g_enemy[i].m_scr = XMFLOAT3(10.0f,10.0f,10.0f);
+		g_enemy[i].m_scr = XMFLOAT3(100.0f,100.0f,100.0f);
 		g_enemy[i].m_use = false;
+		g_enemy[i].collisionSize = 800;
 	}
-
-
+	
+	CreateEnemy(XMFLOAT3(0.0f, 500.0f, 0.0f));
 	return hr;
 }
 
@@ -132,24 +134,22 @@ void UpdateEnemy(void)
 	
 	XMMATRIX mtxWorld, mtxRot, mtxTranslate, mtxScl;
 
-	XMFLOAT3 g_modelPos = GetModelPos();
+	XMFLOAT3 modelPos = GetModelPos();
 
 	for (int i = 0; i < MAX_ENEMY; ++i)
 	{
 		if (!g_enemy[i].m_use)continue;
-		// 移動
-		EnemyStartChase(i,g_modelPos);
 
-		int cnt = 0;
-		if (g_enemy[i].m_catch)
-		{
-			cnt++;
-		}
+		// プレイヤーとの当たり判定
+		int a = EnemyStartChase(i,modelPos);
 
-		/*g_enemy[i].m_pos.x += g_enemy[i].m_move.x;
+		g_enemy[i].m_pos.x += g_enemy[i].m_move.x;
 		g_enemy[i].m_pos.y += g_enemy[i].m_move.y;
 		g_enemy[i].m_pos.z += g_enemy[i].m_move.z;
-*/
+
+		bool hit = CollisionSphere(g_enemy[i].m_pos, g_enemy[i].collisionSize, modelPos, 50.0f);
+		
+
 		//// 壁にぶつかった
 		//bool lr = false, fb = false;
 		//if (g_enemy[i].m_pos.x < -MAP_AMPLITUDE / 2) {
@@ -218,11 +218,7 @@ void UpdateEnemy(void)
 		if (g_enemy[i].m_rot.y < -180.0f) {
 			g_enemy[i].m_rot.y += 360.0f;
 		}
-		g_enemy[i].m_move = XMFLOAT3(
-			-SinDeg(g_enemy[i].m_rot.y) * VALUE_MOVE_ENEMY,
-			0.0f,
-			-CosDeg(g_enemy[i].m_rot.y) * VALUE_MOVE_ENEMY);
-
+	
 		// ワールドマトリックスの初期化
 		mtxWorld = XMMatrixIdentity();
 
@@ -250,45 +246,22 @@ void UpdateEnemy(void)
 
 		// 丸影の移動
 		MoveShadow(g_enemy[i].m_nShadow, g_enemy[i].m_pos);
+
+#if _DEBUG
+
+
+		// デバック用文字列
+		PrintDebugProc("[ﾃｷｱﾀﾘﾊﾝﾃｲ : (%d )]\n", hit);
+		PrintDebugProc("[ﾃｷｱﾀﾘﾊﾝﾃｲ : (%f )]\n", g_enemy[i].m_pos.x);
+		
+
+#endif
+
 	}
+
+
 }
 
-	// 敵との当たり判定
-	struct ENEMY
-	{
-		D3DXVECTOR3 min;         // 最大値
-		D3DXVECTOR3 max;         // 最小値
-		D3DXVECTOR3 actor01dPos; // 前の座標
-
-		ENEMY() = default;
-		~ENEMY() = default;
-		ENEMY(D3DXVECTOR3 minValue, D3DXVECTOR3 maxValue, D3DXVECTOR3 actorPos)
-		{
-			min = minValue;
-			max = maxValue;
-			actor01dPos = actorPos;
-		}
-		// 更新
-		void Update(const D3DXVECTOR3& actorPosition)
-		{
-			D3DXVECTOR3 diff = actorPosition;// -actor01dPos;
-			min.x += diff.x;
-			max.y += diff.y;
-			actor01dPos = actorPosition;
-		};
-		// 衝突判定
-		inline bool intersectAABB(const ENEMY& box1, const ENEMY& box2)
-		{
-			if (box1.min.x > box2.max.x) return false;
-			if (box1.max.x < box2.min.x) return false;
-			if (box1.min.y > box2.max.y) return false;
-			if (box1.max.y < box2.min.y) return false;
-			if (box1.min.z > box2.max.z) return false;
-			if (box1.max.z < box2.min.z) return false;
-
-			return true;
-		}
-	};
 
 //=============================================================================
 // 描画処理
@@ -317,91 +290,42 @@ void UpdateEnemy(void)
 
 	int EnemyStartChase(int i, XMFLOAT3 pos)
 	{
-		XMFLOAT3 g_modelPos = GetModelPos();
+		//XMFLOAT3 g_modelPos = GetModelPos();
 
-		bool hit = CollisionSphere(g_enemy[i].m_pos, ENEMY_RADIUS, pos, 200.0f);
+		bool hit = CollisionSphere(g_enemy[i].m_pos, g_enemy[i].collisionSize, pos, 50.0f);
 
-		bool hit2 = CollisionSphere(g_enemy[i].m_pos, ENEMY_RADIUS, pos, 100.0f);
+		bool hit2 = CollisionSphere(g_enemy[i].m_pos, g_enemy[i].collisionSize, pos, 50.0f);
 
 		if (hit)
 		{
-			g_enemy[i].m_catch = true;
-			if (g_modelPos.y - g_enemy[i].m_pos.y > 20.0f)
-			{
-				//上
-				g_enemy[i].m_rotDest.x = 30.0f;
-			}
-			else if (g_modelPos.y - g_enemy[i].m_pos.y < -20.0f)
-			{
-				//下
-				g_enemy[i].m_rotDest.x = -30.0f;
-			}
-			else
-			{
-				//水平
-				g_enemy[i].m_rotDest.x = 0;
-			}
+			g_enemy[i].m_rotDest.y = XMConvertToDegrees(atan2f(-g_enemy[i].m_move.x, -g_enemy[i].m_move.z));
 
-			if (g_modelPos.x - g_enemy[i].m_pos.x > 0 && g_modelPos.z - g_enemy[i].m_pos.z > 0)
-			{
-				// 左後
-				g_enemy[i].m_rotDest.y = -135.0f;
-			}
-			else if (g_modelPos.x - g_enemy[i].m_pos.x < -0 && g_modelPos.z - g_enemy[i].m_pos.z > 0)
-			{
-				// 右後
-				g_enemy[i].m_rotDest.y = 135.0f;
-			}
-			else if (g_modelPos.x - g_enemy[i].m_pos.x > 0 && g_modelPos.z - g_enemy[i].m_pos.z < -0)
-			{
-				// 左前
-				g_enemy[i].m_rotDest.y = -45.0f;
-			}
-			else if (g_modelPos.x - g_enemy[i].m_pos.x < -0 && g_modelPos.z - g_enemy[i].m_pos.z < -0)
-			{
-				// 右前
-				g_enemy[i].m_rotDest.y = 45.0f;
-			}
-			else if (g_modelPos.x - g_enemy[i].m_pos.x > 0)
-			{
-				// 左
-				g_enemy[i].m_rotDest.y = -90.0f;
-			}
-			else if (g_modelPos.x - g_enemy[i].m_pos.x < 0)
-			{
-				// 右
-				g_enemy[i].m_rotDest.y = 90.0f;
-			}
-			else if (g_modelPos.z - g_enemy[i].m_pos.z > 0)
-			{
-				// 後
-				g_enemy[i].m_rotDest.y = 180.0f;
-			}
-			else
-			{
-				// 前
-				g_enemy[i].m_rotDest.y = 0;
-			}
 
-			g_enemy[i].m_pos.x -= SinDeg(g_enemy[i].m_rot.y) * VALUE_MOVE_ENEMY * 6.0f;
-			g_enemy[i].m_pos.y += SinDeg(g_enemy[i].m_rot.x) * VALUE_MOVE_ENEMY * 6.0f;
-			g_enemy[i].m_pos.z -= CosDeg(g_enemy[i].m_rot.y) * VALUE_MOVE_ENEMY * 6.0f;
-
+			/*g_enemy[i].m_move.x -= SinDeg(g_enemy[i].m_rot.y) * VALUE_MOVE_ENEMY * 6.0f;
+			g_enemy[i].m_move.y += SinDeg(g_enemy[i].m_rot.x) * VALUE_MOVE_ENEMY * 6.0f;
+			g_enemy[i].m_move.z -= CosDeg(g_enemy[i].m_rot.y) * VALUE_MOVE_ENEMY * 6.0f;
+*/
 			if (hit2) {
 
-				g_enemy[i].m_rotDest.y = XMConvertToDegrees(atan2f(-g_enemy[i].m_move.x, -g_enemy[i].m_move.z));
+			//	g_enemy[i].m_rotDest.y = XMConvertToDegrees(atan2f(-g_enemy[i].m_move.x, -g_enemy[i].m_move.z));
 
 			}
+
+			return 1;
+		}
+		else
+		{
+			return 0;
 		}
 
-		return i, hit;
+		
 	}
 
 	void CreateEnemy(XMFLOAT3 pos)
 	{
 		for (int i = 0; i < MAX_ENEMY; i++)
 		{
-			if (!g_enemy[i].m_use)continue;
+			if (g_enemy[i].m_use)continue;
 			g_enemy[i].m_pos = pos;
 			g_enemy[i].m_use = true;
 

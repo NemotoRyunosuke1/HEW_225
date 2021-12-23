@@ -88,25 +88,7 @@ void Wind::Update()
 	XMStoreFloat4x4(&m_mtxWorld, mtxWorld);
 
 
-	//// エフェクトのカメラ設定
-
-	//CCamera* pCamera;
-
-	//// 行列
-	//DirectX::XMFLOAT3 cameraPos = pCamera->GetPos();
-	//DirectX::XMFLOAT3 cameraLook = pCamera->GetLook();
-	//DirectX::XMFLOAT3 cameraUp = pCamera->GetUp();
-	//Effekseer::Vector3D eye = ::Effekseer::Vector3D(cameraPos.x, cameraPos.y, cameraPos.z);
-	//Effekseer::Vector3D look = ::Effekseer::Vector3D(cameraLook.x, cameraLook.y, cameraLook.z);
-	//Effekseer::Vector3D up = ::Effekseer::Vector3D(cameraUp.x, cameraUp.y, cameraUp.z);
-
-	//// 投影行列を設定
-	//m_renderer->SetProjectionMatrix(::Effekseer::Matrix44().PerspectiveFovLH(
-	//	pCamera->GetFOV(), pCamera->GetAspect(), pCamera->GetNearClip(), pCamera->GetFarClip()));
-
-	//// カメラ行列を設定
-	//m_renderer->SetCameraMatrix(::Effekseer::Matrix44().LookAtLH(eye, look, up));
-
+	
 
 	//a
 
