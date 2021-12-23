@@ -21,11 +21,13 @@ public:
 	void SetSelect(bool);
 	bool GetSelect();
 	void SetSize(XMFLOAT3);
+	XMFLOAT3 GetOriginSize();
 private:
 	bool m_flg;
 	bool m_use;
 	bool m_select;
 	int m_frameNum;
+	XMFLOAT3 m_sizeUpDown;
 	ID3D11ShaderResourceView* m_pTexture1;
 	ID3D11ShaderResourceView* m_pTexture2;
 	ID3D11ShaderResourceView* m_pTexture3;

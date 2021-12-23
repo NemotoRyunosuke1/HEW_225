@@ -4,163 +4,120 @@
 // Author :鈴木拓巳
 //
 //=============================================================================
-#include "titleUI.h"
-#include "debugproc.h"
-#include "sceneBase.h"
 #include "stageSelectScene.h"
-#include "fade.h"
-
+#include "debugproc.h"
+#include "titleUI.h"
+#include "stageButton.h"
+#include "polygon.h"
 #include "input.h"
-#include <Windows.h>
 
-#pragma comment(lib, "dinput8.lib")
-#pragma comment(lib, "dxguid.lib")
+#define MAX_TEXTUER 1
 
-//*****************************************************************************
-// マクロ定義
-//*****************************************************************************
-#define BG_POS_X
-#define BG_POS_Y
-#define BG_WIDTH  SCREEN_WIDTH
-#define BG_HEIGHT SCREEN_HEIGHT
+#define POS_X_BG   0.0f
+#define POS_Y_BG   0.0f
 
-#define LOGO_POS_X   0.0f
-#define LOGO_POS_Y   0.0f
-#define LOGO_WIDTH   800
-#define LOGO_HEIGHT  640
+#define TEX_BG		 0
+#define TEX_LOGO	 1
+#define TEX_ENTER    2
 
-#define TEX_BG       0
-#define TEX_LOGO     1
-#define MAX_TEXTURE  2
+#define BLINK_TIMER 30
+#define BLINK_START_TIMER 5
 
-#define Release(x) { if((x) != nullptr) (x)->Release(); (x) = nullptr;}
+#define ENTER L"data/texture/press_enter.png"
 
-//*****************************************************************************
 // グローバル変数
-//*****************************************************************************
-static LPCWSTR g_pszTexName[] =
-{
-	L"data/texture/sky001.png",
-	L"data/texture/sky001.png",
-};
-static ID3D11ShaderResourceView* g_pTexture[MAX_TEXTURE];
+static ID3D11ShaderResourceView* g_pTexture[MAX_TEXTUER];
+static int g_nBlink;
+static int g_nStart;
 
-//=============================================================================
-// コンストラクタ
-//=============================================================================
-Input::Input(Window* win):
-	win(win), result(S_OK), input(nullptr), key(nullptr)
+// 初期化
+TitleUI::TitleUI()
 {
-	memset(&keys, 0, sizeof(keys));
-	memset(&olds, 0, sizeof(keys));
+	ID3D11Device* pDevice = GetDevice();
+	CreateTextureFromFile(pDevice, ENTER, &m_pTecture);
 
-	CreateInput();
-	CreateKey();
-	SetKeyFormat();
-	SetKeyCooperative();
+	{
+	m_init = false;
+	m_pos = XMFLOAT3(10, 5, 10);
+	m_size = XMFLOAT3(250, 250, 250);
+	r = 0.0f;
+	g = 0.0f;
+	b = 1.0f;
+	}
 }
 
 // デストラクタ
-Input::~Input()
+TitleUI::~TitleUI()
 {
-	Release(key);
-	Release(input);
-	//delete win;
+	SAFE_RELEASE(m_pTecture)
 }
 
-// インプットの生成
-HRESULT Input::CreateInput(void)
+// 更新
+void TitleUI::Update()
 {
-	result = DirectInput8Create(GetModuleHandle(0), DIRECTINPUT_VERSION, IID_IDirectInput8,
-		(void**)(&input), NULL);
-
-	return result;
-}
-
-// キーデバイスの生成
-HRESULT Input::CreateKey(void)
-{
-	result = input->CreateDevice(GUID_SysKeyboard, &key, NULL);
-
-	return result;
-}
-
-// キーフォーマットのセット
-HRESULT Input::SetKeyFormat(void)
-{
-	result = key->SetDataFormat(&c_dfDIKeyboard);
-
-	return result;
-}
-
-// キーの協調レベルのセット
-HRESULT Input::SetKeyCooperative(void)
-{
-	// ↓エラーになる
-	//result = key->SetCooperativeLevel(win->GetHandle(), DISCL_NONEXCLUSIVE | DISCL_BACKGROUND);
-
-	// 入力デバイスへのアクセス
-	key->Acquire();
-
-	return result;
-}
-
-// キー入力
-bool Input::CheckKey(UINT index)
-{
-	// チェックフラグ
-	bool flag = false;
-
-	// キー情報を取得
-	key->GetDeviceState(sizeof(keys), &keys);
-	if (keys[index] & 0x80)
-	{
-		flag = true;
+	// 点滅制御
+	--g_nBlink;
+	if (g_nBlink <= 0) {
+		g_nBlink = (g_nStart) ? BLINK_START_TIMER
+			: BLINK_TIMER;
 	}
 
-	olds[index] = keys[index];
-
-	return flag;
-
-}
-
-// トリガーの取得
-bool Input::TriggerKey(UINT index)
-{
-	// チェックフラグ
-	bool flag = false;
-
-	// キー情報を取得
-	key->GetDeviceState(sizeof(keys), &keys);
-	if ((keys[index] & 0x80) && !(olds[index] & 0x80))
-	{
-		flag = true;
+	if (GetKeyRelease(VK_RETURN) || GetKeyRelease(VK_SPACE)) {
+		StartFadeOut(SCENE_GAME);
+		g_nStart = 1;
+		g_nBlink = BLINK_START_TIMER;
+		return;
 	}
-	olds[index] = keys[index];
+}
+void TitleUI::Draw()
+{
+	ID3D11DeviceContext*  pBC = GetDeviceContext();
 
-	return flag;
+	//枠
+	SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
+	SetPolygonSize(m_size.x, m_size.y);
+	SetPolygonPos(m_pos.x, m_pos.y);
+	SetPolygonTexture(m_pTecture);
+	SetPolygonUV(0.0f, 0.0f);
+	DrawPolygon(pBC);
+
+	//タイトルUI
+	SetPolygonColor(r, g, b);	//ポリゴンカラー
+	SetPolygonSize(m_size.x * m_currentSTM / m_maxSTM, m_size.y);
+	SetPolygonPos(m_pos.x - (m_size.x - m_size.x * m_currentSTM / m_maxSTM) / 2, m_pos.y);
+	SetPolygonTexture(m_pTecture);
+	SetPolygonUV(0.0f, 0.0f);
+	DrawPolygon(pBC);	
 }
 
+void TitleUI::Create(float stm, XMFLOAT3 pos, XMFLOAT3 size, XMFLOAT3 color)
+{
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}
+void TitleUI::SetSTM(float stm)
+{
+	if (!m_init)
+	{
+		m_maxSTM = stm;
+		m_init = true;
+	}
+	if (stm <= 0)
+	{
+		stm = 0;
+	}
+	m_currentSTM = stm;
+}
+void TitleUI::SetPos(XMFLOAT3 pos)
+{
+	m_pos = pos;
+}
+void TitleUI::SetSize(XMFLOAT3 size)
+{
+	m_size = size;
+}
+void TitleUI::SetColor(float red, float green, float blue)
+{
+	r = red;
+	g = green;
+	b = blue;
+}

@@ -33,16 +33,16 @@ ResultScene::ResultScene()
 	m_Iconsize1 = XMFLOAT3(100, 50, 0);	    // サイズ
 
 	//// 星２
-	//m_pos2 = XMFLOAT3(0, 100, 0);
-	//m_size2 = XMFLOAT3(100, 100, 0);
-	//m_IconPos2 = XMFLOAT3(100, 100, 0);		// 位置
-	//m_Iconsize2 = XMFLOAT3(100, 50, 0);	    // サイズ
+	m_pos2 = XMFLOAT3(300, 00, 0);
+	m_size2 = XMFLOAT3(100, 100, 0);
+	m_IconPos2 = XMFLOAT3(100, 100, 0);		// 位置
+	m_Iconsize2 = XMFLOAT3(100, 50, 0);	    // サイズ
 
 	//// 星３
-	//m_pos3 = XMFLOAT3(0, 100, 0);
-	//m_size3 = XMFLOAT3(100, 100, 0);
-	//m_IconPos3 = XMFLOAT3(100, 100, 0);		// 位置
-	//m_Iconsize3 = XMFLOAT3(100, 50, 0);	    // サイズ
+	m_pos3 = XMFLOAT3(300, -100, 0);
+	m_size3 = XMFLOAT3(100, 100, 0);
+	m_IconPos3 = XMFLOAT3(100, 100, 0);		// 位置
+	m_Iconsize3 = XMFLOAT3(100, 50, 0);	    // サイズ
 
 	// リザルトロゴ
 	m_pos4 = XMFLOAT3(0, 250, 0);
@@ -170,6 +170,7 @@ void ResultScene::Update()
 void ResultScene::Draw()
 {
 	ID3D11DeviceContext*  pBC = GetDeviceContext();
+	SetBlendState(BS_ALPHABLEND);	// アルファブレンド有効				  
 
 	//----------------
 	// 枠
@@ -184,20 +185,20 @@ void ResultScene::Draw()
 	DrawPolygon(pBC);
 
 	////　星２ 
-	//SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
-	//SetPolygonSize(m_size2.x, m_size.y);
-	//SetPolygonPos(m_pos2.x, m_pos2.y);
-	//SetPolygonTexture(m_pIconTexture2);
-	//SetPolygonUV(0.0f, 0.0f);
-	//DrawPolygon(pBC);
+	SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
+	SetPolygonSize(m_size2.x, m_size2.y);
+	SetPolygonPos(m_pos2.x, m_pos2.y);
+	SetPolygonTexture(m_pIconTexture1);
+	SetPolygonUV(0.0f, 0.0f);
+	DrawPolygon(pBC);
 	//
 	////　星３ 
-	//SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
-	//SetPolygonSize(m_size3.x, m_size3.y);
-	//SetPolygonPos(m_pos3.x, m_pos3.y);
-	//SetPolygonTexture(m_pIconTexture3);
-	//SetPolygonUV(0.0f, 0.0f);
-	//DrawPolygon(pBC);
+	SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
+	SetPolygonSize(m_size3.x, m_size3.y);
+	SetPolygonPos(m_pos3.x, m_pos3.y);
+	SetPolygonTexture(m_pIconTexture1);
+	SetPolygonUV(0.0f, 0.0f);
+	DrawPolygon(pBC);
 
 	// リザルトロゴ 
 	SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
@@ -250,4 +251,6 @@ void ResultScene::Draw()
 	//// 2D描画
 	//// Zバッファ無効(Zチェック無&Z更新無)
 	//SetZBuffer(false);
+	SetBlendState(BS_NONE);	// アルファブレンド無効			  
+
 }

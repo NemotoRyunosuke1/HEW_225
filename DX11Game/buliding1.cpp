@@ -7,6 +7,7 @@ Buliding::Buliding()
 {
 	m_pos = XMFLOAT3(300.0f, 50.0f,300.0f);	// 位置
 	m_size = XMFLOAT3(10.0f, 10.0f, 10.0f);	// サイズ
+	m_collisionSize = XMFLOAT3(10.0f, 10.0f, 10.0f);	// サイズ
 	m_rot = XMFLOAT3(0.0f, 0.0f, 0.0f);		// 現在の向き
 	m_use = false;
 
@@ -82,3 +83,12 @@ void Buliding::Create(XMFLOAT3 pos, XMFLOAT3 size)	// ビル生成
 	m_size = size;
 	m_use = true;
 }
+XMFLOAT3 Buliding::GetPos()	// 位置取得
+{
+	return m_pos;
+}
+XMFLOAT3 Buliding::GetSize()	// サイズ取得
+{
+	return m_size;
+}
+
