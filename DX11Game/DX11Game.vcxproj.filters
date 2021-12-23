@@ -192,17 +192,17 @@
     <ClCompile Include="bg.cpp">
       <Filter>ソース ファイル\scene</Filter>
     </ClCompile>
-    <ClCompile Include="ScoreUI.cpp">
-      <Filter>ソース ファイル\scene\gameScene\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="pause.cpp">
-      <Filter>ソース ファイル\scene\gameScene\UI</Filter>
-    </ClCompile>
     <ClCompile Include="lever.cpp">
       <Filter>ソース ファイル\scene\gameScene\UI</Filter>
     </ClCompile>
+    <ClCompile Include="pause.cpp">
+      <Filter>ソース ファイル\scene\gameScene\object</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreUI.cpp">
+      <Filter>ソース ファイル\scene\gameScene\object</Filter>
+    </ClCompile>
     <ClCompile Include="Cunt.cpp">
-      <Filter>ソース ファイル\scene\gameScene\UI</Filter>
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -342,13 +342,13 @@
       <Filter>ヘッダー ファイル\scene\gameScene\UI</Filter>
     </ClInclude>
     <ClInclude Include="ScoreUI.h">
-      <Filter>ヘッダー ファイル\scene\gameScene\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="pause.h">
-      <Filter>ヘッダー ファイル\scene\gameScene\UI</Filter>
+      <Filter>ヘッダー ファイル\scene\gameScene\object</Filter>
     </ClInclude>
     <ClInclude Include="Cunt.h">
-      <Filter>ヘッダー ファイル\scene\gameScene\UI</Filter>
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="pause.h">
+      <Filter>ヘッダー ファイル\scene\gameScene\object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
