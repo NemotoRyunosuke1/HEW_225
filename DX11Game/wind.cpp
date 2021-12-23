@@ -108,7 +108,7 @@ void Wind::Update()
 	//m_renderer->SetCameraMatrix(::Effekseer::Matrix44().LookAtLH(eye, look, up));
 
 
-
+	//a
 
 
 	if (1)
