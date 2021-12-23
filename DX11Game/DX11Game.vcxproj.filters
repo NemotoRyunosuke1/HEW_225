@@ -114,9 +114,6 @@
     <ClCompile Include="stageSelectScene.cpp">
       <Filter>ソース ファイル\scene\stageSelectScene</Filter>
     </ClCompile>
-    <ClCompile Include="bg.cpp">
-      <Filter>ソース ファイル\scene\titleScene</Filter>
-    </ClCompile>
     <ClCompile Include="player.cpp">
       <Filter>ソース ファイル\scene\gameScene\player</Filter>
     </ClCompile>
@@ -165,23 +162,44 @@
     <ClCompile Include="buliding1.cpp">
       <Filter>ソース ファイル\scene\gameScene\object</Filter>
     </ClCompile>
-    <ClCompile Include="titleUI.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="ScoreUI.cpp">
       <Filter>ソース ファイル\scene\gameScene\object</Filter>
     </ClCompile>
     <ClCompile Include="Sound.cpp">
       <Filter>ソース ファイル\scene\system</Filter>
     </ClCompile>
-    <ClCompile Include="EffectTest.cpp">
-      <Filter>ソース ファイル\scene\system</Filter>
+    <ClCompile Include="Cunt.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="EffectManager.cpp">
-      <Filter>ソース ファイル\scene\system</Filter>
+      <Filter>ソース ファイル\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="cloud.cpp">
+      <Filter>ソース ファイル\scene\gameScene\object</Filter>
+    </ClCompile>
+    <ClCompile Include="cloudManagercpp.cpp">
+      <Filter>ソース ファイル\scene\gameScene\object</Filter>
+    </ClCompile>
+    <ClCompile Include="pause.cpp">
+      <Filter>ソース ファイル\scene\gameScene\object</Filter>
+    </ClCompile>
+    <ClCompile Include="stageSelectBG.cpp">
+      <Filter>ソース ファイル\scene\stageSelectScene</Filter>
+    </ClCompile>
+    <ClCompile Include="titleButton.cpp">
+      <Filter>ソース ファイル\scene\titleScene</Filter>
+    </ClCompile>
+    <ClCompile Include="titleUI.cpp">
+      <Filter>ソース ファイル\scene\titleScene</Filter>
+    </ClCompile>
+    <ClCompile Include="bg.cpp">
+      <Filter>ソース ファイル\scene</Filter>
     </ClCompile>
     <ClCompile Include="sceneBase.cpp">
-      <Filter>ソース ファイル\scene\titleScene</Filter>
+      <Filter>ソース ファイル\scene</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectTest.cpp">
+      <Filter>ソース ファイル\scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -290,9 +308,6 @@
     <ClInclude Include="buliding1.h">
       <Filter>ヘッダー ファイル\scene\gameScene\object</Filter>
     </ClInclude>
-    <ClInclude Include="titleUI.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="ScoreUI.h">
       <Filter>ヘッダー ファイル\scene\gameScene\object</Filter>
     </ClInclude>
@@ -305,14 +320,35 @@
     <ClInclude Include="SoundData.hpp">
       <Filter>ヘッダー ファイル\scene\system</Filter>
     </ClInclude>
-    <ClInclude Include="EffectTest.h">
-      <Filter>ヘッダー ファイル\scene\system</Filter>
+    <ClInclude Include="Cunt.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="EffectManager.h">
-      <Filter>ヘッダー ファイル\scene\system</Filter>
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectTest.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="cloud.h">
+      <Filter>ヘッダー ファイル\scene\gameScene\object</Filter>
+    </ClInclude>
+    <ClInclude Include="cloudManager.h">
+      <Filter>ヘッダー ファイル\scene\gameScene\object</Filter>
+    </ClInclude>
+    <ClInclude Include="pause.h">
+      <Filter>ヘッダー ファイル\scene\gameScene\object</Filter>
+    </ClInclude>
+    <ClInclude Include="stageSelectBG.h">
+      <Filter>ヘッダー ファイル\scene\stageSelectScene</Filter>
+    </ClInclude>
+    <ClInclude Include="titleButton.h">
+      <Filter>ヘッダー ファイル\scene\titleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="titleUI.h">
+      <Filter>ヘッダー ファイル\scene\titleScene</Filter>
     </ClInclude>
     <ClInclude Include="sceneBase.h">
-      <Filter>ヘッダー ファイル\scene\titleScene</Filter>
+      <Filter>ヘッダー ファイル\scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
