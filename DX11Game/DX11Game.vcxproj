@@ -43,7 +43,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -79,6 +79,8 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)$(ProjectName)\</OutDir>
     <TargetName>$(ProjectName)D</TargetName>
+    <IncludePath>C:\Users\naona\OneDrive\デスクトップ\HAL\2年\DX22\HEW_project_ver3\DX11Game;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\naona\OneDrive\デスクトップ\HAL\2年\DX22\HEW_project_ver3\DX11Game\Effekseer;C:\Users\naona\OneDrive\デスクトップ\HAL\2年\DX22\HEW_project_ver3\DX11Game;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -88,6 +90,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)$(ProjectName)\</OutDir>
+    <IncludePath>C:\Users\naona\OneDrive\デスクトップ\HAL\2年\DX22\HEW_project_ver3\DX11Game;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\naona\OneDrive\デスクトップ\HAL\専科\ｴﾌｪｸﾄﾌﾟﾛｸﾞﾗﾐﾝｸﾞ\ソフト\EffekseerSample\DirectXProject\DirectXProject;C:\Users\naona\OneDrive\デスクトップ\HAL\2年\DX22\HEW_project_ver3\DX11Game\Effekseer;C:\Users\naona\OneDrive\デスクトップ\HAL\2年\DX22\HEW_project_ver3\DX11Game;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -169,6 +173,8 @@
     <ClCompile Include="crew.cpp" />
     <ClCompile Include="Cunt.cpp" />
     <ClCompile Include="debugproc.cpp" />
+    <ClCompile Include="EffectManager.cpp" />
+    <ClCompile Include="EffectTest.cpp" />
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="fade.cpp" />
     <ClCompile Include="gameScene.cpp" />
@@ -216,6 +222,8 @@
     <ClInclude Include="crew.h" />
     <ClInclude Include="Cunt.h" />
     <ClInclude Include="debugproc.h" />
+    <ClInclude Include="EffectManager.h" />
+    <ClInclude Include="EffectTest.h" />
     <ClInclude Include="enemy.h" />
     <ClInclude Include="fade.h" />
     <ClInclude Include="gameScene.h" />

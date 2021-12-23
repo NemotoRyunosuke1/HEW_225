@@ -16,9 +16,10 @@
 #include "input.h"
 #include "collision.h"
 #include "Cunt.h"
+#include "EffectManager.h"
 
 #if _DEBUG
-#define MAX_BULIDING (1)
+#define MAX_BULIDING (100)
 
 #else
 #define MAX_BULIDING (400)
@@ -62,6 +63,9 @@ GameScene::GameScene()
 	// 鳥残機カウント初期化
 	m_pCunt = new Cunt;
 
+	//エフェクトマネージャー終了
+	EffectManager::Create();
+
 	// 風マネージャー初期化
 	m_pWindManager = new WindManager;
 
@@ -86,7 +90,7 @@ GameScene::GameScene()
 	// リザルトシーン初期化
 	//m_pResult = new ResultScene;
 
-	m_pLever = new Lever;
+	
 
 	// ビルの生成
 	for (int k = 0; k < MAX_BULIDING / 16 / 5; k++)
@@ -116,8 +120,8 @@ GameScene::GameScene()
 	m_pBuliding[4].Create(XMFLOAT3(1110, 10, 00), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
 	m_pBuliding[5].Create(XMFLOAT3(1110, 10, 300), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
 	m_pBuliding[6].Create(XMFLOAT3(1110, 10, 600), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
-	m_pBuliding[7].Create(XMFLOAT3(1110, 10, 900), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
-*/
+	m_pBuliding[7].Create(XMFLOAT3(1110, 10, 900), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));*/
+
 
 
 	// 変数初期化
@@ -149,6 +153,9 @@ GameScene::~GameScene()
 	// 鳥残機カウント終了処理
 	delete m_pCunt;
 
+	//エフェクトマネージャー終了
+	EffectManager::Release();
+
 	// 風マネージャー終了
 	delete m_pWindManager;
 
@@ -170,9 +177,6 @@ GameScene::~GameScene()
 	// ポーズ終了処理
 	delete m_pPause;
 	
-	//
-	delete m_pLever;
-
 	// リザルト終了処理
 	//delete m_pResult;
 }
@@ -222,8 +226,6 @@ void GameScene::Update()
 		m_pPause->SetBack(false);
 	}
 
-	// レバガチャ更新
-	m_pLever->Update();
 
 	// カメラ更新
 	CCamera::Get()->Update();
@@ -330,8 +332,8 @@ void GameScene::Update()
 			GetModelPos().z + GetModelCollisionSize().z / 2 > m_pBuliding[i].GetPos().z - 500 - 130 && GetModelPos().z - GetModelCollisionSize().z / 2 < m_pBuliding[i].GetPos().z - 500 + 60
 			)
 		{
-			//StartFadeOut(SCENE_GAME);
-			StartStanModel();
+			StartFadeOut(SCENE_GAME);
+																															 
 		}
 
 	}
@@ -429,14 +431,12 @@ void GameScene::Draw()
 		m_pResult->Draw();
 	}*/
 
-	// レバガチャ更新
-	m_pLever->Draw();
-
-
 	// ポーズ中の処理
 	if (m_bPause)
 	{
 		m_pPause->Draw();
 		
 	}
+
+	EFFECT->Play(0);
 }
