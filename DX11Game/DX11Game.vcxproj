@@ -216,6 +216,7 @@
     <ClInclude Include="Cunt.h" />
     <ClInclude Include="debugproc.h" />
     <ClInclude Include="enemy.h" />
+    <ClInclude Include="EnemyBird.h" />
     <ClInclude Include="fade.h" />
     <ClInclude Include="gameScene.h" />
     <ClInclude Include="goal.h" />

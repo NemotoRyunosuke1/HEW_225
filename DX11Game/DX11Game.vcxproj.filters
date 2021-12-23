@@ -338,6 +338,9 @@
     <ClInclude Include="pause.h">
       <Filter>ヘッダー ファイル\scene\gameScene\object</Filter>
     </ClInclude>
+    <ClInclude Include="EnemyBird.h">
+      <Filter>ヘッダー ファイル\scene\gameScene\object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Pixel.hlsl">
