@@ -10,8 +10,13 @@
 #include <Effekseer/Effekseer.h>
 #include <Effekseer/EffekseerRendererDX11.h>
 
+#ifdef _DEBUG
+#pragma comment(lib, "EffekseerD.lib")
+#pragma comment(lib, "EffekseerRendererDX11D.lib")
+#else
 #pragma comment(lib, "Effekseer.lib")
 #pragma comment(lib, "EffekseerRendererDX11.lib")
+#endif
 
 #include "input.h"
 #include "DirectXTex.h"

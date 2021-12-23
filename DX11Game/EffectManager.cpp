@@ -61,8 +61,7 @@ int EffectManager::Load(const char *Create)
 {
 	// fileNameに基づいてエフェクトの読み込み
 	// エフェクトのデータを読み込み
-	m_effect = Effekseer::Effect::Create(m_manager, u"Assets/Laser01.efk");
-	
+	m_effect = Effekseer::Effect::Create(m_manager, u"Assets/wind_jousyou_Small.efk");
 
 	return 0; // エフェクトハンドルを返す
 }
@@ -83,7 +82,7 @@ int EffectManager::Play(int Handle)
 
 	// 投影行列を設定
 	m_renderer->SetProjectionMatrix(::Effekseer::Matrix44().PerspectiveFovLH(
-		pCamera->GetFOV(), pCamera->GetAspect(), pCamera->GetNearClip(), pCamera->GetFarClip()));
+		DirectX::XMConvertToRadians(pCamera->GetFOV()), pCamera->GetAspect(), pCamera->GetNearClip(), pCamera->GetFarClip()));
 
 	// カメラ行列を設定
 	m_renderer->SetCameraMatrix(::Effekseer::Matrix44().LookAtLH(eye, look, up));
@@ -92,17 +91,27 @@ int EffectManager::Play(int Handle)
 	// Effekseer
 	static int time = 0;
 
+	
 
 	if (GetKeyTrigger('P'))
 	{
-		m_handle = m_manager->Play(m_effect, 0, 500, 0);
+		m_handle = m_manager->Play(m_effect, 0, 0, 0);      //表示＆座標
+		m_manager->SetScale(m_handle, 5.0f, 10.0f, 5.0f);   //大きさ
 	}
+
+	
+	if (GetKeyTrigger('O'))
+	{
+		m_handle = m_manager->Play(m_effect, -1800, 0, 1200);
+		m_manager->SetScale(m_handle, 5.0f, 10.0f, 5.0f);
+
+	}
+
 	m_manager->Update();
 	m_renderer->SetTime(time++ / 60.0f);
 	m_renderer->BeginRendering();
 	m_manager->Draw();
-	
-	//m_renderer->EndRendering();
+	m_renderer->EndRendering();
 
 	return 0;
 }

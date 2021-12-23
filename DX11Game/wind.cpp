@@ -93,10 +93,6 @@ void Wind::Update()
 	//a
 
 
-	if (1)
-	{
-		EFFECT->Play(m_handle);
-	}
 
 
 #if _DEBUG
@@ -130,7 +126,7 @@ void Wind::Draw()
 	SetZWrite(true);				// Zバッファ更新する
 	SetBlendState(BS_NONE);			// アルファブレンド無効
 
-	
+
 	
 }
 

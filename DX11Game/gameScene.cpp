@@ -19,7 +19,7 @@
 #include "EffectManager.h"
 
 #if _DEBUG
-#define MAX_BULIDING (16)
+#define MAX_BULIDING (100)
 
 #else
 #define MAX_BULIDING (400)
@@ -120,8 +120,8 @@ GameScene::GameScene()
 	m_pBuliding[4].Create(XMFLOAT3(1110, 10, 00), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
 	m_pBuliding[5].Create(XMFLOAT3(1110, 10, 300), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
 	m_pBuliding[6].Create(XMFLOAT3(1110, 10, 600), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
-	m_pBuliding[7].Create(XMFLOAT3(1110, 10, 900), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
-*/
+	m_pBuliding[7].Create(XMFLOAT3(1110, 10, 900), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));*/
+
 
 
 	// •Ï”‰Šú‰»
@@ -437,4 +437,6 @@ void GameScene::Draw()
 		m_pPause->Draw();
 		
 	}
+
+	EFFECT->Play(0);
 }
