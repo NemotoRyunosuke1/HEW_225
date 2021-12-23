@@ -6,7 +6,16 @@
 //=============================================================================
 #include "wind.h"
 #include "debugproc.h"
+#include "EffectManager.h"
+#include "Camera.h"
+
+
+
 #define MODEL_PLANE			"data/model/box1.fbx"
+
+Effekseer::Handle m_effcet;
+Effekseer::Handle m_handle;
+
 
 
 //=======================================================
@@ -29,6 +38,10 @@ Wind::Wind()
 	if (!m_model.Load(pDevice, pDeviceContext, MODEL_PLANE)) {
 		MessageBoxA(GetMainWnd(), "モデルデータ読み込みエラー", "InitModel", MB_OK);
 	}
+
+	//エフェクト読み込み
+	m_handle = EFFECT->Load("Assets/Laser01.efk");
+
 }
 
 //=======================================================
@@ -75,9 +88,33 @@ void Wind::Update()
 	XMStoreFloat4x4(&m_mtxWorld, mtxWorld);
 
 
-	
+	//// エフェクトのカメラ設定
+
+	//CCamera* pCamera;
+
+	//// 行列
+	//DirectX::XMFLOAT3 cameraPos = pCamera->GetPos();
+	//DirectX::XMFLOAT3 cameraLook = pCamera->GetLook();
+	//DirectX::XMFLOAT3 cameraUp = pCamera->GetUp();
+	//Effekseer::Vector3D eye = ::Effekseer::Vector3D(cameraPos.x, cameraPos.y, cameraPos.z);
+	//Effekseer::Vector3D look = ::Effekseer::Vector3D(cameraLook.x, cameraLook.y, cameraLook.z);
+	//Effekseer::Vector3D up = ::Effekseer::Vector3D(cameraUp.x, cameraUp.y, cameraUp.z);
+
+	//// 投影行列を設定
+	//m_renderer->SetProjectionMatrix(::Effekseer::Matrix44().PerspectiveFovLH(
+	//	pCamera->GetFOV(), pCamera->GetAspect(), pCamera->GetNearClip(), pCamera->GetFarClip()));
+
+	//// カメラ行列を設定
+	//m_renderer->SetCameraMatrix(::Effekseer::Matrix44().LookAtLH(eye, look, up));
 
 
+	//a
+
+
+	if (1)
+	{
+		EFFECT->Play(m_handle);
+	}
 
 
 #if _DEBUG
@@ -110,6 +147,9 @@ void Wind::Draw()
 	m_model.Draw(pDC, m_mtxWorld, eTransparentOnly);
 	SetZWrite(true);				// Zバッファ更新する
 	SetBlendState(BS_NONE);			// アルファブレンド無効
+
+	
+	
 }
 
 //=======================================================
