@@ -16,6 +16,7 @@
 #include "input.h"
 #include "collision.h"
 #include "Cunt.h"
+#include "EffectManager.h"
 
 #if _DEBUG
 #define MAX_BULIDING (16)
@@ -61,6 +62,9 @@ GameScene::GameScene()
 
 	// 鳥残機カウント初期化
 	m_pCunt = new Cunt;
+
+	//エフェクトマネージャー終了
+	EffectManager::Create();
 
 	// 風マネージャー初期化
 	m_pWindManager = new WindManager;
@@ -148,6 +152,9 @@ GameScene::~GameScene()
 
 	// 鳥残機カウント終了処理
 	delete m_pCunt;
+
+	//エフェクトマネージャー終了
+	EffectManager::Release();
 
 	// 風マネージャー終了
 	delete m_pWindManager;
