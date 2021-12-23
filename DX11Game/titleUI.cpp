@@ -65,7 +65,7 @@ Input::~Input()
 {
 	Release(key);
 	Release(input);
-	delete win;
+	//delete win;
 }
 
 // インプットの生成

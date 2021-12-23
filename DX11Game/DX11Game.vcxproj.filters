@@ -111,9 +111,6 @@
     <ClCompile Include="titleBG.cpp">
       <Filter>ソース ファイル\scene\titleScene</Filter>
     </ClCompile>
-    <ClCompile Include="sceneBase.cpp">
-      <Filter>ソース ファイル\scene</Filter>
-    </ClCompile>
     <ClCompile Include="stageSelectScene.cpp">
       <Filter>ソース ファイル\scene\stageSelectScene</Filter>
     </ClCompile>
@@ -177,6 +174,15 @@
     <ClCompile Include="Sound.cpp">
       <Filter>ソース ファイル\scene\system</Filter>
     </ClCompile>
+    <ClCompile Include="EffectTest.cpp">
+      <Filter>ソース ファイル\scene\system</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectManager.cpp">
+      <Filter>ソース ファイル\scene\system</Filter>
+    </ClCompile>
+    <ClCompile Include="sceneBase.cpp">
+      <Filter>ソース ファイル\scene\titleScene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -232,9 +238,6 @@
     </ClInclude>
     <ClInclude Include="titleBG.h">
       <Filter>ヘッダー ファイル\scene\titleScene</Filter>
-    </ClInclude>
-    <ClInclude Include="sceneBase.h">
-      <Filter>ヘッダー ファイル\scene</Filter>
     </ClInclude>
     <ClInclude Include="stageSelectScene.h">
       <Filter>ヘッダー ファイル\scene\stageSelectScene</Filter>
@@ -301,6 +304,15 @@
     </ClInclude>
     <ClInclude Include="SoundData.hpp">
       <Filter>ヘッダー ファイル\scene\system</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectTest.h">
+      <Filter>ヘッダー ファイル\scene\system</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectManager.h">
+      <Filter>ヘッダー ファイル\scene\system</Filter>
+    </ClInclude>
+    <ClInclude Include="sceneBase.h">
+      <Filter>ヘッダー ファイル\scene\titleScene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

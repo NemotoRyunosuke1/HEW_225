@@ -15,6 +15,7 @@
 #include "enemy.h"
 #include "input.h"
 #include "collision.h"
+#include "EffectManager.h"
 
 #if _DEBUG
 #define MAX_BULIDING (16)
@@ -45,6 +46,9 @@ GameScene::GameScene()
 	// 敵初期化
 	InitEnemy();
 
+	//エフェクトマネージャー初期化
+	EffectManager::Create();
+
 	// 風マネージャー初期化
 	m_pWindManager = new WindManager;
 
@@ -62,6 +66,11 @@ GameScene::GameScene()
 
 	// リザルトシーン初期化
 	m_pResult = new ResultScene;
+
+
+	
+
+
 
 	/*for (int j = 0; j < 4; j++)
 	{
@@ -189,6 +198,9 @@ GameScene::~GameScene()
 	// 敵終了処理
 	UninitEnemy();
 
+	//エフェクトマネージャー終了
+	EffectManager::Release();
+
 	// 風マネージャー終了
 	delete m_pWindManager;
 
@@ -206,6 +218,10 @@ GameScene::~GameScene()
 
 	// リザルト終了処理
 	delete m_pResult;
+
+	
+
+
 }
 
 //=============================================================================
