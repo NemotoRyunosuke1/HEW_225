@@ -90,7 +90,9 @@ GameScene::GameScene()
 	// リザルトシーン初期化
 	//m_pResult = new ResultScene;
 
-	
+	// レバガチャ初期化
+	m_pLever = new Lever;
+
 
 	// ビルの生成
 	for (int k = 0; k < MAX_BULIDING / 16 / 5; k++)
@@ -179,6 +181,9 @@ GameScene::~GameScene()
 	
 	// リザルト終了処理
 	//delete m_pResult;
+
+	// レバガチャ終了
+	delete m_pLever;
 }
 
 //=============================================================================
@@ -258,7 +263,9 @@ void GameScene::Update()
 	UpdateModel();
 
 	// スタミナゲージ更新
+	m_pStaminaBar->Update();
 	m_pStaminaBar->SetSTM(GetSTM());
+
 
 	// 丸影更新
 	UpdateShadow();
@@ -332,14 +339,17 @@ void GameScene::Update()
 			GetModelPos().z + GetModelCollisionSize().z / 2 > m_pBuliding[i].GetPos().z - 500 - 130 && GetModelPos().z - GetModelCollisionSize().z / 2 < m_pBuliding[i].GetPos().z - 500 + 60
 			)
 		{
-			StartFadeOut(SCENE_GAME);
+			StartStanModel();
 																															 
 		}
 
 	}
 
-
-
+	if (GetOverHeartModel() || GetStanModel())
+	{
+		// レバガチャ更新
+		m_pLever->Update();
+	}
 	//次のシーンへ移る条件
 	if (GetModelPos().x + GetModelCollisionSize().x / 2 > m_pGoal->GetPos().x - m_pGoal->GetSize().x / 2 && GetModelPos().x - GetModelCollisionSize().x / 2 < m_pGoal->GetPos().x + m_pGoal->GetSize().x / 2 &&
 		GetModelPos().y + GetModelCollisionSize().y / 2 > m_pGoal->GetPos().y - m_pGoal->GetSize().y / 2 && GetModelPos().y - GetModelCollisionSize().y / 2 < m_pGoal->GetPos().y + m_pGoal->GetSize().y / 2 &&
@@ -431,12 +441,21 @@ void GameScene::Draw()
 		m_pResult->Draw();
 	}*/
 
+	if (GetOverHeartModel() || GetStanModel())
+	{
+		// レバガチャ描画
+		m_pLever->Draw();
+	}
+
+	
+
 	// ポーズ中の処理
 	if (m_bPause)
 	{
 		m_pPause->Draw();
 		
 	}
+	
 
 	EFFECT->Play(0);
 }

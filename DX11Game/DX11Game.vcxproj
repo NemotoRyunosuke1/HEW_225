@@ -352,6 +352,7 @@
     <ResourceCompile Include="DX11Game.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="murekidori.ico" />
     <Image Include="res\directx9.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

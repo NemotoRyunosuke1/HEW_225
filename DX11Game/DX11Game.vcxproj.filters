@@ -320,6 +320,7 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\directx9.ico" />
+    <Image Include="murekidori.ico" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ソースファイル">

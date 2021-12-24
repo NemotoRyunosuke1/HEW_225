@@ -76,15 +76,15 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdL
 		0,
 		0,
 		hInstance,
-		LoadIcon(hInstance, MAKEINTRESOURCE(IDI_MAINFRM)),
+		LoadIcon(hInstance, MAKEINTRESOURCE(IDI_MAINFRM2)),
 		LoadCursor(nullptr, IDC_ARROW),
 		(HBRUSH)(COLOR_WINDOW + 1),
 		nullptr,
 		CLASS_NAME,
-		nullptr
+		LoadIcon(hInstance, MAKEINTRESOURCE(IDI_MAINFRM))
 	};
 	MSG msg;
-	
+	//ExtractIconExA(LPCSTR(1),0, (HICON)LoadIcon(hInstance, MAKEINTRESOURCE(IDI_MAINFRM));
 	// COM初期化
 	if (FAILED(CoInitializeEx(nullptr, COINIT_MULTITHREADED))) {
 		MessageBox(NULL, _T("COMの初期化に失敗しました。"), _T("error"), MB_OK);
@@ -166,7 +166,7 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdL
 			dwFrameCount++;
 		}
 	}
-
+	
 	// タイマ設定を元に戻す
 	timeEndPeriod(1);
 

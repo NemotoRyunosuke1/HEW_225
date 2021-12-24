@@ -55,7 +55,7 @@ struct TEnemy {
 
 	bool m_catch;
 	bool m_use;
-
+	bool m_bAtack;
 	double dAnimTime;
 };
 
@@ -109,12 +109,14 @@ HRESULT InitEnemy(void)
 
 		// 丸影の生成
 		g_enemy[i].m_nShadow = CreateShadow(g_enemy[i].m_pos, 12.0f);
-		g_enemy[i].m_scr = XMFLOAT3(100.0f,100.0f,100.0f);
+		g_enemy[i].m_scr = XMFLOAT3(20.0f,20.0f,20.0f);
 		g_enemy[i].m_use = false;
+		g_enemy[i].m_bAtack = false;
 		g_enemy[i].collisionSize = 2000;
 		g_enemy[i].dAnimTime = 0.0f;
-	}
-	
+
+			}
+
 	CreateEnemy(XMFLOAT3(0.0f, 500.0f, 0.0f));
 	return hr;
 }
@@ -305,56 +307,65 @@ void UpdateEnemy(void)
 
 	int EnemyStartChase(int i, XMFLOAT3 pos)
 	{
-		//XMFLOAT3 g_modelPos = GetModelPos();
-
 		// 索敵範囲
 		bool hit = CollisionSphere(g_enemy[i].m_initPos, g_enemy[i].collisionSize, pos, 50.0f);
 
 		// プレイヤーとの当たり判定
-		bool hit2 = CollisionSphere(g_enemy[i].m_pos, 100, pos, 50.0f);
+		bool hit2 = CollisionSphere(pos, 100, g_enemy[i].m_pos, 50.0f);
 
 		// プレイヤーと当たったら
-		if (hit2) 
+		if (hit2)
+		{
+			g_enemy[i].m_bAtack = true;
+			
+		}
+		// 攻撃中でなければ
+		else if(!g_enemy[i].m_bAtack)
+		{
+			// 移動量代入
+			g_enemy[i].m_move.x = -SinDeg(g_enemy[i].m_rot.y) * VALUE_MOVE_ENEMY * 6.0f;
+			g_enemy[i].m_move.y = SinDeg(g_enemy[i].m_rot.x) * VALUE_MOVE_ENEMY * 6.0f;
+			g_enemy[i].m_move.z = -CosDeg(g_enemy[i].m_rot.y) * VALUE_MOVE_ENEMY * 6.0f;
+
+			// 前移動
+			g_enemy[i].m_pos.x += g_enemy[i].m_move.x;
+			g_enemy[i].m_pos.y += g_enemy[i].m_move.y;
+			g_enemy[i].m_pos.z += g_enemy[i].m_move.z;
+
+			g_enemy[i].dAnimTime = 0.0f;
+		}
+
+		// 攻撃中
+		if (g_enemy[i].m_bAtack)
 		{
 			// アニメーション更新
-			g_enemy[i].dAnimTime += 0.04f;
+			g_enemy[i].dAnimTime += 0.02f;
+
+			// 攻撃判定時間
+			if (g_enemy[i].dAnimTime > 0.8f && g_enemy[i].dAnimTime < 1.0f)
+			{
+				// プレイヤースタン
+				if(hit2)StartStanModel();
+			}
+
+			// アニメーションリセット
+			if (g_enemy[i].dAnimTime > 2.2f)
+			{
+				g_enemy[i].m_bAtack = false;
+				g_enemy[i].dAnimTime = 0.0f;
+			}
 		}
 
 		// プレイヤーが探索範囲に入ったとき
 		if (hit)
 		{
-			//g_enemy[i].m_rotDest.y = XMConvertToDegrees(atan2f(-g_enemy[i].m_move.x, -g_enemy[i].m_move.z));
-			
 			// プレイヤーを見る処理
 			g_enemy[i].m_rotDest.y = atan2( g_enemy[i].m_pos.x - pos.x,g_enemy[i].m_pos.z -pos.z)* 180/ PI;
-			float radianX = -atan2( g_enemy[i].m_pos.y - pos.y + 400,  fabsf(pos.z) - g_enemy[i].m_pos.z  ) * 180 / PI;
-			if (radianX > 45)radianX = 45;
-			if (radianX < -45)radianX = -45;
-			g_enemy[i].m_rotDest.x = radianX;
+			float radianX = -atan2( g_enemy[i].m_pos.y - pos.y ,  fabsf(pos.z) - g_enemy[i].m_pos.z  ) * 180 / PI;
+			if (radianX > 80)radianX = 80;		// 角度制限(上)
+			if (radianX < -80)radianX = -80;	// 角度制限(下)
+			g_enemy[i].m_rotDest.x = radianX;	// 角度代入
 			
-			// 攻撃
-			if (CollisionSphere(pos, 1000, g_enemy[i].m_pos, 50.0f))
-			{
-				g_enemy[i].dAnimTime += 0.04f;
-			}
-			else
-			{
-				// 移動量代入
-				g_enemy[i].m_move.x = -SinDeg(g_enemy[i].m_rot.y) * VALUE_MOVE_ENEMY * 6.0f;
-				g_enemy[i].m_move.y = SinDeg(g_enemy[i].m_rot.x) * VALUE_MOVE_ENEMY * 6.0f;
-				g_enemy[i].m_move.z = -CosDeg(g_enemy[i].m_rot.y) * VALUE_MOVE_ENEMY * 6.0f;
-
-				// 前移動
-				g_enemy[i].m_pos.x += g_enemy[i].m_move.x;
-				g_enemy[i].m_pos.y += g_enemy[i].m_move.y;
-				g_enemy[i].m_pos.z += g_enemy[i].m_move.z;
-
-				g_enemy[i].dAnimTime = 0.0f;
-			}
-
-			
-			
-
 			return 1;
 		}
 		else	//　プレイヤーが探索範囲に入っていないとき
@@ -399,6 +410,7 @@ void UpdateEnemy(void)
 				if (radianX > 45)radianX = 45;
 				if (radianX < -45)radianX = -45;
 				g_enemy[i].m_rotDest.x = radianX;
+
 				// 移動量代入
 				g_enemy[i].m_move.x = -SinDeg(g_enemy[i].m_rot.y) * VALUE_MOVE_ENEMY * 6.0f;
 				g_enemy[i].m_move.y = SinDeg(g_enemy[i].m_rot.x) * VALUE_MOVE_ENEMY * 6.0f;
@@ -408,13 +420,10 @@ void UpdateEnemy(void)
 				g_enemy[i].m_pos.x += g_enemy[i].m_move.x;
 				g_enemy[i].m_pos.y += g_enemy[i].m_move.y;
 				g_enemy[i].m_pos.z += g_enemy[i].m_move.z;
-
 			}
 
 			return 0;
-		}
-
-		
+		}	
 	}
 
 	void CreateEnemy(XMFLOAT3 pos)

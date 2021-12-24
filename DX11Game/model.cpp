@@ -68,7 +68,11 @@ static float g_fStanTime;	// スタン時間
 static bool g_bStan;	// スタンフラグ
 static bool g_bInvincible;	// 無敵フラグ
 static float g_fInvincible;	// 無敵時間
-static float g_fBilin;
+static float g_fBilin;		// 点滅時間
+static float g_fStaminaDecrease;	// スタミナ変化量
+static bool g_bStickTrigger;	// スティック用トリガー
+static float g_fOverHeartRecoverySpeed;	// オーバーヒート回復スピード
+static bool g_bSharpTurn;	// 急旋回フラグ
 //=============================================================================
 // 初期化処理
 //=============================================================================
@@ -119,6 +123,10 @@ HRESULT InitModel(void)
 	g_bInvincible = false;
 	g_fInvincible = 10;
 	g_fBilin = 3;
+	g_fStaminaDecrease = 0;
+	g_bStickTrigger = false;
+	g_fOverHeartRecoverySpeed = 0;
+	g_bSharpTurn = false;
 	return hr;
 }
 
@@ -241,6 +249,7 @@ void UpdateModel(void)
 	{
 		stickX = 0;
 		stickY = 0;
+		g_bStickTrigger = false;
 	}
 	// カメラの向き取得
 	XMFLOAT3 rotCamera = CCamera::Get()->GetAngle();
@@ -469,12 +478,20 @@ void UpdateModel(void)
 		// 機体のロール
 		g_rotDestModel.z = -30.0f;
 		g_rotDestModel.y -=  2.0f;
+
+		// 羽ばたき(急旋回)
 		if (GetKeyPress(VK_SPACE) && !g_bOverHeart)
 		{
-			g_stm -= 0.3f;	// スタミナ減少
+			// スタミナ減少
+			g_fStaminaDecrease = -0.3f;
+			g_stm += g_fStaminaDecrease;	
 			g_rotDestModel.y -= 2.0f;
+			g_bSharpTurn = true;
 		}
-
+		else
+		{
+			g_bSharpTurn = false;
+		}
 		
 	}
 	else if ((GetKeyPress(VK_RIGHT) || GetKeyPress(VK_D)) && !bWind)
@@ -482,10 +499,19 @@ void UpdateModel(void)
 		// 機体のロール
 		g_rotDestModel.z = 30.0f;
 		g_rotDestModel.y += 2.0f;
+
+		// 羽ばたき(急旋回)
 		if (GetKeyPress(VK_SPACE) && !g_bOverHeart)
 		{
-			g_stm -= 0.3f;	// スタミナ減少
+			// スタミナ減少
+			g_fStaminaDecrease = -0.3f;
+			g_stm += g_fStaminaDecrease;
 			g_rotDestModel.y += 2.0f;
+			g_bSharpTurn = true;
+		}
+		else
+		{
+			g_bSharpTurn = false;
 		}
 	} 
 	
@@ -500,8 +526,14 @@ void UpdateModel(void)
 		// 羽ばたきｶｿｸ
 		if (GetJoyButton(0, JOYSTICKID6) && !g_bOverHeart)
 		{
-			g_stm -= 0.3f;	// スタミナ減少
+			g_fStaminaDecrease = -0.3f;
+			g_stm += g_fStaminaDecrease;	// スタミナ減少
 			g_rotDestModel.y += 1.0f * stickX / 9000;
+			g_bSharpTurn = true;
+		}
+		else
+		{
+			g_bSharpTurn = false;
 		}
 		// ゲームパッド
 	 // 下降
@@ -773,9 +805,12 @@ void UpdateModel(void)
 	if (g_rotModel.x > 3 && !g_bWindDelay)
 	{
 		// スタミナ減少
-		if(!bWind)	// 風に乗ってないとき
-		g_stm -= 0.2f * g_rotModel.x / 45;
-
+		if (!bWind)	// 風に乗ってないとき
+		{
+			g_fStaminaDecrease = -0.2f * g_rotModel.x / 45;
+			g_stm += g_fStaminaDecrease;
+		}
+	
 		// オーバーヒート
 		if (g_stm <= 0.0f)
 		{
@@ -784,28 +819,56 @@ void UpdateModel(void)
 		}
 
 	}
-	else
+	else if(!g_bSharpTurn)
 	{
 		// スタミナ回復
 		if (!bWind)	// 風に乗ってないとき
 		{
-			g_stm += 0.1f;
-
+			g_fStaminaDecrease = 0.1f;
+			
 		}
 		else 	// 風に乗ってる時
 		{
-			g_stm += 0.5f;
+			g_fStaminaDecrease = 0.5f;
 		}
-		
+		g_stm += g_fStaminaDecrease + g_fOverHeartRecoverySpeed;
 	}
+
+	// スタミナ上限
 	if (g_stm > 100)
 	{
 		g_stm = 100;	// スタミナ上限
 		g_bOverHeart = false;	// オーバーヒート解除
 	}
-	 // 死亡条件
 	
-
+	// オーバーヒート処理(レバガチャで回復速度アップ)
+	if (g_bOverHeart)
+	{
+		// レバガチャ判定
+		if (stickY > 20000 || stickX > 20000 || stickY < -20000 || stickX < -20000)
+		{
+			if (!g_bStickTrigger)
+			{
+				g_fOverHeartRecoverySpeed = 1.5f;
+				g_bStickTrigger = true;
+			}
+			else
+			{
+				g_fOverHeartRecoverySpeed = 0;
+			}
+		}
+		else
+		{
+			g_bStickTrigger = false;
+		}
+		
+	}
+	else
+	{
+		g_fOverHeartRecoverySpeed = 0;
+	}
+	
+   // ライト方向処理
 	g_rotLightModel.x = -SinDeg(g_rotModel.y);
 	g_rotLightModel.z = -CosDeg(g_rotModel.y);
 
@@ -938,4 +1001,16 @@ void StartStanModel()
 	{
 		g_bStan = true;
 	}
+}
+float GetStaminaDecreaseModel()
+{
+	return g_fStaminaDecrease;
+}
+bool GetOverHeartModel()
+{
+	return g_bOverHeart;
+}
+bool GetStanModel()
+{
+	return g_bStan;
 }
