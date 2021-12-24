@@ -17,8 +17,10 @@ enum eSE {
 	//SE_CANCEL,		// キャンセル音
 	SE_SELECT,		// 選択音
 	//SE_SHOT,		// 弾発射音
+	SE_COLLECT, 	//回収音
+	SE_WIND,		// 風
 	SE_SWING,		// はばたき音
-	//SE_JUMP,		// ジャンプ音
+	SE_DAMAGE,		// 被弾音
 	
 
 	MAX_SE

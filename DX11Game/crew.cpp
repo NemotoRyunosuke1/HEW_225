@@ -11,6 +11,8 @@
 #include "shadow.h"
 #include "model.h"
 #include "collision.h"
+#include "Sound.h"
+#include "Cunt.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -52,6 +54,7 @@ struct TCrew {
 
 	bool m_catch;
 	bool m_use;
+	bool m_CollectTrriger;
 	CAssimpModel	m_model;			// モデル
 };
 
@@ -64,6 +67,9 @@ static int CrewCnt;
 
 static bool hit2[MAX_CREW];
 
+static bool g_CollectTrriger;
+
+static Cunt g_Cunt;
 
 //=============================================================================
 // 初期化処理
@@ -98,6 +104,8 @@ HRESULT InitCrew(void)
 		hit2[i] = false;
 
 		g_crew[i].m_animTime = 0;	// アニメーションタイム
+
+		g_crew[i].m_CollectTrriger = false;
 	}
 
 	return hr;
@@ -151,76 +159,73 @@ void UpdateCrew(void)
 			g_crew[i].m_animTime = 0.0f;
 		}
 
-		//for (int j = 0; j < MAX_CREW; ++j)
-		//{
-		//	if (!g_crew[j].m_use)continue;
-		//	hit2[j] = false;
-		//}
-		//for (int j = 0; j < MAX_CREW; ++j)
-		//{
-		//	if (!g_crew[j].m_use)continue;
-		//	if (i != j)
-		//	{
-		//		hit2[j] = CollisionSphere(g_crew[i].m_pos, 40.0f, g_crew[j].m_pos, 40.0f);
-		//	}
-		//
-		//}
-		//for (int j = 0; j < MAX_CREW; ++j)
-		//{
-		//	if (!g_crew[j].m_use)continue;
-		//	if (hit2[j])
-		//	{
-		//		g_crew[i].m_rotDest.y = XMConvertToDegrees(atan2f(-g_crew[i].m_move.x, -g_crew[i].m_move.z));
-		//	}
-		//}
+
+		for (int j = 0; j < MAX_CREW; ++j)
+		{
+			if (i != j)
+			{
+				hit2[j] = CollisionSphere(g_crew[i].m_pos, 40.0f, g_crew[j].m_pos, 40.0f);
+			}
+
+		}
 		
+		for (int j = 0; j < MAX_CREW; ++j)
+		{
+			if (hit2[j])
+			{
+				g_crew[i].m_rotDest.y = XMConvertToDegrees(atan2f(-g_crew[i].m_move.x, -g_crew[i].m_move.z));
+			}
+		}
 		
 		if (g_crew[i].m_catch)
 		{
 			cnt++;
+
+			//Cunt::Gatherbird();
+
 		}
 		CrewCnt = cnt;
-		
 
+		
 		g_crew[i].m_pos.x += g_crew[i].m_move.x;
 		g_crew[i].m_pos.y += g_crew[i].m_move.y;
 		g_crew[i].m_pos.z += g_crew[i].m_move.z;
 
 		// 壁にぶつかった
-		//bool lr = false, fb = false;
-		//if (g_crew[i].m_pos.x < -MAP_HIROSA / 2) {
-		//	g_crew[i].m_pos.x = -MAP_HIROSA / 2;
-		//	lr = true;
-		//}
-		//if (g_crew[i].m_pos.x > MAP_HIROSA / 2) {
-		//	g_crew[i].m_pos.x = MAP_HIROSA / 2;
-		//	lr = true;
-		//}
-		//if (g_crew[i].m_pos.z < -MAP_HIROSA / 2) {
-		//	g_crew[i].m_pos.z = -MAP_HIROSA / 2;
-		//	fb = true;
-		//}
-		//if (g_crew[i].m_pos.z > MAP_HIROSA / 2) {
-		//	g_crew[i].m_pos.z = MAP_HIROSA / 2;
-		//	fb = true;
-		//}
-		//if (g_crew[i].m_pos.y < 0.0f) {
-		//	g_crew[i].m_pos.y = 0.0f;
-		//}
-		//if (g_crew[i].m_pos.y > 2000.0f) {
-		//	g_crew[i].m_pos.y = 2000.0f;
-		//}
-		//if (fabsf(g_crew[i].m_rot.y - g_crew[i].m_rotDest.y) < 0.0001f) {
-		//	if (lr) {
-		//		g_crew[i].m_move.x *= -1.0f;
-		//	}
-		//	if (fb) {
-		//		g_crew[i].m_move.z *= -1.0f;
-		//	}
-		//	if (lr || fb) {
-		//		g_crew[i].m_rotDest.y = XMConvertToDegrees(atan2f(-g_crew[i].m_move.x, -g_crew[i].m_move.z));
-		//	}
-		//}
+		bool lr = false, fb = false;
+		if (g_crew[i].m_pos.x < -MAP_HIROSA / 2) {
+			g_crew[i].m_pos.x = -MAP_HIROSA / 2;
+			lr = true;
+		}
+		if (g_crew[i].m_pos.x > MAP_HIROSA / 2) {
+			g_crew[i].m_pos.x = MAP_HIROSA / 2;
+			lr = true;
+		}
+		if (g_crew[i].m_pos.z < -MAP_HIROSA / 2) {
+			g_crew[i].m_pos.z = -MAP_HIROSA / 2;
+			fb = true;
+		}
+		if (g_crew[i].m_pos.z > MAP_HIROSA / 2) {
+			g_crew[i].m_pos.z = MAP_HIROSA / 2;
+			fb = true;
+		}
+		if (g_crew[i].m_pos.y < 0.0f) {
+			g_crew[i].m_pos.y = 0.0f;
+		}
+		if (g_crew[i].m_pos.y > 2000.0f) {
+			g_crew[i].m_pos.y = 2000.0f;
+		}
+		if (fabsf(g_crew[i].m_rot.y - g_crew[i].m_rotDest.y) < 0.0001f) {
+			if (lr) {
+				g_crew[i].m_move.x *= -1.0f;
+			}
+			if (fb) {
+				g_crew[i].m_move.z *= -1.0f;
+			}
+			if (lr || fb) {
+				g_crew[i].m_rotDest.y = XMConvertToDegrees(atan2f(-g_crew[i].m_move.x, -g_crew[i].m_move.z));
+			}
+		}
 
 		// 目的の角度までの差分
 		float fDiffRotX = g_crew[i].m_rotDest.x - g_crew[i].m_rot.x;
@@ -332,80 +337,99 @@ int StartChase(int i, XMFLOAT3 pos)
 	XMFLOAT3 g_modelPos = GetModelPos();
 	XMFLOAT3 modelRot = GetModelRot();
 	// 察知範囲
-	bool hit = CollisionSphere(g_crew[i].m_pos, CREW_RADIUS, pos, 50.0f);
-
+	bool hit = CollisionSphere(g_crew[i].m_pos, CREW_RADIUS, pos, 100.0f);
 	
 	if (hit  || g_crew[i].m_catch)
 	{
 		g_crew[i].m_catch = true;
-#if 0
-		if (g_modelPos.y - g_crew[i].m_pos.y > 50.0f)
-		{
-			//上
-			g_crew[i].m_rotDest.x = 30.0f;
-		}
-		else if (g_modelPos.y - g_crew[i].m_pos.y < -50.0f)
-		{
-			//下
-			g_crew[i].m_rotDest.x = -30.0f;
-		}
-		else
-		{
-			//水平
-			g_crew[i].m_rotDest.x = 0;
-		}
-		
-		if (g_modelPos.x - g_crew[i].m_pos.x > 0 && g_modelPos.z - g_crew[i].m_pos.z > 0)
-		{
-			//左後ろ
-			g_crew[i].m_rotDest.y = -135.0f;
-		}
-		else if (g_modelPos.x - g_crew[i].m_pos.x < 0 && g_modelPos.z - g_crew[i].m_pos.z > 0)
-		{
-			//右後ろ
-			g_crew[i].m_rotDest.y = 135.0f;
-		}
-		else if (g_modelPos.x - g_crew[i].m_pos.x > 0 && g_modelPos.z - g_crew[i].m_pos.z < 0)
-		{
-			//左前
-			g_crew[i].m_rotDest.y = -45.0f;
-		}
-		else if (g_modelPos.x - g_crew[i].m_pos.x < 0 && g_modelPos.z - g_crew[i].m_pos.z < 0)
-		{
-			//右前
-			g_crew[i].m_rotDest.y = 45.0f;
-		}
-		else if (g_modelPos.x - g_crew[i].m_pos.x > 0)
-		{
-			//左
-			g_crew[i].m_rotDest.y = -90.0f;
-		}
-		else if (g_modelPos.x - g_crew[i].m_pos.x < 0)
-		{
-			//右
-			g_crew[i].m_rotDest.y = 90.0f;
-		}
-		else if (g_modelPos.z - g_crew[i].m_pos.z > 0)
-		{
-			//後ろ
-			g_crew[i].m_rotDest.y = 180.0f;
-		}
-		else
-		{
-			//前
-			g_crew[i].m_rotDest.y = 0;
-		}
-#endif
+
+		//g_Cunt.Gatherbird();
+
+
+		//if (g_modelPos.y - g_crew[i].m_pos.y > 50.0f)
+		//{
+		//	//上
+		//	g_crew[i].m_rotDest.x = 30.0f;
+		//}
+		//else if (g_modelPos.y - g_crew[i].m_pos.y < -50.0f)
+		//{
+		//	//下
+		//	g_crew[i].m_rotDest.x = -30.0f;
+		//}
+		//else
+		//{
+		//	//水平
+		//	g_crew[i].m_rotDest.x = 0;
+		//}
+
+		//if (g_modelPos.x - g_crew[i].m_pos.x > 0 && g_modelPos.z - g_crew[i].m_pos.z > 0)
+		//{
+		//	//左後ろ
+		//	g_crew[i].m_rotDest.y = -135.0f;
+		//}
+		//else if (g_modelPos.x - g_crew[i].m_pos.x < 0 && g_modelPos.z - g_crew[i].m_pos.z > 0)
+		//{
+		//	//右後ろ
+		//	g_crew[i].m_rotDest.y = 135.0f;
+		//}
+		//else if (g_modelPos.x - g_crew[i].m_pos.x > 0 && g_modelPos.z - g_crew[i].m_pos.z < 0)
+		//{
+		//	//左前
+		//	g_crew[i].m_rotDest.y = -45.0f;
+		//}
+		//else if (g_modelPos.x - g_crew[i].m_pos.x < 0 && g_modelPos.z - g_crew[i].m_pos.z < 0)
+		//{
+		//	//右前
+		//	g_crew[i].m_rotDest.y = 45.0f;
+		//}
+		//else if (g_modelPos.x - g_crew[i].m_pos.x > 0)
+		//{
+		//	//左
+		//	g_crew[i].m_rotDest.y = -90.0f;
+		//}
+		//else if (g_modelPos.x - g_crew[i].m_pos.x < 0)
+		//{
+		//	//右
+		//	g_crew[i].m_rotDest.y = 90.0f;
+		//}
+		//else if (g_modelPos.z - g_crew[i].m_pos.z > 0)
+		//{
+		//	//後ろ
+		//	g_crew[i].m_rotDest.y = 180.0f;
+		//}
+		//else
+		//{
+		//	//前
+		//	g_crew[i].m_rotDest.y = 0;
+		//}
 
 		g_crew[i].m_pos.x -= SinDeg(g_crew[i].m_rot.y) * VALUE_MOVE_CREW ;
 		g_crew[i].m_pos.y += SinDeg(g_crew[i].m_rot.x) * VALUE_MOVE_CREW ;
 		g_crew[i].m_pos.z -= CosDeg(g_crew[i].m_rot.y) * VALUE_MOVE_CREW ;
 		
-		
+		if (hit)
+		{
+			// プレイヤーから離る
+			 //g_crew[i].m_rotDest.y = XMConvertToDegrees(atan2f(-g_crew[i].m_move.x, -g_crew[i].m_move.z));
+
+		}
+
 		// 捕まった時の処理
 		if (g_crew[i].m_catch == true)
-		{	
-#if TRUE
+		{
+			if (!g_crew[i].m_CollectTrriger)
+			{
+
+				CSound::SetVolume(SE_COLLECT,3.0f);
+				CSound::Play(SE_COLLECT);
+
+				// 鳥残機カウント処理
+				Cunt::Gatherbird();
+
+				//Cunt::BirdIcon2();
+
+				g_crew[i].m_CollectTrriger = true;
+			}
 			//プレイヤーから一定範囲内にいさせる処理
 			if (g_modelPos.x + CREW_LENGHT < g_crew[i].m_pos.x)
 			{
@@ -431,11 +455,10 @@ int StartChase(int i, XMFLOAT3 pos)
 			{
 				g_crew[i].m_pos.y = g_modelPos.y - CREW_LENGHT;
 			}
-#endif
 
 			// プレイヤーの向いている方向へ向く
-			g_crew[i].m_rotDest = modelRot;
-			
+			g_crew[i].m_rot = modelRot;
+
 			
 
 			// 他の仲間の鳥との当たり判定
@@ -443,38 +466,15 @@ int StartChase(int i, XMFLOAT3 pos)
 			{
 				// 使用されてなかったらスキップ
 				if (!g_crew[j].m_use)continue;
-			
+
 				// 同じ番号だったらスキップ
 				if (i == j)continue;
-			
+
 				// 球判定
 				if (CollisionSphere(g_crew[i].m_pos, 10, g_crew[j].m_pos, 10))
-				{	
-					// 他の仲間の鳥と当たらないとこに移動
-					
-#if TRUE
+				{	// 他の仲間の鳥と当たらないとこに移動
 					g_crew[i].m_pos.x += rand()% 140 - 70;
 					g_crew[i].m_pos.z += rand()% 140 - 70;
-#endif
-#if 0
-					if (g_crew[i].m_pos.x < g_crew[j].m_pos.x)
-					{
-						g_crew[i].m_pos.x = g_crew[j].m_pos.x - 20.0f;
-					}
-					if (g_crew[i].m_pos.x > g_crew[j].m_pos.x)
-					{
-						g_crew[i].m_pos.x = g_crew[j].m_pos.x + 20.0f;
-					}
-					if (g_crew[i].m_pos.z < g_crew[j].m_pos.z)
-					{
-						g_crew[i].m_pos.z = g_crew[j].m_pos.z - 20.0f;
-					}
-					if (g_crew[i].m_pos.z > g_crew[j].m_pos.z)
-					{
-						g_crew[i].m_pos.z = g_crew[j].m_pos.z + 20.0f;
-					}	
-#endif
-					
 				}
 			}
 		}

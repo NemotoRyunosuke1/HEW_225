@@ -3,6 +3,7 @@
 // DX11Game.rc ‚ÅŽg—p
 //
 #define IDI_MAINFRM                     101
+#define IDI_MAINFRM2                     102
 
 // Next default values for new objects
 // 

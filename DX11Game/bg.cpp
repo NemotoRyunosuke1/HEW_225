@@ -4,7 +4,7 @@
 #include "polygon.h"
 
 // É}ÉNÉçíËã`
-#define PATH_BGTEXTURE	L"data/texture/sky001.jpg"
+#define PATH_BGTEXTURE	L"data/texture/sky0.jpg"
 #define BG_POS_X		0.0f
 #define BG_POS_Y		0.0f
 #define BG_WIDTH		SCREEN_WIDTH

@@ -9,19 +9,26 @@
 #include "Sound.h"
 #include "input.h"
 
+static bool SelectTrriger;
+
+
 //=============================================================================
 // コンストラクタ
 //=============================================================================
 TitleScene::TitleScene()
 {
+	SelectTrriger=false;
 
+	m_pTitleBG = new TitleBG;
+	m_pTitleButton = new TitleButton;
 }
 //=============================================================================
 // デストラクタ
 //=============================================================================
 TitleScene::~TitleScene()
 {
-
+	delete m_pTitleBG;
+	delete m_pTitleButton;
 }
 //=============================================================================
 // 初期化処理
@@ -47,15 +54,23 @@ void TitleScene::Uninit()
 //=============================================================================
 void TitleScene::Update()
 {
-	
+	// タイトルBG更新
+	m_pTitleBG->Update();
+
+	m_pTitleButton->Update();
 
 	//次のシーンへ移る条件
 	if (GetKeyTrigger(VK_RETURN))
 	{
-		CSound::SetVolume(SE_SELECT, 1.0f);
-		CSound::Play(SE_SELECT);
+		if (!SelectTrriger)
+		{
+			CSound::SetVolume(SE_SELECT, 1.0f);
+			CSound::Play(SE_SELECT);
+			SelectTrriger = true;
+		}
+		
 #if _DEBUG
-		StartFadeOut(SCENE_GAME);
+		StartFadeOut(SCENE_STAGE_SELECT);
 
 #else 
 		StartFadeOut(SCENE_STAGE_SELECT);
@@ -68,12 +83,43 @@ void TitleScene::Update()
 		CSound::SetVolume(SE_SELECT, 1.0f);
 		CSound::Play(SE_SELECT);
 #if _DEBUG
-		StartFadeOut(SCENE_GAME);
+		StartFadeOut(SCENE_STAGE_SELECT);
 
 #else 
 		StartFadeOut(SCENE_STAGE_SELECT);
 
 #endif
+	}
+
+	// ゲーム内ボタンスタート
+	if (m_pTitleButton->GetNextScene())
+	{
+		if (!SelectTrriger)
+		{
+			CSound::SetVolume(SE_SELECT, 1.0f);
+			CSound::Play(SE_SELECT);
+			SelectTrriger = true;
+	}
+#if _DEBUG
+		StartFadeOut(SCENE_STAGE_SELECT);
+
+#else 
+		StartFadeOut(SCENE_STAGE_SELECT);
+
+#endif
+
+	}
+
+	// オプションボタン
+	if (m_pTitleButton->GetOption())
+	{
+
+	}
+
+	// エンドボタン
+	if (m_pTitleButton->GetEnd())
+	{
+		PostQuitMessage(0);	// ゲーム終了
 	}
 
 #if _DEBUG
@@ -102,6 +148,6 @@ void TitleScene::Draw()
 	// 2D描画
 	// Zバッファ無効(Zチェック無&Z更新無)
 	SetZBuffer(false);
-	
-	
+	m_pTitleBG->Draw();
+	m_pTitleButton->Draw();
 }

@@ -8,6 +8,10 @@
 #include "ScoreUI.h"
 #include "cloudManager.h"
 #include "resultScene.h"
+#include "Cunt.h"
+#include "pause.h"
+#include "lever.h"
+
 
 class GameScene :public SceneBase
 {
@@ -21,12 +25,16 @@ public:
 private:
 	
 	WindManager* m_pWindManager;
+	Cunt* m_pCunt;
 	Goal* m_pGoal;
 	StaminaBar* m_pStaminaBar;
 	Buliding* m_pBuliding;
 	ScoreUI* m_pScoreUI;
 	CloudManager* m_pCloudManager;
 	ResultScene* m_pResult;
+	Pause* m_pPause;
+	Lever* m_pLever;
+
 	bool m_bDebugMode;
 	bool m_bPause;
 	bool m_bGoal;

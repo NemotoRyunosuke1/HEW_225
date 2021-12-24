@@ -27,3 +27,7 @@ void SetModelWindCollision(bool ,int ,XMFLOAT3 vec);
 float GetSTM();
 XMFLOAT3 GetMoveModel();
 XMFLOAT3& GetModelRotLight();
+void StartStanModel();
+float GetStaminaDecreaseModel();
+bool GetOverHeartModel();
+bool GetStanModel();
