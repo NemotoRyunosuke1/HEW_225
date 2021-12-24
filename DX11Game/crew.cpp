@@ -64,7 +64,8 @@ struct TCrew {
 static CAssimpModel	g_model;			// ÉÇÉfÉã
 static TCrew		g_crew[MAX_CREW];	// ñ°ï˚èÓïÒ
 static int CrewCnt;
-
+static int g_nMaxCrew;
+static int g_nRemainCrew;
 static bool hit2[MAX_CREW];
 
 static bool g_CollectTrriger;
@@ -107,7 +108,8 @@ HRESULT InitCrew(void)
 
 		g_crew[i].m_CollectTrriger = false;
 	}
-
+	g_nMaxCrew = 0;
+	g_nRemainCrew = 0;
 	return hr;
 }
 
@@ -141,7 +143,7 @@ void UpdateCrew(void)
 
 	
 	int cnt = 0;
-
+	g_nRemainCrew = g_nMaxCrew - CrewCnt;
 	for (int i = 0; i < MAX_CREW; ++i) {
 
 		if (!g_crew[i].m_use)
@@ -525,7 +527,7 @@ void CrewCreate(XMFLOAT3 pos1, XMFLOAT3 pos2, XMFLOAT3 pos3, XMFLOAT3 pos4, XMFL
 		}
 		g_crew[i].m_pos = pos1;
 		g_crew[i].m_use = true;
-		
+		g_nMaxCrew++;
 		break;
 	}
 	for (int i = 0; i < MAX_CREW; ++i)
@@ -557,7 +559,7 @@ void CrewCreate(XMFLOAT3 pos1, XMFLOAT3 pos2, XMFLOAT3 pos3, XMFLOAT3 pos4, XMFL
 		}
 		g_crew[i].m_pos = pos2;
 		g_crew[i].m_use = true;
-
+		g_nMaxCrew++;
 		break;
 	}
 	for (int i = 0; i < MAX_CREW; ++i)
@@ -589,7 +591,7 @@ void CrewCreate(XMFLOAT3 pos1, XMFLOAT3 pos2, XMFLOAT3 pos3, XMFLOAT3 pos4, XMFL
 		}
 		g_crew[i].m_pos = pos3;
 		g_crew[i].m_use = true;
-
+		g_nMaxCrew++;
 		break;
 	}
 	for (int i = 0; i < MAX_CREW; ++i)
@@ -621,7 +623,7 @@ void CrewCreate(XMFLOAT3 pos1, XMFLOAT3 pos2, XMFLOAT3 pos3, XMFLOAT3 pos4, XMFL
 		}
 		g_crew[i].m_pos = pos4;
 		g_crew[i].m_use = true;
-
+		g_nMaxCrew++;
 		break;
 	}
 	for (int i = 0; i < MAX_CREW; ++i)
@@ -653,7 +655,7 @@ void CrewCreate(XMFLOAT3 pos1, XMFLOAT3 pos2, XMFLOAT3 pos3, XMFLOAT3 pos4, XMFL
 		}
 		g_crew[i].m_pos = pos5;
 		g_crew[i].m_use = true;
-
+		g_nMaxCrew++;
 		break;
 	}
 	for (int i = 0; i < MAX_CREW; ++i)
@@ -685,7 +687,7 @@ void CrewCreate(XMFLOAT3 pos1, XMFLOAT3 pos2, XMFLOAT3 pos3, XMFLOAT3 pos4, XMFL
 		}
 		g_crew[i].m_pos = pos6;
 		g_crew[i].m_use = true;
-
+		g_nMaxCrew++;
 		break;
 	}
 	for (int i = 0; i < MAX_CREW; ++i)
@@ -717,7 +719,7 @@ void CrewCreate(XMFLOAT3 pos1, XMFLOAT3 pos2, XMFLOAT3 pos3, XMFLOAT3 pos4, XMFL
 		}
 		g_crew[i].m_pos = pos7;
 		g_crew[i].m_use = true;
-
+		g_nMaxCrew++;
 		break;
 	}
 	for (int i = 0; i < MAX_CREW; ++i)
@@ -749,7 +751,7 @@ void CrewCreate(XMFLOAT3 pos1, XMFLOAT3 pos2, XMFLOAT3 pos3, XMFLOAT3 pos4, XMFL
 		}
 		g_crew[i].m_pos = pos8;
 		g_crew[i].m_use = true;
-
+		g_nMaxCrew++;
 		break;
 	}
 	for (int i = 0; i < MAX_CREW; ++i)
@@ -781,7 +783,7 @@ void CrewCreate(XMFLOAT3 pos1, XMFLOAT3 pos2, XMFLOAT3 pos3, XMFLOAT3 pos4, XMFL
 		}
 		g_crew[i].m_pos = pos9;
 		g_crew[i].m_use = true;
-
+		g_nMaxCrew++;
 		break;
 	}
 	for (int i = 0; i < MAX_CREW; ++i)
@@ -813,7 +815,16 @@ void CrewCreate(XMFLOAT3 pos1, XMFLOAT3 pos2, XMFLOAT3 pos3, XMFLOAT3 pos4, XMFL
 		}
 		g_crew[i].m_pos = pos10;
 		g_crew[i].m_use = true;
-
+		g_nMaxCrew++;
 		break;
 	}
+	g_nRemainCrew = g_nMaxCrew;
+}
+int& GetMaxCrew()
+{
+	return 	g_nMaxCrew;
+}
+int& GetRemainCrew()
+{
+	return g_nRemainCrew;
 }

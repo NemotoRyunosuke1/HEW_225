@@ -332,7 +332,9 @@ void GameScene::Update()
 	// ビルとの当たり判定
 	for (int i = 0; i < MAX_BULIDING; i++)
 	{
-
+		XMFLOAT3 pos = m_pBuliding[i].GetPos();
+		XMFLOAT3 size1 = XMFLOAT3(400 - 90, 0, -500 - 130);
+		XMFLOAT3 size2 = XMFLOAT3(400 + 102, m_pBuliding[i].GetSize().y * 100 - 50, -500 + 60);
 		
 		if (GetModelPos().x + GetModelCollisionSize().x / 2 > m_pBuliding[i].GetPos().x + 400 - 90 && GetModelPos().x - GetModelCollisionSize().x / 2 < m_pBuliding[i].GetPos().x + 400 + 102 &&
 			GetModelPos().y + GetModelCollisionSize().y / 2 > 0 && GetModelPos().y - GetModelCollisionSize().y / 2 < m_pBuliding[i].GetPos().y + m_pBuliding[i].GetSize().y * 100  -50&&
@@ -340,11 +342,12 @@ void GameScene::Update()
 			)
 		{
 			StartStanModel();
-																															 
+			CollisionObjectModel(pos,size1,size2,false);
 		}
 
 	}
 
+	// オーバーヒートかスタンしたら
 	if (GetOverHeartModel() || GetStanModel())
 	{
 		// レバガチャ更新
@@ -410,9 +413,7 @@ void GameScene::Draw()
 	// 敵描画
 	DrawEnemy();
 
-	// 鳥残機カウント描画
-	m_pCunt->Draw();
-
+	
 	// 風マネージャー描画
 	m_pWindManager->Draw();
 
@@ -436,6 +437,10 @@ void GameScene::Draw()
 
 	// スコアUI描画
 	m_pScoreUI->Draw();
+
+	// 鳥残機カウント描画
+	m_pCunt->Draw();
+
 	/*if (m_bGoal)
 	{
 		m_pResult->Draw();
