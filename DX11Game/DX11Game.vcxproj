@@ -171,6 +171,7 @@
     <ClCompile Include="cloudManagercpp.cpp" />
     <ClCompile Include="collision.cpp" />
     <ClCompile Include="crew.cpp" />
+    <ClCompile Include="crewUI.cpp" />
     <ClCompile Include="Cunt.cpp" />
     <ClCompile Include="debugproc.cpp" />
     <ClCompile Include="EffectManager.cpp" />
@@ -221,6 +222,7 @@
     <ClInclude Include="cloudManager.h" />
     <ClInclude Include="collision.h" />
     <ClInclude Include="crew.h" />
+    <ClInclude Include="crewUI.h" />
     <ClInclude Include="Cunt.h" />
     <ClInclude Include="debugproc.h" />
     <ClInclude Include="EffectManager.h" />

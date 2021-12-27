@@ -165,6 +165,9 @@
     <ClCompile Include="escapeText.cpp">
       <Filter>ソースファイル\scene\gameScene\UI</Filter>
     </ClCompile>
+    <ClCompile Include="crewUI.cpp">
+      <Filter>ソースファイル\scene\gameScene\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AssimpModel.h">
@@ -318,6 +321,9 @@
       <Filter>ヘッダーファイル\scene\titleScene</Filter>
     </ClInclude>
     <ClInclude Include="escapeText.h">
+      <Filter>ヘッダーファイル\scene\gameScene\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="crewUI.h">
       <Filter>ヘッダーファイル\scene\gameScene\UI</Filter>
     </ClInclude>
   </ItemGroup>

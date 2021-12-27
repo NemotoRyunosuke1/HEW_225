@@ -131,6 +131,11 @@ GameScene::GameScene()
 	// 変数初期化
 	m_bDebugMode = false;
 	m_bPause = false;
+
+	//時間取得	
+	m_fCurrentTime = m_fRemainTime = (float)timeGetTime();
+	
+	m_timer;
 	//m_bGoal = false;
 }
 
@@ -196,6 +201,10 @@ GameScene::~GameScene()
 //=============================================================================
 void GameScene::Update()
 {
+	//スタートタイマー
+	m_fCurrentTime = (float)timeGetTime();
+	m_timer = (m_fCurrentTime - m_fRemainTime) / 1000;
+
 	// ポーズ
 	if (GetJoyRelease(0, JOYSTICKID8))	// コントローラーSTARTボタン
 	{

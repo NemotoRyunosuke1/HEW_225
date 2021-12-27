@@ -39,5 +39,11 @@ private:
 	bool m_bDebugMode;
 	bool m_bPause;
 	bool m_bGoal;
+
+	// タイマー用変数
+	float m_fRemainTime;
+	float m_fCurrentTime;
+	float m_timer;
+
 };
 
