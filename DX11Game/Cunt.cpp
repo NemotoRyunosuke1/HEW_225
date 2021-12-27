@@ -8,25 +8,19 @@
 #include "Texture.h"
 #include "polygon.h"
 #include "debugproc.h"
+#include "crew.h"
 
 // マクロ定義
-#define CUNT_TEXTURE_10 L"data/texture/ato10.png"
-#define CUNT_TEXTURE_9  L"data/texture/ato9.png"
-#define CUNT_TEXTURE_8  L"data/texture/ato8.png"
-#define CUNT_TEXTURE_7  L"data/texture/ato7.png"
-#define CUNT_TEXTURE_6  L"data/texture/ato6.png"
-#define CUNT_TEXTURE_5  L"data/texture/ato5.png"
-#define CUNT_TEXTURE_4  L"data/texture/ato4.png"
-#define CUNT_TEXTURE_3  L"data/texture/ato3.png"
-#define CUNT_TEXTURE_2  L"data/texture/ato2.png"
-#define CUNT_TEXTURE_1  L"data/texture/ato1.png"
-#define CUNT_TEXTURE_0  L"data/texture/ato0.png"
 
-#define BIRD_CUNT_TEXTURE_1 L"data/texture/uenotori1.png"
-#define BIRD_CUNT_TEXTURE_2 L"data/texture/uenotori2.png"
 
-#define CUNT_X_NUMBER 10
-#define CUNT_Y_NUMBER 1
+#define BIRD_CUNT_TEXTURE L"data/texture/万能文字.png"
+#define BIRD_ICON_TEXTURE L"data/texture/残り数.png"
+#define GO_GOAL_TEXTURE L"data/texture/ato0.png"
+
+#define MAX_DIGIT (2)
+
+#define CUNT_X_NUMBER 5
+#define CUNT_Y_NUMBER 3
 #define MAX_BIRD 11
 
 #define CUNT_FRAME_WIDTH   14.0f
@@ -35,9 +29,11 @@
 #define CUNT_FRAME_POS_Y   (SCREEN_HEIGHT-CUNT_FRAME_HEIGHT)*0.5f
 
 // グローバル変数
-static ID3D11ShaderResourceView* g_pCuntTexture[MAX_BIRD];
+static ID3D11ShaderResourceView* g_pCntTexture;
 static ID3D11ShaderResourceView* m_pIconTexture;
-static ID3D11ShaderResourceView* g_pUenotoriTexture;
+static ID3D11ShaderResourceView* m_pGoGoalTexture;
+
+
 
 int Cunt::Getbird;
 
@@ -53,41 +49,26 @@ Cunt::Cunt()
 	ID3D11Device* pDevice = GetDevice();
 
 	// テクスチャ読み込み
-	// 鳥の残り数
-	CreateTextureFromFile(pDevice, CUNT_TEXTURE_0, &g_pCuntTexture[0]);
-
-	CreateTextureFromFile(pDevice, CUNT_TEXTURE_1, &g_pCuntTexture[1]);
-
-	CreateTextureFromFile(pDevice, CUNT_TEXTURE_2, &g_pCuntTexture[2]);
+	// 鳥カウンター
+	CreateTextureFromFile(pDevice, BIRD_CUNT_TEXTURE, &g_pCntTexture);
 	
-    CreateTextureFromFile(pDevice, CUNT_TEXTURE_3, &g_pCuntTexture[3]);
-	
-    CreateTextureFromFile(pDevice, CUNT_TEXTURE_4, &g_pCuntTexture[4]);	
-
-	CreateTextureFromFile(pDevice, CUNT_TEXTURE_5, &g_pCuntTexture[5]);
-	
-	CreateTextureFromFile(pDevice, CUNT_TEXTURE_6, &g_pCuntTexture[6]);
-
-	CreateTextureFromFile(pDevice, CUNT_TEXTURE_7, &g_pCuntTexture[7]);
-	
-	CreateTextureFromFile(pDevice, CUNT_TEXTURE_8, &g_pCuntTexture[8]);
-	
-	CreateTextureFromFile(pDevice, CUNT_TEXTURE_9, &g_pCuntTexture[9]);
-	
-	CreateTextureFromFile(pDevice, CUNT_TEXTURE_10, &g_pCuntTexture[10]);
-
 	// 鳥アイコン
-	CreateTextureFromFile(pDevice, BIRD_CUNT_TEXTURE_2, &g_pUenotoriTexture);
+	CreateTextureFromFile(pDevice, BIRD_ICON_TEXTURE, &m_pIconTexture);
 
-	CreateTextureFromFile(pDevice, BIRD_CUNT_TEXTURE_1, &g_pUenotoriTexture);
+	// ゴールへ迎え！
+	CreateTextureFromFile(pDevice, GO_GOAL_TEXTURE, &m_pGoGoalTexture);
 
 	// 変数初期化
-	m_Cuntpos = XMFLOAT3(550, -300, 0);         // 位置
-	m_Cuntsize = XMFLOAT3(180, 100, 0);          // サイズ
-	m_CuntIconPos = XMFLOAT3(400, -300, 0);		// 位置
+	m_Cuntpos = XMFLOAT3(550, -330, 0);         // 位置
+	m_Cuntsize = XMFLOAT3(60, 100, 0);          // サイズ
+	m_CuntIconPos = XMFLOAT3(300, -300, 0);		// 位置
 	m_CuntIconsize = XMFLOAT3(100, 100, 0);	    // サイズ
+	m_textPos = XMFLOAT3(500, -330, 0);		// 位置
+	m_textSize = XMFLOAT3(120, 100, 0);	// サイズ
+	m_textGoPos =  XMFLOAT3(500, -330, 0);		// 位置
+	m_textGoSize = XMFLOAT3(300, 100, 0);	// サイズ
 
-	Getbird = 10;
+	Getbird = m_birdVessel= GetMaxCrew();
 }
 
 //=============================================================================
@@ -96,12 +77,10 @@ Cunt::Cunt()
 Cunt::~Cunt()
 {
 	// テクスチャ解放	
-	for(int i = 0; i < MAX_BIRD; i++)
-	{
-      SAFE_RELEASE(g_pCuntTexture[i]);
-	}
+	SAFE_RELEASE(g_pCntTexture);
 	
-	SAFE_RELEASE(g_pUenotoriTexture);
+	SAFE_RELEASE(m_pIconTexture);
+	SAFE_RELEASE(m_pGoGoalTexture);
 	
 }
 
@@ -110,8 +89,21 @@ Cunt::~Cunt()
 //=============================================================================
 void Cunt::Update()
 {
+	// テキストの位置をアイコンの位置と紐づける
+	m_textPos.x = m_CuntIconPos.x + m_CuntIconsize.x / 2 + m_textSize.x / 2;
+
+	// 残りの数字テキストをテキストの位置と紐づける
+	m_Cuntpos.x = m_textPos.x + m_textSize.x / 2 + m_Cuntsize.x ;
+
+	// ゴールへ迎え!テキストをアイコンの位置と紐づける
+	m_textGoPos.x = m_CuntIconPos.x + m_CuntIconsize.x / 2 + m_textGoSize.x / 2;
+
+	// 仲間の残り数取得
+	Getbird = GetRemainCrew();
+	m_birdVessel = Getbird ;
+
 #if _DEBUG
-	PrintDebugProc("%d\n",Getbird);
+	PrintDebugProc("ｱﾄ%dﾜ\n", m_birdVessel);
 	PrintDebugProc("\n");
 #else 
 	
@@ -126,24 +118,70 @@ void Cunt::Draw()
 {
 	ID3D11DeviceContext* pBC = GetDeviceContext();
 	SetBlendState(BS_ALPHABLEND);	// アルファブレンド有効
-	
+	m_birdVessel = Getbird;
 
 	// 鳥アイコン
 	SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
 	SetPolygonSize(m_CuntIconsize.x, m_CuntIconsize.y);
 	SetPolygonPos(m_CuntIconPos.x, m_CuntIconPos.y);
-	SetPolygonTexture(g_pUenotoriTexture);
+	SetPolygonTexture(m_pIconTexture);
 	SetPolygonUV(0.0f, 0.0f);
+	SetPolygonFrameSize(1.0f, 0.5f);
 	DrawPolygon(pBC);
 	
+	// あと(n)わ表示
+	if (Getbird != 0)
+	{
+		// テキスト(あと)
+		SetPolygonColor(1, 1, 1);	//ポリゴンカラー
+		SetPolygonSize(m_textSize.x, m_textSize.y);
+		SetPolygonPos(m_textPos.x, m_textPos.y);
+		SetPolygonTexture(g_pCntTexture);
+		SetPolygonUV(0.0f, 0.0f);
+		SetPolygonFrameSize(2.0f / CUNT_X_NUMBER, 1.0f / 3.0f);
+		DrawPolygon(pBC);
+
+		// テキスト(わ)
+		SetPolygonColor(1, 1, 1);	//ポリゴンカラー
+		SetPolygonSize(m_textSize.x / 2, m_textSize.y);
+		SetPolygonPos(m_textPos.x + m_textSize.x / 2 + m_Cuntsize.x * 2 + 30, m_textPos.y);
+		SetPolygonTexture(g_pCntTexture);
+		SetPolygonUV(3.0f / CUNT_X_NUMBER, 0.0f);
+		SetPolygonFrameSize(1.0f / CUNT_X_NUMBER, 1.0f / 3.0f);
+		DrawPolygon(pBC);
+
+		SetPolygonFrameSize(1.0f / CUNT_X_NUMBER, 1.0f / CUNT_Y_NUMBER);
+		// 残りの数
+		for (int i = 0; i < MAX_DIGIT; i++)
+		{
+			unsigned n = (m_birdVessel) % 10 + 5;
+			SetPolygonPos(m_Cuntpos.x - i * m_Cuntsize.x + 30, m_Cuntpos.y);
+			SetPolygonColor(1, 1, 1);	//ポリゴンカラー
+			SetPolygonSize(m_Cuntsize.x, m_Cuntsize.y);
+			SetPolygonUV((n % CUNT_X_NUMBER) / (float)CUNT_X_NUMBER,
+				(n / CUNT_X_NUMBER) / (float)CUNT_Y_NUMBER +((n / CUNT_X_NUMBER)/2 )* 0.06f);
+			DrawPolygon(pBC);
+			m_birdVessel /= 10;
+		}
+
+	}
+	else
+	{
+		// テキスト(ゴールへ迎え！	)
+		SetPolygonColor(1, 1, 1);	//ポリゴンカラー
+		SetPolygonSize(m_textGoSize.x, m_textGoSize.y);
+		SetPolygonPos(m_textGoPos.x, m_textGoPos.y);
+		SetPolygonTexture(m_pGoGoalTexture);
+		SetPolygonUV(0.0f, 0.0f);
+		SetPolygonFrameSize(1.0f, 1.0f);
+		DrawPolygon(pBC);
+
+	}
+
 	
-	// 残りの数
-	SetPolygonColor(1, 1, 1);	//ポリゴンカラー
-	SetPolygonSize(m_Cuntsize.x, m_Cuntsize.y);
-	SetPolygonPos(m_Cuntpos.x, m_Cuntpos.y);
-	SetPolygonTexture(g_pCuntTexture[Getbird]);
 	SetPolygonUV(0.0f, 0.0f);
-	DrawPolygon(pBC);
+	SetPolygonFrameSize(1.0f, 1.0f);
+	
 	SetBlendState(BS_NONE);	// アルファブレンド無効
 
 }
@@ -152,10 +190,7 @@ void Cunt::Draw()
 // 鳥をゲットしたときの処理
 void Cunt::Gatherbird()
 {
-	ID3D11Device* pDevice = GetDevice();
-
-	Getbird--;
-	
+	Getbird--;	
 }
 
 

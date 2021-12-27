@@ -162,6 +162,12 @@
     <ClCompile Include="windManager.cpp">
       <Filter>ソースファイル\scene\gameScene\object</Filter>
     </ClCompile>
+    <ClCompile Include="escapeText.cpp">
+      <Filter>ソースファイル\scene\gameScene\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="crewUI.cpp">
+      <Filter>ソースファイル\scene\gameScene\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AssimpModel.h">
@@ -313,6 +319,12 @@
     </ClInclude>
     <ClInclude Include="titleUI.h">
       <Filter>ヘッダーファイル\scene\titleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="escapeText.h">
+      <Filter>ヘッダーファイル\scene\gameScene\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="crewUI.h">
+      <Filter>ヘッダーファイル\scene\gameScene\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

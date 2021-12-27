@@ -73,6 +73,7 @@ static float g_fStaminaDecrease;	// スタミナ変化量
 static bool g_bStickTrigger;	// スティック用トリガー
 static float g_fOverHeartRecoverySpeed;	// オーバーヒート回復スピード
 static bool g_bSharpTurn;	// 急旋回フラグ
+static float g_fStanRecoverySpeed;	// スタン回復スピード
 //=============================================================================
 // 初期化処理
 //=============================================================================
@@ -127,6 +128,7 @@ HRESULT InitModel(void)
 	g_bStickTrigger = false;
 	g_fOverHeartRecoverySpeed = 0;
 	g_bSharpTurn = false;
+	g_fStanRecoverySpeed = 0;
 	return hr;
 }
 
@@ -147,6 +149,18 @@ void UninitModel(void)
 
 void UpdateModel(void)
 {
+	// コントローラースティック情報取得
+	LONG stickX = GetJoyLX(0);
+	LONG stickY = GetJoyLY(0);
+
+	// デッドゾーン処理
+	if ((stickX < STICK_DEAD_ZONE && stickX > -STICK_DEAD_ZONE) &&
+		(stickY < STICK_DEAD_ZONE && stickY > -STICK_DEAD_ZONE))
+	{
+		stickX = 0;
+		stickY = 0;
+		g_bStickTrigger = false;
+	}
 	XMMATRIX mtxWorld, mtxRot, mtxScl, mtxTranslate;
 
 	// ワールドマトリックスの初期化
@@ -189,7 +203,7 @@ void UpdateModel(void)
 	// スタン時
 	if (g_bStan)
 	{
-		g_fStanTime -= 0.1f;
+		g_fStanTime -= 0.04f + g_fStanRecoverySpeed;
 		if (g_fStanTime < 0)
 		{
 			g_bStan = false;
@@ -198,13 +212,30 @@ void UpdateModel(void)
 		}
 
 		g_posModel.y -= 1.1f;
+		// レバガチャ判定
+		if (stickY > 20000 || stickX > 20000 || stickY < -20000 || stickX < -20000)
+		{
+			if (!g_bStickTrigger)
+			{
+				g_fStanRecoverySpeed = 0.1f;
+				g_bStickTrigger = true;
+			}
+			else
+			{
+				g_fStanRecoverySpeed = 0.0f;
+			}
+		}
+		else
+		{
+			g_bStickTrigger = false;
+		}
 
 		// スタンしてる時は処理をしない
 		return;
 	}
 	if (g_bInvincible)
 	{
-		g_fInvincible -= 0.1f;
+		g_fInvincible -= 0.05f;
 		if (g_fInvincible < 0)
 		{
 			g_bInvincible = false;
@@ -239,18 +270,7 @@ void UpdateModel(void)
 			d = 0.1f;
 		}
 	}
-	// コントローラースティック情報取得
-	LONG stickX = GetJoyLX(0);
-	LONG stickY = GetJoyLY(0);
-
-	// デッドゾーン処理
-	if ((stickX < STICK_DEAD_ZONE && stickX > -STICK_DEAD_ZONE) &&
-		(stickY < STICK_DEAD_ZONE && stickY > -STICK_DEAD_ZONE))
-	{
-		stickX = 0;
-		stickY = 0;
-		g_bStickTrigger = false;
-	}
+	
 	// カメラの向き取得
 	XMFLOAT3 rotCamera = CCamera::Get()->GetAngle();
 
@@ -296,7 +316,7 @@ void UpdateModel(void)
 			g_moveModel.z = -CosDeg(g_rotModel.y) * 5.1f;
 			g_moveModel.x = -SinDeg(g_rotModel.y) * 5.1f;
 			g_moveModel.y = SinDeg(g_rotModel.x) * 5.1f;
-
+			g_bStan = false;
 		}
 		else
 		{
@@ -1013,4 +1033,64 @@ bool GetOverHeartModel()
 bool GetStanModel()
 {
 	return g_bStan;
+}
+void CollisionObjectModel(XMFLOAT3 pos, XMFLOAT3 size1, XMFLOAT3 size2, bool bAout)
+{
+	// 当たったらそこで止まる処理
+	if (bAout)	// size2を使わないとき
+	{
+		if (g_posModel.x + g_collisionSize.x / 2 > pos.x - size1.x / 2)
+		{
+			g_posModel.x = pos.x - size1.x / 2;
+		}
+		if (g_posModel.x - g_collisionSize.x / 2 < pos.x + size1.x / 2)
+		{
+			g_posModel.x = pos.x + size1.x / 2;
+		}
+		if (g_posModel.y + g_collisionSize.y / 2 > pos.y - size1.y / 2)
+		{
+			g_posModel.y = pos.y - size1.y / 2;
+		}
+		if (g_posModel.y - g_collisionSize.y / 2 < pos.y + size1.y / 2)
+		{
+			g_posModel.y = pos.x + size1.y / 2;
+		}
+		if (g_posModel.z + g_collisionSize.z / 2 > pos.z - size1.z / 2)
+		{
+			g_posModel.z = pos.y - size1.z / 2;
+		}
+		if (g_posModel.z - g_collisionSize.z / 2 < pos.z + size1.z / 2)
+		{
+			g_posModel.z = pos.x + size1.z / 2;
+		}
+	}
+	else   // size2を使うとき(多分ビルだけにしか使わん)
+	{
+		if (g_posModel.x  > pos.x + size2.x )
+		{
+			g_posModel.x = pos.x + size2.x +g_collisionSize.x /2;
+		}
+		if (g_posModel.x  < pos.x + size1.x )
+		{
+			g_posModel.x = pos.x + size1.x - g_collisionSize.x / 2;
+		}
+		if (g_posModel.y + g_collisionSize.y / 2 > pos.y + size1.y / 2)
+		{
+			//g_posModel.y = pos.y + size1.y / 2;
+		}
+		if (g_posModel.y - g_collisionSize.y / 2 < pos.y + size2.y &&g_posModel.x  < pos.x + size2.x&&g_posModel.x > pos.x + size1.x&&g_posModel.z > pos.z + size1.z&&g_posModel.z  < pos.z + size2.z)
+		{
+			g_posModel.y = pos.y + size2.y + g_collisionSize.y / 2;
+		}
+		if (g_posModel.z  < pos.z + size1.z )
+		{
+			g_posModel.z = pos.z + size1.z - g_collisionSize.z / 2;
+		}
+		if (g_posModel.z  > pos.z + size2.z )
+		{
+			g_posModel.z = pos.z + size2.z + g_collisionSize.z / 2;
+		}
+	}
+	
+
 }

@@ -93,6 +93,8 @@ GameScene::GameScene()
 	// レバガチャ初期化
 	m_pLever = new Lever;
 
+	// 逃走テキスト初期化
+	m_pEscapeText = new EscapeText;
 
 	// ビルの生成
 	for (int k = 0; k < MAX_BULIDING / 16 / 5; k++)
@@ -129,6 +131,11 @@ GameScene::GameScene()
 	// 変数初期化
 	m_bDebugMode = false;
 	m_bPause = false;
+
+	//時間取得	
+	m_fCurrentTime = m_fRemainTime = (float)timeGetTime();
+	
+	m_timer;
 	//m_bGoal = false;
 }
 
@@ -184,6 +191,9 @@ GameScene::~GameScene()
 
 	// レバガチャ終了
 	delete m_pLever;
+
+	// 逃走テキスト終了
+	delete m_pEscapeText;
 }
 
 //=============================================================================
@@ -191,6 +201,10 @@ GameScene::~GameScene()
 //=============================================================================
 void GameScene::Update()
 {
+	//スタートタイマー
+	m_fCurrentTime = (float)timeGetTime();
+	m_timer = (m_fCurrentTime - m_fRemainTime) / 1000;
+
 	// ポーズ
 	if (GetJoyRelease(0, JOYSTICKID8))	// コントローラーSTARTボタン
 	{
@@ -332,7 +346,9 @@ void GameScene::Update()
 	// ビルとの当たり判定
 	for (int i = 0; i < MAX_BULIDING; i++)
 	{
-
+		XMFLOAT3 pos = m_pBuliding[i].GetPos();
+		XMFLOAT3 size1 = XMFLOAT3(400 - 90, 0, -500 - 130);
+		XMFLOAT3 size2 = XMFLOAT3(400 + 102, m_pBuliding[i].GetSize().y * 100 - 50, -500 + 60);
 		
 		if (GetModelPos().x + GetModelCollisionSize().x / 2 > m_pBuliding[i].GetPos().x + 400 - 90 && GetModelPos().x - GetModelCollisionSize().x / 2 < m_pBuliding[i].GetPos().x + 400 + 102 &&
 			GetModelPos().y + GetModelCollisionSize().y / 2 > 0 && GetModelPos().y - GetModelCollisionSize().y / 2 < m_pBuliding[i].GetPos().y + m_pBuliding[i].GetSize().y * 100  -50&&
@@ -340,11 +356,12 @@ void GameScene::Update()
 			)
 		{
 			StartStanModel();
-																															 
+			CollisionObjectModel(pos,size1,size2,false);
 		}
 
 	}
 
+	// オーバーヒートかスタンしたら
 	if (GetOverHeartModel() || GetStanModel())
 	{
 		// レバガチャ更新
@@ -365,7 +382,16 @@ void GameScene::Update()
 		m_pResult->Update();
 	}*/
 
-	
+	if (GetEscapeCrew())
+	{
+		
+		m_pEscapeText->Update();
+		if (m_pEscapeText->GetAlhpa() <= 0.0f)
+		{
+			m_pEscapeText->SetAlhpa(1.0f);
+			SetEscapeCrew(false);
+		}
+	}
 
 #if _DEBUG
 	if (GetAsyncKeyState(VK_RETURN) & 0x8000)
@@ -410,9 +436,7 @@ void GameScene::Draw()
 	// 敵描画
 	DrawEnemy();
 
-	// 鳥残機カウント描画
-	m_pCunt->Draw();
-
+	
 	// 風マネージャー描画
 	m_pWindManager->Draw();
 
@@ -436,6 +460,10 @@ void GameScene::Draw()
 
 	// スコアUI描画
 	m_pScoreUI->Draw();
+
+	// 鳥残機カウント描画
+	m_pCunt->Draw();
+
 	/*if (m_bGoal)
 	{
 		m_pResult->Draw();
@@ -446,7 +474,11 @@ void GameScene::Draw()
 		// レバガチャ描画
 		m_pLever->Draw();
 	}
-
+	if (GetEscapeCrew())
+	{
+		m_pEscapeText->Draw();
+   }
+	
 	
 
 	// ポーズ中の処理

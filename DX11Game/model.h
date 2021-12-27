@@ -31,3 +31,4 @@ void StartStanModel();
 float GetStaminaDecreaseModel();
 bool GetOverHeartModel();
 bool GetStanModel();
+void CollisionObjectModel(XMFLOAT3 pos, XMFLOAT3 size1, XMFLOAT3 size2 ,bool aout);
