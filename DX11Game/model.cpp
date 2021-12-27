@@ -27,7 +27,7 @@
 #define	VALUE_ROTATE_MODEL	(3.0f)		// 回転速度
 #define	RATE_ROTATE_MODEL	(0.065f)	// 回転慣性係数
 
-#define AUTO_FALL_ROT	(-20)	// 自動落下時の角度
+#define AUTO_FALL_ROT	(-10)	// 自動落下時の角度
 
 #define MAX_ACC (3.5f)			// 加速度の上限
 
@@ -64,6 +64,16 @@ static bool g_bWing;
 static bool g_bWindDelay;
 static float g_WindSound;
 static bool g_bSoundTrriger;
+static float g_fStanTime;	// スタン時間
+static bool g_bStan;	// スタンフラグ
+static bool g_bInvincible;	// 無敵フラグ
+static float g_fInvincible;	// 無敵時間
+static float g_fBilin;		// 点滅時間
+static float g_fStaminaDecrease;	// スタミナ変化量
+static bool g_bStickTrigger;	// スティック用トリガー
+static float g_fOverHeartRecoverySpeed;	// オーバーヒート回復スピード
+static bool g_bSharpTurn;	// 急旋回フラグ
+static float g_fStanRecoverySpeed;	// スタン回復スピード
 //=============================================================================
 // 初期化処理
 //=============================================================================
@@ -109,6 +119,16 @@ HRESULT InitModel(void)
 	g_bWindDelay = false;
 	g_WindSound = 2.0f;
 	g_bSoundTrriger = false;
+	g_bStan = false;
+	g_fStanTime = 10;
+	g_bInvincible = false;
+	g_fInvincible = 10;
+	g_fBilin = 3;
+	g_fStaminaDecrease = 0;
+	g_bStickTrigger = false;
+	g_fOverHeartRecoverySpeed = 0;
+	g_bSharpTurn = false;
+	g_fStanRecoverySpeed = 0;
 	return hr;
 }
 
@@ -129,6 +149,18 @@ void UninitModel(void)
 
 void UpdateModel(void)
 {
+	// コントローラースティック情報取得
+	LONG stickX = GetJoyLX(0);
+	LONG stickY = GetJoyLY(0);
+
+	// デッドゾーン処理
+	if ((stickX < STICK_DEAD_ZONE && stickX > -STICK_DEAD_ZONE) &&
+		(stickY < STICK_DEAD_ZONE && stickY > -STICK_DEAD_ZONE))
+	{
+		stickX = 0;
+		stickY = 0;
+		g_bStickTrigger = false;
+	}
 	XMMATRIX mtxWorld, mtxRot, mtxScl, mtxTranslate;
 
 	// ワールドマトリックスの初期化
@@ -157,6 +189,59 @@ void UpdateModel(void)
 	// 効果音　音量
 	CSound::SetVolume(SE_SWING, 1.0f);
 
+	// 死亡条件
+	if (g_posModel.y <= 0.0f)	// 地面 
+	{
+#if  _DEBUG
+		StartFadeOut(SCENE_GAME);
+#else
+		StartFadeOut(SCENE_GAME);
+#endif
+
+	}
+
+	// スタン時
+	if (g_bStan)
+	{
+		g_fStanTime -= 0.04f + g_fStanRecoverySpeed;
+		if (g_fStanTime < 0)
+		{
+			g_bStan = false;
+			g_fStanTime = 10;
+			g_bInvincible = true;
+		}
+
+		g_posModel.y -= 1.1f;
+		// レバガチャ判定
+		if (stickY > 20000 || stickX > 20000 || stickY < -20000 || stickX < -20000)
+		{
+			if (!g_bStickTrigger)
+			{
+				g_fStanRecoverySpeed = 0.1f;
+				g_bStickTrigger = true;
+			}
+			else
+			{
+				g_fStanRecoverySpeed = 0.0f;
+			}
+		}
+		else
+		{
+			g_bStickTrigger = false;
+		}
+
+		// スタンしてる時は処理をしない
+		return;
+	}
+	if (g_bInvincible)
+	{
+		g_fInvincible -= 0.05f;
+		if (g_fInvincible < 0)
+		{
+			g_bInvincible = false;
+			g_fInvincible = 10;
+		}
+	}
 	// アニメーション更新
 	//d+= 0.02f;
 	g_model.SetAnimTime(d);
@@ -185,17 +270,7 @@ void UpdateModel(void)
 			d = 0.1f;
 		}
 	}
-	// コントローラースティック情報取得
-	LONG stickX = GetJoyLX(0);
-	LONG stickY = GetJoyLY(0);
-
-	// デッドゾーン処理
-	if ((stickX < STICK_DEAD_ZONE && stickX > -STICK_DEAD_ZONE) &&
-		(stickY < STICK_DEAD_ZONE && stickY > -STICK_DEAD_ZONE))
-	{
-		stickX = 0;
-		stickY = 0;
-	}
+	
 	// カメラの向き取得
 	XMFLOAT3 rotCamera = CCamera::Get()->GetAngle();
 
@@ -241,7 +316,7 @@ void UpdateModel(void)
 			g_moveModel.z = -CosDeg(g_rotModel.y) * 5.1f;
 			g_moveModel.x = -SinDeg(g_rotModel.y) * 5.1f;
 			g_moveModel.y = SinDeg(g_rotModel.x) * 5.1f;
-
+			g_bStan = false;
 		}
 		else
 		{
@@ -423,12 +498,20 @@ void UpdateModel(void)
 		// 機体のロール
 		g_rotDestModel.z = -30.0f;
 		g_rotDestModel.y -=  2.0f;
+
+		// 羽ばたき(急旋回)
 		if (GetKeyPress(VK_SPACE) && !g_bOverHeart)
 		{
-			g_stm -= 0.3f;	// スタミナ減少
+			// スタミナ減少
+			g_fStaminaDecrease = -0.3f;
+			g_stm += g_fStaminaDecrease;	
 			g_rotDestModel.y -= 2.0f;
+			g_bSharpTurn = true;
 		}
-
+		else
+		{
+			g_bSharpTurn = false;
+		}
 		
 	}
 	else if ((GetKeyPress(VK_RIGHT) || GetKeyPress(VK_D)) && !bWind)
@@ -436,10 +519,19 @@ void UpdateModel(void)
 		// 機体のロール
 		g_rotDestModel.z = 30.0f;
 		g_rotDestModel.y += 2.0f;
+
+		// 羽ばたき(急旋回)
 		if (GetKeyPress(VK_SPACE) && !g_bOverHeart)
 		{
-			g_stm -= 0.3f;	// スタミナ減少
+			// スタミナ減少
+			g_fStaminaDecrease = -0.3f;
+			g_stm += g_fStaminaDecrease;
 			g_rotDestModel.y += 2.0f;
+			g_bSharpTurn = true;
+		}
+		else
+		{
+			g_bSharpTurn = false;
 		}
 	} 
 	
@@ -454,8 +546,14 @@ void UpdateModel(void)
 		// 羽ばたきｶｿｸ
 		if (GetJoyButton(0, JOYSTICKID6) && !g_bOverHeart)
 		{
-			g_stm -= 0.3f;	// スタミナ減少
+			g_fStaminaDecrease = -0.3f;
+			g_stm += g_fStaminaDecrease;	// スタミナ減少
 			g_rotDestModel.y += 1.0f * stickX / 9000;
+			g_bSharpTurn = true;
+		}
+		else
+		{
+			g_bSharpTurn = false;
 		}
 		// ゲームパッド
 	 // 下降
@@ -727,9 +825,12 @@ void UpdateModel(void)
 	if (g_rotModel.x > 3 && !g_bWindDelay)
 	{
 		// スタミナ減少
-		if(!bWind)	// 風に乗ってないとき
-		g_stm -= 0.2f * g_rotModel.x / 45;
-
+		if (!bWind)	// 風に乗ってないとき
+		{
+			g_fStaminaDecrease = -0.2f * g_rotModel.x / 45;
+			g_stm += g_fStaminaDecrease;
+		}
+	
 		// オーバーヒート
 		if (g_stm <= 0.0f)
 		{
@@ -738,36 +839,56 @@ void UpdateModel(void)
 		}
 
 	}
-	else
+	else if(!g_bSharpTurn)
 	{
 		// スタミナ回復
 		if (!bWind)	// 風に乗ってないとき
 		{
-			g_stm += 0.1f;
-
+			g_fStaminaDecrease = 0.1f;
+			
 		}
 		else 	// 風に乗ってる時
 		{
-			g_stm += 0.5f;
+			g_fStaminaDecrease = 0.5f;
 		}
-		
+		g_stm += g_fStaminaDecrease + g_fOverHeartRecoverySpeed;
 	}
+
+	// スタミナ上限
 	if (g_stm > 100)
 	{
 		g_stm = 100;	// スタミナ上限
 		g_bOverHeart = false;	// オーバーヒート解除
 	}
-	 // 死亡条件
-	if (g_posModel.y <= 0.0f)	// 地面 
+	
+	// オーバーヒート処理(レバガチャで回復速度アップ)
+	if (g_bOverHeart)
 	{
-#if  _DEBUG
-		StartFadeOut(SCENE_GAME);
-#else
-		StartFadeOut(SCENE_GAME);
-#endif
+		// レバガチャ判定
+		if (stickY > 20000 || stickX > 20000 || stickY < -20000 || stickX < -20000)
+		{
+			if (!g_bStickTrigger)
+			{
+				g_fOverHeartRecoverySpeed = 1.5f;
+				g_bStickTrigger = true;
+			}
+			else
+			{
+				g_fOverHeartRecoverySpeed = 0;
+			}
+		}
+		else
+		{
+			g_bStickTrigger = false;
+		}
 		
 	}
-
+	else
+	{
+		g_fOverHeartRecoverySpeed = 0;
+	}
+	
+   // ライト方向処理
 	g_rotLightModel.x = -SinDeg(g_rotModel.y);
 	g_rotLightModel.z = -CosDeg(g_rotModel.y);
 
@@ -805,6 +926,19 @@ void UpdateModel(void)
 void DrawModel(void)
 {
 	ID3D11DeviceContext* pDC = GetDeviceContext();
+
+	if (g_bInvincible || g_bStan)
+	{
+		g_fBilin -= 0.1f;
+		if (g_fBilin < 1)
+		{
+			if (g_fBilin < 0)g_fBilin = 3;
+			
+			
+			return;
+		}
+
+	}
 
 	// 不透明部分を描画
 	g_model.Draw(pDC, g_mtxWorld, eOpacityOnly);
@@ -880,4 +1014,83 @@ XMFLOAT3 GetMoveModel()
 XMFLOAT3& GetModelRotLight()
 {
 	return g_rotLightModel;
+}
+void StartStanModel()
+{
+	if (!g_bInvincible)
+	{
+		g_bStan = true;
+	}
+}
+float GetStaminaDecreaseModel()
+{
+	return g_fStaminaDecrease;
+}
+bool GetOverHeartModel()
+{
+	return g_bOverHeart;
+}
+bool GetStanModel()
+{
+	return g_bStan;
+}
+void CollisionObjectModel(XMFLOAT3 pos, XMFLOAT3 size1, XMFLOAT3 size2, bool bAout)
+{
+	// 当たったらそこで止まる処理
+	if (bAout)	// size2を使わないとき
+	{
+		if (g_posModel.x + g_collisionSize.x / 2 > pos.x - size1.x / 2)
+		{
+			g_posModel.x = pos.x - size1.x / 2;
+		}
+		if (g_posModel.x - g_collisionSize.x / 2 < pos.x + size1.x / 2)
+		{
+			g_posModel.x = pos.x + size1.x / 2;
+		}
+		if (g_posModel.y + g_collisionSize.y / 2 > pos.y - size1.y / 2)
+		{
+			g_posModel.y = pos.y - size1.y / 2;
+		}
+		if (g_posModel.y - g_collisionSize.y / 2 < pos.y + size1.y / 2)
+		{
+			g_posModel.y = pos.x + size1.y / 2;
+		}
+		if (g_posModel.z + g_collisionSize.z / 2 > pos.z - size1.z / 2)
+		{
+			g_posModel.z = pos.y - size1.z / 2;
+		}
+		if (g_posModel.z - g_collisionSize.z / 2 < pos.z + size1.z / 2)
+		{
+			g_posModel.z = pos.x + size1.z / 2;
+		}
+	}
+	else   // size2を使うとき(多分ビルだけにしか使わん)
+	{
+		if (g_posModel.x  > pos.x + size2.x )
+		{
+			g_posModel.x = pos.x + size2.x +g_collisionSize.x /2;
+		}
+		if (g_posModel.x  < pos.x + size1.x )
+		{
+			g_posModel.x = pos.x + size1.x - g_collisionSize.x / 2;
+		}
+		if (g_posModel.y + g_collisionSize.y / 2 > pos.y + size1.y / 2)
+		{
+			//g_posModel.y = pos.y + size1.y / 2;
+		}
+		if (g_posModel.y - g_collisionSize.y / 2 < pos.y + size2.y &&g_posModel.x  < pos.x + size2.x&&g_posModel.x > pos.x + size1.x&&g_posModel.z > pos.z + size1.z&&g_posModel.z  < pos.z + size2.z)
+		{
+			g_posModel.y = pos.y + size2.y + g_collisionSize.y / 2;
+		}
+		if (g_posModel.z  < pos.z + size1.z )
+		{
+			g_posModel.z = pos.z + size1.z - g_collisionSize.z / 2;
+		}
+		if (g_posModel.z  > pos.z + size2.z )
+		{
+			g_posModel.z = pos.z + size2.z + g_collisionSize.z / 2;
+		}
+	}
+	
+
 }

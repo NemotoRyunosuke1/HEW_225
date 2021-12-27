@@ -25,6 +25,8 @@ public:
 private:
 	float m_maxSTM;
 	float m_currentSTM;
+	XMFLOAT3 m_redSize;
+	bool m_bDecrease;
 	bool  m_init;
 	float r;
 	float g;

@@ -62,6 +62,13 @@ struct TAssimpMaterial {
 		SAFE_RELEASE(pTexEmmisive);
 		SAFE_RELEASE(pTexture);
 	}
+	void SetReflectLight(XMFLOAT4 a, XMFLOAT4 d , XMFLOAT4 s , XMFLOAT4 e)
+	{
+		Ka = a;
+		Kd = d;
+		Ks = s;
+		Ke = e;
+	}
 };
 
 // í∏ì_èÓïÒ
@@ -193,6 +200,10 @@ private:
 	ID3D11Buffer* m_pConstantBuffer1;
 
 	ID3D11Buffer* m_pConstantBufferBone;
+	XMFLOAT4 m_La;
+	XMFLOAT4 m_Ld;
+	XMFLOAT4 m_Ls;
+	XMFLOAT4 m_Le;
 
 public:
 	CAssimpMesh(ID3D11Device* pDevice, CAssimpModel* pModel, std::vector<TAssimpVertex> aVertex, std::vector<UINT> aIndex, TAssimpMaterial& material);
@@ -202,6 +213,8 @@ public:
 	void Release();
 
 	void SetBoneMatrix(ID3D11DeviceContext* pDC, XMFLOAT4X4 mtxBone[]);
+
+	void SetReflectLight(XMFLOAT4, XMFLOAT4, XMFLOAT4, XMFLOAT4 Le);
 
 private:
 	bool SetupMesh(ID3D11Device* pDevice);

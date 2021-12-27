@@ -31,6 +31,8 @@ Pause::~Pause()
 {
 	// ƒ{ƒ^ƒ“ƒƒ‚ƒŠŠJ•ú
 	delete[] m_pButton;
+	
+	SAFE_RELEASE(m_pTextureBG);
 }
 
 void Pause::Update()

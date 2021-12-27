@@ -10,6 +10,8 @@
 #include "resultScene.h"
 #include "Cunt.h"
 #include "pause.h"
+#include "lever.h"
+#include "escapeText.h"
 
 class GameScene :public SceneBase
 {
@@ -31,9 +33,17 @@ private:
 	CloudManager* m_pCloudManager;
 	ResultScene* m_pResult;
 	Pause* m_pPause;
+	Lever* m_pLever;
+	EscapeText* m_pEscapeText;
 
 	bool m_bDebugMode;
 	bool m_bPause;
 	bool m_bGoal;
+
+	// タイマー用変数
+	float m_fRemainTime;
+	float m_fCurrentTime;
+	float m_timer;
+
 };
 

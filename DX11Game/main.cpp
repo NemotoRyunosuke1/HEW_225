@@ -76,15 +76,15 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdL
 		0,
 		0,
 		hInstance,
-		LoadIcon(hInstance, MAKEINTRESOURCE(IDI_MAINFRM)),
+		LoadIcon(hInstance, MAKEINTRESOURCE(IDI_MAINFRM2)),
 		LoadCursor(nullptr, IDC_ARROW),
 		(HBRUSH)(COLOR_WINDOW + 1),
 		nullptr,
 		CLASS_NAME,
-		nullptr
+		LoadIcon(hInstance, MAKEINTRESOURCE(IDI_MAINFRM))
 	};
 	MSG msg;
-	
+	//ExtractIconExA(LPCSTR(1),0, (HICON)LoadIcon(hInstance, MAKEINTRESOURCE(IDI_MAINFRM));
 	// COM初期化
 	if (FAILED(CoInitializeEx(nullptr, COINIT_MULTITHREADED))) {
 		MessageBox(NULL, _T("COMの初期化に失敗しました。"), _T("error"), MB_OK);
@@ -122,6 +122,8 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdL
 	timeBeginPeriod(1);				// 分解能を設定
 	dwExecLastTime = dwFPSLastTime = timeGetTime();
 	dwCurrentTime = dwFrameCount = 0;
+
+	
 
 	// ウインドウの表示(初期化処理の後に呼ばないと駄目)
 	ShowWindow(g_hWnd, nCmdShow);
@@ -164,7 +166,7 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdL
 			dwFrameCount++;
 		}
 	}
-
+	
 	// タイマ設定を元に戻す
 	timeEndPeriod(1);
 
@@ -194,7 +196,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	case WM_KEYDOWN:				//----- キーボードが押された
 		switch (wParam) {
 		case VK_ESCAPE:					// [ESC]キーが押された
-			PostMessage(hWnd, WM_CLOSE, 0, 0);	// [x]が押されたように振舞う
+#if _DEBUG
+		   PostMessage(hWnd, WM_CLOSE, 0, 0);	// [x]が押されたように振舞う
+#endif // DEBUG
+		
 			return 0;
 		}
 		break;

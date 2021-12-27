@@ -79,8 +79,8 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)$(ProjectName)\</OutDir>
     <TargetName>$(ProjectName)D</TargetName>
-    <IncludePath>C:\Users\naona\OneDrive\デスクトップ\HAL\2年\DX22\HEW_project_ver3\DX11Game;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\naona\OneDrive\デスクトップ\HAL\2年\DX22\HEW_project_ver3\DX11Game\Effekseer;C:\Users\naona\OneDrive\デスクトップ\HAL\2年\DX22\HEW_project_ver3\DX11Game;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\nemot\OneDrive\デスクトップ\授業\2年生\DX22\3D_game_base\DX11Game;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\nemot\OneDrive\デスクトップ\授業\2年生\DX22\3D_game_base\DX11Game;C:\Users\nemot\OneDrive\デスクトップ\授業\2年生\DX22\3D_game_base\DX11Game\Effekseer;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -90,8 +90,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)$(ProjectName)\</OutDir>
-    <IncludePath>C:\Users\naona\OneDrive\デスクトップ\HAL\2年\DX22\HEW_project_ver3\DX11Game;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\naona\OneDrive\デスクトップ\HAL\専科\ｴﾌｪｸﾄﾌﾟﾛｸﾞﾗﾐﾝｸﾞ\ソフト\EffekseerSample\DirectXProject\DirectXProject;C:\Users\naona\OneDrive\デスクトップ\HAL\2年\DX22\HEW_project_ver3\DX11Game\Effekseer;C:\Users\naona\OneDrive\デスクトップ\HAL\2年\DX22\HEW_project_ver3\DX11Game;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\nemot\OneDrive\デスクトップ\授業\2年生\DX22\3D_game_base\DX11Game;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\naona\OneDrive\デスクトップ\HAL\専科\ｴﾌｪｸﾄﾌﾟﾛｸﾞﾗﾐﾝｸﾞ\ソフト\EffekseerSample\DirectXProject\DirectXProject;C:\Users\nemot\OneDrive\デスクトップ\授業\2年生\DX22\3D_game_base\DX11Game;C:\Users\nemot\OneDrive\デスクトップ\授業\2年生\DX22\3D_game_base\DX11Game\Effekseer;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -171,15 +171,18 @@
     <ClCompile Include="cloudManagercpp.cpp" />
     <ClCompile Include="collision.cpp" />
     <ClCompile Include="crew.cpp" />
+    <ClCompile Include="crewUI.cpp" />
     <ClCompile Include="Cunt.cpp" />
     <ClCompile Include="debugproc.cpp" />
     <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="EffectTest.cpp" />
     <ClCompile Include="enemy.cpp" />
+    <ClCompile Include="escapeText.cpp" />
     <ClCompile Include="fade.cpp" />
     <ClCompile Include="gameScene.cpp" />
     <ClCompile Include="goal.cpp" />
     <ClCompile Include="input.cpp" />
+    <ClCompile Include="lever.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mesh.cpp" />
@@ -219,15 +222,18 @@
     <ClInclude Include="cloudManager.h" />
     <ClInclude Include="collision.h" />
     <ClInclude Include="crew.h" />
+    <ClInclude Include="crewUI.h" />
     <ClInclude Include="Cunt.h" />
     <ClInclude Include="debugproc.h" />
     <ClInclude Include="EffectManager.h" />
     <ClInclude Include="EffectTest.h" />
     <ClInclude Include="enemy.h" />
+    <ClInclude Include="escapeText.h" />
     <ClInclude Include="fade.h" />
     <ClInclude Include="gameScene.h" />
     <ClInclude Include="goal.h" />
     <ClInclude Include="input.h" />
+    <ClInclude Include="lever.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="mesh.h" />
@@ -350,6 +356,7 @@
     <ResourceCompile Include="DX11Game.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="murekidori.ico" />
     <Image Include="res\directx9.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
