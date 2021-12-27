@@ -96,6 +96,9 @@ GameScene::GameScene()
 	// 逃走テキスト初期化
 	m_pEscapeText = new EscapeText;
 
+	// タイマーUI初期化
+	m_pTimerUI = new TimerUI;
+
 	// ビルの生成
 	for (int k = 0; k < MAX_BULIDING / 16 / 5; k++)
 	{
@@ -194,6 +197,9 @@ GameScene::~GameScene()
 
 	// 逃走テキスト終了
 	delete m_pEscapeText;
+
+	// タイマーUI終了
+	delete m_pTimerUI;
 }
 
 //=============================================================================
@@ -304,6 +310,9 @@ void GameScene::Update()
 
 	// スコアUI更新
 	m_pScoreUI->Update();
+
+	// タイマーUI更新
+	m_pTimerUI->Update();
 
 	// ビル更新
 	for (int i = 0; i < MAX_BULIDING; i++)
@@ -479,7 +488,8 @@ void GameScene::Draw()
 		m_pEscapeText->Draw();
    }
 	
-	
+	// タイマーUI更新
+	m_pTimerUI->Draw();
 
 	// ポーズ中の処理
 	if (m_bPause)
