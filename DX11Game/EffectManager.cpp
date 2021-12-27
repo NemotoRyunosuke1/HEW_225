@@ -62,6 +62,7 @@ int EffectManager::Load(const char *Create)
 	// fileNameに基づいてエフェクトの読み込み
 	// エフェクトのデータを読み込み
 	m_effect = Effekseer::Effect::Create(m_manager, u"Assets/wind_jousyou_Small.efk");
+	m_effect1 = Effekseer::Effect::Create(m_manager, u"Assets/Sutan.efk");
 
 	return 0; // エフェクトハンドルを返す
 }
@@ -93,18 +94,23 @@ int EffectManager::Play(int Handle)
 
 	
 
-	if (GetKeyTrigger('P'))
+	if (time > 130.0f)
 	{
+		time = 0;
 		m_handle = m_manager->Play(m_effect, 0, 0, 0);      //表示＆座標
 		m_manager->SetScale(m_handle, 5.0f, 10.0f, 5.0f);   //大きさ
+
+		m_handle = m_manager->Play(m_effect, -1800, 0, 0);
+		m_manager->SetScale(m_handle, 5.0f, 10.0f, 5.0f);
 	}
 
 	
-	if (GetKeyTrigger('O'))
-	{
-		m_handle = m_manager->Play(m_effect, -1800, 0, 1200);
-		m_manager->SetScale(m_handle, 5.0f, 10.0f, 5.0f);
 
+	if (time > 100.0f)
+	{
+		time = 0;
+		m_handle = m_manager->Play(m_effect1, 100, 100, 100);
+		m_manager->SetScale(m_handle, 5.0f, 10.0f, 5.0f);
 	}
 
 	m_manager->Update();

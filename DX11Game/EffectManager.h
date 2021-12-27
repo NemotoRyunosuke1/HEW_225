@@ -43,6 +43,7 @@ private:
 	EffekseerRendererDX11::RendererRef m_renderer;
 	Effekseer::ManagerRef m_manager;
 	Effekseer::EffectRef m_effect;
+	Effekseer::EffectRef m_effect1;
 	Effekseer::Handle m_handle;
 };
 
