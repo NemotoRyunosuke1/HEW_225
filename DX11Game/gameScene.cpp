@@ -93,6 +93,8 @@ GameScene::GameScene()
 	// レバガチャ初期化
 	m_pLever = new Lever;
 
+	// 逃走テキスト初期化
+	m_pEscapeText = new EscapeText;
 
 	// ビルの生成
 	for (int k = 0; k < MAX_BULIDING / 16 / 5; k++)
@@ -184,6 +186,9 @@ GameScene::~GameScene()
 
 	// レバガチャ終了
 	delete m_pLever;
+
+	// 逃走テキスト終了
+	delete m_pEscapeText;
 }
 
 //=============================================================================
@@ -368,7 +373,16 @@ void GameScene::Update()
 		m_pResult->Update();
 	}*/
 
-	
+	if (GetEscapeCrew())
+	{
+		
+		m_pEscapeText->Update();
+		if (m_pEscapeText->GetAlhpa() <= 0.0f)
+		{
+			m_pEscapeText->SetAlhpa(1.0f);
+			SetEscapeCrew(false);
+		}
+	}
 
 #if _DEBUG
 	if (GetAsyncKeyState(VK_RETURN) & 0x8000)
@@ -451,7 +465,11 @@ void GameScene::Draw()
 		// レバガチャ描画
 		m_pLever->Draw();
 	}
-
+	if (GetEscapeCrew())
+	{
+		m_pEscapeText->Draw();
+   }
+	
 	
 
 	// ポーズ中の処理

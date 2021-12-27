@@ -12,6 +12,7 @@
 #include "model.h"
 #include "collision.h"
 #include <stdlib.h>
+#include "crew.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -77,7 +78,7 @@ static CAssimpModel	g_model;			      // モデル
 static TEnemy		g_enemy[MAX_ENEMY];	      // 敵の情報
 static ID3D11ShaderResourceView* g_pTexture;
 static int		g_nEnemy;			          // 敵現在数
-
+static bool g_bTrigger;	// トリガーフラグ
 //=============================================================================
 // 初期化処理
 //=============================================================================
@@ -118,6 +119,7 @@ HRESULT InitEnemy(void)
 			}
 
 	CreateEnemy(XMFLOAT3(0.0f, 500.0f, 0.0f));
+	g_bTrigger = false;
 	return hr;
 }
 
@@ -338,14 +340,28 @@ void UpdateEnemy(void)
 		// 攻撃中
 		if (g_enemy[i].m_bAtack)
 		{
+			
 			// アニメーション更新
 			g_enemy[i].dAnimTime += 0.02f;
 
 			// 攻撃判定時間
 			if (g_enemy[i].dAnimTime > 0.8f && g_enemy[i].dAnimTime < 1.0f)
 			{
+			
 				// プレイヤースタン
-				if(hit2)StartStanModel();
+				if (hit2)
+				{
+					StartStanModel();	// プレイヤ―のスタンの開始
+					if (!g_bTrigger)
+					{
+						StartEscapeCrew();	// 味方の逃走
+						g_bTrigger = true;
+					}		
+				}
+			}
+			else
+			{
+				g_bTrigger = false;
 			}
 
 			// アニメーションリセット

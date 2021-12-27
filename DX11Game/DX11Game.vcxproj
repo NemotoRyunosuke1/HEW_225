@@ -176,6 +176,7 @@
     <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="EffectTest.cpp" />
     <ClCompile Include="enemy.cpp" />
+    <ClCompile Include="escapeText.cpp" />
     <ClCompile Include="fade.cpp" />
     <ClCompile Include="gameScene.cpp" />
     <ClCompile Include="goal.cpp" />
@@ -225,6 +226,7 @@
     <ClInclude Include="EffectManager.h" />
     <ClInclude Include="EffectTest.h" />
     <ClInclude Include="enemy.h" />
+    <ClInclude Include="escapeText.h" />
     <ClInclude Include="fade.h" />
     <ClInclude Include="gameScene.h" />
     <ClInclude Include="goal.h" />

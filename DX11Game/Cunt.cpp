@@ -13,7 +13,7 @@
 // マクロ定義
 
 
-#define BIRD_CUNT_TEXTURE L"data/texture/万能文字1.png"
+#define BIRD_CUNT_TEXTURE L"data/texture/万能文字.png"
 #define BIRD_ICON_TEXTURE L"data/texture/残り数.png"
 #define GO_GOAL_TEXTURE L"data/texture/ato0.png"
 
@@ -159,7 +159,7 @@ void Cunt::Draw()
 			SetPolygonColor(1, 1, 1);	//ポリゴンカラー
 			SetPolygonSize(m_Cuntsize.x, m_Cuntsize.y);
 			SetPolygonUV((n % CUNT_X_NUMBER) / (float)CUNT_X_NUMBER,
-				(n / CUNT_X_NUMBER) / (float)CUNT_Y_NUMBER);
+				(n / CUNT_X_NUMBER) / (float)CUNT_Y_NUMBER +((n / CUNT_X_NUMBER)/2 )* 0.06f);
 			DrawPolygon(pBC);
 			m_birdVessel /= 10;
 		}
