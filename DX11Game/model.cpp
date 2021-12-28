@@ -15,6 +15,7 @@
 #include "windManager.h"
 #include "Sound.h"
 #include <stdlib.h>
+#include "EffectManager.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -104,7 +105,7 @@ HRESULT InitModel(void)
 	g_nShadow = CreateShadow(g_posModel, 12.0f);
 
 	bFlg = false;
-	//風の移動量？の初期化？
+	//風の移動量の初期化
 	bWind = false;
 	for (int i = 0; i < MAX_WIND; i++) {
 		bWind1[i] = false;
@@ -210,6 +211,9 @@ void UpdateModel(void)
 			g_fStanTime = 10;
 			g_bInvincible = true;
 		}
+
+		//スタンエフェクト表示
+		EffectManager::Play(2);
 
 		g_posModel.y -= 1.1f;
 		// レバガチャ判定

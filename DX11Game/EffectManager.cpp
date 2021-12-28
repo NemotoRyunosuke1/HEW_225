@@ -8,9 +8,18 @@
 #include "EffectManager.h"
 #include "input.h"
 #include "Camera.h"
+#include "model.h"
 
 Effekseer::EffectRef m_effcet;
 Effekseer::EffectRef m_handle;
+
+EffekseerRendererDX11::RendererRef EffectManager::m_renderer;
+Effekseer::ManagerRef EffectManager::m_manager;
+Effekseer::EffectRef EffectManager::m_effect;		//風
+Effekseer::EffectRef EffectManager::m_effect1;		//風_黄色
+Effekseer::EffectRef EffectManager::m_effect2;		//スタン
+Effekseer::EffectRef EffectManager::m_effect3;		//風_横
+Effekseer::Handle EffectManager::m_handle;
 
 EffectManager* EffectManager::m_pInstance = nullptr;
 
@@ -62,7 +71,9 @@ int EffectManager::Load(const char *Create)
 	// fileNameに基づいてエフェクトの読み込み
 	// エフェクトのデータを読み込み
 	m_effect = Effekseer::Effect::Create(m_manager, u"Assets/wind_jousyou_Small.efk");
-	m_effect1 = Effekseer::Effect::Create(m_manager, u"Assets/Sutan.efk");
+	m_effect1 = Effekseer::Effect::Create(m_manager, u"Assets/wind_jousyou_Small_Yellow.efk");
+	m_effect2 = Effekseer::Effect::Create(m_manager, u"Assets/Sutan.efk");
+	m_effect3 = Effekseer::Effect::Create(m_manager, u"Assets/wind_yoko.efk");
 
 	return 0; // エフェクトハンドルを返す
 }
@@ -92,26 +103,58 @@ int EffectManager::Play(int Handle)
 	// Effekseer
 	static int time = 0;
 
+	switch (Handle)
+	{
+	case 0: /*if (time > 130.0f)*/
+	{
+		////風
+		//time = 0;
+		//m_handle = m_manager->Play(m_effect, 0, 0, 0);      //表示＆座標
+		//m_manager->SetScale(m_handle, 5.0f, 10.0f, 5.0f);   //大きさ
+
+	} break;
+
+	case 1: 
+		//風_黄色
+		m_handle = m_manager->Play(m_effect1, -1800, 0, 0);
+		m_manager->SetScale(m_handle, 15.0f, 20.0f, 15.0f);
+	 break;
+
+	case 2: 
+		//スタン
+		if (time > 100.0f) 
+		{
+			time = 0;
+			m_handle = m_manager->Play(m_effect2, GetModelPos().x, GetModelPos().y - 10 , GetModelPos().z);
+			m_manager->SetScale(m_handle, 1.0f, 1.0f, 1.0f);
+			cameraPos.y - 100.0f;
+		}
+	 break;
+
+	default:
 	
+
+
+		break;
+	}
 
 	if (time > 130.0f)
 	{
+		//風
 		time = 0;
 		m_handle = m_manager->Play(m_effect, 0, 0, 0);      //表示＆座標
 		m_manager->SetScale(m_handle, 5.0f, 10.0f, 5.0f);   //大きさ
 
-		m_handle = m_manager->Play(m_effect, -1800, 0, 0);
-		m_manager->SetScale(m_handle, 5.0f, 10.0f, 5.0f);
+		m_handle = m_manager->Play(m_effect, -1800, 0, 0);      //表示＆座標
+		m_manager->SetScale(m_handle, 5.0f, 10.0f, 5.0f);   //大きさ
+
+		m_handle = m_manager->Play(m_effect3, -1800, 300, -1000);      //表示＆座標
+		m_manager->SetScale(m_handle, 10.0f, 10.0f, 10.0f);   //大きさ
 	}
+	
 
 	
 
-	if (time > 100.0f)
-	{
-		time = 0;
-		m_handle = m_manager->Play(m_effect1, 100, 100, 100);
-		m_manager->SetScale(m_handle, 5.0f, 10.0f, 5.0f);
-	}
 
 	m_manager->Update();
 	m_renderer->SetTime(time++ / 60.0f);
