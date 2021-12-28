@@ -42,10 +42,11 @@ private:
 
 	static EffekseerRendererDX11::RendererRef m_renderer;
 	static Effekseer::ManagerRef m_manager;
-	static Effekseer::EffectRef m_effect;
-	static Effekseer::EffectRef m_effect1;
-	static Effekseer::EffectRef m_effect2;
-	static Effekseer::EffectRef m_effect3;
+	static Effekseer::EffectRef m_effect;	//•—_ã
+	static Effekseer::EffectRef m_effect1;	//•—_‰©F
+	static Effekseer::EffectRef m_effect2;	//•—_‰¡
+	static Effekseer::EffectRef m_effect3;	//ƒXƒ^ƒ“
+	static Effekseer::EffectRef m_effect4;	//»šº
 	static Effekseer::Handle m_handle;
 };
 

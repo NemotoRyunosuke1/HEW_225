@@ -195,6 +195,7 @@ void UpdateModel(void)
 	{
 #if  _DEBUG
 		StartFadeOut(SCENE_GAME);
+		EffectManager::Play(2);
 #else
 		StartFadeOut(SCENE_GAME);
 #endif
@@ -213,7 +214,7 @@ void UpdateModel(void)
 		}
 
 		//スタンエフェクト表示
-		EffectManager::Play(2);
+		EffectManager::Play(1);
 
 		g_posModel.y -= 1.1f;
 		// レバガチャ判定
