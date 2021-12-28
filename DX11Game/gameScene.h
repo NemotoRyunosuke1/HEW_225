@@ -12,6 +12,7 @@
 #include "pause.h"
 #include "lever.h"
 #include "escapeText.h"
+#include "timerUI.h"
 
 class GameScene :public SceneBase
 {
@@ -35,6 +36,7 @@ private:
 	Pause* m_pPause;
 	Lever* m_pLever;
 	EscapeText* m_pEscapeText;
+	TimerUI* m_pTimerUI;
 
 	bool m_bDebugMode;
 	bool m_bPause;

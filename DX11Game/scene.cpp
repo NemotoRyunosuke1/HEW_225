@@ -17,6 +17,7 @@ TitleScene* Scene::m_pTitleScene;
 GameScene* Scene::m_pGameScene;
 StageSlectScene* Scene::m_pStageSelectScene;
 ResultScene* Scene::m_pResultScene;
+GameOverScene* Scene::m_pGameOverScene;
 
 //=============================================================================
 // コンストラクタ
@@ -54,6 +55,10 @@ Scene::Scene()
 		m_pResultScene = new ResultScene;
 		break;
 
+	case SCENE_GAMEOVER:
+		m_pGameOverScene = new GameOverScene;
+		break;
+
 	case MAX_SCENE:
 		break;
 	default:
@@ -85,6 +90,10 @@ Scene::~Scene()
 
 	case SCENE_RESULT:
 		delete m_pResultScene;
+		break;
+
+	case SCENE_GAMEOVER:
+		delete m_pGameOverScene;
 		break;
 
 	case MAX_SCENE:
@@ -132,6 +141,10 @@ void Scene::Update()
 		m_pResultScene->Update();
 		break;
 
+	case SCENE_GAMEOVER:
+		m_pGameOverScene->Update();
+		break;
+
 	case MAX_SCENE:
 		break;
 	default:
@@ -155,6 +168,10 @@ void Scene::Update()
 	if (GetAsyncKeyState(VK_F4) & 0x8000)
 	{
 		StartFadeOut(SCENE_RESULT);
+	}	
+	if (GetAsyncKeyState(VK_F5) & 0x8000)
+	{
+		StartFadeOut(SCENE_GAMEOVER);
 	}
 #endif
 	// フェード更新
@@ -182,6 +199,10 @@ void Scene::Draw()
 
 	case SCENE_RESULT:
 		m_pResultScene->Draw();
+		break;
+
+	case SCENE_GAMEOVER:
+		m_pGameOverScene->Draw();
 		break;
 
 	case MAX_SCENE:
@@ -230,6 +251,10 @@ void Scene::SetScene(EScene eScene)
 		delete m_pResultScene;
 		break;
 
+	case SCENE_GAMEOVER:
+		delete m_pGameOverScene;
+		break;
+
 	case MAX_SCENE:
 		break;
 	default:
@@ -256,6 +281,10 @@ void Scene::SetScene(EScene eScene)
 
 	case SCENE_RESULT://リザルトシーン
 		m_pResultScene = new ResultScene;
+		break;
+
+	case SCENE_GAMEOVER:
+		m_pGameOverScene = new GameOverScene;
 		break;
 
 	case MAX_SCENE:

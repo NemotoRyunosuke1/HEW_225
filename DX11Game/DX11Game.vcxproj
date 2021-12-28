@@ -179,6 +179,8 @@
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="escapeText.cpp" />
     <ClCompile Include="fade.cpp" />
+    <ClCompile Include="gameOverScene.cpp" />
+    <ClCompile Include="gameOverSceneButton.cpp" />
     <ClCompile Include="gameScene.cpp" />
     <ClCompile Include="goal.cpp" />
     <ClCompile Include="input.cpp" />
@@ -204,6 +206,7 @@
     <ClCompile Include="stageSelectScene.cpp" />
     <ClCompile Include="staminaBar.cpp" />
     <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="timerUI.cpp" />
     <ClCompile Include="titleBG.cpp" />
     <ClCompile Include="titleButton.cpp" />
     <ClCompile Include="titleScene.cpp" />
@@ -230,6 +233,8 @@
     <ClInclude Include="enemy.h" />
     <ClInclude Include="escapeText.h" />
     <ClInclude Include="fade.h" />
+    <ClInclude Include="gameOverScene.h" />
+    <ClInclude Include="gameOverSceneButton.h" />
     <ClInclude Include="gameScene.h" />
     <ClInclude Include="goal.h" />
     <ClInclude Include="input.h" />
@@ -258,6 +263,7 @@
     <ClInclude Include="stageSelectScene.h" />
     <ClInclude Include="staminaBar.h" />
     <ClInclude Include="Texture.h" />
+    <ClInclude Include="timerUI.h" />
     <ClInclude Include="titleBG.h" />
     <ClInclude Include="titleButton.h" />
     <ClInclude Include="titleScene.h" />

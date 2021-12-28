@@ -13,6 +13,8 @@
 #include "collision.h"
 #include "Sound.h"
 #include "Cunt.h"
+#include "crewUI.h"
+
 #if _DEBUG
 #include "input.h"
 #endif // _DEBUG
@@ -114,7 +116,9 @@ HRESULT InitCrew(void)
 
 		g_crew[i].m_CollectTrriger = false;
 		g_crew[i].m_bEscape = false;
-	}
+
+
+		}
 	CrewCnt = 0;
 	g_nMaxCrew = 0;
 	g_nRemainCrew = 0;
@@ -163,8 +167,18 @@ void UpdateCrew(void)
 		{
 			continue;
 		}
-
 		
+		// UI移動
+		if (!g_crew[i].m_catch)
+		{
+			SetCrewUI(XMFLOAT3(g_crew[i].m_pos.x, g_crew[i].m_pos.y + 50, g_crew[i].m_pos.z), 60, 60, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), i);	// 仲間用UIセット
+
+		}
+		else
+		{
+			SetUseCrewUI(false, i);
+		}
+		//SetCrewUI(XMFLOAT3(g_crew[i].m_pos.x, g_crew[i].m_pos.y + 50, g_crew[i].m_pos.z), 30, 30, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f));	// 仲間用UIセット
 
 		// アニメーション
 		g_crew[i].m_model.SetAnimTime(g_crew[i].m_animTime);
@@ -388,11 +402,6 @@ void DrawCrew(void)
 		SetZWrite(true);				// Zバッファ更新する
 		SetBlendState(BS_NONE);			// アルファブレンド無効
 	}
-
-	for (int i = 0; i < MAX_CREW; ++i)
-	{
-		
-	}
 }
 
 int StartChase(int i, XMFLOAT3 pos)
@@ -492,8 +501,8 @@ int& GetCrewCnt()
 	return CrewCnt;
 }
 
-void CrewCreate(XMFLOAT3 pos1, XMFLOAT3 pos2, XMFLOAT3 pos3, XMFLOAT3 pos4, XMFLOAT3 pos5,
-	            XMFLOAT3 pos6, XMFLOAT3 pos7, XMFLOAT3 pos8, XMFLOAT3 pos9, XMFLOAT3 pos10)
+
+void CrewCreate(XMFLOAT3 pos1)
 {
 	ID3D11Device* pDevice = GetDevice();
 	ID3D11DeviceContext* pDeviceContext = GetDeviceContext();
@@ -529,296 +538,10 @@ void CrewCreate(XMFLOAT3 pos1, XMFLOAT3 pos2, XMFLOAT3 pos3, XMFLOAT3 pos4, XMFL
 		g_crew[i].m_pos = g_crew[i].m_initPos = pos1;
 		g_crew[i].m_use = true;
 		g_nMaxCrew++;
+		
 		break;
 	}
-	for (int i = 0; i < MAX_CREW; ++i)
-	{
-		if (g_crew[i].m_use)
-		{
-			continue;
-		}
-		switch (rand() % 5)
-		{
-		case 0:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW1); // モデルデータの読み込み
-			break;
-		case 1:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW2); // モデルデータの読み込み
-			break;
-		case 2:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW3); // モデルデータの読み込み
-			break;
-		case 3:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW4); // モデルデータの読み込み
-			break;
-		case 4:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW5); // モデルデータの読み込み
-			break;
-
-		default:
-			break;
-		}
-		g_crew[i].m_pos = g_crew[i].m_initPos = pos2;
-		g_crew[i].m_use = true;
-		g_nMaxCrew++;
-		break;
-	}
-	for (int i = 0; i < MAX_CREW; ++i)
-	{
-		if (g_crew[i].m_use)
-		{
-			continue;
-		}
-		switch (rand() % 5)
-		{
-		case 0:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW1); // モデルデータの読み込み
-			break;
-		case 1:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW2); // モデルデータの読み込み
-			break;
-		case 2:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW3); // モデルデータの読み込み
-			break;
-		case 3:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW4); // モデルデータの読み込み
-			break;
-		case 4:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW5); // モデルデータの読み込み
-			break;
-
-		default:
-			break;
-		}
-		g_crew[i].m_pos = g_crew[i].m_initPos = pos3;
-		g_crew[i].m_use = true;
-		g_nMaxCrew++;
-		break;
-	}
-	for (int i = 0; i < MAX_CREW; ++i)
-	{
-		if (g_crew[i].m_use)
-		{
-			continue;
-		}
-		switch (rand() % 5)
-		{
-		case 0:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW1); // モデルデータの読み込み
-			break;
-		case 1:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW2); // モデルデータの読み込み
-			break;
-		case 2:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW3); // モデルデータの読み込み
-			break;
-		case 3:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW4); // モデルデータの読み込み
-			break;
-		case 4:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW5); // モデルデータの読み込み
-			break;
-
-		default:
-			break;
-		}
-		g_crew[i].m_pos = g_crew[i].m_initPos = pos4;
-		g_crew[i].m_use = true;
-		g_nMaxCrew++;
-		break;
-	}
-	for (int i = 0; i < MAX_CREW; ++i)
-	{
-		if (g_crew[i].m_use)
-		{
-			continue;
-		}
-		switch (rand() % 5)
-		{
-		case 0:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW1); // モデルデータの読み込み
-			break;
-		case 1:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW2); // モデルデータの読み込み
-			break;
-		case 2:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW3); // モデルデータの読み込み
-			break;
-		case 3:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW4); // モデルデータの読み込み
-			break;
-		case 4:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW5); // モデルデータの読み込み
-			break;
-
-		default:
-			break;
-		}
-		g_crew[i].m_pos = g_crew[i].m_initPos = pos5;
-		g_crew[i].m_use = true;
-		g_nMaxCrew++;
-		break;
-	}
-	for (int i = 0; i < MAX_CREW; ++i)
-	{
-		if (g_crew[i].m_use)
-		{
-			continue;
-		}
-		switch (rand() % 5)
-		{
-		case 0:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW1); // モデルデータの読み込み
-			break;
-		case 1:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW2); // モデルデータの読み込み
-			break;
-		case 2:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW3); // モデルデータの読み込み
-			break;
-		case 3:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW4); // モデルデータの読み込み
-			break;
-		case 4:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW5); // モデルデータの読み込み
-			break;
-
-		default:
-			break;
-		}
-		g_crew[i].m_pos = g_crew[i].m_initPos = pos6;
-		g_crew[i].m_use = true;
-		g_nMaxCrew++;
-		break;
-	}
-	for (int i = 0; i < MAX_CREW; ++i)
-	{
-		if (g_crew[i].m_use)
-		{
-			continue;
-		}
-		switch (rand() % 5)
-		{
-		case 0:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW1); // モデルデータの読み込み
-			break;
-		case 1:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW2); // モデルデータの読み込み
-			break;
-		case 2:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW3); // モデルデータの読み込み
-			break;
-		case 3:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW4); // モデルデータの読み込み
-			break;
-		case 4:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW5); // モデルデータの読み込み
-			break;
-
-		default:
-			break;
-		}
-		g_crew[i].m_pos = g_crew[i].m_initPos = pos7;
-		g_crew[i].m_use = true;
-		g_nMaxCrew++;
-		break;
-	}
-	for (int i = 0; i < MAX_CREW; ++i)
-	{
-		if (g_crew[i].m_use)
-		{
-			continue;
-		}
-		switch (rand() % 5)
-		{
-		case 0:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW1); // モデルデータの読み込み
-			break;
-		case 1:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW2); // モデルデータの読み込み
-			break;
-		case 2:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW3); // モデルデータの読み込み
-			break;
-		case 3:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW4); // モデルデータの読み込み
-			break;
-		case 4:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW5); // モデルデータの読み込み
-			break;
-
-		default:
-			break;
-		}
-		g_crew[i].m_pos = g_crew[i].m_initPos = pos8;
-		g_crew[i].m_use = true;
-		g_nMaxCrew++;
-		break;
-	}
-	for (int i = 0; i < MAX_CREW; ++i)
-	{
-		if (g_crew[i].m_use)
-		{
-			continue;
-		}
-		switch (rand() % 5)
-		{
-		case 0:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW1); // モデルデータの読み込み
-			break;
-		case 1:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW2); // モデルデータの読み込み
-			break;
-		case 2:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW3); // モデルデータの読み込み
-			break;
-		case 3:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW4); // モデルデータの読み込み
-			break;
-		case 4:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW5); // モデルデータの読み込み
-			break;
-
-		default:
-			break;
-		}
-		g_crew[i].m_pos = g_crew[i].m_initPos = pos9;
-		g_crew[i].m_use = true;
-		g_nMaxCrew++;
-		break;
-	}
-	for (int i = 0; i < MAX_CREW; ++i)
-	{
-		if (g_crew[i].m_use)
-		{
-			continue;
-		}
-		switch (rand() % 5)
-		{
-		case 0:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW1); // モデルデータの読み込み
-			break;
-		case 1:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW2); // モデルデータの読み込み
-			break;
-		case 2:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW3); // モデルデータの読み込み
-			break;
-		case 3:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW4); // モデルデータの読み込み
-			break;
-		case 4:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW5); // モデルデータの読み込み
-			break;
-
-		default:
-			break;
-		}
-		g_crew[i].m_pos = g_crew[i].m_initPos = pos10;
-		g_crew[i].m_use = true;
-		g_nMaxCrew++;
-		break;
-	}
+	
 	g_nRemainCrew = g_nMaxCrew;
 }
 int& GetMaxCrew()
