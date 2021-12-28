@@ -177,6 +177,9 @@
     <ClCompile Include="gameOverSceneButton.cpp">
       <Filter>ソースファイル\scene\gameOverScene</Filter>
     </ClCompile>
+    <ClCompile Include="gameOverSceneBG.cpp">
+      <Filter>ソースファイル\scene\gameOverScene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AssimpModel.h">
@@ -342,6 +345,9 @@
       <Filter>ヘッダーファイル\scene\gameOverScene</Filter>
     </ClInclude>
     <ClInclude Include="gameOverSceneButton.h">
+      <Filter>ヘッダーファイル\scene\gameOverScene</Filter>
+    </ClInclude>
+    <ClInclude Include="gameOverSceneBG.h">
       <Filter>ヘッダーファイル\scene\gameOverScene</Filter>
     </ClInclude>
   </ItemGroup>

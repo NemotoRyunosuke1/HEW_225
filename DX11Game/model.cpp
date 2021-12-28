@@ -15,6 +15,7 @@
 #include "windManager.h"
 #include "Sound.h"
 #include <stdlib.h>
+#include "EffectManager.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -210,7 +211,7 @@ void UpdateModel(void)
 			g_fStanTime = 10;
 			g_bInvincible = true;
 		}
-
+		
 		g_posModel.y -= 1.1f;
 		// レバガチャ判定
 		if (stickY > 20000 || stickX > 20000 || stickY < -20000 || stickX < -20000)

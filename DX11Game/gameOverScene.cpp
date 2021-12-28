@@ -3,6 +3,8 @@
 #include "Sound.h"
 #include "input.h"
 
+
+
 GameOverScene::GameOverScene()
 {
 	m_pGameOverSceneButton = new GameOverSceneButton;
@@ -19,13 +21,13 @@ void GameOverScene::Update()
 
 	// デバック時
 #if _DEBUG
-
+	 
 	 //デバック用文字列
 	PrintDebugProc("****** GameOverScene ******\n");
 	PrintDebugProc("\n");
 
 #endif
-
+	  
 	// シーン遷移
 	// リスタート
 	if (m_pGameOverSceneButton->GetRestart())
