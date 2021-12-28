@@ -388,6 +388,11 @@ void DrawCrew(void)
 		SetZWrite(true);				// Zバッファ更新する
 		SetBlendState(BS_NONE);			// アルファブレンド無効
 	}
+
+	for (int i = 0; i < MAX_CREW; ++i)
+	{
+		
+	}
 }
 
 int StartChase(int i, XMFLOAT3 pos)
