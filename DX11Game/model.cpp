@@ -105,7 +105,7 @@ HRESULT InitModel(void)
 	g_nShadow = CreateShadow(g_posModel, 12.0f);
 
 	bFlg = false;
-	//風の移動量？の初期化？
+	//風の移動量の初期化
 	bWind = false;
 	for (int i = 0; i < MAX_WIND; i++) {
 		bWind1[i] = false;
@@ -194,9 +194,9 @@ void UpdateModel(void)
 	if (g_posModel.y <= 0.0f)	// 地面 
 	{
 #if  _DEBUG
-		StartFadeOut(SCENE_GAMEOVER);
+		StartFadeOut(SCENE_GAME);
 #else
-		StartFadeOut(SCENE_GAMEOVER);
+		StartFadeOut(SCENE_GAME);
 #endif
 
 	}
@@ -211,7 +211,10 @@ void UpdateModel(void)
 			g_fStanTime = 10;
 			g_bInvincible = true;
 		}
-		
+
+		//スタンエフェクト表示
+		EffectManager::Play(2);
+
 		g_posModel.y -= 1.1f;
 		// レバガチャ判定
 		if (stickY > 20000 || stickX > 20000 || stickY < -20000 || stickX < -20000)
@@ -803,19 +806,24 @@ void UpdateModel(void)
 	{
 		g_posModel.y = MAX_FLY_Y;
 	}
-	if (g_posModel.x < -5500.0f) {
-		g_posModel.x = -5500.0f;
+	/*if (g_posModel.x < -310.0f) {
+		g_posModel.x = -310.0f;
 	}
-	if (g_posModel.x > 3200.0f) {
-		g_posModel.x = 3200.0f;
+	if (g_posModel.x > 310.0f) {
+		g_posModel.x = 310.0f;
 	}
-	if (g_posModel.z < -2500.0f) {
-		g_posModel.z = -2500.0f;
+	if (g_posModel.z < -310.0f) {
+		g_posModel.z = -310.0f;
 	}
-	if (g_posModel.z > 9200.0f) {
-		g_posModel.z = 9200.0f;
+	if (g_posModel.z > 310.0f) {
+		g_posModel.z = 310.0f;
 	}
-	
+	if (g_posModel.y < 0.0f) {
+		g_posModel.y = 0.0f;
+	}
+	if (g_posModel.y > 80.0f) {
+		g_posModel.y = 80.0f;
+	}*/
 
 	// スタミナ処理
 	if (g_rotModel.x > 3 && !g_bWindDelay)
