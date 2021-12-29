@@ -67,6 +67,19 @@ void GameOverSceneButton::Update()
 		}
 	}
 	
+	if (GetKeyRelease(VK_W) || GetKeyRelease(VK_UP))
+	{
+		m_cnt--;
+		if (m_cnt < 0) m_cnt = MAX_BUTTON - 1;
+	}
+	if (GetKeyRelease(VK_S) || GetKeyRelease(VK_DOWN))
+	{
+		m_cnt++;
+		if (m_cnt > MAX_BUTTON - 1) m_cnt = 0;
+		
+	}
+
+
 	switch (m_cnt)
 	{
 	case 0:
@@ -88,6 +101,7 @@ void GameOverSceneButton::Update()
 	default:
 		break;
 	}
+
 
 	// ボタンが押されたか情報取得
 	m_bRestart = m_pButton[0].GetFlg();		// リスタート

@@ -2,7 +2,7 @@
 #include "input.h"
 
 #define PATH_PAUSE_BG	L"data/texture/scenesenni/pause/pauseBG.png"
-#define MAX_BUTTON (5)
+#define MAX_BUTTON (3)
 
 Pause::Pause()
 {
@@ -81,6 +81,20 @@ void Pause::Update()
 	{
 
 	}
+
+	if (GetKeyRelease(VK_W) || GetKeyRelease(VK_UP))
+	{
+		
+		m_cnt--;
+		if (m_cnt < 0) m_cnt = MAX_BUTTON - 1;
+	}
+	if (GetKeyRelease(VK_S) || GetKeyRelease(VK_DOWN))
+	{
+		m_cnt++;
+		if (m_cnt > MAX_BUTTON - 1) m_cnt = 0;
+
+	}
+
 
 	switch (m_cnt)
 	{
