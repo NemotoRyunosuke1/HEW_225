@@ -1,7 +1,22 @@
 #pragma once
 
 #include "object.h"
+enum EButtonTexture
+{
+	STAGE_SELECT_1_1_BTN = 0,
+	STAGE_SELECT_1_2_BTN,
+	STAGE_SELECT_1_3_BTN,
+	STAGE_SELECT_BTN,
+	OPTION_BTN,
+	ENDGAME_BTN,
+	STAGE1_BTN,
+	BACK_BTN,
+	RESTART_BTN,
+	BACK_GAME_BTN,
+	BACK_STAGE_SELECT_BTN,
 
+	MAX_BTN_TEXTURE
+};
 class Button :public Object 
 {
 public:

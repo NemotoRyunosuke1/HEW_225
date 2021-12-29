@@ -7,6 +7,7 @@
 #include "gameScene.h"
 #include "stageSelectScene.h"
 #include "resultScene.h"
+#include "gameOverScene.h"
 
 class Scene : public SceneBase
 {
@@ -24,5 +25,6 @@ private:
 	static GameScene* m_pGameScene;
 	static StageSlectScene* m_pStageSelectScene;
 	static ResultScene* m_pResultScene;
+	static GameOverScene* m_pGameOverScene;
 };
 

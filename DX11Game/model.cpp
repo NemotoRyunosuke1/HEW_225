@@ -194,10 +194,9 @@ void UpdateModel(void)
 	if (g_posModel.y <= 0.0f)	// 地面 
 	{
 #if  _DEBUG
-		StartFadeOut(SCENE_GAME);
-		EffectManager::Play(2);
+		StartFadeOut(SCENE_GAMEOVER);
 #else
-		StartFadeOut(SCENE_GAME);
+		StartFadeOut(SCENE_GAMEOVER);
 #endif
 
 	}
@@ -214,7 +213,7 @@ void UpdateModel(void)
 		}
 
 		//スタンエフェクト表示
-		EffectManager::Play(1);
+		EffectManager::Play(2);
 
 		g_posModel.y -= 1.1f;
 		// レバガチャ判定

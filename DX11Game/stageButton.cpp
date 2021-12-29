@@ -22,9 +22,9 @@ StageButton::StageButton()
 {
 	// É{É^ÉìÉÅÉÇÉäämï€
 	m_pButton = new Button[MAX_BUTTON];
-	m_pButton[0].CreateButton(XMFLOAT3(300.0f, 300.0f,0.0f), XMFLOAT3(0.0f, 0.0f, 0.0f)   ,7);
+	m_pButton[0].CreateButton(XMFLOAT3(300.0f, 300.0f,0.0f), XMFLOAT3(0.0f, 0.0f, 0.0f)   ,STAGE1_BTN);
 	m_pButton[0].SetSelect(true);
-	m_pButton[1].CreateButton(XMFLOAT3(300.0f, 300.0f,0.0f), XMFLOAT3(0.0f, -200.0f, 0.0f),8);
+	m_pButton[1].CreateButton(XMFLOAT3(300.0f, 300.0f,0.0f), XMFLOAT3(0.0f, -200.0f, 0.0f),BACK_BTN);
 	//m_pButton[2].CreateButton(XMFLOAT3(300.0f, 300.0f,0.0f), XMFLOAT3( 400.0f, 0.0f, 0.0f),8);
 	g_time = 0;
 	m_bBack = false;

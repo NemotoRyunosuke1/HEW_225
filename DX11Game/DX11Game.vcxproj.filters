@@ -168,6 +168,18 @@
     <ClCompile Include="crewUI.cpp">
       <Filter>ソースファイル\scene\gameScene\UI</Filter>
     </ClCompile>
+    <ClCompile Include="timerUI.cpp">
+      <Filter>ソースファイル\scene\gameScene\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="gameOverScene.cpp">
+      <Filter>ソースファイル\scene\gameOverScene</Filter>
+    </ClCompile>
+    <ClCompile Include="gameOverSceneButton.cpp">
+      <Filter>ソースファイル\scene\gameOverScene</Filter>
+    </ClCompile>
+    <ClCompile Include="gameOverSceneBG.cpp">
+      <Filter>ソースファイル\scene\gameOverScene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AssimpModel.h">
@@ -326,6 +338,18 @@
     <ClInclude Include="crewUI.h">
       <Filter>ヘッダーファイル\scene\gameScene\UI</Filter>
     </ClInclude>
+    <ClInclude Include="timerUI.h">
+      <Filter>ヘッダーファイル\scene\gameScene\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="gameOverScene.h">
+      <Filter>ヘッダーファイル\scene\gameOverScene</Filter>
+    </ClInclude>
+    <ClInclude Include="gameOverSceneButton.h">
+      <Filter>ヘッダーファイル\scene\gameOverScene</Filter>
+    </ClInclude>
+    <ClInclude Include="gameOverSceneBG.h">
+      <Filter>ヘッダーファイル\scene\gameOverScene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DX11Game.rc" />
@@ -388,6 +412,12 @@
     </Filter>
     <Filter Include="ヘッダーファイル\scene\titleScene">
       <UniqueIdentifier>{2be88ccb-97b4-4329-8881-652ee05d5e56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソースファイル\scene\gameOverScene">
+      <UniqueIdentifier>{276cc74c-943d-4fe3-96e6-933f3e0d5505}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダーファイル\scene\gameOverScene">
+      <UniqueIdentifier>{8f38cc13-ad5b-432d-968b-cf8e6f81fd47}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
