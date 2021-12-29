@@ -47,6 +47,7 @@ private:
 	static Effekseer::EffectRef m_effect2;	//•—_‰¡
 	static Effekseer::EffectRef m_effect3;	//ƒXƒ^ƒ“
 	static Effekseer::EffectRef m_effect4;	//»šº
+	static Effekseer::EffectRef m_effect5;	//•—_ã_‰©F
 	static Effekseer::Handle m_handle;
 };
 
