@@ -142,6 +142,7 @@ void Scene::Update()
 		break;
 
 	case SCENE_GAMEOVER:
+		CSound::Play(BGM_003);
 		m_pGameOverScene->Update();
 		break;
 
@@ -252,6 +253,7 @@ void Scene::SetScene(EScene eScene)
 		break;
 
 	case SCENE_GAMEOVER:
+		CSound::Stop(BGM_003);
 		delete m_pGameOverScene;
 		break;
 
