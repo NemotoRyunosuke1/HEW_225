@@ -164,7 +164,7 @@ void Cunt::Draw()
 			DrawPolygon(pBC);
 			m_birdVessel /= 10;
 		}
-		
+		EffectManager::Play(3);
 	}
 	else
 	{
@@ -177,7 +177,7 @@ void Cunt::Draw()
 		SetPolygonFrameSize(1.0f, 1.0f);
 		DrawPolygon(pBC);
 
-		EffectManager::Play(3);
+		
 	}
 
 	
