@@ -2,7 +2,7 @@
 
 #include "main.h"
 #include "AssimpModel.h"
-#include "resultScene.h"
+
 
 class Goal 
 {
@@ -27,6 +27,6 @@ private:
 
 	XMFLOAT4X4	m_mtxWorld;		// ワールドマトリックス
 
-	ResultScene* m_pResultScean;
+	
 
 };

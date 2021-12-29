@@ -3,6 +3,7 @@
 #include "main.h"
 #include "fade.h"
 #include "titleBG.h"
+#include "titleButton.h"
 
 class TitleScene
 {
@@ -16,5 +17,6 @@ public:
 
 private:
 	TitleBG* m_pTitleBG;
+	TitleButton* m_pTitleButton;
 	Fade* m_pFade;
 };

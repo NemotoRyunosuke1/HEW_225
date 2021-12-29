@@ -45,6 +45,12 @@ public:
 
 	void SetPos(XMFLOAT3& vPos) { m_vPos = vPos; }
 	XMFLOAT3& GetPos() { return m_vPos; }
+	XMFLOAT3& GetLook() { return m_vTarget; }
+	XMFLOAT3& GetUp() { return m_vUp; }
+	float& GetFOV() { return m_fFovY; }
+	float& GetAspect() { return m_fAspectRatio; }
+	float& GetNearClip() { return m_fNearZ; }
+	float& GetFarClip() { return m_fFarZ; }
 	void SetPos(float x, float y, float z) { m_vPos.x = x, m_vPos.y = y, m_vPos.z = z; }
 	void SetTarget(XMFLOAT3& vTarget) { m_vTarget = vTarget; }
 	void SetTarget(float x, float y, float z) { m_vTarget.x = x, m_vTarget.y = y, m_vTarget.z = z; }

@@ -39,23 +39,23 @@ void ScoreUI::Update()
 void ScoreUI::Draw()
 {
 	ID3D11DeviceContext*  pBC = GetDeviceContext();
-	SetBlendState(BS_ALPHABLEND);	// アルファブレンド有効				  
+				  
 
 	//アイコン
-	SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
-	SetPolygonSize(m_Iconsize.x, m_Iconsize.y);
-	SetPolygonPos(m_IconPos.x, m_IconPos.y);
-	SetPolygonTexture(nullptr);
-	SetPolygonUV(0.0f, 0.0f);
-	DrawPolygon(pBC);
+	//SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
+	//SetPolygonSize(m_Iconsize.x, m_Iconsize.y);
+	//SetPolygonPos(m_IconPos.x, m_IconPos.y);
+	//SetPolygonTexture(nullptr);
+	//SetPolygonUV(0.0f, 0.0f);
+	//DrawPolygon(pBC);
 
 	//残りの数
-	SetPolygonColor(1, 1, 1);	//ポリゴンカラー
-	SetPolygonSize(m_size.x, m_size.y);
-	SetPolygonPos(m_pos.x, m_pos.y);
-	SetPolygonTexture(m_pTexture);
-	SetPolygonUV(0.0f, 0.0f);
-	DrawPolygon(pBC);
-	SetBlendState(BS_NONE);	// アルファブレンド無効				  
+	//SetPolygonColor(1, 1, 1);	//ポリゴンカラー
+	//SetPolygonSize(m_size.x, m_size.y);
+	//SetPolygonPos(m_pos.x, m_pos.y);
+	//SetPolygonTexture(m_pTexture);
+	//SetPolygonUV(0.0f, 0.0f);
+	//DrawPolygon(pBC);
+	//SetBlendState(BS_NONE);	// アルファブレンド無効				  
 
 }

@@ -374,7 +374,11 @@ CAssimpMesh::CAssimpMesh(ID3D11Device *pDevice, CAssimpModel* pModel, vector<TAs
 	m_aIndex = aIndex;
 	m_material = material;
 	SetupMesh(pDevice);
-}
+	m_Ld = XMFLOAT4 (0.9f, 0.9f, 0.9f, 1.0f);
+	m_La = XMFLOAT4(0.05f, 0.05f, 0.05f, 1.0f);
+	m_Ls = XMFLOAT4(0.2f, 0.2f, 0.2f, 1.0f);
+	m_Le =	 XMFLOAT4(0.0f,0.0f,0.0f,0.0f);
+}					
 
 // デストラクタ
 CAssimpMesh::~CAssimpMesh()
@@ -473,7 +477,13 @@ void CAssimpMesh::SetBoneMatrix(ID3D11DeviceContext* pDC, XMFLOAT4X4 mtxBone[])
 		pDC->Unmap(m_pConstantBufferBone, 0);
 	}
 }
-
+void CAssimpMesh::SetReflectLight(XMFLOAT4 Ld, XMFLOAT4 La, XMFLOAT4 Ls, XMFLOAT4 Le)
+{
+	m_Ld = Ld;
+	m_La = La;
+	m_Ls = Ls;
+	m_Le = Le;
+}
 // 描画
 void CAssimpMesh::Draw(ID3D11DeviceContext* pDC, XMFLOAT4X4& m44World, EByOpacity byOpacity)
 {
