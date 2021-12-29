@@ -27,7 +27,7 @@ ResultScene::ResultScene()
 	//----------------
 
 	// 星１
-	m_pos1 = XMFLOAT3(300, 100, 0);
+	m_pos1 = XMFLOAT3(-300, 100, 0);
 	m_size1 = XMFLOAT3(100, 100, 0);
 	m_IconPos1 = XMFLOAT3(100, 100, 0);		// 位置
 	m_Iconsize1 = XMFLOAT3(100, 50, 0);	    // サイズ
@@ -111,6 +111,10 @@ ResultScene::ResultScene()
 	//ID3D11Device* pDevice1 = GetDevice();
 	//CreateTextureFromFile(pDevice1, Result, &m_pIconTexture1);
 	
+
+	// 変数初期化
+	m_fAlpha = 0.0f;	// 透明度
+	m_nScore = 3;	// 星野数
 }
 //=============================================================================
 // デストラクタ
@@ -157,6 +161,11 @@ void ResultScene::Update()
 		StartFadeOut(SCENE_STAGE_SELECT);
 	}
 
+	m_fAlpha += 0.008f;
+	if (m_fAlpha >= 0.5f)
+	{
+		m_fAlpha = 0.5f;
+	}
 
 #if _DEBUG
 	// デバック用文字列
@@ -176,29 +185,45 @@ void ResultScene::Draw()
 	// 枠
 	//----------------
 
-	//　星１ 
-	SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
-	SetPolygonSize(m_size1.x, m_size1.y);
-	SetPolygonPos(m_pos1.x, m_pos1.y);
-	SetPolygonTexture(m_pIconTexture1);
-	SetPolygonUV(0.0f, 0.0f);
-	DrawPolygon(pBC);
+	// フェード描画
+	SetPolygonColor(0.0f, 0.0f, 0.0f);	//ポリゴンカラー
+	SetPolygonSize(SCREEN_WIDTH, SCREEN_HEIGHT);	// ポリゴンサイズ
+	SetPolygonPos(0.0f, 0.0f);	// ポリゴン位置
+	SetPolygonTexture(nullptr);	// ポリゴンテクスチャ
+	SetPolygonAlpha(m_fAlpha);	// ポリゴン透明度
+	SetPolygonUV(0.0f, 0.0f);	// ポリゴンテクスチャ位置
+	DrawPolygon(pBC);			// ポリゴン描画
+	
+	// もとに戻す
+	SetPolygonAlpha(1.0f);		// 
 
-	////　星２ 
-	SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
-	SetPolygonSize(m_size2.x, m_size2.y);
-	SetPolygonPos(m_pos2.x, m_pos2.y);
-	SetPolygonTexture(m_pIconTexture1);
-	SetPolygonUV(0.0f, 0.0f);
-	DrawPolygon(pBC);
-	//
-	////　星３ 
-	SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
-	SetPolygonSize(m_size3.x, m_size3.y);
-	SetPolygonPos(m_pos3.x, m_pos3.y);
-	SetPolygonTexture(m_pIconTexture1);
-	SetPolygonUV(0.0f, 0.0f);
-	DrawPolygon(pBC);
+	for (int i = 0; i < m_nScore; ++i)
+	{
+		//　星１ 
+		SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
+		SetPolygonSize(m_size1.x, m_size1.y);
+		SetPolygonPos(m_pos1.x + (i * m_size1.x*2 + 50), m_pos1.y);
+		SetPolygonTexture(m_pIconTexture1);
+		SetPolygonUV(0.0f, 0.0f);
+		DrawPolygon(pBC);
+	 }
+	
+
+	//////　星２ 
+	//SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
+	//SetPolygonSize(m_size2.x, m_size2.y);
+	//SetPolygonPos(m_pos2.x, m_pos2.y);
+	//SetPolygonTexture(m_pIconTexture1);
+	//SetPolygonUV(0.0f, 0.0f);
+	//DrawPolygon(pBC);
+	////
+	//////　星３ 
+	//SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
+	//SetPolygonSize(m_size3.x, m_size3.y);
+	//SetPolygonPos(m_pos3.x, m_pos3.y);
+	//SetPolygonTexture(m_pIconTexture1);
+	//SetPolygonUV(0.0f, 0.0f);
+	//DrawPolygon(pBC);
 
 	// リザルトロゴ 
 	SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
@@ -253,4 +278,9 @@ void ResultScene::Draw()
 	//SetZBuffer(false);
 	SetBlendState(BS_NONE);	// アルファブレンド無効			  
 
+}
+
+float ResultScene::GetFade()
+{
+	return m_fAlpha;
 }

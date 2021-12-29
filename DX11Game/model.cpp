@@ -194,9 +194,9 @@ void UpdateModel(void)
 	if (g_posModel.y <= 0.0f)	// ’n–Ê 
 	{
 #if  _DEBUG
-		StartFadeOut(SCENE_GAME);
+		StartFadeOut(SCENE_GAMEOVER);
 #else
-		StartFadeOut(SCENE_GAME);
+		StartFadeOut(SCENE_GAMEOVER);
 #endif
 
 	}

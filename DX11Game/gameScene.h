@@ -47,5 +47,10 @@ private:
 	float m_fCurrentTime;
 	float m_timer;
 
+	// タイマー用変数
+	float m_fRemainTime_result;
+	float m_fCurrentTime_result;
+	float m_timer_result;
+	bool  m_bTrigger_result;
 };
 

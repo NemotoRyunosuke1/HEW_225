@@ -12,7 +12,8 @@ public:
 
 	void Update();
 	void Draw();
-
+	float GetFade();
+	void SetScore(int ScoreNum) { m_nScore = ScoreNum; };
 private:
 
 	bool m_use;			// 使用フラグ
@@ -67,4 +68,6 @@ private:
 	ID3D11ShaderResourceView* m_pIconTexture7;
 	ID3D11ShaderResourceView* m_pIconTexture8;
 
+	float m_fAlpha;	// 透明度
+	int m_nScore;
 };

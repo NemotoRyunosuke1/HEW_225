@@ -26,3 +26,4 @@ int& GetRemainCrew();
 void StartEscapeCrew();
 bool GetEscapeCrew();
 void SetEscapeCrew(bool);
+bool GetGoalFlgCrew();	// 全部集めたかゲッター
