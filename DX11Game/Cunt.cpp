@@ -9,6 +9,7 @@
 #include "polygon.h"
 #include "debugproc.h"
 #include "crew.h"
+#include "EffectManager.h"
 
 // É}ÉNÉçíËã`
 
@@ -163,7 +164,7 @@ void Cunt::Draw()
 			DrawPolygon(pBC);
 			m_birdVessel /= 10;
 		}
-
+		
 	}
 	else
 	{
@@ -176,6 +177,7 @@ void Cunt::Draw()
 		SetPolygonFrameSize(1.0f, 1.0f);
 		DrawPolygon(pBC);
 
+		EffectManager::Play(3);
 	}
 
 	

@@ -22,6 +22,8 @@ Effekseer::EffectRef EffectManager::m_effect3;		//スタン
 Effekseer::EffectRef EffectManager::m_effect4;		//砂埃
 Effekseer::Handle EffectManager::m_handle;
 
+
+
 EffectManager* EffectManager::m_pInstance = nullptr;
 
 EffectManager::EffectManager()
@@ -72,7 +74,7 @@ int EffectManager::Load(const char *Create)
 	// fileNameに基づいてエフェクトの読み込み
 	// エフェクトのデータを読み込み
 	m_effect = Effekseer::Effect::Create(m_manager, u"Assets/wind_jousyou_Small.efk");				//風_上
-	m_effect1 = Effekseer::Effect::Create(m_manager, u"Assets/wind_jousyou_Small_Yellow.efk");		//風_黄色
+	m_effect1 = Effekseer::Effect::Create(m_manager, u"Assets/wind_yoko_Yellow.efk");				//風_黄色
 	m_effect2 = Effekseer::Effect::Create(m_manager, u"Assets/wind_yoko.efk");						//風_横
 	m_effect3 = Effekseer::Effect::Create(m_manager, u"Assets/Sutan.efk");							//スタン
 	m_effect4 = Effekseer::Effect::Create(m_manager, u"Assets/SandSmoke.efk");						//砂埃
@@ -109,8 +111,12 @@ int EffectManager::Play(int Handle)
 	{
 	case 0: 
 		////風_黄色
-		//m_handle = m_manager->Play(m_effect1, -1800, 0, 0);
-		//m_manager->SetScale(m_handle, 15.0f, 20.0f, 15.0f);
+		//if (time > 120)
+		//{
+		//	time = 0;
+		//	m_handle = m_manager->Play(m_effect1, -1800, 0, 0);
+		//	m_manager->SetScale(m_handle, 15.0f, 20.0f, 15.0f);
+		//}
 	 break;
 
 	case 1: 
@@ -133,12 +139,36 @@ int EffectManager::Play(int Handle)
 			m_manager->SetScale(m_handle, 1.0f, 1.0f, 1.0f);
 		}
 	break;
+
+	case 3:
+		//風_黄色
+		if (time > 129.9f)
+		{
+			//time = 0;
+			// ゴール前手前左追い風
+			m_handle = m_manager->Play(m_effect1, -1400.0f, 1250.0f, 7000.0f);
+			m_manager->SetScale(m_handle, 15.0f, 15.0f, 15.0f);
+
+			// ゴール前手前右追い風
+			m_handle = m_manager->Play(m_effect1, -600.0f, 1250.0f, 7000.0f);
+			m_manager->SetScale(m_handle, 15.0f, 15.0f, 15.0f);
+			
+			// ゴール前奥左追い風
+			m_handle = m_manager->Play(m_effect1, -1400.0f, 1250.0f, 8500.0f);
+			m_manager->SetScale(m_handle, 15.0f, 15.0f, 15.0f);
+			
+			// ゴール前奥右追い風
+			m_handle = m_manager->Play(m_effect1, -600.0f, 1250.0f, 8500.0f);
+			m_manager->SetScale(m_handle, 15.0f, 15.0f, 15.0f);
+		}
+	break;
 	default:
 	
 
 		break;
 	}
-
+	
+	
 	if (time > 130.0f)
 	{ 
 		// 左側上昇気流
