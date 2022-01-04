@@ -16,6 +16,8 @@
 #include "input.h"
 #include "collision.h"
 #include "Cunt.h"
+#include "timer.h"
+#include "number.h"
 
 #if _DEBUG
 #define MAX_BULIDING (16)
@@ -24,7 +26,6 @@
 #define MAX_BULIDING (400)
 
 #endif
-
 
 //=============================================================================
 // 初期化処理
@@ -58,6 +59,12 @@ GameScene::GameScene()
 
 	// 敵初期化
 	InitEnemy();
+
+	// タイマー初期化
+	InitTimer();
+
+	// 数値初期化
+	InitNumber();
 
 	// 鳥残機カウント初期化
 	m_pCunt = new Cunt;
@@ -144,6 +151,12 @@ GameScene::~GameScene()
 
 	// 敵終了処理
 	UninitEnemy();
+
+	// タイマー終了処理
+	UninitTimer();
+
+	// 数値終了処理
+	UninitNumber();
 
 	// 鳥残機カウント終了処理
 	delete m_pCunt;
@@ -238,6 +251,9 @@ void GameScene::Update()
 	// 敵更新
 	UpdateEnemy();
 
+	// タイマー更新
+	UpdateTimer();
+
 	// 鳥残機カウント更新
 	m_pCunt->Update();
 
@@ -252,6 +268,11 @@ void GameScene::Update()
 
 	// スコアUI更新
 	m_pScoreUI->Update();
+
+	// 秒カウンタ
+	static int nTimer = 0;
+	//PrintDebugProc("Timer=%d\n", nTimer / 60);
+	//++nTimer;
 
 	// ビル更新
 	for (int i = 0; i < MAX_BULIDING; i++)
@@ -366,6 +387,10 @@ void GameScene::Draw()
 
 	// 敵描画
 	DrawEnemy();
+
+	// タイマー描画
+	DrawTimer();
+
 
 	// 鳥残機カウント描画
 	m_pCunt->Draw();

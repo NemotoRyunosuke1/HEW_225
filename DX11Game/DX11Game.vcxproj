@@ -179,6 +179,7 @@
     <ClCompile Include="mesh.cpp" />
     <ClCompile Include="meshfield.cpp" />
     <ClCompile Include="model.cpp" />
+    <ClCompile Include="number.cpp" />
     <ClCompile Include="object.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="polygon.cpp" />
@@ -193,6 +194,7 @@
     <ClCompile Include="stageSelectScene.cpp" />
     <ClCompile Include="staminaBar.cpp" />
     <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="timer.cpp" />
     <ClCompile Include="titleBG.cpp" />
     <ClCompile Include="titleScene.cpp" />
     <ClCompile Include="titleUI.cpp" />
@@ -222,6 +224,7 @@
     <ClInclude Include="mesh.h" />
     <ClInclude Include="meshfield.h" />
     <ClInclude Include="model.h" />
+    <ClInclude Include="number.h" />
     <ClInclude Include="object.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="polygon.h" />
@@ -239,6 +242,7 @@
     <ClInclude Include="stageSelectScene.h" />
     <ClInclude Include="staminaBar.h" />
     <ClInclude Include="Texture.h" />
+    <ClInclude Include="timer.h" />
     <ClInclude Include="titleBG.h" />
     <ClInclude Include="titleScene.h" />
     <ClInclude Include="titleUI.h" />
