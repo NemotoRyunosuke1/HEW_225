@@ -1,7 +1,7 @@
 //=============================================================================
 //
 // シーン処理 [scene.cpp]
-// Author : RYUNOSUKE NEMOTO
+// Author : 根本龍之介
 //
 //=============================================================================
 #include "scene.h"
@@ -18,6 +18,7 @@ GameScene* Scene::m_pGameScene;
 StageSlectScene* Scene::m_pStageSelectScene;
 ResultScene* Scene::m_pResultScene;
 GameOverScene* Scene::m_pGameOverScene;
+EStage Scene::m_eStage;
 
 //=============================================================================
 // コンストラクタ
@@ -37,6 +38,10 @@ Scene::Scene()
 	// サウンド初期化
 	CSound::Init();
 
+	// ステージ初期化
+	m_eStage = STAGE_1;
+
+	// シーンごとの初期化
 	switch (m_eScene)
 	{
 	case SCENE_TITLE:
@@ -48,7 +53,7 @@ Scene::Scene()
 		break;
 
 	case SCENE_GAME:
-		m_pGameScene = new GameScene;
+		m_pGameScene = new GameScene(m_eStage);
 		break;
 
 	case SCENE_RESULT:

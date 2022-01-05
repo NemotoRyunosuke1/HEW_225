@@ -18,6 +18,7 @@ Buliding::Buliding()
 		MessageBoxA(GetMainWnd(), "モデルデータ読み込みエラー", "InitModel", MB_OK);
 	}
 }
+
 Buliding::~Buliding()
 {
 	// モデルの解放
