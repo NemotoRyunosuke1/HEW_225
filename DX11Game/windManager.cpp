@@ -36,7 +36,7 @@ WindManager::WindManager()
 	m_pWind[9]. Create(XMFLOAT3(-1400.0f, 1250.0f, 8500.0f), XMFLOAT3(500.0f,  300.0f,  500.0f), XMFLOAT3(0.0f, 0.0f,  1.0f));  // ゴール前奥左追い風
 	m_pWind[10].Create(XMFLOAT3( -600.0f, 1250.0f, 8500.0f), XMFLOAT3(500.0f,  300.0f,  500.0f), XMFLOAT3(0.0f, 0.0f,  1.0f));  // ゴール前奥右追い風
 	
-	m_pWind[11].Create(XMFLOAT3(-1000.0f, 1000.0f, 9500.0f), XMFLOAT3(600.0f, 1200.0f, 600.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));  // ゴール前奥右追い風
+	m_pWind[11].Create(XMFLOAT3(-1000.0f, 1000.0f, 9500.0f), XMFLOAT3(600.0f, 1200.0f, 600.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));  // ゴール風
 }
 //=======================================================
 //
