@@ -27,6 +27,7 @@
 
 #endif
 
+#define STOP_TIME (3)
 
 //=============================================================================
 // 初期化処理
@@ -34,7 +35,7 @@
 GameScene::GameScene()
 {
 	// メッシュフィールド初期化
-	InitMeshField(10, 10, 2000.0f, 2000.0f);
+	InitMeshField(20, 20, 2000.0f, 2000.0f);
 
 	// モデル初期化
 	InitModel();
@@ -103,7 +104,7 @@ GameScene::GameScene()
 	m_pScoreUI = new ScoreUI;
 
 	// リザルトシーン初期化
-	//m_pResult = new ResultScene;
+	m_pResult = new ResultScene;
 
 	// レバガチャ初期化
 	m_pLever = new Lever;
@@ -154,7 +155,11 @@ GameScene::GameScene()
 	m_fCurrentTime = m_fRemainTime = (float)timeGetTime();
 	
 	m_timer;
-	//m_bGoal = false;
+	m_bGoal = false;
+
+	// リザルト用変数初期化
+	m_fRemainTime = m_fCurrentTime_result = (float)timeGetTime();
+	m_bTrigger_result = false;
 }
 
 //=============================================================================
@@ -208,7 +213,7 @@ GameScene::~GameScene()
 	delete m_pPause;
 	
 	// リザルト終了処理
-	//delete m_pResult;
+	delete m_pResult;
 
 	// レバガチャ終了
 	delete m_pLever;
@@ -229,6 +234,34 @@ void GameScene::Update()
 	m_fCurrentTime = (float)timeGetTime();
 	m_timer = (m_fCurrentTime - m_fRemainTime) / 1000;
 
+	
+	
+	// リザルトシーン更新
+	m_pResult->SetScore(m_pTimerUI->GetScore());
+	if (m_bGoal)
+	{
+		if (!m_bTrigger_result)
+		{
+			m_fRemainTime = m_fCurrentTime_result = (float)timeGetTime();
+			m_bTrigger_result = true;
+		}
+
+		// 時間更新
+		m_fCurrentTime_result = (float)timeGetTime();
+		
+		// リザルト更新
+		
+		m_pResult->Update();
+		if (m_pResult->GetFade() >= 0.5f)
+		{
+			if (GetJoyRelease(0, JOYSTICKID1))	// コントローラーAボタン
+			{
+				StartFadeOut(SCENE_STAGE_SELECT);
+			}
+			return;
+		}
+		
+	}
 	// ポーズ
 	if (GetJoyRelease(0, JOYSTICKID8))	// コントローラーSTARTボタン
 	{
@@ -242,8 +275,6 @@ void GameScene::Update()
 		}
 
 	}
-	
-
 	// ポーズ中の処理
 	if (m_bPause)
 	{
@@ -400,17 +431,14 @@ void GameScene::Update()
 	//次のシーンへ移る条件
 	if (GetModelPos().x + GetModelCollisionSize().x / 2 > m_pGoal->GetPos().x - m_pGoal->GetSize().x / 2 && GetModelPos().x - GetModelCollisionSize().x / 2 < m_pGoal->GetPos().x + m_pGoal->GetSize().x / 2 &&
 		GetModelPos().y + GetModelCollisionSize().y / 2 > m_pGoal->GetPos().y - m_pGoal->GetSize().y / 2 && GetModelPos().y - GetModelCollisionSize().y / 2 < m_pGoal->GetPos().y + m_pGoal->GetSize().y / 2 &&
-		GetModelPos().z + GetModelCollisionSize().z / 2 > m_pGoal->GetPos().z - m_pGoal->GetSize().z / 2 && GetModelPos().z - GetModelCollisionSize().z / 2 < m_pGoal->GetPos().z + m_pGoal->GetSize().z / 2
-		)
+		GetModelPos().z + GetModelCollisionSize().z / 2 > m_pGoal->GetPos().z - m_pGoal->GetSize().z / 2 && GetModelPos().z - GetModelCollisionSize().z / 2 < m_pGoal->GetPos().z + m_pGoal->GetSize().z / 2 &&
+		GetGoalFlgCrew())
 	{
 		// ゴールについたとき
-		//m_bGoal = true;
+		m_bGoal = true;
 	}
 
-	/*if (m_bGoal)
-	{
-		m_pResult->Update();
-	}*/
+	
 
 	if (GetEscapeCrew())
 	{
@@ -498,10 +526,11 @@ void GameScene::Draw()
 	// 鳥残機カウント描画
 	m_pCunt->Draw();
 
-	/*if (m_bGoal)
+	// リザルト表示
+	if (m_bGoal)
 	{
 		m_pResult->Draw();
-	}*/
+	}
 
 	if (GetOverHeartModel() || GetStanModel())
 	{

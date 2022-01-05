@@ -10,7 +10,7 @@ public:
 
 	void Update();
 	void Draw();
-
+	int GetScore();
 
 private:
 	// タイマー用変数
@@ -18,4 +18,6 @@ private:
 	float m_fCurrentTime;
 	float m_timer;
 	float m_fRemainTimer;
+
+	int m_nScoreNum;	// 星野数
 };

@@ -35,15 +35,18 @@ public:
 	static EffectManager *Instance();
 
 	int Load(const char *fileName);
-	int Play(int Handle);
+	static int Play(int Handle);
 
 private:
 	static EffectManager *m_pInstance;
 
-	EffekseerRendererDX11::RendererRef m_renderer;
-	Effekseer::ManagerRef m_manager;
-	Effekseer::EffectRef m_effect;
-	Effekseer::Handle m_handle;
+	static EffekseerRendererDX11::RendererRef m_renderer;
+	static Effekseer::ManagerRef m_manager;
+	static Effekseer::EffectRef m_effect;
+	static Effekseer::EffectRef m_effect1;
+	static Effekseer::EffectRef m_effect2;
+	static Effekseer::EffectRef m_effect3;
+	static Effekseer::Handle m_handle;
 };
 
 

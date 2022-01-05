@@ -79,7 +79,8 @@ static bool hit2[MAX_CREW];
 static bool g_CollectTrriger;
 
 static Cunt g_Cunt;
-static bool g_bEscapeFlg;
+static bool g_bEscapeFlg; 
+static bool g_bAllCatch;	// 全て集めたかフラグ
 //=============================================================================
 // 初期化処理
 //=============================================================================
@@ -123,6 +124,7 @@ HRESULT InitCrew(void)
 	g_nMaxCrew = 0;
 	g_nRemainCrew = 0;
 	g_bEscapeFlg = false;
+	g_bAllCatch = false;
 	return hr;
 }
 
@@ -159,6 +161,15 @@ void UpdateCrew(void)
 
 	// 残りの計算
 	g_nRemainCrew = g_nMaxCrew - CrewCnt;
+
+	if (g_nRemainCrew == 0)
+	{
+		g_bAllCatch = true;
+	}
+	else
+	{
+		g_bAllCatch = false;
+	}
 
 	// 仲間更新
 	for (int i = 0; i < MAX_CREW; ++i) {
@@ -593,4 +604,8 @@ bool GetEscapeCrew()
 void SetEscapeCrew(bool flg)
 {
 	g_bEscapeFlg = flg;
+}
+bool GetGoalFlgCrew()
+{
+	return g_bAllCatch;
 }
