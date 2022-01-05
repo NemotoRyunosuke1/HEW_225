@@ -18,6 +18,7 @@
 #include "Cunt.h"
 #include "EffectManager.h"
 #include "crewUI.h"
+#include "goalUI.h"
 
 #if _DEBUG
 #define MAX_BULIDING (100)
@@ -28,6 +29,8 @@
 #endif
 
 #define STOP_TIME (3)
+
+
 
 //=============================================================================
 // 初期化処理
@@ -75,6 +78,8 @@ GameScene::GameScene()
 
 	// 仲間用UI初期化
 	InitCrewUI();
+
+	InitGoalUI();
 
 	// 鳥残機カウント初期化
 	m_pCunt = new Cunt;
@@ -161,7 +166,140 @@ GameScene::GameScene()
 	m_fRemainTime = m_fCurrentTime_result = (float)timeGetTime();
 	m_bTrigger_result = false;
 }
+GameScene::GameScene(EStage stage)
+{
+	// 変数初期化
+	m_bDebugMode = false;	// デバックモード
+	m_bPause = false;		// ポーズフラグ
+	m_bGoal = false;		// ゴールフラグ
 
+	//時間取得	
+	m_fCurrentTime = m_fRemainTime = (float)timeGetTime();
+
+	// リザルト用変数初期化
+	m_fRemainTime = m_fCurrentTime_result = (float)timeGetTime();
+	m_bTrigger_result = false;
+
+	// モデル初期化 x軸:-1000 y軸:600 z軸:-2000
+	InitModel();
+
+	// 丸影初期化
+	InitShadow();
+
+	// 味方初期化
+	InitCrew();
+
+	// 敵初期化
+	InitEnemy();
+
+	// 仲間用UI初期化
+	InitCrewUI();
+
+	// ゴールUI初期化
+	InitGoalUI();
+
+	// 鳥残機カウント初期化
+	m_pCunt = new Cunt;
+
+	//エフェクトマネージャー終了
+	EffectManager::Create();
+
+	// 風マネージャー初期化
+	m_pWindManager = new WindManager(stage);
+
+	// 雲マネージャー初期化
+	m_pCloudManager = new CloudManager;
+
+	// ゴール初期化
+	m_pGoal = new Goal;
+
+	// スタミナゲージ初期化
+	m_pStaminaBar = new StaminaBar;
+
+	// ビル初期化
+	m_pBuliding = new Buliding[MAX_BULIDING];
+
+	// ポーズ初期化
+	m_pPause = new Pause;
+
+	// スコアUI初期化
+	m_pScoreUI = new ScoreUI;
+
+	// リザルトシーン初期化
+	m_pResult = new ResultScene;
+
+	// レバガチャ初期化
+	m_pLever = new Lever;
+
+	// 逃走テキスト初期化
+	m_pEscapeText = new EscapeText;
+
+	// タイマーUI初期化
+	m_pTimerUI = new TimerUI;
+
+	// ステージごとの初期化  (モデル位置 x軸:-1000 y軸:600 z軸:-2000)
+	switch (stage)
+	{
+	case STAGE_1:
+		// メッシュフィールド初期化
+		InitMeshField(20, 20, 2000.0f, 2000.0f);
+
+		// ビルの配置
+		m_pBuliding[0].Create(XMFLOAT3(-2000,10,0), XMFLOAT3(10.0f, 7.0f, 10.0f));
+
+		// 仲間の配置
+		CrewCreate(XMFLOAT3(-1000.0f,250.0f, 0.0f));// 1
+
+
+		break;
+	case STAGE_2:
+		break;
+	case STAGE_3:
+		break;
+	case STAGE_4:
+		// メッシュフィールド初期化
+		InitMeshField(20, 20, 2000.0f, 2000.0f);
+
+		// 仲間の配置
+		CrewCreate(XMFLOAT3(rand() % 30 - 1000.0f, rand() % 30 + 250.0f, rand() % 30 + 2900.0f));// 1
+		CrewCreate(XMFLOAT3(rand() % 30 - 1900.0f, rand() % 30 + 250.0f, rand() % 30 + 3100.0f));// 2
+		CrewCreate(XMFLOAT3(rand() % 30 - 100.0f, rand() % 30 + 250.0f, rand() % 30 + 3100.0f));// 3
+		CrewCreate(XMFLOAT3(rand() % 30 - 1300.0f, rand() % 30 + 250.0f, rand() % 30 + 2970.0f));// 4
+		CrewCreate(XMFLOAT3(rand() % 30 - 1600.0f, rand() % 30 + 250.0f, rand() % 30 + 3040.0f));// 5
+		CrewCreate(XMFLOAT3(rand() % 30 - 700.0f, rand() % 30 + 250.0f, rand() % 30 + 2970.0f));// 6
+		CrewCreate(XMFLOAT3(rand() % 30 - 400.0f, rand() % 30 + 250.0f, rand() % 30 + 3040.0f));// 7
+		CrewCreate(XMFLOAT3(rand() % 100 - 1050.0f, rand() % 300 + 100.0f, rand() % 30 + 6500.0f));// 8
+		CrewCreate(XMFLOAT3(rand() % 100 - 1050.0f, rand() % 300 + 100.0f, rand() % 30 + 7000.0f));// 9
+		CrewCreate(XMFLOAT3(rand() % 100 - 1050.0f, rand() % 300 + 100.0f, rand() % 30 + 7500.0f));// 10
+
+		// ビルの生成
+		for (int k = 0; k < MAX_BULIDING / 16 / 5; k++)
+		{
+			for (int l = 0; l < MAX_BULIDING / 16 / 5; l++)
+			{
+				for (int j = 0; j < 4; j++)
+				{
+					for (int i = 0; i < 4; i++)
+					{
+						m_pBuliding[i + j * 4 + 80 * k + l * 16].Create(XMFLOAT3(-3900 - 330 * i + 2000 * l, 10, 2000 * k + j * 350), XMFLOAT3(10.0f, 7.0f + rand() % 3, 10.0f));
+
+					}
+				}
+			}
+		}
+
+		// ゴールUI位置初期化
+		SetGoalUI(XMFLOAT3(-1000.0f, 1000.0f, 9000.0f), 1200, 600, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);	// 仲間用UIセット
+
+		break;
+	case STAGE_5:
+		break;
+	case MAX_STAGE:
+		break;
+	default:
+		break;
+	}
+}
 //=============================================================================
 // 終了処理
 //=============================================================================
@@ -184,6 +322,8 @@ GameScene::~GameScene()
 
 	// 仲間用UI終了
 	UninitCrewUI();
+
+	UninitGoalUI();
 
 	// 鳥残機カウント終了処理
 	delete m_pCunt;
@@ -238,8 +378,11 @@ void GameScene::Update()
 	
 	// リザルトシーン更新
 	m_pResult->SetScore(m_pTimerUI->GetScore());
+
+	// ゴールフラグが立った時
 	if (m_bGoal)
 	{
+		// リザルトUI表示時間
 		if (!m_bTrigger_result)
 		{
 			m_fRemainTime = m_fCurrentTime_result = (float)timeGetTime();
@@ -264,6 +407,19 @@ void GameScene::Update()
 	}
 	// ポーズ
 	if (GetJoyRelease(0, JOYSTICKID8))	// コントローラーSTARTボタン
+	{
+		if (m_bPause)
+		{
+			m_bPause = false;
+		}
+		else
+		{
+			m_bPause = true;
+		}
+
+	}
+	// ポーズ
+	if (GetKeyRelease(VK_ESCAPE))	//escape
 	{
 		if (m_bPause)
 		{
@@ -300,7 +456,6 @@ void GameScene::Update()
 		m_pPause->SetBack(false);
 	}
 
-
 	// カメラ更新
 	CCamera::Get()->Update();
 
@@ -316,11 +471,9 @@ void GameScene::Update()
 		{
 			m_bDebugMode = true;
 		}
-	
-
 	}
 
-
+	// デバックモードの時は下の処理をしない
 	if (m_bDebugMode)return;
 #endif
 
@@ -334,7 +487,6 @@ void GameScene::Update()
 	// スタミナゲージ更新
 	m_pStaminaBar->Update();
 	m_pStaminaBar->SetSTM(GetSTM());
-
 
 	// 丸影更新
 	UpdateShadow();
@@ -384,7 +536,7 @@ void GameScene::Update()
 		//PrintDebugProc("[ｶｾﾞｻｲｽﾞ [%d]: (%f : %f : %f)]\n", i, m_pWindManager->GetSize(i).x, m_pWindManager->GetSize(i).y, m_pWindManager->GetSize(i).z);
 
 #endif
-
+		// プレイヤーとの当たり判定処理
 		if (GetModelPos().x + GetModelCollisionSize().x / 2 > m_pWindManager->GetPos(i).x - m_pWindManager->GetSize(i).x / 2 && GetModelPos().x - GetModelCollisionSize().x / 2 < m_pWindManager->GetPos(i).x + m_pWindManager->GetSize(i).x / 2 &&
 			GetModelPos().y + GetModelCollisionSize().y / 2 > m_pWindManager->GetPos(i).y - m_pWindManager->GetSize(i).y / 2 && GetModelPos().y - GetModelCollisionSize().y / 2 < m_pWindManager->GetPos(i).y + m_pWindManager->GetSize(i).y / 2 &&
 			GetModelPos().z + GetModelCollisionSize().z / 2 > m_pWindManager->GetPos(i).z - m_pWindManager->GetSize(i).z / 2 && GetModelPos().z - GetModelCollisionSize().z / 2 < m_pWindManager->GetPos(i).z + m_pWindManager->GetSize(i).z / 2
@@ -439,7 +591,7 @@ void GameScene::Update()
 	}
 
 	
-
+	// 逃げてしまったテキスト更新
 	if (GetEscapeCrew())
 	{
 		
@@ -449,8 +601,13 @@ void GameScene::Update()
 			m_pEscapeText->SetAlhpa(1.0f);
 			SetEscapeCrew(false);
 		}
+		
 	}
 
+	// ゴールUI更新
+	UpdateGoalUI();
+
+	// デバック用
 #if _DEBUG
 	if (GetAsyncKeyState(VK_RETURN) & 0x8000)
 	{
@@ -494,7 +651,6 @@ void GameScene::Draw()
 	// 敵描画
 	DrawEnemy();
 
-	
 	// 風マネージャー描画
 	m_pWindManager->Draw();
 
@@ -502,7 +658,7 @@ void GameScene::Draw()
 	m_pCloudManager->Draw();
 
 	// ゴール描画
-	m_pGoal->Draw();
+	//m_pGoal->Draw();
 
 	// ビル描画
 	for (int i = 0; i < MAX_BULIDING; i++)
@@ -541,7 +697,10 @@ void GameScene::Draw()
 	{
 		m_pEscapeText->Draw();
    }
-	
+	if (GetGoalFlgCrew())
+	{
+		DrawGoalUI();
+	}
 
 
 	// タイマーUI更新

@@ -19,7 +19,7 @@ StageSlectScene::StageSlectScene()
 	// ƒ{ƒ^ƒ“‰Šú‰»
 	m_pStageButton = new StageButton;
 	StageTrrger = false;
-	
+	m_eStage = STAGE_1;
 	m_pStageSelectBG = new StageSelectBG;
 }
 //=============================================================================

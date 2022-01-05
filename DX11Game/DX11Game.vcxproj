@@ -114,13 +114,13 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\..\DirectXTex;..\..\Assimp\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\DirectXTex;..\..\Assimp\include;..\..\DirectShow\baseclasses;..\..\DirectShow\common</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
-      <AdditionalLibraryDirectories>..\..\DirectXTex\$(PlatformTarget)\$(Configuration);..\..\Assimp\lib\$(PlatformTarget);..\..\DirectShow\$(PlatformTarget)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\DirectXTex\$(PlatformTarget)\$(Configuration);..\..\Assimp\lib\$(PlatformTarget);..\..\DirectShow</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -150,7 +150,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\..\DirectXTex;..\..\Assimp\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\DirectXTex;..\..\Assimp\include;..\..\DirectShow\common;..\..\DirectShow\baseclasses</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>

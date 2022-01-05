@@ -1,5 +1,6 @@
 #include "gameOverSceneBG.h"
 
+
 GameOverSceneBG::GameOverSceneBG()
 {
 	ID3D11Device* pDevice = GetDevice();
@@ -10,6 +11,7 @@ GameOverSceneBG::GameOverSceneBG()
 
 	// テクスチャ読込
 	//CreateTextureFromFile(pDevice, PATH_TITLE_BGTEXTURE, &m_pTexture);
+	
 }
 GameOverSceneBG::~GameOverSceneBG()
 {

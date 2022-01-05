@@ -18,6 +18,7 @@ class GameScene :public SceneBase
 {
 public:
 	GameScene();
+	GameScene(EStage stage);
 	~GameScene();
 
 	void Update();

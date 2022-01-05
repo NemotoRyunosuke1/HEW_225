@@ -16,4 +16,5 @@ public:
 private:
 	StageSelectBG* m_pStageSelectBG;
 	StageButton* m_pStageButton;
+	EStage m_eStage;
 };
