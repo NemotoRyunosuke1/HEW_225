@@ -240,7 +240,7 @@ GameScene::GameScene(EStage stage)
 	// ステージごとの初期化  (モデル位置 x軸:-1000 y軸:600 z軸:-2000)
 	switch (stage)
 	{
-	case STAGE_1:
+	case STAGE_1:	// ステージ1
 		// メッシュフィールド初期化
 		InitMeshField(20, 20, 2000.0f, 2000.0f);
 
@@ -252,11 +252,11 @@ GameScene::GameScene(EStage stage)
 
 
 		break;
-	case STAGE_2:
+	case STAGE_2:	// ステージ2
 		break;
-	case STAGE_3:
+	case STAGE_3:	// ステージ3
 		break;
-	case STAGE_4:
+	case STAGE_4:	// ステージ4
 		// メッシュフィールド初期化
 		InitMeshField(20, 20, 2000.0f, 2000.0f);
 
@@ -292,7 +292,7 @@ GameScene::GameScene(EStage stage)
 		SetGoalUI(XMFLOAT3(-1000.0f, 1000.0f, 9000.0f), 1200, 600, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);	// 仲間用UIセット
 
 		break;
-	case STAGE_5:
+	case STAGE_5:	// ステージ5
 		break;
 	case MAX_STAGE:
 		break;
