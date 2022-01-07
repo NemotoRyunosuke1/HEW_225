@@ -9,7 +9,6 @@
 
 #include <Effekseer/Effekseer.h>
 #include <Effekseer/EffekseerRendererDX11.h>
-
 #ifdef _DEBUG
 #pragma comment(lib, "EffekseerD.lib")
 #pragma comment(lib, "EffekseerRendererDX11D.lib")
