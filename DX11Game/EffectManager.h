@@ -34,15 +34,20 @@ public:
 	static EffectManager *Instance();
 
 	int Load(const char *fileName);
-	int Play(int Handle);
+	static int Play(int Handle);
 
 private:
 	static EffectManager *m_pInstance;
 
-	EffekseerRendererDX11::RendererRef m_renderer;
-	Effekseer::ManagerRef m_manager;
-	Effekseer::EffectRef m_effect;
-	Effekseer::Handle m_handle;
+	static EffekseerRendererDX11::RendererRef m_renderer;
+	static Effekseer::ManagerRef m_manager;
+	static Effekseer::EffectRef m_effect;	//風_上
+	static Effekseer::EffectRef m_effect1;	//風_黄色
+	static Effekseer::EffectRef m_effect2;	//風_横
+	static Effekseer::EffectRef m_effect3;	//スタン
+	static Effekseer::EffectRef m_effect4;	//砂埃
+	static Effekseer::EffectRef m_effect5;	//風_上_黄色
+	static Effekseer::Handle m_handle;
 };
 
 

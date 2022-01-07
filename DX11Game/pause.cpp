@@ -2,7 +2,7 @@
 #include "input.h"
 
 #define PATH_PAUSE_BG	L"data/texture/scenesenni/pause/pauseBG.png"
-#define MAX_BUTTON (5)
+#define MAX_BUTTON (3)
 
 Pause::Pause()
 {
@@ -21,10 +21,10 @@ Pause::Pause()
 
 	// É{É^ÉìÉÅÉÇÉäämï€
 	m_pButton = new Button[MAX_BUTTON];
-	m_pButton[0].CreateButton(XMFLOAT3(300.0f, 150.0f, 0.0f), XMFLOAT3(0.0f, -100.0f, 0.0f), 10);
+	m_pButton[0].CreateButton(XMFLOAT3(300.0f, 150.0f, 0.0f), XMFLOAT3(0.0f, -100.0f, 0.0f), BACK_GAME_BTN);
 	m_pButton[0].SetSelect(true);
-	m_pButton[1].CreateButton(XMFLOAT3(300.0f, 150.0f, 0.0f), XMFLOAT3(0.0f, -200.0f, 0.0f), 9);
-	m_pButton[2].CreateButton(XMFLOAT3(300.0f, 150.0f, 0.0f), XMFLOAT3(0.0f, -300.0f, 0.0f), 11);
+	m_pButton[1].CreateButton(XMFLOAT3(300.0f, 150.0f, 0.0f), XMFLOAT3(0.0f, -200.0f, 0.0f), RESTART_BTN);
+	m_pButton[2].CreateButton(XMFLOAT3(300.0f, 150.0f, 0.0f), XMFLOAT3(0.0f, -300.0f, 0.0f), STAGE_SELECT_BTN);
 
 }
 Pause::~Pause()
@@ -81,6 +81,20 @@ void Pause::Update()
 	{
 
 	}
+
+	if (GetKeyRelease(VK_W) || GetKeyRelease(VK_UP))
+	{
+		
+		m_cnt--;
+		if (m_cnt < 0) m_cnt = MAX_BUTTON - 1;
+	}
+	if (GetKeyRelease(VK_S) || GetKeyRelease(VK_DOWN))
+	{
+		m_cnt++;
+		if (m_cnt > MAX_BUTTON - 1) m_cnt = 0;
+
+	}
+
 
 	switch (m_cnt)
 	{

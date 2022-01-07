@@ -1,7 +1,7 @@
 //=============================================================================
 //
 // メイン処理 [main.h]
-// Author : HIROHIKO HAMAYA
+// Author : 根本龍之介
 //
 //=============================================================================
 #pragma once
@@ -77,10 +77,22 @@ enum EScene
 	SCENE_STAGE_SELECT,
 	SCENE_GAME,
 	SCENE_RESULT,
+	SCENE_GAMEOVER,
 
 	MAX_SCENE
 };
 
+// ステージ列挙対
+enum EStage
+{
+	STAGE_1 = 0,
+	STAGE_2,
+	STAGE_3,
+	STAGE_4,
+	STAGE_5,
+
+	MAX_STAGE
+};
 
 
 //*****************************************************************************

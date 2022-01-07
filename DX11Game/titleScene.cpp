@@ -73,7 +73,7 @@ void TitleScene::Update()
 		StartFadeOut(SCENE_STAGE_SELECT);
 
 #else 
-		StartFadeOut(SCENE_STAGE_SELECT);
+		
 
 #endif
 	}	
@@ -86,7 +86,7 @@ void TitleScene::Update()
 		StartFadeOut(SCENE_STAGE_SELECT);
 
 #else 
-		StartFadeOut(SCENE_STAGE_SELECT);
+		
 
 #endif
 	}
@@ -100,13 +100,13 @@ void TitleScene::Update()
 			CSound::Play(SE_SELECT);
 			SelectTrriger = true;
 	}
-#if _DEBUG
+	#if _DEBUG
 		StartFadeOut(SCENE_STAGE_SELECT);
 
-#else 
+	#else 
 		StartFadeOut(SCENE_STAGE_SELECT);
 
-#endif
+	#endif
 
 	}
 

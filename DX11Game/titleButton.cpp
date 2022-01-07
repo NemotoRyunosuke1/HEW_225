@@ -7,10 +7,10 @@
 TitleButton::TitleButton()
 {
 	m_pButton = new Button[MAX_TITLE_BUTTON];
-	m_pButton[0].CreateButton(XMFLOAT3(150,50,0), XMFLOAT3(0, -200, 0),4 );
+	m_pButton[0].CreateButton(XMFLOAT3(150,50,0), XMFLOAT3(0, -200, 0),STAGE_SELECT_BTN );
 	m_pButton[0].SetSelect(true);
-	m_pButton[1].CreateButton(XMFLOAT3(150,50,0), XMFLOAT3(0, -250, 0),5 );
-	m_pButton[2].CreateButton(XMFLOAT3(150,50,0), XMFLOAT3(0, -300, 0),6 );
+	m_pButton[1].CreateButton(XMFLOAT3(150,50,0), XMFLOAT3(0, -250, 0),OPTION_BTN );
+	m_pButton[2].CreateButton(XMFLOAT3(150,50,0), XMFLOAT3(0, -300, 0),ENDGAME_BTN );
 	m_cnt = 0;
 	m_Trigger = false;
 	m_NextScene = false;
@@ -68,6 +68,18 @@ void TitleButton::Update()
 	else
 	{
 		
+	}
+
+	if (GetKeyRelease(VK_W) || GetKeyRelease(VK_UP))
+	{
+		m_cnt--;
+		if (m_cnt < 0) m_cnt = 2;
+	}
+	if (GetKeyRelease(VK_S) || GetKeyRelease(VK_DOWN))
+	{
+		
+		m_cnt++;
+		if (m_cnt > 2) m_cnt = 0;
 	}
 
 	switch (m_cnt)

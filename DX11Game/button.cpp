@@ -19,6 +19,7 @@
 #define PATH_BUTTON_PAUSE_TEXTURE3 L"data/texture/scenesenni/pause/backstageselect.png"
 
 
+
 #define NUMBER_COUNT_X (4)	//テクスチャコマ数(X)
 #define NUMBER_COUNT_Y (4)	//テクスチャコマ数(Y)
 
@@ -120,6 +121,11 @@ void Button::Update()
 				m_flg = true;
 
 			}
+			if (GetKeyRelease(VK_RETURN))
+			{
+				m_flg = true;
+
+			}
 		}
 		else
 		{
@@ -168,44 +174,53 @@ void Button::CreateButton(XMFLOAT3 size, XMFLOAT3 pos, int textureNum)
 	m_pos = pos;
 	m_use = true;
 	ID3D11Device* pDevice = GetDevice();
+	/*STAGE_SELECT_1_1_BTN = 0,
+		STAGE_SELECT_1_2_BTN,
+		STAGE_SELECT_1_3_BTN,
+		STAGE_SELECT_BTN,
+		OPTION_BTN,
+		ENDGAME_BTN,
+		STAGE1_BTN,
+		BACK_BTN,
+		RESTART_BTN,
+		BACK_GAME_BTN,
+		BACK_STAGE_SELECT_BTN,
 
+		MAX_BTN_TEXTURE*/
 	switch (textureNum)
 	{
-	case 0:
+	case STAGE_SELECT_1_1_BTN:
 		CreateTextureFromFile(pDevice, PATH_BUTTON_TEXTURE, &m_pTexture);
 		break;
-	case 1:
+	case STAGE_SELECT_1_2_BTN:
 		CreateTextureFromFile(pDevice, PATH_BUTTON_TEXTURE1, &m_pTexture);
 		break;
-	case 2:
+	case STAGE_SELECT_1_3_BTN:
 		CreateTextureFromFile(pDevice, PATH_BUTTON_TEXTURE2, &m_pTexture);
 		break;
-	case 3:
-		m_pTexture = nullptr;
-		break;
-	case 4:
+	case STAGE_SELECT_BTN:
 		CreateTextureFromFile(pDevice, PATH_BUTTON_SELECT_TEXTURE, &m_pTexture);
 		break;
-	case 5:
+	case OPTION_BTN:
 		CreateTextureFromFile(pDevice, PATH_BUTTON_OPTION_TEXTURE, &m_pTexture);
 		break;
-	case 6:
+	case ENDGAME_BTN:
 		CreateTextureFromFile(pDevice, PATH_BUTTON_END_TEXTURE, &m_pTexture);
 		break;
-	case 7:
+	case STAGE1_BTN:
 		CreateTextureFromFile(pDevice, PATH_BUTTON_SELECT_TEXTURE1, &m_pTexture);
 		break;
-	case 8:
+	case BACK_BTN:
 		CreateTextureFromFile(pDevice, PATH_BUTTON_BACK_TEXTURE, &m_pTexture);
 		break;
-	case 9:
-		CreateTextureFromFile(pDevice, PATH_BUTTON_PAUSE_TEXTURE1, &m_pTexture);
+	case RESTART_BTN:
+		CreateTextureFromFile(pDevice, PATH_BUTTON_PAUSE_TEXTURE1, &m_pTexture);	// リスタート
 		break;
-	case 10:
-		CreateTextureFromFile(pDevice, PATH_BUTTON_PAUSE_TEXTURE2, &m_pTexture);
+	case BACK_GAME_BTN:
+		CreateTextureFromFile(pDevice, PATH_BUTTON_PAUSE_TEXTURE2, &m_pTexture);	// ゲームに戻る
 		break;
-	case 11:
-		CreateTextureFromFile(pDevice, PATH_BUTTON_PAUSE_TEXTURE3, &m_pTexture);
+	case BACK_STAGE_SELECT_BTN:
+		CreateTextureFromFile(pDevice, PATH_BUTTON_PAUSE_TEXTURE3, &m_pTexture);	// ステージセレクトに戻る
 		break;
 	default:
 		break;

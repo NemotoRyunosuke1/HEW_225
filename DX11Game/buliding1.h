@@ -13,6 +13,7 @@ class Buliding
 {
 public:
 	Buliding();
+	Buliding(EStage);
 	~Buliding();
 
 	void Update();

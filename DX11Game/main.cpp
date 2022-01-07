@@ -1,7 +1,7 @@
 //=============================================================================
 //
 // メイン処理 [main.cpp]
-// Author : HIROHIKO HAMAYA
+// Author : 根本龍之介
 //
 //=============================================================================
 #include "AssimpModel.h"
@@ -19,6 +19,7 @@
 #pragma comment(lib, "winmm")
 #pragma comment(lib, "imm32")
 #pragma comment(lib, "d3d11")
+
 
 //*****************************************************************************
 // マクロ定義
@@ -83,6 +84,7 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdL
 		CLASS_NAME,
 		LoadIcon(hInstance, MAKEINTRESOURCE(IDI_MAINFRM))
 	};
+	
 	MSG msg;
 	//ExtractIconExA(LPCSTR(1),0, (HICON)LoadIcon(hInstance, MAKEINTRESOURCE(IDI_MAINFRM));
 	// COM初期化
