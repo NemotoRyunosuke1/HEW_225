@@ -19,7 +19,7 @@ StageSlectScene::StageSlectScene()
 	// É{É^Éìèâä˙âª
 	m_pStageButton = new StageButton;
 	StageTrrger = false;
-	
+	m_eStage = STAGE_1;
 	m_pStageSelectBG = new StageSelectBG;
 }
 //=============================================================================
@@ -52,10 +52,10 @@ void StageSlectScene::Update()
 		}
 		
 #if _DEBUG
-		StartFadeOut(SCENE_GAME);
+		
 
 #else 
-		StartFadeOut(SCENE_GAME);
+	
 
 #endif
 	}
@@ -65,10 +65,10 @@ void StageSlectScene::Update()
 		CSound::SetVolume(SE_SELECT, 1.0f);
 		CSound::Play(SE_SELECT);
 #if _DEBUG
-		StartFadeOut(SCENE_GAME);
+		
 
 #else 
-		StartFadeOut(SCENE_GAME);
+		
 
 #endif
 }

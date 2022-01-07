@@ -14,6 +14,7 @@ class WindManager
 {
 public:
 	WindManager();
+	WindManager(EStage);
 	~WindManager();
 
 	void Update();

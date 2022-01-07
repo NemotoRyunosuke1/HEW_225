@@ -121,6 +121,11 @@ void Button::Update()
 				m_flg = true;
 
 			}
+			if (GetKeyRelease(VK_RETURN))
+			{
+				m_flg = true;
+
+			}
 		}
 		else
 		{

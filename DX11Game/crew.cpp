@@ -14,6 +14,7 @@
 #include "Sound.h"
 #include "Cunt.h"
 #include "crewUI.h"
+#include "EffectManager.h"
 
 #if _DEBUG
 #include "input.h"

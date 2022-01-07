@@ -168,9 +168,6 @@
     <ClCompile Include="crewUI.cpp">
       <Filter>ソースファイル\scene\gameScene\UI</Filter>
     </ClCompile>
-    <ClCompile Include="timerUI.cpp">
-      <Filter>ソースファイル\scene\gameScene\UI</Filter>
-    </ClCompile>
     <ClCompile Include="gameOverScene.cpp">
       <Filter>ソースファイル\scene\gameOverScene</Filter>
     </ClCompile>
@@ -179,6 +176,12 @@
     </ClCompile>
     <ClCompile Include="gameOverSceneBG.cpp">
       <Filter>ソースファイル\scene\gameOverScene</Filter>
+    </ClCompile>
+    <ClCompile Include="goalUI.cpp">
+      <Filter>ソースファイル\scene\gameScene\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="timerUI.cpp">
+      <Filter>ソースファイル\scene\gameScene\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -349,6 +352,9 @@
     </ClInclude>
     <ClInclude Include="gameOverSceneBG.h">
       <Filter>ヘッダーファイル\scene\gameOverScene</Filter>
+    </ClInclude>
+    <ClInclude Include="goalUI.h">
+      <Filter>ヘッダーファイル\scene\gameScene\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
