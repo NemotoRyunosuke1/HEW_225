@@ -13,6 +13,12 @@
 #include "collision.h"
 #include "Sound.h"
 #include "Cunt.h"
+#include "crewUI.h"
+
+#if _DEBUG
+#include "input.h"
+#endif // _DEBUG
+
 
 //*****************************************************************************
 // マクロ定義
@@ -42,6 +48,7 @@
 //*****************************************************************************
 struct TCrew {
 	XMFLOAT3	m_pos;		// 現在の位置
+	XMFLOAT3	m_initPos;		// 現在の位置
 	XMFLOAT3	m_rot;		// 現在の向き
 	XMFLOAT3	m_rotDest;	// 目的の向き
 	XMFLOAT3	m_move;		// 移動量
@@ -55,6 +62,7 @@ struct TCrew {
 	bool m_catch;
 	bool m_use;
 	bool m_CollectTrriger;
+	bool m_bEscape;		// 逃走フラグ
 	CAssimpModel	m_model;			// モデル
 };
 
@@ -64,13 +72,15 @@ struct TCrew {
 static CAssimpModel	g_model;			// モデル
 static TCrew		g_crew[MAX_CREW];	// 味方情報
 static int CrewCnt;
-
+static int g_nMaxCrew;
+static int g_nRemainCrew;
 static bool hit2[MAX_CREW];
 
 static bool g_CollectTrriger;
 
 static Cunt g_Cunt;
-
+static bool g_bEscapeFlg; 
+static bool g_bAllCatch;	// 全て集めたかフラグ
 //=============================================================================
 // 初期化処理
 //=============================================================================
@@ -106,8 +116,15 @@ HRESULT InitCrew(void)
 		g_crew[i].m_animTime = 0;	// アニメーションタイム
 
 		g_crew[i].m_CollectTrriger = false;
-	}
+		g_crew[i].m_bEscape = false;
 
+
+		}
+	CrewCnt = 0;
+	g_nMaxCrew = 0;
+	g_nRemainCrew = 0;
+	g_bEscapeFlg = false;
+	g_bAllCatch = false;
 	return hr;
 }
 
@@ -142,15 +159,38 @@ void UpdateCrew(void)
 	
 	int cnt = 0;
 
+	// 残りの計算
+	g_nRemainCrew = g_nMaxCrew - CrewCnt;
+
+	if (g_nRemainCrew == 0)
+	{
+		g_bAllCatch = true;
+	}
+	else
+	{
+		g_bAllCatch = false;
+	}
+
+	// 仲間更新
 	for (int i = 0; i < MAX_CREW; ++i) {
 
 		if (!g_crew[i].m_use)
 		{
 			continue;
 		}
-		// 移動
-		StartChase(i,g_modelPos);
 		
+		// UI移動
+		if (!g_crew[i].m_catch)
+		{
+			SetCrewUI(XMFLOAT3(g_crew[i].m_pos.x, g_crew[i].m_pos.y + 50, g_crew[i].m_pos.z), 60, 60, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), i);	// 仲間用UIセット
+
+		}
+		else
+		{
+			SetUseCrewUI(false, i);
+		}
+		//SetCrewUI(XMFLOAT3(g_crew[i].m_pos.x, g_crew[i].m_pos.y + 50, g_crew[i].m_pos.z), 30, 30, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f));	// 仲間用UIセット
+
 		// アニメーション
 		g_crew[i].m_model.SetAnimTime(g_crew[i].m_animTime);
 		g_crew[i].m_animTime += 0.04f;
@@ -159,37 +199,16 @@ void UpdateCrew(void)
 			g_crew[i].m_animTime = 0.0f;
 		}
 
-
-		for (int j = 0; j < MAX_CREW; ++j)
-		{
-			if (i != j)
-			{
-				hit2[j] = CollisionSphere(g_crew[i].m_pos, 40.0f, g_crew[j].m_pos, 40.0f);
-			}
-
-		}
-		
-		for (int j = 0; j < MAX_CREW; ++j)
-		{
-			if (hit2[j])
-			{
-				g_crew[i].m_rotDest.y = XMConvertToDegrees(atan2f(-g_crew[i].m_move.x, -g_crew[i].m_move.z));
-			}
-		}
-		
+		// キャッチカウント
 		if (g_crew[i].m_catch)
 		{
 			cnt++;
-
-			//Cunt::Gatherbird();
-
+			CrewCnt++;
 		}
-		CrewCnt = cnt;
 
+		// 現在の取得状況
+		CrewCnt = cnt;
 		
-		g_crew[i].m_pos.x += g_crew[i].m_move.x;
-		g_crew[i].m_pos.y += g_crew[i].m_move.y;
-		g_crew[i].m_pos.z += g_crew[i].m_move.z;
 
 		// 壁にぶつかった
 		bool lr = false, fb = false;
@@ -263,12 +282,12 @@ void UpdateCrew(void)
 			-SinDeg(g_crew[i].m_rot.y) * VALUE_MOVE_CREW * 0.0f,
 			0.0f,
 			-CosDeg(g_crew[i].m_rot.y) * VALUE_MOVE_CREW * 0.0f);
-		
+
 
 		// ワールドマトリックスの初期化
 		mtxWorld = XMMatrixIdentity();
 
-		
+
 		//スケール反映
 		mtxScl = XMMatrixScaling(3.0f, 3.0f, 3.0f);
 		mtxWorld = XMMatrixMultiply(mtxWorld, mtxScl);
@@ -292,10 +311,74 @@ void UpdateCrew(void)
 
 		// 丸影の移動
 		MoveShadow(g_crew[i].m_nShadow, g_crew[i].m_pos);
+
+		// 逃走フラグがONだったらスキップ
+		if (g_crew[i].m_bEscape)
+		{
+			g_crew[i].m_pos = g_crew[i].m_initPos;
+			g_crew[i].m_bEscape = false;
+			continue;	// 逃走フラグがONだったらスキップ
+		}
+
+		// 移動
+		StartChase(i,g_modelPos);
+		
+		
+
+/*
+		for (int j = 0; j < MAX_CREW; ++j)
+		{
+			if (i != j)
+			{
+				hit2[j] = CollisionSphere(g_crew[i].m_pos, 40.0f, g_crew[j].m_pos, 40.0f);
+			}
+
+		}
+		
+		for (int j = 0; j < MAX_CREW; ++j)
+		{
+			if (hit2[j])
+			{
+				g_crew[i].m_rotDest.y = XMConvertToDegrees(atan2f(-g_crew[i].m_move.x, -g_crew[i].m_move.z));
+			}
+		}*/
+		
+	
+
+		
+		g_crew[i].m_pos.x += g_crew[i].m_move.x;
+		g_crew[i].m_pos.y += g_crew[i].m_move.y;
+		g_crew[i].m_pos.z += g_crew[i].m_move.z;
+
+#if _DEBUG
+	
+	
+
+#endif
+
 	}
+
 #if _DEBUG
 	PrintDebugProc("[ﾐｶﾀ : (%d)]\n", cnt);
+	PrintDebugProc("[ﾐｶﾀ : (%d)]\n", CrewCnt);
+	PrintDebugProc("[ﾐｶﾀ ﾉｺﾘ: (%d)]\n", g_nRemainCrew);
+	PrintDebugProc("[ﾐｶﾀ ﾉｺﾘ: (%d)]\n", g_nMaxCrew);
 
+
+		if (GetJoyRelease(0, JOYSTICKID1))	// コントローラーBACKボタン
+		{
+			for (int i = 0; i < MAX_CREW; ++i)
+			{
+				if (!g_crew[i].m_use)
+				{
+					continue;
+				}
+				if (!g_crew[i].m_catch)g_crew[i].m_catch = true;
+			
+
+			}
+		}
+	
 #endif
 	
 }
@@ -343,66 +426,7 @@ int StartChase(int i, XMFLOAT3 pos)
 	{
 		g_crew[i].m_catch = true;
 
-		//g_Cunt.Gatherbird();
-
-
-		//if (g_modelPos.y - g_crew[i].m_pos.y > 50.0f)
-		//{
-		//	//上
-		//	g_crew[i].m_rotDest.x = 30.0f;
-		//}
-		//else if (g_modelPos.y - g_crew[i].m_pos.y < -50.0f)
-		//{
-		//	//下
-		//	g_crew[i].m_rotDest.x = -30.0f;
-		//}
-		//else
-		//{
-		//	//水平
-		//	g_crew[i].m_rotDest.x = 0;
-		//}
-
-		//if (g_modelPos.x - g_crew[i].m_pos.x > 0 && g_modelPos.z - g_crew[i].m_pos.z > 0)
-		//{
-		//	//左後ろ
-		//	g_crew[i].m_rotDest.y = -135.0f;
-		//}
-		//else if (g_modelPos.x - g_crew[i].m_pos.x < 0 && g_modelPos.z - g_crew[i].m_pos.z > 0)
-		//{
-		//	//右後ろ
-		//	g_crew[i].m_rotDest.y = 135.0f;
-		//}
-		//else if (g_modelPos.x - g_crew[i].m_pos.x > 0 && g_modelPos.z - g_crew[i].m_pos.z < 0)
-		//{
-		//	//左前
-		//	g_crew[i].m_rotDest.y = -45.0f;
-		//}
-		//else if (g_modelPos.x - g_crew[i].m_pos.x < 0 && g_modelPos.z - g_crew[i].m_pos.z < 0)
-		//{
-		//	//右前
-		//	g_crew[i].m_rotDest.y = 45.0f;
-		//}
-		//else if (g_modelPos.x - g_crew[i].m_pos.x > 0)
-		//{
-		//	//左
-		//	g_crew[i].m_rotDest.y = -90.0f;
-		//}
-		//else if (g_modelPos.x - g_crew[i].m_pos.x < 0)
-		//{
-		//	//右
-		//	g_crew[i].m_rotDest.y = 90.0f;
-		//}
-		//else if (g_modelPos.z - g_crew[i].m_pos.z > 0)
-		//{
-		//	//後ろ
-		//	g_crew[i].m_rotDest.y = 180.0f;
-		//}
-		//else
-		//{
-		//	//前
-		//	g_crew[i].m_rotDest.y = 0;
-		//}
-
+	
 		g_crew[i].m_pos.x -= SinDeg(g_crew[i].m_rot.y) * VALUE_MOVE_CREW ;
 		g_crew[i].m_pos.y += SinDeg(g_crew[i].m_rot.x) * VALUE_MOVE_CREW ;
 		g_crew[i].m_pos.z -= CosDeg(g_crew[i].m_rot.y) * VALUE_MOVE_CREW ;
@@ -489,8 +513,7 @@ int& GetCrewCnt()
 }
 
 
-void CrewCreate(XMFLOAT3 pos1, XMFLOAT3 pos2, XMFLOAT3 pos3, XMFLOAT3 pos4, XMFLOAT3 pos5,
-	            XMFLOAT3 pos6, XMFLOAT3 pos7, XMFLOAT3 pos8, XMFLOAT3 pos9, XMFLOAT3 pos10)
+void CrewCreate(XMFLOAT3 pos1)
 {
 	ID3D11Device* pDevice = GetDevice();
 	ID3D11DeviceContext* pDeviceContext = GetDeviceContext();
@@ -523,297 +546,66 @@ void CrewCreate(XMFLOAT3 pos1, XMFLOAT3 pos2, XMFLOAT3 pos3, XMFLOAT3 pos4, XMFL
 		default:
 			break;
 		}
-		g_crew[i].m_pos = pos1;
+		g_crew[i].m_pos = g_crew[i].m_initPos = pos1;
 		g_crew[i].m_use = true;
+		g_nMaxCrew++;
 		
 		break;
 	}
-	for (int i = 0; i < MAX_CREW; ++i)
+	
+	g_nRemainCrew = g_nMaxCrew;
+}
+int& GetMaxCrew()
+{
+	return 	g_nMaxCrew;
+}
+int& GetRemainCrew()
+{
+	return g_nRemainCrew;
+}
+void StartEscapeCrew()
+{
+	bool trigger = false;
+	
+	do
 	{
-		if (g_crew[i].m_use)
+		for (int i = 0; i < MAX_CREW; ++i)
 		{
-			continue;
-		}
-		switch (rand() % 5)
-		{
-		case 0:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW1); // モデルデータの読み込み
-			break;
-		case 1:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW2); // モデルデータの読み込み
-			break;
-		case 2:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW3); // モデルデータの読み込み
-			break;
-		case 3:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW4); // モデルデータの読み込み
-			break;
-		case 4:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW5); // モデルデータの読み込み
-			break;
-
-		default:
+			if (!g_crew[i].m_use)
+			{
+				continue;
+			}
+			if (!g_crew[i].m_catch)
+			{
+				continue;
+			}
+			//int randam = rand() % 10;	// 逃走フラグ抽選
+			//if (randam == 0)
+			//{
+			//	g_crew[i].m_bEscape = true;	// 逃走開始フラグON
+			//	g_crew[i].m_catch = false;	// 取得状況解除
+			//}
+			g_crew[i].m_bEscape = true;	// 逃走開始フラグON
+			g_crew[i].m_catch = false;	// 取得状況解除
+			g_bEscapeFlg = true;	// 逃走フラグオン
 			break;
 		}
-		g_crew[i].m_pos = pos2;
-		g_crew[i].m_use = true;
+		
+	} while (trigger);
 
-		break;
-	}
-	for (int i = 0; i < MAX_CREW; ++i)
-	{
-		if (g_crew[i].m_use)
-		{
-			continue;
-		}
-		switch (rand() % 5)
-		{
-		case 0:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW1); // モデルデータの読み込み
-			break;
-		case 1:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW2); // モデルデータの読み込み
-			break;
-		case 2:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW3); // モデルデータの読み込み
-			break;
-		case 3:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW4); // モデルデータの読み込み
-			break;
-		case 4:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW5); // モデルデータの読み込み
-			break;
-
-		default:
-			break;
-		}
-		g_crew[i].m_pos = pos3;
-		g_crew[i].m_use = true;
-
-		break;
-	}
-	for (int i = 0; i < MAX_CREW; ++i)
-	{
-		if (g_crew[i].m_use)
-		{
-			continue;
-		}
-		switch (rand() % 5)
-		{
-		case 0:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW1); // モデルデータの読み込み
-			break;
-		case 1:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW2); // モデルデータの読み込み
-			break;
-		case 2:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW3); // モデルデータの読み込み
-			break;
-		case 3:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW4); // モデルデータの読み込み
-			break;
-		case 4:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW5); // モデルデータの読み込み
-			break;
-
-		default:
-			break;
-		}
-		g_crew[i].m_pos = pos4;
-		g_crew[i].m_use = true;
-
-		break;
-	}
-	for (int i = 0; i < MAX_CREW; ++i)
-	{
-		if (g_crew[i].m_use)
-		{
-			continue;
-		}
-		switch (rand() % 5)
-		{
-		case 0:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW1); // モデルデータの読み込み
-			break;
-		case 1:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW2); // モデルデータの読み込み
-			break;
-		case 2:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW3); // モデルデータの読み込み
-			break;
-		case 3:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW4); // モデルデータの読み込み
-			break;
-		case 4:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW5); // モデルデータの読み込み
-			break;
-
-		default:
-			break;
-		}
-		g_crew[i].m_pos = pos5;
-		g_crew[i].m_use = true;
-
-		break;
-	}
-	for (int i = 0; i < MAX_CREW; ++i)
-	{
-		if (g_crew[i].m_use)
-		{
-			continue;
-		}
-		switch (rand() % 5)
-		{
-		case 0:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW1); // モデルデータの読み込み
-			break;
-		case 1:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW2); // モデルデータの読み込み
-			break;
-		case 2:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW3); // モデルデータの読み込み
-			break;
-		case 3:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW4); // モデルデータの読み込み
-			break;
-		case 4:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW5); // モデルデータの読み込み
-			break;
-
-		default:
-			break;
-		}
-		g_crew[i].m_pos = pos6;
-		g_crew[i].m_use = true;
-
-		break;
-	}
-	for (int i = 0; i < MAX_CREW; ++i)
-	{
-		if (g_crew[i].m_use)
-		{
-			continue;
-		}
-		switch (rand() % 5)
-		{
-		case 0:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW1); // モデルデータの読み込み
-			break;
-		case 1:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW2); // モデルデータの読み込み
-			break;
-		case 2:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW3); // モデルデータの読み込み
-			break;
-		case 3:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW4); // モデルデータの読み込み
-			break;
-		case 4:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW5); // モデルデータの読み込み
-			break;
-
-		default:
-			break;
-		}
-		g_crew[i].m_pos = pos7;
-		g_crew[i].m_use = true;
-
-		break;
-	}
-	for (int i = 0; i < MAX_CREW; ++i)
-	{
-		if (g_crew[i].m_use)
-		{
-			continue;
-		}
-		switch (rand() % 5)
-		{
-		case 0:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW1); // モデルデータの読み込み
-			break;
-		case 1:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW2); // モデルデータの読み込み
-			break;
-		case 2:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW3); // モデルデータの読み込み
-			break;
-		case 3:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW4); // モデルデータの読み込み
-			break;
-		case 4:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW5); // モデルデータの読み込み
-			break;
-
-		default:
-			break;
-		}
-		g_crew[i].m_pos = pos8;
-		g_crew[i].m_use = true;
-
-		break;
-	}
-	for (int i = 0; i < MAX_CREW; ++i)
-	{
-		if (g_crew[i].m_use)
-		{
-			continue;
-		}
-		switch (rand() % 5)
-		{
-		case 0:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW1); // モデルデータの読み込み
-			break;
-		case 1:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW2); // モデルデータの読み込み
-			break;
-		case 2:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW3); // モデルデータの読み込み
-			break;
-		case 3:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW4); // モデルデータの読み込み
-			break;
-		case 4:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW5); // モデルデータの読み込み
-			break;
-
-		default:
-			break;
-		}
-		g_crew[i].m_pos = pos9;
-		g_crew[i].m_use = true;
-
-		break;
-	}
-	for (int i = 0; i < MAX_CREW; ++i)
-	{
-		if (g_crew[i].m_use)
-		{
-			continue;
-		}
-		switch (rand() % 5)
-		{
-		case 0:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW1); // モデルデータの読み込み
-			break;
-		case 1:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW2); // モデルデータの読み込み
-			break;
-		case 2:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW3); // モデルデータの読み込み
-			break;
-		case 3:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW4); // モデルデータの読み込み
-			break;
-		case 4:
-			g_crew[i].m_model.Load(pDevice, pDeviceContext, MODEL_CREW5); // モデルデータの読み込み
-			break;
-
-		default:
-			break;
-		}
-		g_crew[i].m_pos = pos10;
-		g_crew[i].m_use = true;
-
-		break;
-	}
+	
+	
+	
+}
+bool GetEscapeCrew()
+{
+	return g_bEscapeFlg;
+}
+void SetEscapeCrew(bool flg)
+{
+	g_bEscapeFlg = flg;
+}
+bool GetGoalFlgCrew()
+{
+	return g_bAllCatch;
 }

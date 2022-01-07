@@ -9,6 +9,8 @@
 #include "main.h"
 #include "AssimpModel.h"
 
+
+
 class Wind
 {
 public:
@@ -35,4 +37,8 @@ private:
 	bool m_use;			// 使用フラグ
 
 	XMFLOAT4X4	m_mtxWorld;		// ワールドマトリックス
+
+
+	
+
 };

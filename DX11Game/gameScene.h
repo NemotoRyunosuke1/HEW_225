@@ -9,6 +9,10 @@
 #include "cloudManager.h"
 #include "resultScene.h"
 #include "Cunt.h"
+#include "pause.h"
+#include "lever.h"
+#include "escapeText.h"
+#include "timerUI.h"
 
 class GameScene :public SceneBase
 {
@@ -29,8 +33,24 @@ private:
 	ScoreUI* m_pScoreUI;
 	CloudManager* m_pCloudManager;
 	ResultScene* m_pResult;
+	Pause* m_pPause;
+	Lever* m_pLever;
+	EscapeText* m_pEscapeText;
+	TimerUI* m_pTimerUI;
+
 	bool m_bDebugMode;
 	bool m_bPause;
 	bool m_bGoal;
+
+	// タイマー用変数
+	float m_fRemainTime;
+	float m_fCurrentTime;
+	float m_timer;
+
+	// タイマー用変数
+	float m_fRemainTime_result;
+	float m_fCurrentTime_result;
+	float m_timer_result;
+	bool  m_bTrigger_result;
 };
 

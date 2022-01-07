@@ -9,6 +9,17 @@
 #define PATH_BUTTON_TEXTURE L"data/texture/ステージセレクト1-1.png"
 #define PATH_BUTTON_TEXTURE1 L"data/texture/ステージセレクト1-2.png"
 #define PATH_BUTTON_TEXTURE2 L"data/texture/ステージセレクト1-3.png"
+#define PATH_BUTTON_SELECT_TEXTURE L"data/texture/scenesenni/title/titlestageselect.png"
+#define PATH_BUTTON_OPTION_TEXTURE L"data/texture/scenesenni/title/titleoption.png"
+#define PATH_BUTTON_END_TEXTURE L"data/texture/scenesenni/title/titleend.png"
+#define PATH_BUTTON_SELECT_TEXTURE1 L"data/texture/scenesenni/stageselect/selectstage1.png"
+#define PATH_BUTTON_BACK_TEXTURE L"data/texture/scenesenni/stageselect/selectback.png"
+#define PATH_BUTTON_PAUSE_TEXTURE1 L"data/texture/scenesenni/pause/restart.png"
+#define PATH_BUTTON_PAUSE_TEXTURE2 L"data/texture/scenesenni/pause/backgame.png"
+#define PATH_BUTTON_PAUSE_TEXTURE3 L"data/texture/scenesenni/pause/backstageselect.png"
+
+
+
 #define NUMBER_COUNT_X (4)	//テクスチャコマ数(X)
 #define NUMBER_COUNT_Y (4)	//テクスチャコマ数(Y)
 
@@ -20,7 +31,7 @@ bool g_bButton = false;
 Button::Button()
 {
 	m_pos  = XMFLOAT3(  0.0f,  0.0f, 0.0f);
-	m_size = XMFLOAT3(100.0f, 50.0f, 0.0f);
+	m_size = m_sizeUpDown = XMFLOAT3(100.0f, 50.0f, 0.0f);
 	m_flg = false;
 	m_use = false;
 	m_frameNum = 0;
@@ -100,6 +111,22 @@ void Button::Update()
 		{
 
 		}
+		if (m_select)
+		{
+			m_size.x = m_sizeUpDown.x * 1.5f;
+			m_size.y = m_sizeUpDown.y * 1.5f;
+
+			if (GetJoyRelease(0, JOYSTICKID1))
+			{
+				m_flg = true;
+
+			}
+		}
+		else
+		{
+			m_size.x = m_sizeUpDown.x;
+			m_size.y = m_sizeUpDown.y;
+		}
 	}
 #if _DEBUG
 	// デバック用文字列
@@ -116,7 +143,7 @@ void Button::Draw()
 	SetBlendState(BS_ALPHABLEND);	// アルファブレンド有効		
 	if (m_use)
 	{
-		if (((GetMousePosition()->x > (long)(m_pos.x - m_size.x / 2 + FULLSCREEN_WIDTH / 2)) && (GetMousePosition()->x < (long)(m_pos.x + m_size.x / 2 + FULLSCREEN_WIDTH / 2)) && (-GetMousePosition()->y < (long)(m_pos.y + m_size.y / 2 - FULLSCREEN_HEIGHT / 2)) && (-GetMousePosition()->y > (long)(m_pos.y - m_size.y / 2 - FULLSCREEN_HEIGHT / 2))) || (m_select))
+		if (((GetMousePosition()->x > (long)(m_pos.x - m_size.x / 2 + FULLSCREEN_WIDTH / 2)) && (GetMousePosition()->x < (long)(m_pos.x + m_size.x / 2 + FULLSCREEN_WIDTH / 2)) && (GetMousePosition()->y < (long)(m_pos.y + m_size.y / 2 + FULLSCREEN_HEIGHT / 2)) && (GetMousePosition()->y > (long)(m_pos.y - m_size.y / 2 + FULLSCREEN_HEIGHT / 2))) || (m_select))
 		{
 			SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
 		}
@@ -138,66 +165,105 @@ void Button::Draw()
 }
 void Button::CreateButton(XMFLOAT3 size, XMFLOAT3 pos, int textureNum)
 {
-	m_size = size;
+	m_size = m_sizeUpDown =size;
 	m_pos = pos;
 	m_use = true;
 	ID3D11Device* pDevice = GetDevice();
+	/*STAGE_SELECT_1_1_BTN = 0,
+		STAGE_SELECT_1_2_BTN,
+		STAGE_SELECT_1_3_BTN,
+		STAGE_SELECT_BTN,
+		OPTION_BTN,
+		ENDGAME_BTN,
+		STAGE1_BTN,
+		BACK_BTN,
+		RESTART_BTN,
+		BACK_GAME_BTN,
+		BACK_STAGE_SELECT_BTN,
 
+		MAX_BTN_TEXTURE*/
 	switch (textureNum)
 	{
-	case 0:
+	case STAGE_SELECT_1_1_BTN:
 		CreateTextureFromFile(pDevice, PATH_BUTTON_TEXTURE, &m_pTexture);
 		break;
-	case 1:
+	case STAGE_SELECT_1_2_BTN:
 		CreateTextureFromFile(pDevice, PATH_BUTTON_TEXTURE1, &m_pTexture);
 		break;
-	case 2:
+	case STAGE_SELECT_1_3_BTN:
 		CreateTextureFromFile(pDevice, PATH_BUTTON_TEXTURE2, &m_pTexture);
+		break;
+	case STAGE_SELECT_BTN:
+		CreateTextureFromFile(pDevice, PATH_BUTTON_SELECT_TEXTURE, &m_pTexture);
+		break;
+	case OPTION_BTN:
+		CreateTextureFromFile(pDevice, PATH_BUTTON_OPTION_TEXTURE, &m_pTexture);
+		break;
+	case ENDGAME_BTN:
+		CreateTextureFromFile(pDevice, PATH_BUTTON_END_TEXTURE, &m_pTexture);
+		break;
+	case STAGE1_BTN:
+		CreateTextureFromFile(pDevice, PATH_BUTTON_SELECT_TEXTURE1, &m_pTexture);
+		break;
+	case BACK_BTN:
+		CreateTextureFromFile(pDevice, PATH_BUTTON_BACK_TEXTURE, &m_pTexture);
+		break;
+	case RESTART_BTN:
+		CreateTextureFromFile(pDevice, PATH_BUTTON_PAUSE_TEXTURE1, &m_pTexture);	// リスタート
+		break;
+	case BACK_GAME_BTN:
+		CreateTextureFromFile(pDevice, PATH_BUTTON_PAUSE_TEXTURE2, &m_pTexture);	// ゲームに戻る
+		break;
+	case BACK_STAGE_SELECT_BTN:
+		CreateTextureFromFile(pDevice, PATH_BUTTON_PAUSE_TEXTURE3, &m_pTexture);	// ステージセレクトに戻る
 		break;
 	default:
 		break;
 	}
 }
-//bool Button::GetFlg()
-//{
-//	return m_flg;
-//}
-//void Button::SetFlg(bool flg)
-//{
-//	m_flg = flg;
-//}
-//void Button::SetPos(XMFLOAT3 pos)
-//{
-//	m_pos = pos;
-//}
-//XMFLOAT3 Button::GetSize()
-//{
-//	return m_size;
-//}
-//XMFLOAT3 Button::GetPos()
-//{
-//	return m_pos;
-//}
+bool Button::GetFlg()
+{
+	return m_flg;
+}
+void Button::SetFlg(bool flg)
+{
+	m_flg = flg;
+}
+void Button::SetPos(XMFLOAT3 pos)
+{
+	m_pos = pos;
+}
+XMFLOAT3 Button::GetSize()
+{
+	return m_size;
+}
+XMFLOAT3 Button::GetPos()
+{
+	return m_pos;
+}
 
 bool Button::GetUse()
 {
 	return m_use;
 }
-//void Button::SetFrameNum(int num)
-//{
-//	m_frameNum = num;
-//}
-//void Button::SetSelect(bool select)
-//{
-//	m_select = select;
-//}
-//bool Button::GetSelect()
-//{
-//	return m_select;
-//}
-//void Button::SetSize(XMFLOAT3 size)
-//{
-//	m_size = size;
-//}
-//
-//
+void Button::SetFrameNum(int num)
+{
+	m_frameNum = num;
+}
+void Button::SetSelect(bool select)
+{
+	m_select = select;
+}
+bool Button::GetSelect()
+{
+	return m_select;
+}
+void Button::SetSize(XMFLOAT3 size)
+{
+	m_size = size;
+}
+XMFLOAT3 Button::GetOriginSize()
+{
+	return m_sizeUpDown;
+}
+

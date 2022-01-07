@@ -6,7 +6,16 @@
 //=============================================================================
 #include "wind.h"
 #include "debugproc.h"
+#include "EffectManager.h"
+#include "Camera.h"
+
+
+
 #define MODEL_PLANE			"data/model/box1.fbx"
+
+Effekseer::Handle m_effcet;
+Effekseer::Handle m_handle;
+
 
 
 //=======================================================
@@ -29,6 +38,10 @@ Wind::Wind()
 	if (!m_model.Load(pDevice, pDeviceContext, MODEL_PLANE)) {
 		MessageBoxA(GetMainWnd(), "モデルデータ読み込みエラー", "InitModel", MB_OK);
 	}
+
+	//エフェクト読み込み
+	m_handle = EFFECT->Load("Assets/Laser01.efk");
+
 }
 
 //=======================================================
@@ -77,6 +90,8 @@ void Wind::Update()
 
 	
 
+	//a
+
 
 
 
@@ -110,6 +125,9 @@ void Wind::Draw()
 	m_model.Draw(pDC, m_mtxWorld, eTransparentOnly);
 	SetZWrite(true);				// Zバッファ更新する
 	SetBlendState(BS_NONE);			// アルファブレンド無効
+
+
+	
 }
 
 //=======================================================
