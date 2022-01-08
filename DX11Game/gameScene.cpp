@@ -319,6 +319,17 @@ GameScene::GameScene(EStage stage)
 		break;
 	case STAGE_2:	// ステージ2
 		InitMeshField(20, 20, 2000.0f, 2000.0f);
+
+		// ビルの配置
+		for (int i = 0; i < 5; i++)
+		{
+			m_pBuliding[i].Create(XMFLOAT3(-2600 + i * 600, 10, 0), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		}
+		for (int i = 0; i < 5; i++)
+		{
+			m_pBuliding[i + 5].Create(XMFLOAT3(-2600 + i * 600, 10, 900), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		}
+
 		break;
 	case STAGE_3:	// ステージ3
 		InitMeshField(20, 20, 2000.0f, 2000.0f);
