@@ -81,7 +81,7 @@ void StageSlectScene::Update()
 			CSound::Play(SE_SELECT);
 			StageTrrger = true;
 		}
-		StartFadeOut(SCENE_GAME);
+		StartFadeOut(SCENE_GAME);  //
 	}
 
 	// –ß‚é
