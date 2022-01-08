@@ -320,7 +320,16 @@ GameScene::GameScene(EStage stage)
 		m_pBuliding[64].Create(XMFLOAT3( -300, 10,  600), XMFLOAT3(10.0f, 10.0f, 10.0f));
 
 		// 仲間の配置
-		CrewCreate(XMFLOAT3(-1000.0f,250.0f, 0.0f));// 1
+		CrewCreate(XMFLOAT3(-1000.0f, 500.0f, -300.0f));// 1
+		CrewCreate(XMFLOAT3(-1200.0f, 500.0f, -200.0f));// 2
+		CrewCreate(XMFLOAT3(-1500.0f, 500.0f, -100.0f));// 3
+		CrewCreate(XMFLOAT3(-3000.0f, 400.0f, -100.0f));// 4
+		CrewCreate(XMFLOAT3(-3200.0f, 400.0f, 300.0f));// 5
+		CrewCreate(XMFLOAT3(-3000.0f, 400.0f, 700.0f));// 6
+		CrewCreate(XMFLOAT3(-1000.0f, 400.0f, 2000.0f));// 7
+		CrewCreate(XMFLOAT3(-700.0f, 400.0f, 4000.0f));// 8
+		CrewCreate(XMFLOAT3(-1200.0f, 400.0f, 6000.0f));// 9
+		CrewCreate(XMFLOAT3(-800.0f, 400.0f, 8000.0f));// 10
 
 		// ゴールUI位置初期化
 		SetGoalUI(XMFLOAT3(-1000.0f, 1000.0f, 9000.0f), 1200, 600, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);
@@ -339,6 +348,17 @@ GameScene::GameScene(EStage stage)
 		{
 			m_pBuliding[i + 5].Create(XMFLOAT3(-2600 + i * 600, 10, 900), XMFLOAT3(10.0f, 10.0f, 10.0f));
 		}
+
+		// 仲間の配置
+		CrewCreate(XMFLOAT3(-700.0f, 500.0f, -1300.0f));// 1
+		CrewCreate(XMFLOAT3(-1900.0f, 400.0f, -600.0f));// 2
+		CrewCreate(XMFLOAT3(-1000.0f, 350.0f, 0.0f));// 3
+		CrewCreate(XMFLOAT3(-100.0f, 350.0f, 600.0f));// 4
+		CrewCreate(XMFLOAT3(-1000.0f, 350.0f, 2000.0f));// 5
+		CrewCreate(XMFLOAT3(-1000.0f, 50.0f, 4000.0f));// 6
+		CrewCreate(XMFLOAT3(-1000.0f, 950.0f, 6000.0f));// 7
+		CrewCreate(XMFLOAT3(-1000.0f, 350.0f, 8000.0f));// 8
+
 		// ゴールUI位置初期化
 		SetGoalUI(XMFLOAT3(-1000.0f, 1000.0f, 9000.0f), 1200, 600, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);
 
@@ -351,16 +371,16 @@ GameScene::GameScene(EStage stage)
 		InitMeshField(20, 20, 2000.0f, 2000.0f);
 
 		// 仲間の配置
-		CrewCreate(XMFLOAT3(rand() % 30 - 1000.0f, rand() % 30 + 250.0f, rand() % 30 + 2900.0f));// 1
-		CrewCreate(XMFLOAT3(rand() % 30 - 1900.0f, rand() % 30 + 250.0f, rand() % 30 + 3100.0f));// 2
-		CrewCreate(XMFLOAT3(rand() % 30 - 100.0f, rand() % 30 + 250.0f, rand() % 30 + 3100.0f));// 3
-		CrewCreate(XMFLOAT3(rand() % 30 - 1300.0f, rand() % 30 + 250.0f, rand() % 30 + 2970.0f));// 4
-		CrewCreate(XMFLOAT3(rand() % 30 - 1600.0f, rand() % 30 + 250.0f, rand() % 30 + 3040.0f));// 5
-		CrewCreate(XMFLOAT3(rand() % 30 - 700.0f, rand() % 30 + 250.0f, rand() % 30 + 2970.0f));// 6
-		CrewCreate(XMFLOAT3(rand() % 30 - 400.0f, rand() % 30 + 250.0f, rand() % 30 + 3040.0f));// 7
-		CrewCreate(XMFLOAT3(rand() % 100 - 1050.0f, rand() % 300 + 100.0f, rand() % 30 + 6500.0f));// 8
-		CrewCreate(XMFLOAT3(rand() % 100 - 1050.0f, rand() % 300 + 100.0f, rand() % 30 + 7000.0f));// 9
-		CrewCreate(XMFLOAT3(rand() % 100 - 1050.0f, rand() % 300 + 100.0f, rand() % 30 + 7500.0f));// 10
+		CrewCreate(XMFLOAT3(1000.0f, 250.0f, 2900.0f));// 1
+		CrewCreate(XMFLOAT3(1900.0f, 250.0f, 3100.0f));// 2
+		CrewCreate(XMFLOAT3( 100.0f, 250.0f, 3100.0f));// 3
+		CrewCreate(XMFLOAT3(1300.0f, 250.0f, 2970.0f));// 4
+		CrewCreate(XMFLOAT3(1600.0f, 250.0f, 3040.0f));// 5
+		CrewCreate(XMFLOAT3( 700.0f, 250.0f, 2970.0f));// 6
+		CrewCreate(XMFLOAT3( 400.0f, 250.0f, 3040.0f));// 7
+		CrewCreate(XMFLOAT3(1050.0f, 100.0f, 6500.0f));// 8
+		CrewCreate(XMFLOAT3(1050.0f, 100.0f, 7000.0f));// 9
+		CrewCreate(XMFLOAT3(1050.0f, 100.0f, 7500.0f));// 10
 
 		// ビルの生成
 		for (int k = 0; k < MAX_BULIDING / 16 / 5; k++)

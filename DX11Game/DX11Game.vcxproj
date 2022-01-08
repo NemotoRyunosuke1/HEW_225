@@ -184,6 +184,7 @@
     <ClCompile Include="gameOverSceneButton.cpp" />
     <ClCompile Include="gameScene.cpp" />
     <ClCompile Include="goal.cpp" />
+    <ClCompile Include="goalUI.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="lever.cpp" />
     <ClCompile Include="Light.cpp" />
@@ -239,6 +240,7 @@
     <ClInclude Include="gameOverSceneButton.h" />
     <ClInclude Include="gameScene.h" />
     <ClInclude Include="goal.h" />
+    <ClInclude Include="goalUI.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="lever.h" />
     <ClInclude Include="Light.h" />
