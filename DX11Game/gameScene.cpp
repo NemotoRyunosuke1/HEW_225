@@ -30,10 +30,10 @@
 
 #define STOP_TIME (3)
 
-EStage GameScene::m_eStage;
+EStage GameScene::m_eStage = STAGE_1;
 
 //=============================================================================
-// 初期化処理
+// 初期化処理　※多分使わん、念のため
 //=============================================================================
 GameScene::GameScene()
 {
@@ -167,12 +167,17 @@ GameScene::GameScene()
 	m_fRemainTime = m_fCurrentTime_result = (float)timeGetTime();
 	m_bTrigger_result = false;
 }
+
+//=============================================================================
+// 初期化処理　引数にステージ番号が入る
+//=============================================================================
 GameScene::GameScene(EStage stage)
 {
 	// 変数初期化
 	m_bDebugMode = false;	// デバックモード
 	m_bPause = false;		// ポーズフラグ
 	m_bGoal = false;		// ゴールフラグ
+	m_eStage = stage;
 
 	//時間取得	
 	m_fCurrentTime = m_fRemainTime = (float)timeGetTime();
@@ -246,16 +251,98 @@ GameScene::GameScene(EStage stage)
 		InitMeshField(20, 20, 2000.0f, 2000.0f);
 
 		// ビルの配置
-		m_pBuliding[0].Create(XMFLOAT3(-2000,10,0), XMFLOAT3(10.0f, 7.0f, 10.0f));
+		m_pBuliding[0]. Create(XMFLOAT3(-1900, 10,    0), XMFLOAT3(10.0f, 10.0f, 10.0f));  // 左横
+		m_pBuliding[1]. Create(XMFLOAT3(-2200, 10,    0), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		m_pBuliding[2]. Create(XMFLOAT3(-2500, 10,    0), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		m_pBuliding[3]. Create(XMFLOAT3(-2800, 10,    0), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		m_pBuliding[4]. Create(XMFLOAT3(-3100, 10,    0), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		m_pBuliding[5]. Create(XMFLOAT3(-3400, 10,    0), XMFLOAT3(10.0f, 10.0f, 10.0f)); 
+		m_pBuliding[6]. Create(XMFLOAT3(-3700, 10,    0), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		m_pBuliding[7]. Create(XMFLOAT3(-4000, 10,    0), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		m_pBuliding[8]. Create(XMFLOAT3( -900, 10,    0), XMFLOAT3(10.0f, 10.0f, 10.0f));  // 右縦
+		m_pBuliding[9]. Create(XMFLOAT3( -900, 10,  300), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		m_pBuliding[10].Create(XMFLOAT3( -900, 10,  600), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		m_pBuliding[11].Create(XMFLOAT3(-3200, 10,  900), XMFLOAT3(10.0f, 10.0f, 10.0f));  //真ん中横
+		m_pBuliding[12].Create(XMFLOAT3(-2900, 10,  900), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		m_pBuliding[13].Create(XMFLOAT3(-2600, 10,  900), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		m_pBuliding[14].Create(XMFLOAT3(-2300, 10,  900), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		m_pBuliding[15].Create(XMFLOAT3(-2000, 10,  900), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		m_pBuliding[16].Create(XMFLOAT3(-1700, 10,  900), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		m_pBuliding[17].Create(XMFLOAT3(-1400, 10,  900), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		m_pBuliding[18].Create(XMFLOAT3(-1200, 10,  900), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		m_pBuliding[19].Create(XMFLOAT3( -900, 10,  900), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		m_pBuliding[20].Create(XMFLOAT3( -600, 10,  900), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		m_pBuliding[21].Create(XMFLOAT3( -300, 10,  900), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		m_pBuliding[22].Create(XMFLOAT3(-1000, 10, 1800), XMFLOAT3(10.0f, 10.0f, 10.0f));  // 後横
+		m_pBuliding[23].Create(XMFLOAT3(-1300, 10, 1800), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		m_pBuliding[24].Create(XMFLOAT3(-1600, 10, 1800), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		m_pBuliding[25].Create(XMFLOAT3(-1900, 10, 1800), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		m_pBuliding[26].Create(XMFLOAT3(-2200, 10, 1800), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		m_pBuliding[27].Create(XMFLOAT3(-2500, 10, 1800), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		m_pBuliding[28].Create(XMFLOAT3(-2800, 10, 1800), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		m_pBuliding[29].Create(XMFLOAT3(-3100, 10, 1800), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		m_pBuliding[30].Create(XMFLOAT3(-3400, 10, 1800), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		m_pBuliding[31].Create(XMFLOAT3(-3700, 10, 1800), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		m_pBuliding[32].Create(XMFLOAT3(-4000, 10, 1800), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		m_pBuliding[33].Create(XMFLOAT3( -600, 10, 3600), XMFLOAT3(10.0f, 10.0f, 10.0f));  // 後ろ
+		m_pBuliding[34].Create(XMFLOAT3( -300, 10, 3600), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		m_pBuliding[35].Create(XMFLOAT3(    0, 10,    0), XMFLOAT3(10.0f, 10.0f, 10.0f));  // 右端
+		m_pBuliding[36].Create(XMFLOAT3(    0, 10,  300), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		m_pBuliding[37].Create(XMFLOAT3(    0, 10,  600), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		m_pBuliding[38].Create(XMFLOAT3(    0, 10,  900), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		m_pBuliding[39].Create(XMFLOAT3(    0, 10, 1200), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		m_pBuliding[40].Create(XMFLOAT3(    0, 10, 1500), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		m_pBuliding[41].Create(XMFLOAT3(    0, 10, 1800), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		m_pBuliding[42].Create(XMFLOAT3(    0, 10, 2100), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		m_pBuliding[43].Create(XMFLOAT3(    0, 10, 2400), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		m_pBuliding[44].Create(XMFLOAT3(    0, 10, 2700), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		m_pBuliding[45].Create(XMFLOAT3(    0, 10, 2700), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		m_pBuliding[46].Create(XMFLOAT3(    0, 10, 3000), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		m_pBuliding[47].Create(XMFLOAT3(    0, 10, 3300), XMFLOAT3(10.0f, 10.0f, 10.0f));  // 左端
+		m_pBuliding[48].Create(XMFLOAT3(-4300, 10,  300), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		m_pBuliding[49].Create(XMFLOAT3(-4300, 10,  600), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		m_pBuliding[50].Create(XMFLOAT3(-4300, 10,  900), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		m_pBuliding[51].Create(XMFLOAT3(-4300, 10, 1200), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		m_pBuliding[52].Create(XMFLOAT3(-4300, 10, 1500), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		m_pBuliding[53].Create(XMFLOAT3(-4300, 10, 1800), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		m_pBuliding[54].Create(XMFLOAT3(-4300, 10, 2100), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		m_pBuliding[55].Create(XMFLOAT3(-4300, 10, 2400), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		m_pBuliding[56].Create(XMFLOAT3(-4300, 10, 2700), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		m_pBuliding[57].Create(XMFLOAT3(-4300, 10, 3000), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		m_pBuliding[58].Create(XMFLOAT3(-4300, 10, 3300), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		m_pBuliding[59].Create(XMFLOAT3( -600, 10,    0), XMFLOAT3(10.0f, 10.0f, 10.0f));  // 穴埋め
+		m_pBuliding[60].Create(XMFLOAT3( -300, 10,    0), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		m_pBuliding[61].Create(XMFLOAT3( -600, 10,  300), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		m_pBuliding[62].Create(XMFLOAT3( -300, 10,  300), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		m_pBuliding[63].Create(XMFLOAT3( -600, 10,  600), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		m_pBuliding[64].Create(XMFLOAT3( -300, 10,  600), XMFLOAT3(10.0f, 10.0f, 10.0f));
 
 		// 仲間の配置
 		CrewCreate(XMFLOAT3(-1000.0f,250.0f, 0.0f));// 1
 
+		// ゴールUI位置初期化
+		SetGoalUI(XMFLOAT3(-1000.0f, 1000.0f, 9000.0f), 1200, 600, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);
+
 
 		break;
 	case STAGE_2:	// ステージ2
+		InitMeshField(20, 20, 2000.0f, 2000.0f);
+
+		// ビルの配置
+		for (int i = 0; i < 5; i++)
+		{
+			m_pBuliding[i].Create(XMFLOAT3(-2600 + i * 600, 10, 0), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		}
+		for (int i = 0; i < 5; i++)
+		{
+			m_pBuliding[i + 5].Create(XMFLOAT3(-2600 + i * 600, 10, 900), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		}
+		// ゴールUI位置初期化
+		SetGoalUI(XMFLOAT3(-1000.0f, 1000.0f, 9000.0f), 1200, 600, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);
+
 		break;
 	case STAGE_3:	// ステージ3
+		InitMeshField(20, 20, 2000.0f, 2000.0f);
 		break;
 	case STAGE_4:	// ステージ4
 		// メッシュフィールド初期化
@@ -294,6 +381,7 @@ GameScene::GameScene(EStage stage)
 
 		break;
 	case STAGE_5:	// ステージ5
+		InitMeshField(20, 20, 2000.0f, 2000.0f);
 		break;
 	case MAX_STAGE:
 		break;
@@ -371,6 +459,15 @@ GameScene::~GameScene()
 //=============================================================================
 void GameScene::Update()
 {
+	// デバック用
+#if _DEBUG
+	// デバック用文字列
+	PrintDebugProc("****** GameScene ******\n");
+	PrintDebugProc("%f,%f,%f\n", m_pBuliding[0].GetPos().x, m_pBuliding[0].GetPos().y, m_pBuliding[0].GetPos().z);
+	PrintDebugProc("ｽﾃｰｼﾞ:%d\n", m_eStage + 1);
+	PrintDebugProc("\n");
+#endif
+
 	//スタートタイマー
 	m_fCurrentTime = (float)timeGetTime();
 	m_timer = (m_fCurrentTime - m_fRemainTime) / 1000;
@@ -394,7 +491,6 @@ void GameScene::Update()
 		m_fCurrentTime_result = (float)timeGetTime();
 		
 		// リザルト更新
-		
 		m_pResult->Update();
 		if (m_pResult->GetFade() >= 0.5f)
 		{
@@ -407,8 +503,9 @@ void GameScene::Update()
 		
 	}
 	// ポーズ
-	if (GetJoyRelease(0, JOYSTICKID8))	// コントローラーSTARTボタン
+	if (GetJoyRelease(0, JOYSTICKID8) || GetKeyRelease(VK_ESCAPE))	// コントローラーSTARTボタン
 	{
+		// ポーズ中の時
 		if (m_bPause)
 		{
 			m_bPause = false;
@@ -419,23 +516,14 @@ void GameScene::Update()
 		}
 
 	}
-	// ポーズ
-	if (GetKeyRelease(VK_ESCAPE))	//escape
-	{
-		if (m_bPause)
-		{
-			m_bPause = false;
-		}
-		else
-		{
-			m_bPause = true;
-		}
-
-	}
+	
 	// ポーズ中の処理
 	if (m_bPause)
 	{
+		// ポーズ処理更新
 		m_pPause->Update();
+
+		// ゲームに戻る
 		if (m_pPause->GetBack())
 		{
 			m_bPause = false;
@@ -445,12 +533,12 @@ void GameScene::Update()
 		{
 			StartFadeOut(SCENE_GAME);
 		}
-
+		// ステージセレクトに戻る
 		if (m_pPause->GetStageSelect())
 		{
 			StartFadeOut(SCENE_STAGE_SELECT);
 		}
-		return;
+		return;		// ポーズ中下の処理をしない
 	}
 	else
 	{
@@ -608,20 +696,7 @@ void GameScene::Update()
 	// ゴールUI更新
 	UpdateGoalUI();
 
-	// デバック用
-#if _DEBUG
-	if (GetAsyncKeyState(VK_RETURN) & 0x8000)
-	{
 
-		StartFadeOut(SCENE_RESULT);
-	}
-
-	// デバック用文字列
-	PrintDebugProc("****** GameScene ******\n");
-	PrintDebugProc("%f,%f,%f\n",m_pBuliding[0].GetPos().x, m_pBuliding[0].GetPos().y, m_pBuliding[0].GetPos().z);
-	PrintDebugProc("\n");
-	PrintDebugProc("\n");
-#endif
 }
 
 //=============================================================================

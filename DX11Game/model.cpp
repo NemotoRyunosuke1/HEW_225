@@ -702,10 +702,6 @@ void UpdateModel(void)
 	g_moveModel.y += SinDeg(g_rotModel.x) * VALUE_MOVE_MODEL * g_accModel.y ;
 	
 	// 上昇&下降処理
-	
-	
-
-	
 
 	// キーボード
 	// 上昇
@@ -732,7 +728,6 @@ void UpdateModel(void)
 		g_bWindDelay = false;
 	}
 	
-
 	if (g_rotDestModel.y >= 360)
 	{
 		g_rotDestModel.y -= 360.0f;

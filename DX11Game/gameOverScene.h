@@ -16,4 +16,6 @@ public:
 private:
 	GameOverSceneButton* m_pGameOverSceneButton;
 	GameOverSceneBG* m_pGameOverSceneBG;
+
+	
 };
