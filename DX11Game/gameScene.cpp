@@ -49,16 +49,18 @@ GameScene::GameScene()
 	// ñ°ï˚èâä˙âª
 	InitCrew();
 
-	CrewCreate(XMFLOAT3( rand() %  30 - 1000.0f, rand() %  30 + 250.0f, rand() % 30 + 2900.0f));// 1
-	CrewCreate(XMFLOAT3( rand() %  30 - 1900.0f, rand() %  30 + 250.0f, rand() % 30 + 3100.0f));// 2
-	CrewCreate(XMFLOAT3( rand() %  30 -  100.0f, rand() %  30 + 250.0f, rand() % 30 + 3100.0f));// 3
-	CrewCreate(XMFLOAT3( rand() %  30 - 1300.0f, rand() %  30 + 250.0f, rand() % 30 + 2970.0f));// 4
-	CrewCreate(XMFLOAT3( rand() %  30 - 1600.0f, rand() %  30 + 250.0f, rand() % 30 + 3040.0f));// 5
-	CrewCreate(XMFLOAT3( rand() %  30 -  700.0f, rand() %  30 + 250.0f, rand() % 30 + 2970.0f));// 6
-	CrewCreate(XMFLOAT3( rand() %  30 -  400.0f, rand() %  30 + 250.0f, rand() % 30 + 3040.0f));// 7
-	CrewCreate(XMFLOAT3( rand() % 100 - 1050.0f, rand() % 300 + 100.0f, rand() % 30 + 6500.0f));// 8
-	CrewCreate(XMFLOAT3( rand() % 100 - 1050.0f, rand() % 300 + 100.0f, rand() % 30 + 7000.0f));// 9
-	CrewCreate(XMFLOAT3( rand() % 100 - 1050.0f, rand() % 300 + 100.0f, rand() % 30 + 7500.0f));// 10
+	CrewCreate(XMFLOAT3( 1000.0f, 250.0f, 2900.0f));// 1
+	CrewCreate(XMFLOAT3( 1900.0f, 250.0f, 3100.0f));// 2
+	CrewCreate(XMFLOAT3(  100.0f, 250.0f, 3100.0f));// 3
+	CrewCreate(XMFLOAT3( 1300.0f, 250.0f, 2970.0f));// 4
+	CrewCreate(XMFLOAT3( 1600.0f, 250.0f, 3040.0f));// 5
+	CrewCreate(XMFLOAT3(  700.0f, 250.0f, 2970.0f));// 6
+	CrewCreate(XMFLOAT3(  400.0f, 250.0f, 3040.0f));// 7
+	CrewCreate(XMFLOAT3( 1050.0f, 100.0f, 6500.0f));// 8
+	CrewCreate(XMFLOAT3( 1050.0f, 100.0f, 7000.0f));// 9
+	CrewCreate(XMFLOAT3( 1050.0f, 100.0f, 7500.0f));// 10
+
+	CreateEnemy(XMFLOAT3(1000.0f, 250.0f, 2900.0f));
 	
 
 	//  XMFLOAT3( rand() %  30 - 1000.0f, rand() %  30 + 250.0f, rand() % 30 + 2900.0f),// 1
