@@ -113,6 +113,15 @@ void GameOverSceneButton::Update()
 		if (!m_pButton[i].GetUse())continue;
 		m_pButton[i].Update();
 	}
+
+#if _DEBUG
+
+	//デバック用文字列
+	PrintDebugProc("%d\n",m_cnt);
+	PrintDebugProc("\n");
+
+#endif
+
 }
 void GameOverSceneButton::Draw()
 {

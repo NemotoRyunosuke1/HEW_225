@@ -39,6 +39,8 @@ private:
 	EscapeText* m_pEscapeText;
 	TimerUI* m_pTimerUI;
 
+	static EStage m_eStage;
+
 	bool m_bDebugMode;
 	bool m_bPause;
 	bool m_bGoal;
