@@ -24,6 +24,8 @@ public:
 	void Update();
 	void Draw();
 
+	static void SetStage(EStage stage) { m_eStage = stage; };
+	static EStage GetStage() { return m_eStage; };
 private:
 	
 	WindManager* m_pWindManager;

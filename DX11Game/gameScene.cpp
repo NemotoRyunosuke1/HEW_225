@@ -30,10 +30,10 @@
 
 #define STOP_TIME (3)
 
-EStage GameScene::m_eStage;
+EStage GameScene::m_eStage = STAGE_1;
 
 //=============================================================================
-// 初期化処理
+// 初期化処理　※多分使わん、念のため
 //=============================================================================
 GameScene::GameScene()
 {
@@ -167,12 +167,17 @@ GameScene::GameScene()
 	m_fRemainTime = m_fCurrentTime_result = (float)timeGetTime();
 	m_bTrigger_result = false;
 }
+
+//=============================================================================
+// 初期化処理　引数にステージ番号が入る
+//=============================================================================
 GameScene::GameScene(EStage stage)
 {
 	// 変数初期化
 	m_bDebugMode = false;	// デバックモード
 	m_bPause = false;		// ポーズフラグ
 	m_bGoal = false;		// ゴールフラグ
+	m_eStage = stage;
 
 	//時間取得	
 	m_fCurrentTime = m_fRemainTime = (float)timeGetTime();
@@ -371,6 +376,15 @@ GameScene::~GameScene()
 //=============================================================================
 void GameScene::Update()
 {
+	// デバック用
+#if _DEBUG
+	// デバック用文字列
+	PrintDebugProc("****** GameScene ******\n");
+	PrintDebugProc("%f,%f,%f\n", m_pBuliding[0].GetPos().x, m_pBuliding[0].GetPos().y, m_pBuliding[0].GetPos().z);
+	PrintDebugProc("ｽﾃｰｼﾞ:%d\n", m_eStage + 1);
+	PrintDebugProc("\n");
+#endif
+
 	//スタートタイマー
 	m_fCurrentTime = (float)timeGetTime();
 	m_timer = (m_fCurrentTime - m_fRemainTime) / 1000;
@@ -394,7 +408,6 @@ void GameScene::Update()
 		m_fCurrentTime_result = (float)timeGetTime();
 		
 		// リザルト更新
-		
 		m_pResult->Update();
 		if (m_pResult->GetFade() >= 0.5f)
 		{
@@ -407,8 +420,9 @@ void GameScene::Update()
 		
 	}
 	// ポーズ
-	if (GetJoyRelease(0, JOYSTICKID8))	// コントローラーSTARTボタン
+	if (GetJoyRelease(0, JOYSTICKID8) || GetKeyRelease(VK_ESCAPE))	// コントローラーSTARTボタン
 	{
+		// ポーズ中の時
 		if (m_bPause)
 		{
 			m_bPause = false;
@@ -419,23 +433,14 @@ void GameScene::Update()
 		}
 
 	}
-	// ポーズ
-	if (GetKeyRelease(VK_ESCAPE))	//escape
-	{
-		if (m_bPause)
-		{
-			m_bPause = false;
-		}
-		else
-		{
-			m_bPause = true;
-		}
-
-	}
+	
 	// ポーズ中の処理
 	if (m_bPause)
 	{
+		// ポーズ処理更新
 		m_pPause->Update();
+
+		// ゲームに戻る
 		if (m_pPause->GetBack())
 		{
 			m_bPause = false;
@@ -445,12 +450,12 @@ void GameScene::Update()
 		{
 			StartFadeOut(SCENE_GAME);
 		}
-
+		// ステージセレクトに戻る
 		if (m_pPause->GetStageSelect())
 		{
 			StartFadeOut(SCENE_STAGE_SELECT);
 		}
-		return;
+		return;		// ポーズ中下の処理をしない
 	}
 	else
 	{
@@ -608,20 +613,7 @@ void GameScene::Update()
 	// ゴールUI更新
 	UpdateGoalUI();
 
-	// デバック用
-#if _DEBUG
-	if (GetAsyncKeyState(VK_RETURN) & 0x8000)
-	{
 
-		StartFadeOut(SCENE_RESULT);
-	}
-
-	// デバック用文字列
-	PrintDebugProc("****** GameScene ******\n");
-	PrintDebugProc("%f,%f,%f\n",m_pBuliding[0].GetPos().x, m_pBuliding[0].GetPos().y, m_pBuliding[0].GetPos().z);
-	PrintDebugProc("\n");
-	PrintDebugProc("\n");
-#endif
 }
 
 //=============================================================================

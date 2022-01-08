@@ -1,6 +1,7 @@
 #include "button.h"
 #include "input.h"
 #include "debugproc.h"
+#include "Sound.h"
 
 //*****************************************************************************
 // 
@@ -32,10 +33,13 @@ Button::Button()
 {
 	m_pos  = XMFLOAT3(  0.0f,  0.0f, 0.0f);
 	m_size = m_sizeUpDown = XMFLOAT3(100.0f, 50.0f, 0.0f);
+	m_color = XMFLOAT3(1.0f, 1.0f, 1.0f);
 	m_flg = false;
 	m_use = false;
 	m_frameNum = 0;
 	m_select = false;
+	m_bSoudTrigger = true;
+	m_bSoudTriggerDecision = false;
 	ID3D11Device* pDevice = GetDevice();
 	CreateTextureFromFile(pDevice, PATH_BUTTON_TEXTURE, &m_pTexture);
 }
@@ -65,13 +69,6 @@ HRESULT Button::Init()
 	m_frameNum = 0;
 	m_select = false;
 
-	//ボタンテクスチャ読み込み
-	/*hr = CreateTextureFromFile(pDevice, PATH_BUTTON_TEXTURE, &m_pTexture);
-	if (FAILED(hr))
-	{
-		return hr;
-	}*/
-
 	return hr;
 }
 void Button::Update()
@@ -80,17 +77,12 @@ void Button::Update()
 	GetCursorPos(&point);
 	BOOL pointW = ScreenToClient(GetMainWnd(),&point);
 	
-	if (GetMouseButton(MOUSEBUTTON_L))
-	{
-		//m_pos = { (float)GetMousePosition()->x - 650,(float)-GetMousePosition()->y + 350 };
-	}
+	// 使われている時
 	if (m_use)
 	{
 		//カーソルがあわされた時
 		if ((GetMousePosition()->x > (long)(m_pos.x - m_size.x / 2 + FULLSCREEN_WIDTH / 2)) && (GetMousePosition()->x < (long)(m_pos.x + m_size.x / 2 + FULLSCREEN_WIDTH / 2)) && (-GetMousePosition()->y < (long)(m_pos.y + m_size.y / 2 - FULLSCREEN_HEIGHT / 2)) && (-GetMousePosition()->y > (long)(m_pos.y - m_size.y / 2 - FULLSCREEN_HEIGHT / 2)))
 		{
-
-
 			if (GetMouseButton(MOUSEBUTTON_L))
 			{
 				if (!g_bButton)
@@ -98,39 +90,51 @@ void Button::Update()
 					
 					g_bButton = true;
 				}
-				//m_flg = true;
+				m_flg = true;
 			}
 			else
 			{
 				m_flg = false;
 				g_bButton = false;
 			}
-
 		}
-		else
-		{
 
-		}
+		// 選択されてる時
 		if (m_select)
 		{
+			// 大きさアップ
 			m_size.x = m_sizeUpDown.x * 1.5f;
 			m_size.y = m_sizeUpDown.y * 1.5f;
 
-			if (GetJoyRelease(0, JOYSTICKID1))
-			{
-				m_flg = true;
+			// カラー変更(黄色)
+			m_color = XMFLOAT3(1.0f, 1.0f, 0.0f);
 
+			//　決定
+			if (GetJoyRelease(0, JOYSTICKID1) || GetKeyRelease(VK_RETURN))
+			{
+				if (!m_bSoudTriggerDecision)
+				{
+					CSound::SetVolume(SE_SELECT, 1.0f);
+					CSound::Play(SE_SELECT);
+					m_bSoudTriggerDecision = true;
+				}
+				m_flg = true;	
 			}
-			if (GetKeyRelease(VK_RETURN))
+	
+			// サウンドトリガー
+			if (!m_bSoudTrigger)
 			{
-				m_flg = true;
-
+				CSound::SetVolume(SE_SELECT, 1.0f);
+				CSound::Play(SE_SELECT);
+				m_bSoudTrigger = true;
 			}
 		}
 		else
 		{
 			m_size.x = m_sizeUpDown.x;
-			m_size.y = m_sizeUpDown.y;
+			m_size.y = m_sizeUpDown.y; 
+			m_color = XMFLOAT3(1.0f, 1.0f, 1.0f);
+			m_bSoudTrigger = false;
 		}
 	}
 #if _DEBUG
@@ -156,10 +160,10 @@ void Button::Draw()
 		{
 			SetPolygonColor(0.8f, 0.8f, 0.8f);	//ポリゴンカラー
 		}
-
+		
 		SetPolygonSize(m_size.x, m_size.y);
 		SetPolygonPos(m_pos.x, m_pos.y);
-
+		SetPolygonColor(m_color.x, m_color.y, m_color.z);	//ポリゴンカラー
 		//SetPolygonUV((m_frameNum % NUMBER_COUNT_X) / (float)NUMBER_COUNT_X,
 		//	(m_frameNum / NUMBER_COUNT_X) / (float)NUMBER_COUNT_Y);
 		//SetPolygonFrameSize(1.0f / 4, 1.0f / 4);
