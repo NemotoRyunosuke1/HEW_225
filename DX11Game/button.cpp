@@ -98,7 +98,7 @@ void Button::Update()
 					
 					g_bButton = true;
 				}
-				m_flg = true;
+				//m_flg = true;
 			}
 			else
 			{

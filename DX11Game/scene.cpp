@@ -29,18 +29,20 @@ Scene::Scene()
 	// ゲームの開始するときのシーン
 	m_eScene = SCENE_GAME;
 
+	// ステージ初期化
+	m_eStage = STAGE_4;
 #else
 	// ゲームの開始するときのシーン
 	m_eScene = SCENE_TITLE;
 
+	// ステージ初期化
+	m_eStage = STAGE_4;
 #endif
 	
 	// サウンド初期化
 	CSound::Init();
 
-	// ステージ初期化
-	m_eStage = STAGE_1;
-
+	
 	// シーンごとの初期化
 	switch (m_eScene)
 	{
@@ -281,7 +283,7 @@ void Scene::SetScene(EScene eScene)
 		break;
 
 	case SCENE_GAME://ゲームシーン
-		m_pGameScene = new GameScene;
+		m_pGameScene = new GameScene(m_pStageSelectScene->GetStage());
 		break;
 
 	case SCENE_RESULT://リザルトシーン

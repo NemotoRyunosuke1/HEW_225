@@ -150,7 +150,8 @@ GameScene::GameScene()
 	m_pBuliding[6].Create(XMFLOAT3(1110, 10, 600), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
 	m_pBuliding[7].Create(XMFLOAT3(1110, 10, 900), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));*/
 
-
+	// ゴールUI位置初期化
+	SetGoalUI(XMFLOAT3(-1000.0f, 1000.0f, 9000.0f), 1200, 600, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);
 
 	// 変数初期化
 	m_bDebugMode = false;
@@ -289,7 +290,7 @@ GameScene::GameScene(EStage stage)
 		}
 
 		// ゴールUI位置初期化
-		SetGoalUI(XMFLOAT3(-1000.0f, 1000.0f, 9000.0f), 1200, 600, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);	// 仲間用UIセット
+		SetGoalUI(XMFLOAT3(-1000.0f, 1000.0f, 9000.0f), 1200, 600, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);	
 
 		break;
 	case STAGE_5:	// ステージ5
@@ -636,6 +637,8 @@ void GameScene::Draw()
 	// Zバッファ無効(Zチェック無&Z更新無)
 	SetZBuffer(true);
 
+	
+
 	// メッシュフィールド描画
 	DrawMeshField();
 
@@ -665,10 +668,16 @@ void GameScene::Draw()
 	{
 		m_pBuliding[i].Draw();
 	}
-
+	
 	// 2D描画
 	// Zバッファ無効(Zチェック無&Z更新無)
 	SetZBuffer(false);
+
+	// ゴールUI
+	if (GetGoalFlgCrew())
+	{
+		DrawGoalUI();
+	}
 
 	// 仲間用UI描画
 	DrawCrewUI();
@@ -697,11 +706,7 @@ void GameScene::Draw()
 	{
 		m_pEscapeText->Draw();
    }
-	if (GetGoalFlgCrew())
-	{
-		DrawGoalUI();
-	}
-
+	
 
 	// タイマーUI更新
 	m_pTimerUI->Draw();

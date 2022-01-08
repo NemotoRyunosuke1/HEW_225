@@ -8,11 +8,12 @@
 GameOverScene::GameOverScene()
 {
 	m_pGameOverSceneButton = new GameOverSceneButton;
+	m_pGameOverSceneBG = new GameOverSceneBG;
 }
 GameOverScene::~GameOverScene()
 {
 	delete m_pGameOverSceneButton;
-
+	delete m_pGameOverSceneBG;
 }
 
 
@@ -49,6 +50,8 @@ void GameOverScene::Update()
 
 	// ボタン更新
 	m_pGameOverSceneButton->Update();
+
+	m_pGameOverSceneBG->Update();
 }
 void GameOverScene::Draw()
 {
@@ -63,7 +66,7 @@ void GameOverScene::Draw()
 	// 2D描画
 	// Zバッファ無効(Zチェック無&Z更新無)
 	SetZBuffer(false);
-
+	m_pGameOverSceneBG->Draw();
 	// ボタン更新
 	m_pGameOverSceneButton->Draw();
 }
