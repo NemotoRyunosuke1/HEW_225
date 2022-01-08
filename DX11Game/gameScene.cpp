@@ -320,6 +320,9 @@ GameScene::GameScene(EStage stage)
 		// 仲間の配置
 		CrewCreate(XMFLOAT3(-1000.0f,250.0f, 0.0f));// 1
 
+		// ゴールUI位置初期化
+		SetGoalUI(XMFLOAT3(-1000.0f, 1000.0f, 9000.0f), 1200, 600, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);
+
 
 		break;
 	case STAGE_2:	// ステージ2
@@ -334,6 +337,8 @@ GameScene::GameScene(EStage stage)
 		{
 			m_pBuliding[i + 5].Create(XMFLOAT3(-2600 + i * 600, 10, 900), XMFLOAT3(10.0f, 10.0f, 10.0f));
 		}
+		// ゴールUI位置初期化
+		SetGoalUI(XMFLOAT3(-1000.0f, 1000.0f, 9000.0f), 1200, 600, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);
 
 		break;
 	case STAGE_3:	// ステージ3

@@ -10,9 +10,9 @@
 #define PATH_BUTTON_TEXTURE L"data/texture/ステージセレクト1-1.png"
 #define PATH_BUTTON_TEXTURE1 L"data/texture/ステージセレクト1-2.png"
 #define PATH_BUTTON_TEXTURE2 L"data/texture/ステージセレクト1-3.png"
-#define PATH_BUTTON_SELECT_TEXTURE L"data/texture/scenesenni/title/titlestageselect.png"
-#define PATH_BUTTON_OPTION_TEXTURE L"data/texture/scenesenni/title/titleoption.png"
-#define PATH_BUTTON_END_TEXTURE L"data/texture/scenesenni/title/titleend.png"
+#define PATH_BUTTON_SELECT_TEXTURE L"data/texture/titleScene/そらをとぶ.png"
+#define PATH_BUTTON_OPTION_TEXTURE L"data/texture/titleScene/せってい.png"
+#define PATH_BUTTON_END_TEXTURE L"data/texture/titleScene/ゲームをやめる.png"
 #define PATH_BUTTON_SELECT_TEXTURE1 L"data/texture/scenesenni/stageselect/selectstage1.png"
 #define PATH_BUTTON_BACK_TEXTURE L"data/texture/scenesenni/stageselect/selectback.png"
 #define PATH_BUTTON_PAUSE_TEXTURE1 L"data/texture/scenesenni/pause/restart.png"
@@ -103,8 +103,8 @@ void Button::Update()
 		if (m_select)
 		{
 			// 大きさアップ
-			m_size.x = m_sizeUpDown.x * 1.5f;
-			m_size.y = m_sizeUpDown.y * 1.5f;
+			m_size.x = m_sizeUpDown.x * 1.1f;
+			m_size.y = m_sizeUpDown.y * 1.1f;
 
 			// カラー変更(黄色)
 			m_color = XMFLOAT3(1.0f, 1.0f, 0.0f);
