@@ -177,6 +177,12 @@
     <ClCompile Include="timerUI.cpp">
       <Filter>ソースファイル\scene\gameScene\UI</Filter>
     </ClCompile>
+    <ClCompile Include="crewUI.cpp">
+      <Filter>ソースファイル\scene\gameScene\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="escapeText.cpp">
+      <Filter>ソースファイル\scene\gameScene\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AssimpModel.h">
@@ -337,6 +343,18 @@
     </ClInclude>
     <ClInclude Include="gameOverSceneButton.h">
       <Filter>ヘッダーファイル\scene\gameOverScene</Filter>
+    </ClInclude>
+    <ClInclude Include="crewUI.h">
+      <Filter>ヘッダーファイル\scene\gameScene\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="timerUI.h">
+      <Filter>ヘッダーファイル\scene\gameScene\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="goalUI.h">
+      <Filter>ヘッダーファイル\scene\gameScene\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="escapeText.h">
+      <Filter>ヘッダーファイル\scene\gameScene\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
