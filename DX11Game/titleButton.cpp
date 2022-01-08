@@ -7,10 +7,10 @@
 TitleButton::TitleButton()
 {
 	m_pButton = new Button[MAX_TITLE_BUTTON];
-	m_pButton[0].CreateButton(XMFLOAT3(150,50,0), XMFLOAT3(0, -200, 0),STAGE_SELECT_BTN );
+	m_pButton[0].CreateButton(XMFLOAT3(650,200,0), XMFLOAT3(360, -45, 0),STAGE_SELECT_BTN );
 	m_pButton[0].SetSelect(true);
-	m_pButton[1].CreateButton(XMFLOAT3(150,50,0), XMFLOAT3(0, -250, 0),OPTION_BTN );
-	m_pButton[2].CreateButton(XMFLOAT3(150,50,0), XMFLOAT3(0, -300, 0),ENDGAME_BTN );
+	m_pButton[1].CreateButton(XMFLOAT3(650, 200,0), XMFLOAT3(360, -150, 0),OPTION_BTN );
+	m_pButton[2].CreateButton(XMFLOAT3(650, 200,0), XMFLOAT3(360, -270, 0),ENDGAME_BTN );
 	m_cnt = 0;
 	m_Trigger = false;
 	m_NextScene = false;

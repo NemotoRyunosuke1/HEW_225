@@ -118,7 +118,7 @@ HRESULT InitEnemy(void)
 
 			}
 
-	CreateEnemy(XMFLOAT3(0.0f, 500.0f, 0.0f));
+	//CreateEnemy(XMFLOAT3(0.0f, 500.0f, 0.0f));
 	g_bTrigger = false;
 	return hr;
 }

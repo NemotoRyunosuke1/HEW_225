@@ -41,8 +41,11 @@ private:
 	bool m_flg;
 	bool m_use;
 	bool m_select;
+	bool m_bSoudTrigger;	// ‘I‘ðŽž
+	bool m_bSoudTriggerDecision;	// Œˆ’èŽž
 	int m_frameNum;
 	XMFLOAT3 m_sizeUpDown;
+	XMFLOAT3 m_color;
 	ID3D11ShaderResourceView* m_pTexture1;
 	ID3D11ShaderResourceView* m_pTexture2;
 	ID3D11ShaderResourceView* m_pTexture3;

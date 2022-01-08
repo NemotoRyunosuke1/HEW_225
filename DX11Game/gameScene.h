@@ -24,6 +24,8 @@ public:
 	void Update();
 	void Draw();
 
+	static void SetStage(EStage stage) { m_eStage = stage; };
+	static EStage GetStage() { return m_eStage; };
 private:
 	
 	WindManager* m_pWindManager;
@@ -38,6 +40,8 @@ private:
 	Lever* m_pLever;
 	EscapeText* m_pEscapeText;
 	TimerUI* m_pTimerUI;
+
+	static EStage m_eStage;
 
 	bool m_bDebugMode;
 	bool m_bPause;
