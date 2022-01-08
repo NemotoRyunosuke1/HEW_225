@@ -45,6 +45,8 @@ WindManager::WindManager(EStage stage)
 	switch (stage)
 	{
 	case STAGE_1:
+		m_pWind[0].Create(XMFLOAT3(-3000.0f, 500.0f, -150.0f), XMFLOAT3(500.0f, 300.0f, 1100.0f), XMFLOAT3(0.0f, 0.0f, 1.0f));  // ç∂ë§í«Ç¢ïó
+
 		break;
 	case STAGE_2:
 		break;

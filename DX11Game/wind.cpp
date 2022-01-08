@@ -111,20 +111,20 @@ void Wind::Update()
 //=======================================================
 void Wind::Draw()
 {
-	////使用されてなければ処理をしない
-	//if (!m_use)return;
+	//使用されてなければ処理をしない
+	if (!m_use)return;
 
-	//ID3D11DeviceContext* pDC = GetDeviceContext();
+	ID3D11DeviceContext* pDC = GetDeviceContext();
 
-	//// 不透明部分を描画
-	//m_model.Draw(pDC, m_mtxWorld, eOpacityOnly);
+	// 不透明部分を描画
+	m_model.Draw(pDC, m_mtxWorld, eOpacityOnly);
 
-	//// 半透明部分を描画
-	//SetBlendState(BS_ALPHABLEND);	// アルファブレンド有効
-	//SetZWrite(false);				// Zバッファ更新しない
-	//m_model.Draw(pDC, m_mtxWorld, eTransparentOnly);
-	//SetZWrite(true);				// Zバッファ更新する
-	//SetBlendState(BS_NONE);			// アルファブレンド無効
+	// 半透明部分を描画
+	SetBlendState(BS_ALPHABLEND);	// アルファブレンド有効
+	SetZWrite(false);				// Zバッファ更新しない
+	m_model.Draw(pDC, m_mtxWorld, eTransparentOnly);
+	SetZWrite(true);				// Zバッファ更新する
+	SetBlendState(BS_NONE);			// アルファブレンド無効
 
 
 	

@@ -153,7 +153,6 @@ int EffectManager::Play(int Handle)
 	break;
 	default:
 	
-
 		break;
 	}
 	//=====================
