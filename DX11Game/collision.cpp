@@ -10,16 +10,7 @@ bool CollisionSphere(XMFLOAT3 Apos, float Ar, XMFLOAT3 Bpos, float Br)
 	float dz = Apos.z - Bpos.z;
 	float dr = Ar + Br;
 
-	
-	if (dx * dx + dy * dy + dz * dz <= dr * dr)
-	{
-		return true;
-	}
-	if (dx * dx + dy * dy + dz * dz > dr * dr)
-	{
-		return false;
-	}
-			
+	return dx * dx + dy * dy + dz * dz <= dr * dr;
 }
 
 // AABB“¯Žm‚ÌÕ“Ë”»’è

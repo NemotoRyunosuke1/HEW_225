@@ -435,7 +435,7 @@ int StartChase(int i, XMFLOAT3 pos)
 		if (hit)
 		{
 			// ÉvÉåÉCÉÑÅ[Ç©ÇÁó£ÇÈ
-			 //g_crew[i].m_rotDest.y = XMConvertToDegrees(atan2f(-g_crew[i].m_move.x, -g_crew[i].m_move.z));
+			//g_crew[i].m_rotDest.y = XMConvertToDegrees(atan2f(-g_crew[i].m_move.x, -g_crew[i].m_move.z));
 
 		}
 
