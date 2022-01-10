@@ -122,6 +122,10 @@ GameScene::GameScene()
 	// タイマーUI初期化
 	m_pTimerUI = new TimerUI;
 
+	// チュートリアル初期化
+	m_pTutorial = new Tutorial;
+
+
 	// ビルの生成
 	for (int k = 0; k < MAX_BULIDING / 16 / 5; k++)
 	{
@@ -180,6 +184,8 @@ GameScene::GameScene(EStage stage)
 	m_bPause = false;		// ポーズフラグ
 	m_bGoal = false;		// ゴールフラグ
 	m_eStage = stage;
+
+	EffectManager::SetStage(m_eStage);
 
 	//時間取得	
 	m_fCurrentTime = m_fRemainTime = (float)timeGetTime();
@@ -244,6 +250,9 @@ GameScene::GameScene(EStage stage)
 
 	// タイマーUI初期化
 	m_pTimerUI = new TimerUI;
+
+	// チュートリアル初期化
+	m_pTutorial = new Tutorial;
 
 	// ステージごとの初期化  (モデル位置 x軸:-1000 y軸:600 z軸:-2000)
 	switch (stage)
@@ -331,8 +340,9 @@ GameScene::GameScene(EStage stage)
 		CrewCreate(XMFLOAT3(-1200.0f, 400.0f, 6000.0f));// 9
 		CrewCreate(XMFLOAT3(-800.0f, 400.0f, 8000.0f));// 10
 
-		// ゴールUI位置初期化
-		SetGoalUI(XMFLOAT3(-1000.0f, 1000.0f, 9000.0f), 1200, 600, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);
+		// ゴール位置初期化
+		SetGoalUI(XMFLOAT3(-1000.0f, 600.0f, 4000.0f), 1200, 600, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);
+		m_pGoal = new Goal(XMFLOAT3(-1000.0f, 600.0f, 4000.0f));
 
 
 		break;
@@ -360,11 +370,27 @@ GameScene::GameScene(EStage stage)
 		CrewCreate(XMFLOAT3(-1000.0f, 350.0f, 8000.0f));// 8
 
 		// ゴールUI位置初期化
-		SetGoalUI(XMFLOAT3(-1000.0f, 1000.0f, 9000.0f), 1200, 600, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);
+		SetGoalUI(XMFLOAT3(-1000.0f, 600.0f, 4000.0f), 1200, 600, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);
+		m_pGoal = new Goal(XMFLOAT3(-1000.0f, 600.0f, 4000.0f));
 
 		break;
 	case STAGE_3:	// ステージ3
 		InitMeshField(20, 20, 2000.0f, 2000.0f);
+		for (int i = 0; i < 12; i++)
+		{
+			for (int j = 0; j < 2; j++)
+			{
+				m_pBuliding[i + j * 12].Create(XMFLOAT3(-3800 + j * 5100, 10, 0 + i * 300), XMFLOAT3(10.0f, 10.0f, 10.0f));
+			}
+		}
+		for (int i = 0; i < 15; i++)
+		{
+			m_pBuliding[i + 24].Create(XMFLOAT3(-3350 + i * 300, 10, 3300), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		}
+
+		// ゴールUI位置初期化
+		SetGoalUI(XMFLOAT3(-1000.0f, 1200.0f, 6000.0f), 1200, 600, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);
+		m_pGoal = new Goal(XMFLOAT3(-1000.0f, 1200.0f, 6000.0f));
 
 		// 仲間の配置
 		CrewCreate(XMFLOAT3(-1000.0f, 500.0f, -600.0f));// 1
@@ -433,10 +459,28 @@ GameScene::GameScene(EStage stage)
 
 		// ゴールUI位置初期化
 		SetGoalUI(XMFLOAT3(-1000.0f, 1000.0f, 9000.0f), 1200, 600, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);	
+		m_pGoal = new Goal(XMFLOAT3(-1000.0f, 1200.0f, 9000.0f));
 
 		break;
 	case STAGE_5:	// ステージ5
 		InitMeshField(20, 20, 2000.0f, 2000.0f);
+		for (int i = 0; i < 5; i++)
+		{
+			for (int j = 0; j < 4; j++)
+			{
+				for (int k = 0; k < 2; k++)
+				{
+					for (int l = 0; l < 2; l++)
+					{
+						m_pBuliding[l + k * 2 + j * 4 + i * 16].Create(XMFLOAT3(-2900 + k * 300 + j * 900, 10, 0 + l * 300 + i * 900), XMFLOAT3(10.0f, 10.0f, 10.0f));
+					}
+				}
+			}
+		}
+		// ゴールUI位置初期化
+		SetGoalUI(XMFLOAT3(-1000.0f, 1000.0f, 9000.0f), 1200, 600, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);
+		m_pGoal = new Goal(XMFLOAT3(-1000.0f, 1200.0f, 9000.0f));
+
 		break;
 	case MAX_STAGE:
 		break;
@@ -506,7 +550,9 @@ GameScene::~GameScene()
 	delete m_pEscapeText;
 
 	// タイマーUI終了
-	delete m_pTimerUI;
+	delete m_pTimerUI;	 
+	// チュートリアル終了
+	delete m_pTutorial;
 }
 
 //=============================================================================
@@ -527,36 +573,7 @@ void GameScene::Update()
 	m_fCurrentTime = (float)timeGetTime();
 	m_timer = (m_fCurrentTime - m_fRemainTime) / 1000;
 
-	
-	
-	// リザルトシーン更新
-	m_pResult->SetScore(m_pTimerUI->GetScore());
 
-	// ゴールフラグが立った時
-	if (m_bGoal)
-	{
-		// リザルトUI表示時間
-		if (!m_bTrigger_result)
-		{
-			m_fRemainTime = m_fCurrentTime_result = (float)timeGetTime();
-			m_bTrigger_result = true;
-		}
-
-		// 時間更新
-		m_fCurrentTime_result = (float)timeGetTime();
-		
-		// リザルト更新
-		m_pResult->Update();
-		if (m_pResult->GetFade() >= 0.5f)
-		{
-			if (GetJoyRelease(0, JOYSTICKID1))	// コントローラーAボタン
-			{
-				StartFadeOut(SCENE_STAGE_SELECT);
-			}
-			return;
-		}
-		
-	}
 	// ポーズ
 	if (GetJoyRelease(0, JOYSTICKID8) || GetKeyRelease(VK_ESCAPE))	// コントローラーSTARTボタン
 	{
@@ -598,6 +615,40 @@ void GameScene::Update()
 	else
 	{
 		m_pPause->SetBack(false);
+	}
+	// チュートリアル更新
+	m_pTutorial->Update(m_eStage);
+
+	// チュートリアル
+	if (m_pTutorial->GetPopup())return;
+
+	// リザルトシーン更新
+	m_pResult->SetScore(m_pTimerUI->GetScore());
+
+	// ゴールフラグが立った時
+	if (m_bGoal)
+	{
+		// リザルトUI表示時間
+		if (!m_bTrigger_result)
+		{
+			m_fRemainTime = m_fCurrentTime_result = (float)timeGetTime();
+			m_bTrigger_result = true;
+		}
+
+		// 時間更新
+		m_fCurrentTime_result = (float)timeGetTime();
+
+		// リザルト更新
+		m_pResult->Update();
+		if (m_pResult->GetFade() >= 0.5f)
+		{
+			if (GetJoyRelease(0, JOYSTICKID1))	// コントローラーAボタン
+			{
+				StartFadeOut(SCENE_STAGE_SELECT);
+			}
+			return;
+		}
+
 	}
 
 	// カメラ更新
@@ -772,8 +823,33 @@ void GameScene::Draw()
 	// メッシュフィールド描画
 	DrawMeshField();
 
-	// モデル描画
-	DrawModel();
+	// ビル描画
+	for (int i = 0; i < MAX_BULIDING; i++)
+	{
+		m_pBuliding[i].Draw();
+	}
+
+	// 雲マネージャー描画
+	m_pCloudManager->Draw();
+
+
+	// 2D描画
+	 // Zバッファ無効(Zチェック無&Z更新無)
+	SetZBuffer(false);
+
+	// ゴールUI
+	if (GetGoalFlgCrew())
+	{
+		DrawGoalUI();
+	}
+
+
+	// 3D描画
+   // Zバッファ無効(Zチェック無&Z更新無)
+	SetZBuffer(true);
+
+
+
 
 	// 丸影描画
 	DrawShadow();
@@ -787,27 +863,14 @@ void GameScene::Draw()
 	// 風マネージャー描画
 	m_pWindManager->Draw();
 
-	// 雲マネージャー描画
-	m_pCloudManager->Draw();
-
-	// ゴール描画
-	//m_pGoal->Draw();
-
-	// ビル描画
-	for (int i = 0; i < MAX_BULIDING; i++)
-	{
-		m_pBuliding[i].Draw();
-	}
+	// モデル描画
+	DrawModel();
 	
 	// 2D描画
 	// Zバッファ無効(Zチェック無&Z更新無)
 	SetZBuffer(false);
 
-	// ゴールUI
-	if (GetGoalFlgCrew())
-	{
-		DrawGoalUI();
-	}
+	EFFECT->Play(0);
 
 	// 仲間用UI描画
 	DrawCrewUI();
@@ -840,6 +903,9 @@ void GameScene::Draw()
 
 	// タイマーUI更新
 	m_pTimerUI->Draw();
+	// チュートリアル描画
+	m_pTutorial->Draw();
+
 
 	// ポーズ中の処理
 	if (m_bPause)
