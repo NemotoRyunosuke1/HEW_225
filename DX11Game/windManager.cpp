@@ -50,6 +50,14 @@ WindManager::WindManager(EStage stage)
 		m_pWind[2].Create(XMFLOAT3(-100.0f, 800.0f, 1300.0f), XMFLOAT3(300.0f, 300.0f, 1200.0f), XMFLOAT3(0.0f, 0.0f, 1.0f));  // ’Ç‚¢•—
 		break;
 	case STAGE_2:
+		m_pWind[0].Create(XMFLOAT3(-80.0f, 700.0f, -600.0f), XMFLOAT3(300.0f, 300.0f, 100.0f), XMFLOAT3(0.0f, 0.0f, -1.0f));  // Œü‚©‚¢•—1
+		m_pWind[1].Create(XMFLOAT3(-700.0f, 700.0f, -600.0f), XMFLOAT3(300.0f, 300.0f, 100.0f), XMFLOAT3(0.0f, 0.0f, -1.0f));  // Œü‚©‚¢•—2
+		m_pWind[2].Create(XMFLOAT3(-1300.0f, 700.0f, -600.0f), XMFLOAT3(300.0f, 300.0f, 100.0f), XMFLOAT3(0.0f, 0.0f, -1.0f));  // Œü‚©‚¢•—3
+		m_pWind[3].Create(XMFLOAT3(-1900.0f, 700.0f, 400.0f), XMFLOAT3(300.0f, 300.0f, 100.0f), XMFLOAT3(0.0f, 0.0f, -1.0f));  // Œü‚©‚¢•—4
+		m_pWind[4].Create(XMFLOAT3(-1300.0f, 700.0f, 400.0f), XMFLOAT3(300.0f, 300.0f, 100.0f), XMFLOAT3(0.0f, 0.0f, -1.0f));  // Œü‚©‚¢•—5
+		m_pWind[5].Create(XMFLOAT3(-700.0f, 700.0f, 400.0f), XMFLOAT3(300.0f, 300.0f, 100.0f), XMFLOAT3(0.0f, 0.0f, -1.0f));  // Œü‚©‚¢•—6
+		m_pWind[6].Create(XMFLOAT3(-100.0f, 800.0f, 1300.0f), XMFLOAT3(1000.0f, 300.0f, 300.0f), XMFLOAT3(-1.0f, 0.0f, 1.0f));  // ’Ç‚¢•—
+
 		break;
 	case STAGE_3:
 		break;

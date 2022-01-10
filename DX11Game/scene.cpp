@@ -34,6 +34,7 @@ Scene::Scene()
 #else
 	// ゲームの開始するときのシーン
 	m_eScene = SCENE_TITLE;
+	
 
 	// ステージ初期化
 	m_eStage = STAGE_4;

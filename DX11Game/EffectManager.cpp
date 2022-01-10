@@ -148,7 +148,7 @@ int EffectManager::Play(int Handle)
 		{
 			// ゴール風
 			//time = 0;
-			m_handle = m_manager->Play(m_effect5, -1000.0f, 1000.0f, 9500.0f);
+			m_handle = m_manager->Play(m_effect5, -1500.0f, 500.0f, 3500.0f);
 			m_manager->SetScale(m_handle, 30.0f, 30.0f, 30.0f);
 		}
 	break;
@@ -180,6 +180,9 @@ int EffectManager::Play(int Handle)
 			m_handle = m_manager->Play(m_effect, -1700.0f, 300.0f, 800.0f);      //表示＆座標
 			m_manager->SetScale(m_handle, 3.0f, 3.0f, 3.0f);   //大きさ
 
+		//======================
+		//風_横
+		//======================
 			// 追い風
 			time = 0;
 			m_handle = m_manager->Play(m_effect2, -100.0f, 800.0f, 700.0f);      //表示＆座標
@@ -187,18 +190,65 @@ int EffectManager::Play(int Handle)
 
 		}
 
-		//======================
-		//風_横
-		//======================
+		
 	break;
 	
 	case STAGE_2:
+		
 		if (time > 130.0f)
 		{
-			// 左側上昇気流
+		//=====================
+		//風_上
+		//=====================
+
+
+
+
+		//======================
+		//風_横
+		//======================
+			// 向かい風_1
 			time = 0;
-			m_handle = m_manager->Play(m_effect, -5000.0f, 150.0f, 3000.0f);      //表示＆座標
-			m_manager->SetScale(m_handle, 5.0f, 6.0f, 5.0f);   //大きさ
+			m_handle = m_manager->Play(m_effect2, -1000.0f, 700.0f, 200.0f);      //表示＆座標
+			m_manager->SetScale(m_handle, 10.0f, 10.0f, 10.0f);   //大きさ
+			m_manager->SetRotation(m_handle, 0.0f, 59.7f, 0.0f);
+
+			//// 向かい風_2
+			//m_handle = m_manager->Play(m_effect2, -1000.0f, 700.0f, 200.0f);      //表示＆座標
+			//m_manager->SetScale(m_handle, 10.0f, 10.0f, 10.0f);   //大きさ
+			//m_manager->SetRotation(m_handle, 0.0f, 59.7f, 0.0f);
+
+			//// 向かい風_3
+			//m_handle = m_manager->Play(m_effect2, -1000.0f, 700.0f, 200.0f);      //表示＆座標
+			//m_manager->SetScale(m_handle, 10.0f, 10.0f, 10.0f);   //大きさ
+			//m_manager->SetRotation(m_handle, 0.0f, 59.7f, 0.0f);
+
+			//// 向かい風_4
+			//m_handle = m_manager->Play(m_effect2, -1000.0f, 700.0f, 200.0f);      //表示＆座標
+			//m_manager->SetScale(m_handle, 10.0f, 10.0f, 10.0f);   //大きさ
+			//m_manager->SetRotation(m_handle, 0.0f, 59.7f, 0.0f);
+
+			//// 向かい風_5
+			//m_handle = m_manager->Play(m_effect2, -1000.0f, 700.0f, 200.0f);      //表示＆座標
+			//m_manager->SetScale(m_handle, 10.0f, 10.0f, 10.0f);   //大きさ
+			//m_manager->SetRotation(m_handle, 0.0f, 59.7f, 0.0f);
+
+			//// 向かい風_6
+			//m_handle = m_manager->Play(m_effect2, -1000.0f, 700.0f, 200.0f);      //表示＆座標
+			//m_manager->SetScale(m_handle, 10.0f, 10.0f, 10.0f);   //大きさ
+			//m_manager->SetRotation(m_handle, 0.0f, 59.7f, 0.0f);
+
+			//// 向かい風_7
+			//m_handle = m_manager->Play(m_effect2, -1000.0f, 700.0f, 200.0f);      //表示＆座標
+			//m_manager->SetScale(m_handle, 10.0f, 10.0f, 10.0f);   //大きさ
+			//m_manager->SetRotation(m_handle, 0.0f, 59.7f, 0.0f);
+
+			//// 向かい風_8
+			//m_handle = m_manager->Play(m_effect2, -1000.0f, 700.0f, 200.0f);      //表示＆座標
+			//m_manager->SetScale(m_handle, 10.0f, 10.0f, 10.0f);   //大きさ
+			//m_manager->SetRotation(m_handle, 0.0f, 59.7f, 0.0f);
+
+
 
 		}
 		break;
