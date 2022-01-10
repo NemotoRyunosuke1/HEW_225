@@ -1,16 +1,17 @@
 //=============================================================================
 //
 // リザルトシーンシーン処理 [resultScene.cpp]
-// Author : ItoNao
+// Author : ItoNao, SuzukiTakumi
 //
 //=============================================================================
 
 #include "resultScene.h"
 #include "debugproc.h"
 
-#define Star			L"data/texture/StarIcon1.png"	//星１
-//#define Result			L"data/texture/.png"		//星２
-//#define Result			L"data/texture/.png"		//星３
+#define Star			L"data/texture/40second.png"	    //星１
+#define Result			L"data/texture/80second.png"		//星２
+#define Result			L"data/texture/130second.png"		//星３
+
 #define Result			L"data/texture/ranking000.png"		//リザルトロゴ
 //#define Result			L"data/texture/.png"		//条件1 [ステージのクリア]
 //#define Result			L"data/texture/.png"		//条件2 [仲間の数]
@@ -83,13 +84,13 @@ ResultScene::ResultScene()
 	ID3D11Device* pDevice = GetDevice();
 	CreateTextureFromFile(pDevice, Star, &m_pIconTexture1);
 
-	//// 星２ 
-	//ID3D11Device* pDevice1 = GetDevice();
-	//CreateTextureFromFile(pDevice1, Result, &m_pIconTexture1);
+	// 星２ 
+	ID3D11Device* pDevice1 = GetDevice();
+	CreateTextureFromFile(pDevice1, Result, &m_pIconTexture2);
 
-	//// 星３ 
-	//ID3D11Device* pDevice1 = GetDevice();
-	//CreateTextureFromFile(pDevice1, Result, &m_pIconTexture1);
+	// 星３ 
+	ID3D11Device* pDevice2 = GetDevice();
+	CreateTextureFromFile(pDevice2, Result, &m_pIconTexture3);
 
 	// リザルトロゴ 
 	ID3D11Device* pDevice1 = GetDevice();
@@ -128,11 +129,11 @@ ResultScene::~ResultScene()
 	// 星１ 
 	SAFE_RELEASE(m_pIconTexture1);
 
-	//// 星２ 
-	//SAFE_RELEASE(m_pIconTexture1);
+	// 星２ 
+    SAFE_RELEASE(m_pIconTexture2);
 
-	//// 星３ 
-	//SAFE_RELEASE(m_pIconTexture1);
+	// 星３ 
+	SAFE_RELEASE(m_pIconTexture3);
 
 	// リザルトロゴ 
 	SAFE_RELEASE(m_pIconTexture4);
@@ -209,21 +210,21 @@ void ResultScene::Draw()
 	 }
 	
 
-	//////　星２ 
-	//SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
-	//SetPolygonSize(m_size2.x, m_size2.y);
-	//SetPolygonPos(m_pos2.x, m_pos2.y);
-	//SetPolygonTexture(m_pIconTexture1);
-	//SetPolygonUV(0.0f, 0.0f);
-	//DrawPolygon(pBC);
-	////
-	//////　星３ 
-	//SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
-	//SetPolygonSize(m_size3.x, m_size3.y);
-	//SetPolygonPos(m_pos3.x, m_pos3.y);
-	//SetPolygonTexture(m_pIconTexture1);
-	//SetPolygonUV(0.0f, 0.0f);
-	//DrawPolygon(pBC);
+	//　星２ 
+	SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
+	SetPolygonSize(m_size2.x, m_size2.y);
+	SetPolygonPos(m_pos2.x, m_pos2.y);
+	SetPolygonTexture(m_pIconTexture2);
+	SetPolygonUV(0.0f, 0.0f);
+	DrawPolygon(pBC);
+	
+	//　星３ 
+	SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
+	SetPolygonSize(m_size3.x, m_size3.y);
+	SetPolygonPos(m_pos3.x, m_pos3.y);
+	SetPolygonTexture(m_pIconTexture3);
+	SetPolygonUV(0.0f, 0.0f);
+	DrawPolygon(pBC);
 
 	// リザルトロゴ 
 	SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
