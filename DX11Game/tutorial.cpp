@@ -2,6 +2,7 @@
 #include "model.h"
 #include "collision.h"
 #include "input.h"
+#include "debugproc.h"
 
 #define PATH_POPUP1_TEXTURE	L"data/texture/tutorial/popup1.png"
 #define PATH_POPUP2_TEXTURE	L"data/texture/tutorial/popup2.png"
@@ -24,6 +25,8 @@ Tutorial::Tutorial()
 	m_pos = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	m_size = XMFLOAT3(0.0f, 10.0f, 0.0f);// XMFLOAT3(SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f);
 	m_bPopup = false;
+	m_bTrigger = false;
+	m_nCnt = 0;
 	for (int i = 0; i < 11; i++)
 	{
 		m_bPopupNum[i] = false;
@@ -62,6 +65,46 @@ void Tutorial::Update(EStage stage)
 				m_size.y = SCREEN_HEIGHT;
 			}
 		}
+
+		// コントローラースティック情報取得
+		LONG stickLX = GetJoyLX(0);
+		LONG stickLY = GetJoyLY(0);
+
+		LONG stickRX = GetJoyRX(0);
+		LONG stickRY = GetJoyRY(0);
+
+		// コントローラースティックによるボタン選択処理
+		// デッドゾーン処理
+		if ((stickLX < STICK_DEAD_ZONE && stickLX > -STICK_DEAD_ZONE) &&
+			(stickLY < STICK_DEAD_ZONE && stickLY > -STICK_DEAD_ZONE) &&
+			(stickRX < STICK_DEAD_ZONE && stickRX > -STICK_DEAD_ZONE) &&
+			(stickRY < STICK_DEAD_ZONE && stickRY > -STICK_DEAD_ZONE)
+			)
+		{
+			stickLX = 0;
+			stickLY = 0;
+			stickRX = 0;
+			stickRY = 0;
+			m_bTrigger = false;
+		}	// スティックを下に傾けたとき
+		else if (stickLX > 20000 || stickRX > 20000)
+		{
+			if (!m_bTrigger)
+			{
+				m_nCnt++;
+				m_bTrigger = true;
+				if (m_nCnt > 5) m_nCnt = 0;
+			}
+		}	// スティックを上に傾けたとき
+		else if (stickLX < -20000 || stickRX < -20000)
+		{
+			if (!m_bTrigger)
+			{
+				m_nCnt--;
+				m_bTrigger = true;
+				if (m_nCnt < 0) m_nCnt = 5;
+			}
+		}
 	}
 	else
 	{
@@ -87,6 +130,26 @@ void Tutorial::Update(EStage stage)
 		// ポップアップ1
 		if (!m_bPopupNum[0] && CollisionAABB(GetModelPos(),XMFLOAT3(10,1000,10), XMFLOAT3(-1000, 600, -1500),XMFLOAT3(100, 1000, 100)))
 		{
+			switch (m_nCnt)
+			{
+			case 0:
+				CreateTextureFromFile(pDevice, PATH_POPUP1_TEXTURE, &m_pTexture);
+				break;
+			case 1:
+				CreateTextureFromFile(pDevice, PATH_POPUP2_TEXTURE, &m_pTexture);
+				break;
+			case 2:
+				CreateTextureFromFile(pDevice, PATH_POPUP3_TEXTURE, &m_pTexture);
+				break;
+			case 3:
+				CreateTextureFromFile(pDevice, PATH_POPUP4_TEXTURE, &m_pTexture);
+				break;
+			case 4:
+				CreateTextureFromFile(pDevice, PATH_POPUP5_TEXTURE, &m_pTexture);
+				break;
+			default:
+				break;
+			}
 			CreateTextureFromFile(pDevice, PATH_POPUP1_TEXTURE, &m_pTexture);
 			m_bPopupNum[0] = true;
 			m_bPopup = true;
@@ -97,6 +160,15 @@ void Tutorial::Update(EStage stage)
 		{
 			CreateTextureFromFile(pDevice, PATH_POPUP2_TEXTURE, &m_pTexture);
 			m_bPopupNum[1] = true;
+			m_bPopup = true;
+		}
+
+
+		// ポップアップ4
+		if (!m_bPopupNum[4]&&GetSTM() < 100)
+		{
+			CreateTextureFromFile(pDevice, PATH_POPUP4_TEXTURE, &m_pTexture);
+			m_bPopupNum[4] = true;
 			m_bPopup = true;
 		}
 		break;
@@ -113,6 +185,12 @@ void Tutorial::Update(EStage stage)
 	default:
 		break;
 	}
+#if _DEBUG
+	
+	// デバック用文字列
+	PrintDebugProc("m_nCnt:%d\n",m_nCnt);
+	PrintDebugProc("\n");
+#endif
 }
 void Tutorial::Draw()
 {

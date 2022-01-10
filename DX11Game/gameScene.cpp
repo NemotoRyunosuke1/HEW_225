@@ -326,8 +326,9 @@ GameScene::GameScene(EStage stage)
 		// 仲間の配置
 		CrewCreate(XMFLOAT3(-1000.0f,250.0f, 0.0f));// 1
 
-		// ゴールUI位置初期化
-		SetGoalUI(XMFLOAT3(-1000.0f, 1000.0f, 9000.0f), 1200, 600, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);
+		// ゴール位置初期化
+		SetGoalUI(XMFLOAT3(-1000.0f, 600.0f, 4000.0f), 1200, 600, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);
+		m_pGoal = new Goal(XMFLOAT3(-1000.0f, 600.0f, 4000.0f));
 
 
 		break;
@@ -344,11 +345,17 @@ GameScene::GameScene(EStage stage)
 			m_pBuliding[i + 5].Create(XMFLOAT3(-2600 + i * 600, 10, 900), XMFLOAT3(10.0f, 10.0f, 10.0f));
 		}
 		// ゴールUI位置初期化
-		SetGoalUI(XMFLOAT3(-1000.0f, 1000.0f, 9000.0f), 1200, 600, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);
+		SetGoalUI(XMFLOAT3(-1000.0f, 600.0f, 4000.0f), 1200, 600, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);
+		m_pGoal = new Goal(XMFLOAT3(-1000.0f, 600.0f, 4000.0f));
 
 		break;
 	case STAGE_3:	// ステージ3
 		InitMeshField(20, 20, 2000.0f, 2000.0f);
+
+		// ゴールUI位置初期化
+		SetGoalUI(XMFLOAT3(-1000.0f, 1200.0f,6000.0f), 1200, 600, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);
+		m_pGoal = new Goal(XMFLOAT3(-1000.0f, 1200.0f, 6000.0f));
+
 		break;
 	case STAGE_4:	// ステージ4
 		// メッシュフィールド初期化
@@ -384,10 +391,16 @@ GameScene::GameScene(EStage stage)
 
 		// ゴールUI位置初期化
 		SetGoalUI(XMFLOAT3(-1000.0f, 1000.0f, 9000.0f), 1200, 600, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);	
+		m_pGoal = new Goal(XMFLOAT3(-1000.0f, 1200.0f, 9000.0f));
 
 		break;
 	case STAGE_5:	// ステージ5
 		InitMeshField(20, 20, 2000.0f, 2000.0f);
+
+		// ゴールUI位置初期化
+		SetGoalUI(XMFLOAT3(-1000.0f, 1000.0f, 9000.0f), 1200, 600, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);
+		m_pGoal = new Goal(XMFLOAT3(-1000.0f, 1200.0f, 9000.0f));
+
 		break;
 	case MAX_STAGE:
 		break;
@@ -734,8 +747,31 @@ void GameScene::Draw()
 	// メッシュフィールド描画
 	DrawMeshField();
 
-	// モデル描画
-	DrawModel();
+	// ビル描画
+	for (int i = 0; i < MAX_BULIDING; i++)
+	{
+		m_pBuliding[i].Draw();
+	}
+	
+	// 雲マネージャー描画
+	m_pCloudManager->Draw();
+
+
+	// 2D描画
+	 // Zバッファ無効(Zチェック無&Z更新無)
+	SetZBuffer(false);
+
+	// ゴールUI
+	if (GetGoalFlgCrew())
+	{
+		DrawGoalUI();
+	}
+
+
+	// 3D描画
+   // Zバッファ無効(Zチェック無&Z更新無)
+	SetZBuffer(true);
+
 
 	// 丸影描画
 	DrawShadow();
@@ -749,17 +785,10 @@ void GameScene::Draw()
 	// 風マネージャー描画
 	m_pWindManager->Draw();
 
-	// 雲マネージャー描画
-	m_pCloudManager->Draw();
+	
+	// モデル描画
+	DrawModel();
 
-	// ゴール描画
-	//m_pGoal->Draw();
-
-	// ビル描画
-	for (int i = 0; i < MAX_BULIDING; i++)
-	{
-		m_pBuliding[i].Draw();
-	}
 	
 	// 2D描画
 	// Zバッファ無効(Zチェック無&Z更新無)
@@ -767,12 +796,7 @@ void GameScene::Draw()
 
 	EFFECT->Play(0);
 
-	// ゴールUI
-	if (GetGoalFlgCrew())
-	{
-		DrawGoalUI();
-	}
-
+	
 	// 仲間用UI描画
 	DrawCrewUI();
 
@@ -802,11 +826,11 @@ void GameScene::Draw()
    }
 	
 
-	// タイマーUI更新
+	// タイマーUI描画
 	m_pTimerUI->Draw();
 
 
-	
+	// チュートリアル描画
 	m_pTutorial->Draw();
 	
 	

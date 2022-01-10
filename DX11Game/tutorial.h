@@ -12,6 +12,8 @@ public:
 	bool GetPopup() { return m_bPopup; };
 
 public:
+	bool m_bTrigger;
 	bool m_bPopup;
 	bool m_bPopupNum[11];
+	int m_nCnt;
 };
