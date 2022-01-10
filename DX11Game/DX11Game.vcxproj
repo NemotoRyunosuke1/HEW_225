@@ -214,6 +214,7 @@
     <ClCompile Include="titleButton.cpp" />
     <ClCompile Include="titleScene.cpp" />
     <ClCompile Include="titleUI.cpp" />
+    <ClCompile Include="tutorial.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="wind.cpp" />
     <ClCompile Include="windManager.cpp" />
@@ -273,6 +274,7 @@
     <ClInclude Include="titleButton.h" />
     <ClInclude Include="titleScene.h" />
     <ClInclude Include="titleUI.h" />
+    <ClInclude Include="tutorial.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="wind.h" />
     <ClInclude Include="windManager.h" />

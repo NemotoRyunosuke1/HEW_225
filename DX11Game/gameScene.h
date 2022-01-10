@@ -13,6 +13,7 @@
 #include "lever.h"
 #include "escapeText.h"
 #include "timerUI.h"
+#include "tutorial.h"
 
 class GameScene :public SceneBase
 {
@@ -40,6 +41,7 @@ private:
 	Lever* m_pLever;
 	EscapeText* m_pEscapeText;
 	TimerUI* m_pTimerUI;
+	Tutorial* m_pTutorial;
 
 	static EStage m_eStage;
 

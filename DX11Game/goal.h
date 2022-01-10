@@ -8,6 +8,7 @@ class Goal
 {
 public:
 	Goal();
+	Goal(XMFLOAT3 pos);
 	~Goal();
 
 

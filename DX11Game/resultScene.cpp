@@ -8,7 +8,7 @@
 #include "resultScene.h"
 #include "debugproc.h"
 
-#define Star			L"data/texture/StarIcon1.png"		//¯‚P
+#define Star			L"data/texture/StarIcon1.png"	//¯‚P
 //#define Result			L"data/texture/.png"		//¯‚Q
 //#define Result			L"data/texture/.png"		//¯‚R
 #define Result			L"data/texture/ranking000.png"		//ƒŠƒUƒ‹ƒgƒƒS

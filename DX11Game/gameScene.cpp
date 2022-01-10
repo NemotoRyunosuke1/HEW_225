@@ -49,8 +49,8 @@ GameScene::GameScene()
 	// 味方初期化
 	InitCrew();
 
-	CrewCreate(XMFLOAT3(rand() % 30 - 1000.0f, rand() % 30 + 250.0f, rand() % 30 + 2900.0f));// 1
-	CrewCreate(XMFLOAT3(rand() % 30 - 1900.0f, rand() % 30 + 250.0f, rand() % 30 + 3100.0f));// 2
+	CrewCreate(XMFLOAT3( rand() %  30 - 1000.0f, rand() %  30 + 250.0f, rand() % 30 + 2900.0f));// 1
+	CrewCreate(XMFLOAT3( rand() %  30 - 1900.0f, rand() %  30 + 250.0f, rand() % 30 + 3100.0f));// 2
 	CrewCreate(XMFLOAT3( rand() %  30 -  100.0f, rand() %  30 + 250.0f, rand() % 30 + 3100.0f));// 3
 	CrewCreate(XMFLOAT3( rand() %  30 - 1300.0f, rand() %  30 + 250.0f, rand() % 30 + 2970.0f));// 4
 	CrewCreate(XMFLOAT3( rand() %  30 - 1600.0f, rand() %  30 + 250.0f, rand() % 30 + 3040.0f));// 5
@@ -61,16 +61,16 @@ GameScene::GameScene()
 	CrewCreate(XMFLOAT3( rand() % 100 - 1050.0f, rand() % 300 + 100.0f, rand() % 30 + 7500.0f));// 10
 	
 
-	//XMFLOAT3(rand() % 30 - 1000.0f, rand() % 30 + 250.0f, rand() % 30 + 2900.0f),// 1
-	//	XMFLOAT3(rand() % 30 - 1900.0f, rand() % 30 + 250.0f, rand() % 30 + 3100.0f),// 2
-	//	XMFLOAT3(rand() % 30 - 100.0f, rand() % 30 + 250.0f, rand() % 30 + 3100.0f),// 3
-	//	XMFLOAT3(rand() % 30 - 1300.0f, rand() % 30 + 250.0f, rand() % 30 + 2970.0f),// 4
-	//	XMFLOAT3(rand() % 30 - 1600.0f, rand() % 30 + 250.0f, rand() % 30 + 3040.0f),// 5
-	//	XMFLOAT3(rand() % 30 - 700.0f, rand() % 30 + 250.0f, rand() % 30 + 2970.0f),// 6
-	//	XMFLOAT3(rand() % 30 - 400.0f, rand() % 30 + 250.0f, rand() % 30 + 3040.0f),// 7
-	//	XMFLOAT3(rand() % 100 - 1050.0f, rand() % 300 + 100.0f, rand() % 30 + 6500.0f),// 8
-	//	XMFLOAT3(rand() % 100 - 1050.0f, rand() % 300 + 100.0f, rand() % 30 + 7000.0f),// 9
-	//	XMFLOAT3(rand() % 100 - 1050.0f, rand() % 300 + 100.0f, rand() % 30 + 7500.0f) // 10
+	//  XMFLOAT3( rand() %  30 - 1000.0f, rand() %  30 + 250.0f, rand() % 30 + 2900.0f),// 1
+	//	XMFLOAT3( rand() %  30 - 1900.0f, rand() %  30 + 250.0f, rand() % 30 + 3100.0f),// 2
+	//	XMFLOAT3( rand() %  30 -  100.0f, rand() %  30 + 250.0f, rand() % 30 + 3100.0f),// 3
+	//	XMFLOAT3( rand() %  30 - 1300.0f, rand() %  30 + 250.0f, rand() % 30 + 2970.0f),// 4
+	//	XMFLOAT3( rand() %  30 - 1600.0f, rand() %  30 + 250.0f, rand() % 30 + 3040.0f),// 5
+	//	XMFLOAT3( rand() %  30 -  700.0f, rand() %  30 + 250.0f, rand() % 30 + 2970.0f),// 6
+	//	XMFLOAT3( rand() %  30 -  400.0f, rand() %  30 + 250.0f, rand() % 30 + 3040.0f),// 7
+	//	XMFLOAT3( rand() % 100 - 1050.0f, rand() % 300 + 100.0f, rand() % 30 + 6500.0f),// 8
+	//	XMFLOAT3( rand() % 100 - 1050.0f, rand() % 300 + 100.0f, rand() % 30 + 7000.0f),// 9
+	//	XMFLOAT3( rand() % 100 - 1050.0f, rand() % 300 + 100.0f, rand() % 30 + 7500.0f) // 10
 
 
 	// 敵初期化
@@ -120,6 +120,9 @@ GameScene::GameScene()
 	// タイマーUI初期化
 	m_pTimerUI = new TimerUI;
 
+	// チュートリアル初期化
+	m_pTutorial = new Tutorial;
+
 	// ビルの生成
 	for (int k = 0; k < MAX_BULIDING / 16 / 5; k++)
 	{
@@ -141,14 +144,14 @@ GameScene::GameScene()
 
 #endif
 	
-	/*m_pBuliding[0].Create(XMFLOAT3(80, 10, 00), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
-	m_pBuliding[1].Create(XMFLOAT3(80, 10, 300), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
-	m_pBuliding[2].Create(XMFLOAT3(80, 10, 600), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
-	m_pBuliding[3].Create(XMFLOAT3(80, 10, 900), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
-	m_pBuliding[4].Create(XMFLOAT3(1110, 10, 00), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
-	m_pBuliding[5].Create(XMFLOAT3(1110, 10, 300), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
-	m_pBuliding[6].Create(XMFLOAT3(1110, 10, 600), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
-	m_pBuliding[7].Create(XMFLOAT3(1110, 10, 900), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));*/
+	/*m_pBuliding[0].Create(XMFLOAT3(  80, 10,  00), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
+	  m_pBuliding[1].Create(XMFLOAT3(  80, 10, 300), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
+	  m_pBuliding[2].Create(XMFLOAT3(  80, 10, 600), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
+	  m_pBuliding[3].Create(XMFLOAT3(  80, 10, 900), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
+	  m_pBuliding[4].Create(XMFLOAT3(1110, 10,  00), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
+	  m_pBuliding[5].Create(XMFLOAT3(1110, 10, 300), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
+	  m_pBuliding[6].Create(XMFLOAT3(1110, 10, 600), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
+	  m_pBuliding[7].Create(XMFLOAT3(1110, 10, 900), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));*/
 
 	// ゴールUI位置初期化
 	SetGoalUI(XMFLOAT3(-1000.0f, 1000.0f, 9000.0f), 1200, 600, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);
@@ -245,6 +248,9 @@ GameScene::GameScene(EStage stage)
 	// タイマーUI初期化
 	m_pTimerUI = new TimerUI;
 
+	// チュートリアル初期化
+	m_pTutorial = new Tutorial;
+
 	// ステージごとの初期化  (モデル位置 x軸:-1000 y軸:600 z軸:-2000)
 	switch (stage)
 	{
@@ -322,8 +328,9 @@ GameScene::GameScene(EStage stage)
 		// 仲間の配置
 		CrewCreate(XMFLOAT3(-1000.0f,250.0f, 0.0f));// 1
 
-		// ゴールUI位置初期化
-		SetGoalUI(XMFLOAT3(-1000.0f, 1000.0f, 9000.0f), 1200, 600, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);
+		// ゴール位置初期化
+		SetGoalUI(XMFLOAT3(-1000.0f, 600.0f, 4000.0f), 1200, 600, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);
+		m_pGoal = new Goal(XMFLOAT3(-1000.0f, 600.0f, 4000.0f));
 
 
 		break;
@@ -340,11 +347,17 @@ GameScene::GameScene(EStage stage)
 			m_pBuliding[i + 5].Create(XMFLOAT3(-2600 + i * 600, 10, 900), XMFLOAT3(10.0f, 10.0f, 10.0f));
 		}
 		// ゴールUI位置初期化
-		SetGoalUI(XMFLOAT3(-1000.0f, 1000.0f, 9000.0f), 1200, 600, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);
+		SetGoalUI(XMFLOAT3(-1000.0f, 600.0f, 4000.0f), 1200, 600, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);
+		m_pGoal = new Goal(XMFLOAT3(-1000.0f, 600.0f, 4000.0f));
 
 		break;
 	case STAGE_3:	// ステージ3
 		InitMeshField(20, 20, 2000.0f, 2000.0f);
+
+		// ゴールUI位置初期化
+		SetGoalUI(XMFLOAT3(-1000.0f, 1200.0f,6000.0f), 1200, 600, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);
+		m_pGoal = new Goal(XMFLOAT3(-1000.0f, 1200.0f, 6000.0f));
+
 		break;
 	case STAGE_4:	// ステージ4
 		// メッシュフィールド初期化
@@ -380,10 +393,16 @@ GameScene::GameScene(EStage stage)
 
 		// ゴールUI位置初期化
 		SetGoalUI(XMFLOAT3(-1000.0f, 1000.0f, 9000.0f), 1200, 600, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);	
+		m_pGoal = new Goal(XMFLOAT3(-1000.0f, 1200.0f, 9000.0f));
 
 		break;
 	case STAGE_5:	// ステージ5
 		InitMeshField(20, 20, 2000.0f, 2000.0f);
+
+		// ゴールUI位置初期化
+		SetGoalUI(XMFLOAT3(-1000.0f, 1000.0f, 9000.0f), 1200, 600, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);
+		m_pGoal = new Goal(XMFLOAT3(-1000.0f, 1200.0f, 9000.0f));
+
 		break;
 	case MAX_STAGE:
 		break;
@@ -454,6 +473,9 @@ GameScene::~GameScene()
 
 	// タイマーUI終了
 	delete m_pTimerUI;
+
+	// チュートリアル終了
+	delete m_pTutorial;
 }
 
 //=============================================================================
@@ -474,7 +496,53 @@ void GameScene::Update()
 	m_fCurrentTime = (float)timeGetTime();
 	m_timer = (m_fCurrentTime - m_fRemainTime) / 1000;
 
-	
+	// ポーズ
+	if (GetJoyRelease(0, JOYSTICKID8) || GetKeyRelease(VK_ESCAPE))	// コントローラーSTARTボタン
+	{
+		// ポーズ中の時
+		if (m_bPause)
+		{
+			m_bPause = false;
+		}
+		else
+		{
+			m_bPause = true;
+		}
+
+	}
+
+	// ポーズ中の処理
+	if (m_bPause)
+	{
+		// ポーズ処理更新
+		m_pPause->Update();
+
+		// ゲームに戻る
+		if (m_pPause->GetBack())
+		{
+			m_bPause = false;
+		}
+		// リスタート
+		if (m_pPause->GetRestart())
+		{
+			StartFadeOut(SCENE_GAME);
+		}
+		// ステージセレクトに戻る
+		if (m_pPause->GetStageSelect())
+		{
+			StartFadeOut(SCENE_STAGE_SELECT);
+		}
+		return;		// ポーズ中下の処理をしない
+	}
+	else
+	{
+		m_pPause->SetBack(false);
+	}
+	// チュートリアル更新
+	m_pTutorial->Update(m_eStage);
+
+	// チュートリアル
+	if (m_pTutorial->GetPopup())return;
 	
 	// リザルトシーン更新
 	m_pResult->SetScore(m_pTimerUI->GetScore());
@@ -504,48 +572,7 @@ void GameScene::Update()
 		}
 		
 	}
-	// ポーズ
-	if (GetJoyRelease(0, JOYSTICKID8) || GetKeyRelease(VK_ESCAPE))	// コントローラーSTARTボタン
-	{
-		// ポーズ中の時
-		if (m_bPause)
-		{
-			m_bPause = false;
-		}
-		else
-		{
-			m_bPause = true;
-		}
-
-	}
 	
-	// ポーズ中の処理
-	if (m_bPause)
-	{
-		// ポーズ処理更新
-		m_pPause->Update();
-
-		// ゲームに戻る
-		if (m_pPause->GetBack())
-		{
-			m_bPause = false;
-		}
-		// リスタート
-		if (m_pPause->GetRestart())
-		{
-			StartFadeOut(SCENE_GAME);
-		}
-		// ステージセレクトに戻る
-		if (m_pPause->GetStageSelect())
-		{
-			StartFadeOut(SCENE_STAGE_SELECT);
-		}
-		return;		// ポーズ中下の処理をしない
-	}
-	else
-	{
-		m_pPause->SetBack(false);
-	}
 
 	// カメラ更新
 	CCamera::Get()->Update();
@@ -608,6 +635,7 @@ void GameScene::Update()
 
 	// 仲間用UI更新
 	UpdateCrewUI();
+
 
 	// ビル更新
 	for (int i = 0; i < MAX_BULIDING; i++)
@@ -710,6 +738,8 @@ void GameScene::Draw()
 	// Zバッファ無効(Zチェック無&Z更新無)
 	SetZBuffer(false);
 
+
+
 	// 3D描画
 	// Zバッファ無効(Zチェック無&Z更新無)
 	SetZBuffer(true);
@@ -719,8 +749,31 @@ void GameScene::Draw()
 	// メッシュフィールド描画
 	DrawMeshField();
 
-	// モデル描画
-	DrawModel();
+	// ビル描画
+	for (int i = 0; i < MAX_BULIDING; i++)
+	{
+		m_pBuliding[i].Draw();
+	}
+	
+	// 雲マネージャー描画
+	m_pCloudManager->Draw();
+
+
+	// 2D描画
+	 // Zバッファ無効(Zチェック無&Z更新無)
+	SetZBuffer(false);
+
+	// ゴールUI
+	if (GetGoalFlgCrew())
+	{
+		DrawGoalUI();
+	}
+
+
+	// 3D描画
+   // Zバッファ無効(Zチェック無&Z更新無)
+	SetZBuffer(true);
+
 
 	// 丸影描画
 	DrawShadow();
@@ -734,28 +787,18 @@ void GameScene::Draw()
 	// 風マネージャー描画
 	m_pWindManager->Draw();
 
-	// 雲マネージャー描画
-	m_pCloudManager->Draw();
+	
+	// モデル描画
+	DrawModel();
 
-	// ゴール描画
-	//m_pGoal->Draw();
-
-	// ビル描画
-	for (int i = 0; i < MAX_BULIDING; i++)
-	{
-		m_pBuliding[i].Draw();
-	}
 	
 	// 2D描画
 	// Zバッファ無効(Zチェック無&Z更新無)
 	SetZBuffer(false);
 
-	// ゴールUI
-	if (GetGoalFlgCrew())
-	{
-		DrawGoalUI();
-	}
+	EFFECT->Play(0);
 
+	
 	// 仲間用UI描画
 	DrawCrewUI();
 
@@ -785,8 +828,14 @@ void GameScene::Draw()
    }
 	
 
-	// タイマーUI更新
+	// タイマーUI描画
 	m_pTimerUI->Draw();
+
+
+	// チュートリアル描画
+	m_pTutorial->Draw();
+	
+	
 
 	// ポーズ中の処理
 	if (m_bPause)
@@ -796,5 +845,6 @@ void GameScene::Draw()
 	}
 	
 
-	EFFECT->Play(0);
+
+	
 }

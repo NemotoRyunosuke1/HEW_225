@@ -17,7 +17,6 @@ void UpdateCrew(void);
 void DrawCrew(void);
 
 int StartChase(int i, XMFLOAT3 pos);
-XMFLOAT3& GetSonotaCrewPos();
 void CrewCreate(XMFLOAT3 pos1);
 
 int& GetCrewCnt();
