@@ -179,6 +179,8 @@ GameScene::GameScene(EStage stage)
 	m_bGoal = false;		// ƒS[ƒ‹ƒtƒ‰ƒO
 	m_eStage = stage;
 
+	EffectManager::SetStage(m_eStage);
+
 	//ŠÔæ“¾	
 	m_fCurrentTime = m_fRemainTime = (float)timeGetTime();
 
