@@ -333,6 +333,18 @@ GameScene::GameScene(EStage stage)
 		break;
 	case STAGE_3:	// ステージ3
 		InitMeshField(20, 20, 2000.0f, 2000.0f);
+		for (int i = 0; i < 12; i++)
+		{
+			for (int j = 0; j < 2; j++)
+			{
+				m_pBuliding[i + j * 12].Create(XMFLOAT3(-3800 + j * 5100, 10, 0 + i * 300), XMFLOAT3(10.0f, 10.0f, 10.0f));
+			}
+		}
+		for (int i = 0; i < 15; i++)
+		{
+			m_pBuliding[i + 24].Create(XMFLOAT3(-3350 + i * 300, 10, 3300), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		}
+
 		break;
 	case STAGE_4:	// ステージ4
 		// メッシュフィールド初期化
@@ -372,6 +384,21 @@ GameScene::GameScene(EStage stage)
 		break;
 	case STAGE_5:	// ステージ5
 		InitMeshField(20, 20, 2000.0f, 2000.0f);
+		for (int i = 0; i < 5; i++)
+		{
+			for (int j = 0; j < 4; j++)
+			{
+				for (int k = 0; k < 2; k++)
+				{
+					for (int l = 0; l < 2; l++)
+					{
+						m_pBuliding[l + k * 2 + j * 4 + i * 16].Create(XMFLOAT3(-2900 + k * 300 + j * 900, 10, 0 + l * 300 + i * 900), XMFLOAT3(10.0f, 10.0f, 10.0f));
+					}
+				}
+			}
+		}
+		
+		
 		break;
 	case MAX_STAGE:
 		break;
