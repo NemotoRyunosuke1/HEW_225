@@ -15,8 +15,6 @@ GameOverScene::~GameOverScene()
 	delete m_pGameOverSceneButton;
 	delete m_pGameOverSceneBG;
 }
-
-
 void GameOverScene::Update()
 {
 

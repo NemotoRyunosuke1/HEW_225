@@ -120,6 +120,9 @@ GameScene::GameScene()
 	// タイマーUI初期化
 	m_pTimerUI = new TimerUI;
 
+	// チュートリアル初期化
+	m_pTutorial = new Tutorial;
+
 	// ビルの生成
 	for (int k = 0; k < MAX_BULIDING / 16 / 5; k++)
 	{
@@ -242,6 +245,9 @@ GameScene::GameScene(EStage stage)
 
 	// タイマーUI初期化
 	m_pTimerUI = new TimerUI;
+
+	// チュートリアル初期化
+	m_pTutorial = new Tutorial;
 
 	// ステージごとの初期化  (モデル位置 x軸:-1000 y軸:600 z軸:-2000)
 	switch (stage)
@@ -452,6 +458,9 @@ GameScene::~GameScene()
 
 	// タイマーUI終了
 	delete m_pTimerUI;
+
+	// チュートリアル終了
+	delete m_pTutorial;
 }
 
 //=============================================================================
@@ -472,7 +481,53 @@ void GameScene::Update()
 	m_fCurrentTime = (float)timeGetTime();
 	m_timer = (m_fCurrentTime - m_fRemainTime) / 1000;
 
-	
+	// ポーズ
+	if (GetJoyRelease(0, JOYSTICKID8) || GetKeyRelease(VK_ESCAPE))	// コントローラーSTARTボタン
+	{
+		// ポーズ中の時
+		if (m_bPause)
+		{
+			m_bPause = false;
+		}
+		else
+		{
+			m_bPause = true;
+		}
+
+	}
+
+	// ポーズ中の処理
+	if (m_bPause)
+	{
+		// ポーズ処理更新
+		m_pPause->Update();
+
+		// ゲームに戻る
+		if (m_pPause->GetBack())
+		{
+			m_bPause = false;
+		}
+		// リスタート
+		if (m_pPause->GetRestart())
+		{
+			StartFadeOut(SCENE_GAME);
+		}
+		// ステージセレクトに戻る
+		if (m_pPause->GetStageSelect())
+		{
+			StartFadeOut(SCENE_STAGE_SELECT);
+		}
+		return;		// ポーズ中下の処理をしない
+	}
+	else
+	{
+		m_pPause->SetBack(false);
+	}
+	// チュートリアル更新
+	m_pTutorial->Update(m_eStage);
+
+	// チュートリアル
+	if (m_pTutorial->GetPopup())return;
 	
 	// リザルトシーン更新
 	m_pResult->SetScore(m_pTimerUI->GetScore());
@@ -502,48 +557,7 @@ void GameScene::Update()
 		}
 		
 	}
-	// ポーズ
-	if (GetJoyRelease(0, JOYSTICKID8) || GetKeyRelease(VK_ESCAPE))	// コントローラーSTARTボタン
-	{
-		// ポーズ中の時
-		if (m_bPause)
-		{
-			m_bPause = false;
-		}
-		else
-		{
-			m_bPause = true;
-		}
-
-	}
 	
-	// ポーズ中の処理
-	if (m_bPause)
-	{
-		// ポーズ処理更新
-		m_pPause->Update();
-
-		// ゲームに戻る
-		if (m_pPause->GetBack())
-		{
-			m_bPause = false;
-		}
-		// リスタート
-		if (m_pPause->GetRestart())
-		{
-			StartFadeOut(SCENE_GAME);
-		}
-		// ステージセレクトに戻る
-		if (m_pPause->GetStageSelect())
-		{
-			StartFadeOut(SCENE_STAGE_SELECT);
-		}
-		return;		// ポーズ中下の処理をしない
-	}
-	else
-	{
-		m_pPause->SetBack(false);
-	}
 
 	// カメラ更新
 	CCamera::Get()->Update();
@@ -606,6 +620,7 @@ void GameScene::Update()
 
 	// 仲間用UI更新
 	UpdateCrewUI();
+
 
 	// ビル更新
 	for (int i = 0; i < MAX_BULIDING; i++)
@@ -708,6 +723,8 @@ void GameScene::Draw()
 	// Zバッファ無効(Zチェック無&Z更新無)
 	SetZBuffer(false);
 
+
+
 	// 3D描画
 	// Zバッファ無効(Zチェック無&Z更新無)
 	SetZBuffer(true);
@@ -748,6 +765,8 @@ void GameScene::Draw()
 	// Zバッファ無効(Zチェック無&Z更新無)
 	SetZBuffer(false);
 
+	EFFECT->Play(0);
+
 	// ゴールUI
 	if (GetGoalFlgCrew())
 	{
@@ -786,6 +805,12 @@ void GameScene::Draw()
 	// タイマーUI更新
 	m_pTimerUI->Draw();
 
+
+	
+	m_pTutorial->Draw();
+	
+	
+
 	// ポーズ中の処理
 	if (m_bPause)
 	{
@@ -794,5 +819,6 @@ void GameScene::Draw()
 	}
 	
 
-	EFFECT->Play(0);
+
+	
 }
