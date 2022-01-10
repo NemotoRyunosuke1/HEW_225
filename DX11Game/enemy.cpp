@@ -113,7 +113,7 @@ HRESULT InitEnemy(void)
 		g_enemy[i].m_scr = XMFLOAT3(20.0f,20.0f,20.0f);
 		g_enemy[i].m_use = false;
 		g_enemy[i].m_bAtack = false;
-		g_enemy[i].collisionSize = 2000;
+		g_enemy[i].collisionSize = 500;
 		g_enemy[i].dAnimTime = 0.0f;
 
 			}
