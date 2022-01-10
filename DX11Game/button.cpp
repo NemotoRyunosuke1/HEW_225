@@ -18,6 +18,11 @@
 #define PATH_BUTTON_PAUSE_TEXTURE1 L"data/texture/scenesenni/pause/restart.png"
 #define PATH_BUTTON_PAUSE_TEXTURE2 L"data/texture/scenesenni/pause/backgame.png"
 #define PATH_BUTTON_PAUSE_TEXTURE3 L"data/texture/scenesenni/pause/backstageselect.png"
+#define PATH_BUTTON_STAGE1_TEXTURE L"data/texture/scenesenni/stageselect/stage1.png"
+#define PATH_BUTTON_STAGE2_TEXTURE L"data/texture/scenesenni/stageselect/stage2.png"
+#define PATH_BUTTON_STAGE3_TEXTURE L"data/texture/scenesenni/stageselect/stage3.png"
+#define PATH_BUTTON_STAGE4_TEXTURE L"data/texture/scenesenni/stageselect/stage4.png"
+#define PATH_BUTTON_STAGE5_TEXTURE L"data/texture/scenesenni/stageselect/stage5.png"
 
 
 
@@ -211,9 +216,9 @@ void Button::CreateButton(XMFLOAT3 size, XMFLOAT3 pos, int textureNum)
 	case ENDGAME_BTN:
 		CreateTextureFromFile(pDevice, PATH_BUTTON_END_TEXTURE, &m_pTexture);
 		break;
-	case STAGE1_BTN:
-		CreateTextureFromFile(pDevice, PATH_BUTTON_SELECT_TEXTURE1, &m_pTexture);
-		break;
+	//case STAGE1_BTN:
+		//CreateTextureFromFile(pDevice, PATH_BUTTON_SELECT_TEXTURE1, &m_pTexture);
+		//break;
 	case BACK_BTN:
 		CreateTextureFromFile(pDevice, PATH_BUTTON_BACK_TEXTURE, &m_pTexture);
 		break;
@@ -225,6 +230,21 @@ void Button::CreateButton(XMFLOAT3 size, XMFLOAT3 pos, int textureNum)
 		break;
 	case BACK_STAGE_SELECT_BTN:
 		CreateTextureFromFile(pDevice, PATH_BUTTON_PAUSE_TEXTURE3, &m_pTexture);	// ステージセレクトに戻る
+		break;
+	case STAGE_1_BTN:
+		CreateTextureFromFile(pDevice, PATH_BUTTON_STAGE1_TEXTURE, &m_pTexture);	// ステージセレクトに戻る
+		break;
+	case STAGE_2_BTN:
+		CreateTextureFromFile(pDevice, PATH_BUTTON_STAGE2_TEXTURE, &m_pTexture);	// ステージセレクトに戻る
+		break;
+	case STAGE_3_BTN:
+		CreateTextureFromFile(pDevice, PATH_BUTTON_STAGE3_TEXTURE, &m_pTexture);	// ステージセレクトに戻る
+		break;
+	case STAGE_4_BTN:
+		CreateTextureFromFile(pDevice, PATH_BUTTON_STAGE4_TEXTURE, &m_pTexture);	// ステージセレクトに戻る
+		break;
+	case STAGE_5_BTN:
+		CreateTextureFromFile(pDevice, PATH_BUTTON_STAGE5_TEXTURE, &m_pTexture);	// ステージセレクトに戻る
 		break;
 	default:
 		break;

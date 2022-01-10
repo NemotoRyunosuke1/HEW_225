@@ -159,9 +159,6 @@
     <ClCompile Include="wind.cpp">
       <Filter>ソースファイル\scene\gameScene\object</Filter>
     </ClCompile>
-    <ClCompile Include="windManager.cpp">
-      <Filter>ソースファイル\scene\gameScene\object</Filter>
-    </ClCompile>
     <ClCompile Include="gameOverScene.cpp">
       <Filter>ソースファイル\scene\gameOverScene</Filter>
     </ClCompile>
@@ -170,6 +167,9 @@
     </ClCompile>
     <ClCompile Include="gameOverSceneButton.cpp">
       <Filter>ソースファイル\scene\gameOverScene</Filter>
+    </ClCompile>
+    <ClCompile Include="goalUI.cpp">
+      <Filter>ソースファイル\scene\gameScene\UI</Filter>
     </ClCompile>
     <ClCompile Include="timerUI.cpp">
       <Filter>ソースファイル\scene\gameScene\UI</Filter>
@@ -180,8 +180,8 @@
     <ClCompile Include="escapeText.cpp">
       <Filter>ソースファイル\scene\gameScene\UI</Filter>
     </ClCompile>
-    <ClCompile Include="goalUI.cpp">
-      <Filter>ソースファイル\scene\gameScene\UI</Filter>
+    <ClCompile Include="windManager.cpp">
+      <Filter>ソースファイル\scene\gameScene\object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -350,10 +350,10 @@
     <ClInclude Include="timerUI.h">
       <Filter>ヘッダーファイル\scene\gameScene\UI</Filter>
     </ClInclude>
-    <ClInclude Include="escapeText.h">
+    <ClInclude Include="goalUI.h">
       <Filter>ヘッダーファイル\scene\gameScene\UI</Filter>
     </ClInclude>
-    <ClInclude Include="goalUI.h">
+    <ClInclude Include="escapeText.h">
       <Filter>ヘッダーファイル\scene\gameScene\UI</Filter>
     </ClInclude>
   </ItemGroup>

@@ -11,7 +11,7 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-#define MAX_BUTTON (6)
+#define MAX_BUTTON (7)
 
 //=============================================================================
 // コンストラクタ
@@ -20,12 +20,12 @@ StageButton::StageButton()
 {
 	// ボタンメモリ確保
 	m_pButton = new Button[MAX_BUTTON];
-	m_pButton[0].CreateButton(XMFLOAT3(280.0f, 300.0f, 0.0f), XMFLOAT3(0.0f, -200.0f, 0.0f)   , BACK_BTN);	// 戻るボタン
-	m_pButton[1].CreateButton(XMFLOAT3(280.0f, 300.0f, 0.0f), XMFLOAT3(-SCREEN_WIDTH / 2 + 280/2 * 1.5f    , 0.0f, 0.0f), STAGE1_BTN);	// ステージ1ボタン												
-	m_pButton[2].CreateButton(XMFLOAT3(280.0f, 300.0f, 0.0f), XMFLOAT3(-SCREEN_WIDTH / 2 + 280/2 * 1.5f * 2, 0.0f, 0.0f), STAGE1_BTN);	// ステージ2ボタン	
-	m_pButton[3].CreateButton(XMFLOAT3(280.0f, 300.0f, 0.0f), XMFLOAT3(-SCREEN_WIDTH / 2 + 280/2 * 1.5f * 3, 0.0f, 0.0f), STAGE1_BTN);	// ステージ3ボタン	
-	m_pButton[4].CreateButton(XMFLOAT3(280.0f, 300.0f, 0.0f), XMFLOAT3(-SCREEN_WIDTH / 2 + 280/2 * 1.5f * 4, 0.0f, 0.0f), STAGE1_BTN);	// ステージ4ボタン	
-	m_pButton[5].CreateButton(XMFLOAT3(280.0f, 300.0f, 0.0f), XMFLOAT3(-SCREEN_WIDTH / 2 + 280/2 * 1.5f * 5, 0.0f, 0.0f), STAGE1_BTN);	// ステージ5ボタン	
+	m_pButton[0].CreateButton(XMFLOAT3(280.0f, 300.0f, 0.0f), XMFLOAT3(SCREEN_WIDTH / 2 -100, -300.0f, 0.0f)   , BACK_BTN);	// 戻るボタン
+	m_pButton[1].CreateButton(XMFLOAT3(180.0f, 300.0f, 0.0f), XMFLOAT3(-SCREEN_WIDTH / 2 + 300.0f/2 * 1.5f    , 0.0f, 0.0f), STAGE_1_BTN);	// ステージ1ボタン												
+	m_pButton[2].CreateButton(XMFLOAT3(180.0f, 300.0f, 0.0f), XMFLOAT3(-SCREEN_WIDTH / 2 + 300.0f/2 * 1.5f * 2, 0.0f, 0.0f), STAGE_2_BTN);	// ステージ2ボタン	
+	m_pButton[3].CreateButton(XMFLOAT3(180.0f, 300.0f, 0.0f), XMFLOAT3(-SCREEN_WIDTH / 2 + 300.0f/2 * 1.5f * 3, 0.0f, 0.0f), STAGE_3_BTN);	// ステージ3ボタン	
+	m_pButton[4].CreateButton(XMFLOAT3(180.0f, 300.0f, 0.0f), XMFLOAT3(-SCREEN_WIDTH / 2 + 300.0f/2 * 1.5f * 4, 0.0f, 0.0f), STAGE_4_BTN);	// ステージ4ボタン	
+	m_pButton[5].CreateButton(XMFLOAT3(180.0f, 300.0f, 0.0f), XMFLOAT3(-SCREEN_WIDTH / 2 + 300.0f/2 * 1.5f * 5, 0.0f, 0.0f), STAGE_5_BTN);	// ステージ5ボタン	
 	
 	// ---変数初期化---
 

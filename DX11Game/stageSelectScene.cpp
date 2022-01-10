@@ -73,7 +73,7 @@ void StageSlectScene::Update()
 
 #endif
 }
-	// ステージ1へ
+	// ステージへ
 	if (m_pStageButton->GetStage1() || m_pStageButton->GetStage2() || m_pStageButton->GetStage3() || m_pStageButton->GetStage4()|| m_pStageButton->GetStage5())
 	{
 		if (!StageTrrger)
@@ -82,7 +82,7 @@ void StageSlectScene::Update()
 			CSound::Play(SE_SELECT);
 			StageTrrger = true;
 		}
-		StartFadeOut(SCENE_GAME);
+		StartFadeOut(SCENE_GAME);  //
 	}
 
 	// 戻る

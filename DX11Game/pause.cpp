@@ -24,7 +24,7 @@ Pause::Pause()
 	m_pButton[0].CreateButton(XMFLOAT3(300.0f, 150.0f, 0.0f), XMFLOAT3(0.0f, -100.0f, 0.0f), BACK_GAME_BTN);
 	m_pButton[0].SetSelect(true);
 	m_pButton[1].CreateButton(XMFLOAT3(300.0f, 150.0f, 0.0f), XMFLOAT3(0.0f, -200.0f, 0.0f), RESTART_BTN);
-	m_pButton[2].CreateButton(XMFLOAT3(300.0f, 150.0f, 0.0f), XMFLOAT3(0.0f, -300.0f, 0.0f), STAGE_SELECT_BTN);
+	m_pButton[2].CreateButton(XMFLOAT3(300.0f, 150.0f, 0.0f), XMFLOAT3(0.0f, -300.0f, 0.0f), BACK_STAGE_SELECT_BTN);
 
 }
 Pause::~Pause()

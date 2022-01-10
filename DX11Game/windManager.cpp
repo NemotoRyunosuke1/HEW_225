@@ -36,7 +36,7 @@ WindManager::WindManager()
 	m_pWind[9]. Create(XMFLOAT3(-1400.0f, 1250.0f, 8500.0f), XMFLOAT3(500.0f,  300.0f,  500.0f), XMFLOAT3(0.0f, 0.0f,  1.0f));  // ゴール前奥左追い風
 	m_pWind[10].Create(XMFLOAT3( -600.0f, 1250.0f, 8500.0f), XMFLOAT3(500.0f,  300.0f,  500.0f), XMFLOAT3(0.0f, 0.0f,  1.0f));  // ゴール前奥右追い風
 	
-	m_pWind[11].Create(XMFLOAT3(-1000.0f, 1000.0f, 9500.0f), XMFLOAT3(600.0f, 1200.0f, 600.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));  // ゴール前奥右追い風
+	m_pWind[11].Create(XMFLOAT3(-1000.0f, 1000.0f, 9500.0f), XMFLOAT3(600.0f, 1200.0f, 600.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));  // ゴール風
 }
 WindManager::WindManager(EStage stage)
 {
@@ -45,8 +45,19 @@ WindManager::WindManager(EStage stage)
 	switch (stage)
 	{
 	case STAGE_1:
+		m_pWind[0].Create(XMFLOAT3(-1700.0f, 200.0f, 0.0f), XMFLOAT3(200.0f, 500.0f, 300.0f), XMFLOAT3(-1.0f, 1.0f, 0.0f));    // 1個目上昇気流
+		m_pWind[1].Create(XMFLOAT3(-1700.0f, 500.0f, 800.0f), XMFLOAT3(200.0f, 500.0f, 300.0f), XMFLOAT3(1.0f, 1.0f, 0.0f));   // 2個目上昇気流
+		m_pWind[2].Create(XMFLOAT3(-100.0f, 800.0f, 1300.0f), XMFLOAT3(300.0f, 300.0f, 1200.0f), XMFLOAT3(0.0f, 0.0f, 1.0f));  // 追い風
 		break;
 	case STAGE_2:
+		m_pWind[0].Create(XMFLOAT3(-80.0f, 700.0f, -600.0f), XMFLOAT3(300.0f, 300.0f, 100.0f), XMFLOAT3(0.0f, 0.0f, -1.0f));  // 向かい風1
+		m_pWind[1].Create(XMFLOAT3(-700.0f, 700.0f, -600.0f), XMFLOAT3(300.0f, 300.0f, 100.0f), XMFLOAT3(0.0f, 0.0f, -1.0f));  // 向かい風2
+		m_pWind[2].Create(XMFLOAT3(-1300.0f, 700.0f, -600.0f), XMFLOAT3(300.0f, 300.0f, 100.0f), XMFLOAT3(0.0f, 0.0f, -1.0f));  // 向かい風3
+		m_pWind[3].Create(XMFLOAT3(-1900.0f, 700.0f, 400.0f), XMFLOAT3(300.0f, 300.0f, 100.0f), XMFLOAT3(0.0f, 0.0f, -1.0f));  // 向かい風4
+		m_pWind[4].Create(XMFLOAT3(-1300.0f, 700.0f, 400.0f), XMFLOAT3(300.0f, 300.0f, 100.0f), XMFLOAT3(0.0f, 0.0f, -1.0f));  // 向かい風5
+		m_pWind[5].Create(XMFLOAT3(-700.0f, 700.0f, 400.0f), XMFLOAT3(300.0f, 300.0f, 100.0f), XMFLOAT3(0.0f, 0.0f, -1.0f));  // 向かい風6
+		m_pWind[6].Create(XMFLOAT3(-100.0f, 800.0f, 1300.0f), XMFLOAT3(1000.0f, 300.0f, 300.0f), XMFLOAT3(-1.0f, 0.0f, 1.0f));  // 追い風
+
 		break;
 	case STAGE_3:
 		break;
@@ -73,7 +84,15 @@ WindManager::WindManager(EStage stage)
 		break;
 	}
 
+	//メモ
+	//風の向き(x, y, z)
+	//右風	   (1.0f, 0.0f, 1.0f)　　左風    (-1.0f, 0.0f, 1.0f)
+	//上昇気流 (0.0f, 1.0f, 0.0f)
+	//追い風   (0.0f, 0.0f, 1.0f)    向かい風(0.0f, 0.0f, -1.0f)   
 
+	//座標(x, y, z)
+	//左が -x  右が +x
+	//奥が +z  手前 -z
 }
 //=======================================================
 //

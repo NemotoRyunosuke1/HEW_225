@@ -23,6 +23,21 @@ Goal::Goal()
 		MessageBoxA(GetMainWnd(), "モデルデータ読み込みエラー", "InitModel", MB_OK);
 	}
 }
+Goal::Goal(XMFLOAT3 pos)
+{
+	m_pos = pos;	// 位置
+	m_size = XMFLOAT3(1000.0f, 2000.0f, 300.0f);	// サイズ
+	m_rot = XMFLOAT3(0.0f, 0.0f, 0.0f);	// 向き
+
+	m_use = false;
+
+	ID3D11Device* pDevice = GetDevice();
+	ID3D11DeviceContext* pDeviceContext = GetDeviceContext();
+	// モデルデータの読み込み
+	if (!m_model.Load(pDevice, pDeviceContext, MODEL_PLANE)) {
+		MessageBoxA(GetMainWnd(), "モデルデータ読み込みエラー", "InitModel", MB_OK);
+	}
+}
 Goal::~Goal()
 {
 	// モデルの解放
@@ -66,15 +81,15 @@ void Goal::Draw()
 {
 	ID3D11DeviceContext* pDC = GetDeviceContext();
 
-	// 不透明部分を描画
-	m_model.Draw(pDC, m_mtxWorld, eOpacityOnly);
+	//// 不透明部分を描画
+	//m_model.Draw(pDC, m_mtxWorld, eOpacityOnly);
 
-	// 半透明部分を描画
-	SetBlendState(BS_ALPHABLEND);	// アルファブレンド有効
-	SetZWrite(false);				// Zバッファ更新しない
-	m_model.Draw(pDC, m_mtxWorld, eTransparentOnly);
-	SetZWrite(true);				// Zバッファ更新する
-	SetBlendState(BS_NONE);			// アルファブレンド無効
+	//// 半透明部分を描画
+	//SetBlendState(BS_ALPHABLEND);	// アルファブレンド有効
+	//SetZWrite(false);				// Zバッファ更新しない
+	//m_model.Draw(pDC, m_mtxWorld, eTransparentOnly);
+	//SetZWrite(true);				// Zバッファ更新する
+	//SetBlendState(BS_NONE);			// アルファブレンド無効
 }
 XMFLOAT3 Goal::GetPos()
 {
