@@ -3,7 +3,7 @@
 LPCWSTR g_pszFileBGM[MAX_BGM] = {
 	L"75.mp3",	//タイトルBGM
 	//L"MusMus-BGM-077.mp3",		//セレクトBGM
-	//L"MusMus-BGM-123.mp3",			//メニューBGM
+	L"Berceuse.mp3",		//ゲームオーバーBGM
 	L"Greens.mp3",		//ゲームBGM
 	//L"MusMus-BGM-088.mp3",		//リザルトBGM
 	//L"MusMus-BGM-051.mp3",		//ゲームBGM2

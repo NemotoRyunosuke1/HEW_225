@@ -4,7 +4,7 @@ enum eBGM {
 	BGM_000 = 0,	//タイトルBGM
 	//BGM_001 ,		//メニューBGM
 	//BGM_002 ,		//ゲームBGM
-	//BGM_003 ,		//リザルトBGM
+	BGM_003 ,		//ゲームオーバーBGM
 	//BGM_004 ,		//セレクトBGM
 	//GAME_BGM_002,
 	//GAME_BGM_003,

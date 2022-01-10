@@ -43,7 +43,7 @@ void Tutorial::Update(EStage stage)
 {
 	ID3D11Device* pDevice = GetDevice();
 	// ゲームに戻る
-	if (GetJoyRelease(0, JOYSTICKID1))	// コントローラーAボタン
+	if (GetJoyRelease(0, JOYSTICKID1) || GetKeyTrigger(VK_RETURN))	// コントローラーAボタン
 	{
 		if (m_bPopup)
 		{

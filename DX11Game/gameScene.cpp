@@ -616,10 +616,11 @@ void GameScene::Update()
 	{
 		m_pPause->SetBack(false);
 	}
+
 	// チュートリアル更新
 	m_pTutorial->Update(m_eStage);
 
-	// チュートリアル
+	// ポップアップ画像が表示されてる時
 	if (m_pTutorial->GetPopup())return;
 
 	// リザルトシーン更新
