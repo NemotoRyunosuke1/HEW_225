@@ -894,13 +894,7 @@ void UpdateModel(void)
 
 
 #if _DEBUG
-	if (GetKeyPress(VK_RETURN)) {
-		// リセット
-		g_posModel = XMFLOAT3(0.0f, 20.0f, 0.0f);
-		g_moveModel = XMFLOAT3(0.0f, 0.0f, 0.0f);
-		g_rotModel = XMFLOAT3(0.0f, 0.0f, 0.0f);
-		g_rotDestModel = XMFLOAT3(0.0f, 0.0f, 0.0f);
-	}
+	
 	// デバック用文字列
 	PrintDebugProc("[ﾋｺｳｷ ｲﾁ : (%f : %f : %f)]\n", g_posModel.x, g_posModel.y, g_posModel.z);
 	PrintDebugProc("[ﾓﾃﾞﾙﾑｷ : (%f : %f : %f)]\n", g_rotDestModel.x, g_posModel.y, g_posModel.z);

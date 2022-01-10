@@ -119,7 +119,7 @@ void Button::Update()
 			{
 				if (!m_bSoudTriggerDecision)
 				{
-					CSound::SetVolume(SE_SELECT, 1.0f);
+				CSound::SetVolume(SE_SELECT, 1.0f);
 					CSound::Play(SE_SELECT);
 					m_bSoudTriggerDecision = true;
 				}
