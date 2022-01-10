@@ -57,7 +57,7 @@ WindManager::WindManager(EStage stage)
 		m_pWind[4].Create(XMFLOAT3(-1300.0f, 700.0f, 400.0f), XMFLOAT3(300.0f, 300.0f, 100.0f), XMFLOAT3(0.0f, 0.0f, -1.0f));  // Œü‚©‚¢•—5
 		m_pWind[5].Create(XMFLOAT3(-700.0f, 700.0f, 400.0f), XMFLOAT3(300.0f, 300.0f, 100.0f), XMFLOAT3(0.0f, 0.0f, -1.0f));  // Œü‚©‚¢•—6
 		m_pWind[6].Create(XMFLOAT3(-100.0f, 800.0f, 1300.0f), XMFLOAT3(1000.0f, 300.0f, 300.0f), XMFLOAT3(-1.0f, 0.0f, 1.0f));  // ’Ç‚¢•—
-
+		
 		break;
 	case STAGE_3:
 		break;
