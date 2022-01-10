@@ -50,17 +50,22 @@ WindManager::WindManager(EStage stage)
 		m_pWind[2].Create(XMFLOAT3(-100.0f, 800.0f, 1300.0f), XMFLOAT3(300.0f, 300.0f, 1200.0f), XMFLOAT3(0.0f, 0.0f, 1.0f));  // 追い風
 		break;
 	case STAGE_2:
-		m_pWind[0].Create(XMFLOAT3(-80.0f, 700.0f, -600.0f), XMFLOAT3(300.0f, 300.0f, 100.0f), XMFLOAT3(0.0f, 0.0f, -1.0f));  // 向かい風1
-		m_pWind[1].Create(XMFLOAT3(-700.0f, 700.0f, -600.0f), XMFLOAT3(300.0f, 300.0f, 100.0f), XMFLOAT3(0.0f, 0.0f, -1.0f));  // 向かい風2
-		m_pWind[2].Create(XMFLOAT3(-1300.0f, 700.0f, -600.0f), XMFLOAT3(300.0f, 300.0f, 100.0f), XMFLOAT3(0.0f, 0.0f, -1.0f));  // 向かい風3
-		m_pWind[3].Create(XMFLOAT3(-1900.0f, 700.0f, 400.0f), XMFLOAT3(300.0f, 300.0f, 100.0f), XMFLOAT3(0.0f, 0.0f, -1.0f));  // 向かい風4
-		m_pWind[4].Create(XMFLOAT3(-1300.0f, 700.0f, 400.0f), XMFLOAT3(300.0f, 300.0f, 100.0f), XMFLOAT3(0.0f, 0.0f, -1.0f));  // 向かい風5
-		m_pWind[5].Create(XMFLOAT3(-700.0f, 700.0f, 400.0f), XMFLOAT3(300.0f, 300.0f, 100.0f), XMFLOAT3(0.0f, 0.0f, -1.0f));  // 向かい風6
-		m_pWind[6].Create(XMFLOAT3(-100.0f, 800.0f, 1300.0f), XMFLOAT3(1000.0f, 300.0f, 300.0f), XMFLOAT3(-1.0f, 0.0f, 1.0f));  // 左追い風
-		m_pWind[7].Create(XMFLOAT3(-1000.0f, 200.0f, 2000.0f), XMFLOAT3(200.0f, 500.0f, 300.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));    // 上昇気流1
+		m_pWind[0].Create(XMFLOAT3(-80.0f, 500.0f, -600.0f), XMFLOAT3(300.0f, 300.0f, 400.0f), XMFLOAT3(0.0f, 0.0f, -1.0f));  // 向かい風1
+		m_pWind[1].Create(XMFLOAT3(-700.0f, 500.0f, -600.0f), XMFLOAT3(300.0f, 300.0f, 400.0f), XMFLOAT3(0.0f, 0.0f, -1.0f));  // 向かい風2
+		m_pWind[2].Create(XMFLOAT3(-1300.0f, 500.0f, -600.0f), XMFLOAT3(300.0f, 300.0f, 400.0f), XMFLOAT3(0.0f, 0.0f, -1.0f));  // 向かい風3
+		m_pWind[3].Create(XMFLOAT3(-1900.0f, 500.0f, 400.0f), XMFLOAT3(300.0f, 300.0f, 400.0f), XMFLOAT3(0.0f, 0.0f, -1.0f));  // 向かい風4
+		m_pWind[4].Create(XMFLOAT3(-1300.0f, 500.0f, 400.0f), XMFLOAT3(300.0f, 300.0f, 400.0f), XMFLOAT3(0.0f, 0.0f, -1.0f));  // 向かい風5
+		m_pWind[5].Create(XMFLOAT3(-700.0f, 500.0f, 400.0f), XMFLOAT3(300.0f, 300.0f, 400.0f), XMFLOAT3(0.0f, 0.0f, -1.0f));  // 向かい風6
+		m_pWind[6].Create(XMFLOAT3(-100.0f, 400.0f, 1300.0f), XMFLOAT3(800.0f, 300.0f, 300.0f), XMFLOAT3(-1.0f, 0.0f, 1.0f));  // 左追い風
+		m_pWind[7].Create(XMFLOAT3(-1000.0f, 200.0f, 2500.0f), XMFLOAT3(300.0f, 500.0f, 300.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));    // 上昇気流1
 
 		break;
 	case STAGE_3:
+		m_pWind[0].Create(XMFLOAT3(-1400.0f, 500.0f, -600.0f), XMFLOAT3(400.0f, 200.0f, 200.0f), XMFLOAT3(-1.0f, 0.0f, 1.0f));  // 左追い風
+		m_pWind[1].Create(XMFLOAT3(-500.0f, 500.0f, -600.0f), XMFLOAT3(400.0f, 200.0f, 200.0f), XMFLOAT3(1.0f, 0.0f, 1.0f));  // 右追い風
+		m_pWind[2].Create(XMFLOAT3(-1000.0f, 200.0f, 3000.0f), XMFLOAT3(200.0f, 500.0f, 200.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));    // 上昇気流1
+
+
 		break;
 	case STAGE_4:
 		m_pWind[0].Create(XMFLOAT3(-3000.0f, 500.0f, -150.0f), XMFLOAT3(500.0f, 300.0f, 1100.0f), XMFLOAT3(0.0f, 0.0f, 1.0f));  // 左側追い風
