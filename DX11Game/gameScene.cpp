@@ -185,6 +185,8 @@ GameScene::GameScene(EStage stage)
 
 	m_eStage = stage;
 
+	EffectManager::SetStage(m_eStage);
+
 	//ŽžŠÔŽæ“¾	
 	m_fCurrentTime = m_fRemainTime = (float)timeGetTime();
 

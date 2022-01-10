@@ -27,6 +27,7 @@ class EffectManager
 {
 public:
 	EffectManager();
+	EffectManager(EStage);
 	~EffectManager();
 
 	static void Create();
@@ -35,6 +36,8 @@ public:
 
 	int Load(const char *fileName);
 	static int Play(int Handle);
+	
+	static void SetStage(EStage);
 
 private:
 	static EffectManager *m_pInstance;
@@ -48,6 +51,8 @@ private:
 	static Effekseer::EffectRef m_effect4;	//çªö∫
 	static Effekseer::EffectRef m_effect5;	//ïó_è„_â©êF
 	static Effekseer::Handle m_handle;
+
+	static EStage m_estage;
 };
 
 
