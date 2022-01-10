@@ -162,19 +162,13 @@
     <ClCompile Include="windManager.cpp">
       <Filter>ソースファイル\scene\gameScene\object</Filter>
     </ClCompile>
-    <ClCompile Include="escapeText.cpp">
-      <Filter>ソースファイル\scene\gameScene\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="crewUI.cpp">
-      <Filter>ソースファイル\scene\gameScene\UI</Filter>
-    </ClCompile>
     <ClCompile Include="gameOverScene.cpp">
       <Filter>ソースファイル\scene\gameOverScene</Filter>
     </ClCompile>
-    <ClCompile Include="gameOverSceneButton.cpp">
+    <ClCompile Include="gameOverSceneBG.cpp">
       <Filter>ソースファイル\scene\gameOverScene</Filter>
     </ClCompile>
-    <ClCompile Include="gameOverSceneBG.cpp">
+    <ClCompile Include="gameOverSceneButton.cpp">
       <Filter>ソースファイル\scene\gameOverScene</Filter>
     </ClCompile>
     <ClCompile Include="goalUI.cpp">
@@ -182,6 +176,24 @@
     </ClCompile>
     <ClCompile Include="timerUI.cpp">
       <Filter>ソースファイル\scene\gameScene\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="crewUI.cpp">
+      <Filter>ソースファイル\scene\gameScene\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="escapeText.cpp">
+      <Filter>ソースファイル\scene\gameScene\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="tutorial.cpp">
+      <Filter>ソースファイル\scene\gameScene\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Cunt.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="timer.cpp">
+      <Filter>ソース ファイル\scene\gameScene\object</Filter>
+    </ClCompile>
+    <ClCompile Include="number.cpp">
+      <Filter>ソース ファイル\scene\gameScene\object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -335,8 +347,14 @@
     <ClInclude Include="titleUI.h">
       <Filter>ヘッダーファイル\scene\titleScene</Filter>
     </ClInclude>
-    <ClInclude Include="escapeText.h">
-      <Filter>ヘッダーファイル\scene\gameScene\UI</Filter>
+    <ClInclude Include="gameOverScene.h">
+      <Filter>ヘッダーファイル\scene\gameOverScene</Filter>
+    </ClInclude>
+    <ClInclude Include="gameOverSceneBG.h">
+      <Filter>ヘッダーファイル\scene\gameOverScene</Filter>
+    </ClInclude>
+    <ClInclude Include="gameOverSceneButton.h">
+      <Filter>ヘッダーファイル\scene\gameOverScene</Filter>
     </ClInclude>
     <ClInclude Include="crewUI.h">
       <Filter>ヘッダーファイル\scene\gameScene\UI</Filter>
@@ -344,17 +362,23 @@
     <ClInclude Include="timerUI.h">
       <Filter>ヘッダーファイル\scene\gameScene\UI</Filter>
     </ClInclude>
-    <ClInclude Include="gameOverScene.h">
-      <Filter>ヘッダーファイル\scene\gameOverScene</Filter>
-    </ClInclude>
-    <ClInclude Include="gameOverSceneButton.h">
-      <Filter>ヘッダーファイル\scene\gameOverScene</Filter>
-    </ClInclude>
-    <ClInclude Include="gameOverSceneBG.h">
-      <Filter>ヘッダーファイル\scene\gameOverScene</Filter>
-    </ClInclude>
     <ClInclude Include="goalUI.h">
       <Filter>ヘッダーファイル\scene\gameScene\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="escapeText.h">
+      <Filter>ヘッダーファイル\scene\gameScene\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="tutorial.h">
+      <Filter>ヘッダーファイル\scene\gameScene\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Cunt.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="timer.h">
+      <Filter>ヘッダー ファイル\scene\gameScene\object</Filter>
+    </ClInclude>
+    <ClInclude Include="number.h">
+      <Filter>ヘッダー ファイル\scene\gameScene\object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

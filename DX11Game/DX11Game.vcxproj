@@ -79,8 +79,8 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)$(ProjectName)\</OutDir>
     <TargetName>$(ProjectName)D</TargetName>
-    <IncludePath>C:\Users\nemot\OneDrive\デスクトップ\授業\2年生\DX22\3D_game_base\DX11Game;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\nemot\OneDrive\デスクトップ\授業\2年生\DX22\3D_game_base\DX11Game;C:\Users\nemot\OneDrive\デスクトップ\授業\2年生\DX22\3D_game_base\DX11Game\Effekseer;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\hina2\OneDrive\デスクトップ\DX22\HEW\DX11Game;C:\Users\nemot\OneDrive\デスクトップ\授業\2年生\DX22\3D_game_base\DX11Game;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\hina2\OneDrive\デスクトップ\DX22\HEW\DX11Game;C:\Users\hina2\OneDrive\デスクトップ\DX22\HEW\DX11Game\Effekseer;C:\Users\nemot\OneDrive\デスクトップ\授業\2年生\DX22\3D_game_base\DX11Game\Effekseer;C:\Users\nemot\OneDrive\デスクトップ\授業\2年生\DX22\3D_game_base\DX11Game;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -90,8 +90,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)$(ProjectName)\</OutDir>
-    <IncludePath>C:\Users\nemot\OneDrive\デスクトップ\授業\2年生\DX22\3D_game_base\DX11Game;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\naona\OneDrive\デスクトップ\HAL\専科\ｴﾌｪｸﾄﾌﾟﾛｸﾞﾗﾐﾝｸﾞ\ソフト\EffekseerSample\DirectXProject\DirectXProject;C:\Users\nemot\OneDrive\デスクトップ\授業\2年生\DX22\3D_game_base\DX11Game\Effekseer;C:\Users\nemot\OneDrive\デスクトップ\授業\2年生\DX22\3D_game_base\DX11Game;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\hina2\OneDrive\デスクトップ\DX22\HEW\DX11Game;C:\Users\nemot\OneDrive\デスクトップ\授業\2年生\DX22\3D_game_base\DX11Game;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\hina2\OneDrive\デスクトップ\DX22\HEW\DX11Game\Effekseer;C:\Users\hina2\OneDrive\デスクトップ\DX22\HEW\DX11Game;C:\Users\nemot\OneDrive\デスクトップ\授業\2年生\DX22\3D_game_base\DX11Game\Effekseer;C:\Users\nemot\OneDrive\デスクトップ\授業\2年生\DX22\3D_game_base\DX11Game;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -114,13 +114,13 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\..\DirectXTex;..\..\Assimp\include;..\..\DirectShow\baseclasses;..\..\DirectShow\common</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\DirectXTex;..\..\Assimp\include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
-      <AdditionalLibraryDirectories>..\..\DirectXTex\$(PlatformTarget)\$(Configuration);..\..\Assimp\lib\$(PlatformTarget);..\..\DirectShow</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\DirectXTex\$(PlatformTarget)\$(Configuration);..\..\Assimp\lib\$(PlatformTarget)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -150,7 +150,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\..\DirectXTex;..\..\Assimp\include;..\..\DirectShow\common;..\..\DirectShow\baseclasses</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\DirectXTex;..\..\Assimp\include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -158,7 +158,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
-      <AdditionalLibraryDirectories>..\..\DirectXTex\$(PlatformTarget)\$(Configuration);..\..\Assimp\lib\$(PlatformTarget);C:\Users\nemot\OneDrive\デスクトップ\授業\2年生\DX22\DirectShow;.\Effekseer\$(PlatformTarget)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\DirectXTex\$(PlatformTarget)\$(Configuration);..\..\Assimp\lib\$(PlatformTarget)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -213,6 +213,7 @@
     <ClCompile Include="titleButton.cpp" />
     <ClCompile Include="titleScene.cpp" />
     <ClCompile Include="titleUI.cpp" />
+    <ClCompile Include="tutorial.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="wind.cpp" />
     <ClCompile Include="windManager.cpp" />
@@ -272,6 +273,7 @@
     <ClInclude Include="titleButton.h" />
     <ClInclude Include="titleScene.h" />
     <ClInclude Include="titleUI.h" />
+    <ClInclude Include="tutorial.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="wind.h" />
     <ClInclude Include="windManager.h" />

@@ -10,6 +10,7 @@
 #include "input.h"
 
 static bool StageTrrger;
+EStage StageSlectScene::m_eStage = STAGE_1;
 
 //=============================================================================
 // コンストラクタ
@@ -19,7 +20,7 @@ StageSlectScene::StageSlectScene()
 	// ボタン初期化
 	m_pStageButton = new StageButton;
 	StageTrrger = false;
-	m_eStage = STAGE_1;
+	
 	m_pStageSelectBG = new StageSelectBG;
 }
 //=============================================================================
@@ -72,8 +73,8 @@ void StageSlectScene::Update()
 
 #endif
 }
-	// ステージ1へ
-	if (m_pStageButton->GetStage1())
+	// ステージへ
+	if (m_pStageButton->GetStage1() || m_pStageButton->GetStage2() || m_pStageButton->GetStage3() || m_pStageButton->GetStage4()|| m_pStageButton->GetStage5())
 	{
 		if (!StageTrrger)
 		{
@@ -123,4 +124,36 @@ void StageSlectScene::Draw()
 	// ボタン描画
 	m_pStageSelectBG->Draw();
 	m_pStageButton->Draw();
+}
+EStage StageSlectScene::GetStage()
+{
+	if (m_pStageButton->GetStage1())
+	{
+		m_eStage = STAGE_1;
+		return 	 m_eStage;
+    }
+	else if (m_pStageButton->GetStage2())
+	{
+		m_eStage = STAGE_2;
+		return 	 m_eStage;
+	}
+	else if (m_pStageButton->GetStage3())
+	{
+		m_eStage = STAGE_3;
+		return 	 m_eStage;
+	}
+	else if (m_pStageButton->GetStage4())
+	{
+		m_eStage = STAGE_4;
+		return 	 m_eStage;
+	}
+	else if (m_pStageButton->GetStage5())
+	{
+		m_eStage = STAGE_5;
+		return 	 m_eStage;
+	}
+	else
+	{
+		return STAGE_1;
+	}
 }

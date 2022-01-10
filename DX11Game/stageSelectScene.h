@@ -12,9 +12,9 @@ public:
 
 	void Update();
 	void Draw();
-
+	EStage GetStage();
 private:
 	StageSelectBG* m_pStageSelectBG;
 	StageButton* m_pStageButton;
-	EStage m_eStage;
+	static EStage m_eStage;
 };

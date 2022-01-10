@@ -29,18 +29,20 @@ Scene::Scene()
 	// ゲームの開始するときのシーン
 	m_eScene = SCENE_GAME;
 
+	// ステージ初期化
+	m_eStage = STAGE_1;
 #else
 	// ゲームの開始するときのシーン
 	m_eScene = SCENE_TITLE;
 
+	// ステージ初期化
+	m_eStage = STAGE_4;
 #endif
 	
 	// サウンド初期化
 	CSound::Init();
 
-	// ステージ初期化
-	m_eStage = STAGE_1;
-
+	
 	// シーンごとの初期化
 	switch (m_eScene)
 	{
@@ -243,6 +245,7 @@ void Scene::SetScene(EScene eScene)
 	case SCENE_STAGE_SELECT://メニューシーン
 		CSound::Stop(BGM_000); //タイトルBGMストップ
 		//CSound::Stop(BGM_004);//セレクトBGMストップ
+		m_pGameScene->SetStage(m_pStageSelectScene->GetStage());
 		delete m_pStageSelectScene;
 		break;
 
@@ -257,6 +260,7 @@ void Scene::SetScene(EScene eScene)
 		break;
 
 	case SCENE_GAMEOVER:
+		m_pGameScene->SetStage(m_pGameScene->GetStage());
 		delete m_pGameOverScene;
 		break;
 
@@ -278,10 +282,11 @@ void Scene::SetScene(EScene eScene)
 
 	case SCENE_STAGE_SELECT://メニューシーン
 		m_pStageSelectScene = new StageSlectScene;
+		
 		break;
 
 	case SCENE_GAME://ゲームシーン
-		m_pGameScene = new GameScene;
+		m_pGameScene = new GameScene(m_pGameScene->GetStage());
 		break;
 
 	case SCENE_RESULT://リザルトシーン
