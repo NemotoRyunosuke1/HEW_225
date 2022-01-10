@@ -126,7 +126,7 @@ void Button::Update()
 				m_flg = true;	
 			}
 	
-			// サウンドトリガー
+			// サウンドトリガー移動した時の効果音
 			if (!m_bSoudTrigger)
 			{
 				CSound::SetVolume(SE_SELECT, 1.0f);
