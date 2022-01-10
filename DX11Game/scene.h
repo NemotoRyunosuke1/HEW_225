@@ -26,5 +26,6 @@ private:
 	static StageSlectScene* m_pStageSelectScene;
 	static ResultScene* m_pResultScene;
 	static GameOverScene* m_pGameOverScene;
+	static EStage m_eStage;
 };
 

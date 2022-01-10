@@ -73,7 +73,7 @@ void TitleScene::Update()
 		StartFadeOut(SCENE_STAGE_SELECT);
 
 #else 
-		StartFadeOut(SCENE_STAGE_SELECT);
+		
 
 #endif
 	}	
@@ -86,7 +86,7 @@ void TitleScene::Update()
 		StartFadeOut(SCENE_STAGE_SELECT);
 
 #else 
-		StartFadeOut(SCENE_STAGE_SELECT);
+		
 
 #endif
 	}

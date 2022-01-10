@@ -70,6 +70,18 @@ void TitleButton::Update()
 		
 	}
 
+	if (GetKeyRelease(VK_W) || GetKeyRelease(VK_UP))
+	{
+		m_cnt--;
+		if (m_cnt < 0) m_cnt = 2;
+	}
+	if (GetKeyRelease(VK_S) || GetKeyRelease(VK_DOWN))
+	{
+		
+		m_cnt++;
+		if (m_cnt > 2) m_cnt = 0;
+	}
+
 	switch (m_cnt)
 	{
 	case 0:
