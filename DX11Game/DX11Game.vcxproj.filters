@@ -186,6 +186,15 @@
     <ClCompile Include="tutorial.cpp">
       <Filter>ソースファイル\scene\gameScene\UI</Filter>
     </ClCompile>
+    <ClCompile Include="Cunt.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="timer.cpp">
+      <Filter>ソース ファイル\scene\gameScene\object</Filter>
+    </ClCompile>
+    <ClCompile Include="number.cpp">
+      <Filter>ソース ファイル\scene\gameScene\object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AssimpModel.h">
@@ -361,6 +370,15 @@
     </ClInclude>
     <ClInclude Include="tutorial.h">
       <Filter>ヘッダーファイル\scene\gameScene\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Cunt.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="timer.h">
+      <Filter>ヘッダー ファイル\scene\gameScene\object</Filter>
+    </ClInclude>
+    <ClInclude Include="number.h">
+      <Filter>ヘッダー ファイル\scene\gameScene\object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
