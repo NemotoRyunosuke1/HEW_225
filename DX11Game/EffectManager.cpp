@@ -147,7 +147,7 @@ int EffectManager::Play(int Handle)
 		if (time > 129.9f)
 		{
 			// ƒS[ƒ‹•—
-			//time = 0;
+			time = 0;
 			m_handle = m_manager->Play(m_effect5, -1500.0f, 500.0f, 3500.0f);
 			m_manager->SetScale(m_handle, 30.0f, 30.0f, 30.0f);
 		}
