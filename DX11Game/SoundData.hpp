@@ -15,6 +15,7 @@ LPCWSTR g_pszFileSE[MAX_SE] = {
 	L"decide000.wav",						// 決定音
 	//L"cancel000.wav",						// キャンセル音
 	L"select.mp3",						// 選択音
+	L"kati.mp3",						// 選択音
 	L"nakama.mp3",						// 回収音
 	L"Wind.mp3",						// 風
 	L"habataki.mp3",						// はばたき音
