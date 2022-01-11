@@ -16,6 +16,7 @@ enum eSE {
 	SE_DECIDE = 0,	// 決定音
 	//SE_CANCEL,		// キャンセル音
 	SE_SELECT,		// 選択音
+	SE_SELECT2,		// 選択移動音
 	//SE_SHOT,		// 弾発射音
 	SE_COLLECT, 	//回収音
 	SE_WIND,		// 風
