@@ -360,7 +360,7 @@
       <Filter>ヘッダーファイル\scene\gameScene\UI</Filter>
     </ClInclude>
     <ClInclude Include="tutorial.h">
-      <Filter>ソースファイル\scene\gameScene</Filter>
+      <Filter>ヘッダーファイル\scene\gameScene\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
