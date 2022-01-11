@@ -183,6 +183,7 @@
     <ClCompile Include="windManager.cpp">
       <Filter>ソースファイル\scene\gameScene\object</Filter>
     </ClCompile>
+    <ClCompile Include="tutorial.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AssimpModel.h">
@@ -356,6 +357,7 @@
     <ClInclude Include="escapeText.h">
       <Filter>ヘッダーファイル\scene\gameScene\UI</Filter>
     </ClInclude>
+    <ClInclude Include="tutorial.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DX11Game.rc" />
