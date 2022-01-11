@@ -21,7 +21,7 @@
 #include "goalUI.h"
 
 #if _DEBUG
-#define MAX_BULIDING (100)
+#define MAX_BULIDING (200)
 
 #else
 #define MAX_BULIDING (400)
@@ -453,6 +453,18 @@ GameScene::GameScene(EStage stage)
 				}
 			}
 		}
+		for (int i = 0; i < 16; i++)
+		{
+			for (int j = 0; j < 2; j++)
+			{
+				m_pBuliding[i + j * 16 + 80].Create(XMFLOAT3(-3500 + j * 4100, 10, 0 + i * 300), XMFLOAT3(10.0f, 10.0f, 10.0f));
+			}
+		}
+		for (int i = 0; i < 16; i++)
+		{
+			m_pBuliding[i + 128].Create(XMFLOAT3(-3200 + i * 300, 10, 3600), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		}
+
 		// ƒS[ƒ‹UIˆÊ’u‰Šú‰»
 		SetGoalUI(XMFLOAT3(-1000.0f, 1000.0f, 9000.0f), 1200, 600, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);
 		m_pGoal = new Goal(XMFLOAT3(-1000.0f, 1200.0f, 9000.0f));
