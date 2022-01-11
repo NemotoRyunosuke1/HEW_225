@@ -184,7 +184,7 @@
       <Filter>ソースファイル\scene\gameScene\object</Filter>
     </ClCompile>
     <ClCompile Include="tutorial.cpp">
-      <Filter>ソースファイル\scene\gameScene\UI</Filter>
+      <Filter>ソースファイル\scene\gameScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -360,7 +360,7 @@
       <Filter>ヘッダーファイル\scene\gameScene\UI</Filter>
     </ClInclude>
     <ClInclude Include="tutorial.h">
-      <Filter>ヘッダーファイル\scene\gameScene\UI</Filter>
+      <Filter>ソースファイル\scene\gameScene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

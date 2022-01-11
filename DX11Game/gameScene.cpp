@@ -856,7 +856,7 @@ void GameScene::Draw()
 	DrawEnemy();
 
 	// 風マネージャー描画
-	//m_pWindManager->Draw();
+	m_pWindManager->Draw();
    
 	// モデル描画
 	DrawModel();
