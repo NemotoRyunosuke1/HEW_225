@@ -53,7 +53,7 @@ void TitleButton::Update()
 		{
 			m_cnt++;
 			m_Trigger = true;
-			if (m_cnt > 2) m_cnt = 0;
+			if (m_cnt > 2) m_cnt = 2;
 		}
 	}
 	else if (stickLY < -20000 ||  stickRY < -20000)
@@ -62,7 +62,7 @@ void TitleButton::Update()
 		{
 			m_cnt--;
 			m_Trigger = true;
-			if (m_cnt < 0) m_cnt = 2;
+			if (m_cnt < 0) m_cnt = 0;
 		}
 	}
 	else
