@@ -864,14 +864,16 @@ void GameScene::Draw()
 	DrawEnemy();
 
 	// 風マネージャー描画
-	m_pWindManager->Draw();
-
+	//m_pWindManager->Draw();
+   
 	// モデル描画
 	DrawModel();
 	
 	// 2D描画
 	// Zバッファ無効(Zチェック無&Z更新無)
 	SetZBuffer(false);
+
+	EFFECT->Play(0);
 
 	// 仲間用UI描画
 	DrawCrewUI();
@@ -918,5 +920,5 @@ void GameScene::Draw()
 	}
 	
 
-	EFFECT->Play(0);
+	
 }
