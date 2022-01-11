@@ -258,7 +258,7 @@ GameScene::GameScene(EStage stage)
 	switch (stage)
 	{
 	case STAGE_1:	// ステージ1
-		// メッシュフィールド初期化
+		// 地面の配置
 		InitMeshField(20, 20, 2000.0f, 2000.0f);
 
 		// ビルの配置
@@ -347,6 +347,7 @@ GameScene::GameScene(EStage stage)
 
 		break;
 	case STAGE_2:	// ステージ2
+		// 地面の配置
 		InitMeshField(20, 20, 2000.0f, 2000.0f);
 
 		// ビルの配置
@@ -375,7 +376,10 @@ GameScene::GameScene(EStage stage)
 
 		break;
 	case STAGE_3:	// ステージ3
+		// 地面の配置
 		InitMeshField(20, 20, 2000.0f, 2000.0f);
+
+		// ビルの配置
 		for (int i = 0; i < 12; i++)
 		{
 			for (int j = 0; j < 2; j++)
@@ -418,7 +422,7 @@ GameScene::GameScene(EStage stage)
 
 		break;
 	case STAGE_4:	// ステージ4
-		// メッシュフィールド初期化
+			// 地面の配置
 		InitMeshField(20, 20, 2000.0f, 2000.0f);
 
 		// 仲間の配置
@@ -441,7 +445,7 @@ GameScene::GameScene(EStage stage)
 
 
 
-		// ビルの生成
+		// ビルの配置
 		for (int k = 0; k < MAX_BULIDING / 16 / 5; k++)
 		{
 			for (int l = 0; l < MAX_BULIDING / 16 / 5; l++)
@@ -463,7 +467,10 @@ GameScene::GameScene(EStage stage)
 
 		break;
 	case STAGE_5:	// ステージ5
+		// 地面の配置
 		InitMeshField(20, 20, 2000.0f, 2000.0f);
+
+		// ビルの配置
 		for (int i = 0; i < 5; i++)
 		{
 			for (int j = 0; j < 4; j++)
@@ -819,8 +826,6 @@ void GameScene::Draw()
 	// Zバッファ無効(Zチェック無&Z更新無)
 	SetZBuffer(true);
 
-	
-
 	// メッシュフィールド描画
 	DrawMeshField();
 
@@ -849,9 +854,6 @@ void GameScene::Draw()
    // Zバッファ無効(Zチェック無&Z更新無)
 	SetZBuffer(true);
 
-
-
-
 	// 丸影描画
 	DrawShadow();
 
@@ -871,12 +873,10 @@ void GameScene::Draw()
 	// Zバッファ無効(Zチェック無&Z更新無)
 	SetZBuffer(false);
 
-	EFFECT->Play(0);
-
 	// 仲間用UI描画
 	DrawCrewUI();
 
-
+	// スタミナバー
 	m_pStaminaBar->Draw();
 
 	// スコアUI描画
@@ -896,6 +896,8 @@ void GameScene::Draw()
 		// レバガチャ描画
 		m_pLever->Draw();
 	}
+
+	// 
 	if (GetEscapeCrew())
 	{
 		m_pEscapeText->Draw();
