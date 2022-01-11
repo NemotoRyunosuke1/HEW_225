@@ -74,25 +74,55 @@ void StageButton::Update()
 		stickRY = 0;
 		m_Trigger = false;
 	}	// スティックを下に傾けたとき
-	else if (stickLY > 20000 || stickRY > 20000)
+	else if (stickLX > 20000 || stickRX > 20000)
 	{
 		if (!m_Trigger)
 		{
 			m_cnt++;
 			m_Trigger = true;
-			if (m_cnt > 5) m_cnt = 0;
+			if (m_cnt > 5) m_cnt = 5;
+		}
+	}	// スティックを上に傾けたとき
+	else if (stickLX < -20000 || stickRX < -20000)
+	{
+		if (!m_Trigger)
+		{
+			m_cnt--;
+			m_Trigger = true;
+			if (m_cnt < 0) m_cnt = 0;
+		}
+	}
+	else if (stickLY > 20000 || stickRY > 20000)
+	{
+		if (!m_Trigger)
+		{
+			if (m_cnt == 0)
+			{
+				m_cnt = 1;
+			}
+			else
+			{
+				m_cnt = 0;
+			}
+			m_Trigger = true;
 		}
 	}	// スティックを上に傾けたとき
 	else if (stickLY < -20000 || stickRY < -20000)
 	{
 		if (!m_Trigger)
 		{
-			m_cnt--;
+			if (m_cnt == 0)
+			{
+				m_cnt = 1;
+			}
+			else
+			{
+				m_cnt = 0;
+			}
 			m_Trigger = true;
-			if (m_cnt < 0) m_cnt = 5;
 		}
 	}
-	
+
 	// キーボードによるボタン選択処理
 	if (GetKeyRelease(VK_A) || GetKeyRelease(VK_LEFT))
 	{

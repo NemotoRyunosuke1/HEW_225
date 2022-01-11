@@ -311,8 +311,8 @@ GameScene::GameScene(EStage stage)
 		CrewCreate(XMFLOAT3(-800.0f, 400.0f, 3900.0f));// 10
 
 		// ÉSÅ[Éãà íuèâä˙âª
-		SetGoalUI(XMFLOAT3(-1000.0f, 600.0f, 4000.0f), 1200, 600, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);
-		m_pGoal = new Goal(XMFLOAT3(-1000.0f, 600.0f, 4000.0f));
+		SetGoalUI(XMFLOAT3(-1000.0f, 600.0f, 3000.0f), 1200, 600, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);
+		m_pGoal = new Goal(XMFLOAT3(-1000.0f, 600.0f, 3000.0f));
 
 
 		break;
