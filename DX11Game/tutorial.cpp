@@ -187,21 +187,27 @@ void Tutorial::Update(EStage stage)
 			m_bPopup = true;
 		}
 
-		////	ポップアップ2
-		//if (!m_bPopupNum[1] && CollisionAABB(GetModelPos(), XMFLOAT3(10, 1000, 10), XMFLOAT3(-1000, 600, -1000), XMFLOAT3(100, 1000, 100)))
-		//{
-		//	CreateTextureFromFile(pDevice, PATH_POPUP2_TEXTURE, &m_pTexture);
-		//	m_bPopupNum[1] = true;
-		//	m_bPopup = true;
-		//}
+		// ポップアップ7
+		if (!m_bPopupNum[6] && CollisionAABB(GetModelPos(), XMFLOAT3(10, 1000, 10), XMFLOAT3(-1300, 600, 0), XMFLOAT3(100, 1000, 100)))
+		{
 
-		////	ポップアップ3
-		//if (!m_bPopupNum[2] && CollisionAABB(GetModelPos(), XMFLOAT3(10, 1000, 10), XMFLOAT3(-1000, 600, -1000), XMFLOAT3(100, 1000, 100)))
-		//{
-		//	CreateTextureFromFile(pDevice, PATH_POPUP3_TEXTURE, &m_pTexture);
-		//	m_bPopupNum[2] = true;
-		//	m_bPopup = true;
-		//}
+			CreateTextureFromFile(pDevice, PATH_POPUP7_TEXTURE, &m_pTexture);
+			m_bPopupNum[6] = true;
+			m_bPopupNum2[6] = true;
+
+			m_bPopup = true;
+		}
+
+		// ポップアップ7
+		if (!m_bPopupNum[7] && CollisionAABB(GetModelPos(), XMFLOAT3(10, 1000, 10), XMFLOAT3(-600, 800, 900), XMFLOAT3(100, 1000, 100)))
+		{
+
+			CreateTextureFromFile(pDevice, PATH_POPUP8_TEXTURE, &m_pTexture);
+			m_bPopupNum[7] = true;
+			m_bPopupNum2[7] = true;
+
+			m_bPopup = true;
+		}
 
 		// ポップアップ4
 		if (!m_bPopupNum[3]&&GetSTM() < 100)
