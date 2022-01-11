@@ -479,11 +479,11 @@ GameScene::GameScene(EStage stage)
 		}
 		// ’‡ŠÔ‚Ì”z’u
 		CrewCreate(XMFLOAT3(-100.0f, 500.0f, -1000.0f));// 1
-		CrewCreate(XMFLOAT3(1000.0f, 500.0f, 0.0f));// 2
+		//CrewCreate(XMFLOAT3(1000.0f, 500.0f, 0.0f));// 2
 		CrewCreate(XMFLOAT3(-100.0f, 500.0f, 500.0f));// 3
 		CrewCreate(XMFLOAT3(-1500.0f, 500.0f, 0.0f));// 4
 		CrewCreate(XMFLOAT3(-1900.0f, 200.0f, -500.0f));// 5
-		CrewCreate(XMFLOAT3(-3000.0f, 200.0f, 500.0f));// 6
+		//CrewCreate(XMFLOAT3(-3000.0f, 200.0f, 500.0f));// 6
 		CrewCreate(XMFLOAT3(-1900.0f, 800.0f, 1500.0f));// 7
 		CrewCreate(XMFLOAT3(-1500.0f, 200.0f, 1900.0f));// 8
 		CrewCreate(XMFLOAT3(-500.0f, 800.0f, 1900.0f));// 9
