@@ -44,7 +44,7 @@ void Tutorial::Update(EStage stage)
 {
 	ID3D11Device* pDevice = GetDevice();
 	// ゲームに戻る
-	if (GetJoyRelease(0, JOYSTICKID1) || GetKeyTrigger(VK_RETURN))	// コントローラーAボタン
+	if (GetJoyRelease(0, JOYSTICKID1) || GetKeyTrigger(VK_RETURN) || GetKeyTrigger(VK_SPACE))	// コントローラーAボタン
 	{
 		if (m_bPopup)
 		{
@@ -126,7 +126,7 @@ void Tutorial::Update(EStage stage)
 
 		if (m_bPopupNum2[0])
 		{
-			if (m_nCnt > 2) m_nCnt = 2;
+			if (m_nCnt > 3) m_nCnt = 3;
 			if (m_nCnt < 0) m_nCnt = 0;
 			switch (m_nCnt)
 			{
@@ -140,7 +140,7 @@ void Tutorial::Update(EStage stage)
 				CreateTextureFromFile(pDevice, PATH_POPUP3_TEXTURE, &m_pTexture);
 				break;
 			case 3:
-				CreateTextureFromFile(pDevice, PATH_POPUP4_TEXTURE, &m_pTexture);
+				CreateTextureFromFile(pDevice, PATH_POPUP9_TEXTURE, &m_pTexture);
 				break;
 			case 4:
 				CreateTextureFromFile(pDevice, PATH_POPUP5_TEXTURE, &m_pTexture);
@@ -152,7 +152,23 @@ void Tutorial::Update(EStage stage)
 				break;
 			}
 		}
-
+		if (m_bPopupNum2[0])
+		{
+			if (m_nCnt > 1) m_nCnt = 1;
+			if (m_nCnt < 0) m_nCnt = 0;
+			switch (m_nCnt)
+			{
+			case 0:
+				CreateTextureFromFile(pDevice, PATH_POPUP10_TEXTURE, &m_pTexture);
+				break;
+			case 1:
+				CreateTextureFromFile(pDevice, PATH_POPUP11_TEXTURE, &m_pTexture);
+				break;
+			
+			default:
+				break;
+			}
+		}
 	}
 	else
 	{
@@ -228,6 +244,14 @@ void Tutorial::Update(EStage stage)
 	case STAGE_2:
 		break;
 	case STAGE_3:
+		// 敵攻撃Tips
+		if (!m_bPopupNum[10] && CollisionAABB(GetModelPos(), XMFLOAT3(10, 1000, 10), GetModelPos(), XMFLOAT3(100, 1000, 100)))
+		{
+			//CreateTextureFromFile(pDevice, PATH_POPUP5_TEXTURE, &m_pTexture);
+			m_bPopupNum[10] = true;
+			m_bPopupNum2[10] = true;
+			m_bPopup = true;
+		}
 		break;
 	case STAGE_4:
 		break;

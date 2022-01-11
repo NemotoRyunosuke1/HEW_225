@@ -642,7 +642,7 @@ void GameScene::Update()
 		m_pResult->Update();
 		if (m_pResult->GetFade() >= 0.5f)
 		{
-			if (GetJoyRelease(0, JOYSTICKID1))	// コントローラーAボタン
+			if (GetJoyRelease(0, JOYSTICKID1) || GetKeyTrigger(VK_SPACE))	// コントローラーAボタン
 			{
 				StartFadeOut(SCENE_STAGE_SELECT);
 			}
@@ -900,6 +900,7 @@ void GameScene::Draw()
 
 	// タイマーUI更新
 	m_pTimerUI->Draw();
+
 	// チュートリアル描画
 	m_pTutorial->Draw();
 

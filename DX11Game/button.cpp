@@ -115,7 +115,7 @@ void Button::Update()
 			m_color = XMFLOAT3(1.0f, 1.0f, 0.0f);
 
 			//Å@åàíË
-			if (GetJoyRelease(0, JOYSTICKID1) || GetKeyRelease(VK_RETURN))
+			if (GetJoyRelease(0, JOYSTICKID1) || GetKeyRelease(VK_RETURN) || GetKeyTrigger(VK_SPACE))
 			{
 				if (!m_bSoudTriggerDecision)
 				{
