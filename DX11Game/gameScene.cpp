@@ -306,13 +306,15 @@ GameScene::GameScene(EStage stage)
 		CrewCreate(XMFLOAT3(-1000.0f, 500.0f, -300.0f));// 1
 		CrewCreate(XMFLOAT3(-1200.0f, 500.0f, -200.0f));// 2
 		CrewCreate(XMFLOAT3(-1500.0f, 500.0f, -100.0f));// 3
-		CrewCreate(XMFLOAT3(-3000.0f, 400.0f, -100.0f));// 4
-		CrewCreate(XMFLOAT3(-3200.0f, 400.0f, 300.0f));// 5
-		CrewCreate(XMFLOAT3(-3000.0f, 400.0f, 700.0f));// 6
-		CrewCreate(XMFLOAT3(-1000.0f, 400.0f, 2000.0f));// 7
-		CrewCreate(XMFLOAT3(-700.0f, 400.0f, 4000.0f));// 8
-		CrewCreate(XMFLOAT3(-1200.0f, 400.0f, 6000.0f));// 9
-		CrewCreate(XMFLOAT3(-800.0f, 400.0f, 8000.0f));// 10
+		CrewCreate(XMFLOAT3(-3000.0f, 850.0f, -100.0f));// 4
+		CrewCreate(XMFLOAT3(-3200.0f, 675.0f, 300.0f));// 5
+		CrewCreate(XMFLOAT3(-3000.0f, 500.0f, 700.0f));// 6
+
+		CrewCreate(XMFLOAT3(-1000.0f, 850.0f, 2500.0f));// 7
+		CrewCreate(XMFLOAT3(-1200.0f, 850.0f, 2800.0f));// 8
+		CrewCreate(XMFLOAT3(-800.0f, 850.0f, 3200.0f));// 9
+		CrewCreate(XMFLOAT3(-1000.0f, 850.0f, 3500.0f));// 10
+
 
 		// ゴール位置初期化
 		SetGoalUI(XMFLOAT3(-1000.0f, 600.0f, 4000.0f), 1200, 600, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);
@@ -342,13 +344,13 @@ GameScene::GameScene(EStage stage)
 
 		// 仲間の配置
 		CrewCreate(XMFLOAT3( -700.0f, 500.0f, -1300.0f));// 1
-		CrewCreate(XMFLOAT3(-1900.0f, 400.0f, -600.0f));// 2
-		CrewCreate(XMFLOAT3(-1000.0f, 350.0f, 0.0f));// 3
-		CrewCreate(XMFLOAT3( -100.0f, 350.0f, 600.0f));// 4
-		CrewCreate(XMFLOAT3(-1000.0f, 350.0f, 2000.0f));// 5
-		CrewCreate(XMFLOAT3(-1000.0f, 150.0f, 4000.0f));// 6
-		CrewCreate(XMFLOAT3(-1000.0f, 700.0f, 6000.0f));// 7
-		CrewCreate(XMFLOAT3(-1000.0f, 350.0f, 8000.0f));// 8
+		CrewCreate(XMFLOAT3(-1900.0f, 500.0f, -600.0f));// 2
+		CrewCreate(XMFLOAT3(-1000.0f, 500.0f, 0.0f));// 3
+		CrewCreate(XMFLOAT3(-100.0f, 500.0f, 600.0f));// 4
+		CrewCreate(XMFLOAT3(-1000.0f, 500.0f, 1500.0f));// 5
+		CrewCreate(XMFLOAT3(-1000.0f, 200.0f, 1800.0f));// 6
+		CrewCreate(XMFLOAT3(-1000.0f, 800.0f, 2200.0f));// 7
+		CrewCreate(XMFLOAT3(-1000.0f, 500.0f, 2500.0f));// 8
 
 		// ゴールUI位置初期化
 		SetGoalUI(XMFLOAT3(-1000.0f, 600.0f,2000.0f), 1200, 600, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);
@@ -406,23 +408,22 @@ GameScene::GameScene(EStage stage)
 		InitMeshField(20, 20, 2000.0f, 2000.0f);
 
 		// 仲間の配置
-		CrewCreate(XMFLOAT3(-1000.0f, 350.0f, 2900.0f));// 1
-		CrewCreate(XMFLOAT3(-1900.0f, 350.0f, 3100.0f));// 2
-		CrewCreate(XMFLOAT3( -100.0f, 350.0f, 3100.0f));// 3
-		CrewCreate(XMFLOAT3(-1300.0f, 350.0f, 2970.0f));// 4
-		CrewCreate(XMFLOAT3(-1600.0f, 350.0f, 3040.0f));// 5
-		CrewCreate(XMFLOAT3( -700.0f, 350.0f, 2970.0f));// 6
-		CrewCreate(XMFLOAT3( -400.0f, 350.0f, 3040.0f));// 7
+		CrewCreate(XMFLOAT3(-1000.0f, 500.0f, 2900.0f));// 1
+		CrewCreate(XMFLOAT3(-1900.0f, 500.0f, 3100.0f));// 2
+		CrewCreate(XMFLOAT3(-100.0f, 500.0f, 3100.0f));// 3
+		CrewCreate(XMFLOAT3(-1300.0f, 500.0f, 2970.0f));// 4
+		CrewCreate(XMFLOAT3(-1600.0f, 500.0f, 3040.0f));// 5
+		CrewCreate(XMFLOAT3(-700.0f, 500.0f, 2970.0f));// 6
+		CrewCreate(XMFLOAT3(-400.0f, 500.0f, 3040.0f));// 7
 
-		CrewCreate(XMFLOAT3(-1000.0f, 350.0f, 6000.0f));// 8
-		CrewCreate(XMFLOAT3(-1000.0f, 350.0f, 7000.0f));// 9
-		CrewCreate(XMFLOAT3(-1000.0f, 350.0f, 8000.0f));// 10
+		CrewCreate(XMFLOAT3(-1000.0f, 500.0f, 6000.0f));// 8
+		CrewCreate(XMFLOAT3(-1000.0f, 500.0f, 7000.0f));// 9
+		CrewCreate(XMFLOAT3(-1000.0f, 500.0f, 8000.0f));// 10
 
 		// 敵の配置
-		CreateEnemy(XMFLOAT3(-1000.0f, 350.0f, 3500.0f));// 1
-		CreateEnemy(XMFLOAT3(-1000.0f, 350.0f, 6500.0f));// 2
-		CreateEnemy(XMFLOAT3(-1000.0f, 350.0f, 7500.0f));// 3
-
+		CreateEnemy(XMFLOAT3(-1000.0f, 500.0f, 3500.0f));// 1
+		CreateEnemy(XMFLOAT3(-1000.0f, 500.0f, 6500.0f));// 2
+		CreateEnemy(XMFLOAT3(-1000.0f, 500.0f, 7500.0f));// 3
 
 
 		// ビルの配置
@@ -475,7 +476,28 @@ GameScene::GameScene(EStage stage)
 		{
 			m_pBuliding[i + 128].Create(XMFLOAT3(-3200 + i * 300, 10, 3600), XMFLOAT3(10.0f, 8.0f + rand() % 5, 10.0f));
 		}
+		// 仲間の配置
+		CrewCreate(XMFLOAT3(-100.0f, 500.0f, -1000.0f));// 1
+		CrewCreate(XMFLOAT3(1000.0f, 500.0f, 0.0f));// 2
+		CrewCreate(XMFLOAT3(-100.0f, 500.0f, 500.0f));// 3
+		CrewCreate(XMFLOAT3(-1500.0f, 500.0f, 0.0f));// 4
+		CrewCreate(XMFLOAT3(-1900.0f, 200.0f, -500.0f));// 5
+		CrewCreate(XMFLOAT3(-3000.0f, 200.0f, 500.0f));// 6
+		CrewCreate(XMFLOAT3(-1900.0f, 800.0f, 1500.0f));// 7
+		CrewCreate(XMFLOAT3(-1500.0f, 200.0f, 1900.0f));// 8
+		CrewCreate(XMFLOAT3(-500.0f, 800.0f, 1900.0f));// 9
+		CrewCreate(XMFLOAT3(-100.0f, 200.0f, 2500.0f));// 10
 
+		// 敵の配置
+		CreateEnemy(XMFLOAT3(700.0f, 500.0f, -1200.0f));// 1
+		CreateEnemy(XMFLOAT3(-100.0f, 500.0f, 0.0f));// 2
+		CreateEnemy(XMFLOAT3(-1200.0f, 500.0f, 1000.0f));// 3
+		CreateEnemy(XMFLOAT3(-2200.0f, 500.0f, 2000.0f));// 4
+		CreateEnemy(XMFLOAT3(-2000.0f, 500.0f, 2200.0f));// 5
+		CreateEnemy(XMFLOAT3(-100.0f, 500.0f, 2800.0f));// 6
+		CreateEnemy(XMFLOAT3(200.0f, 500.0f, 3000.0f));// 7
+		CreateEnemy(XMFLOAT3(-1000.0f, 500.0f, 2700.0f));// 8
+		CreateEnemy(XMFLOAT3(-1300.0f, 500.0f, 3000.0f));// 9
 		// ゴールUI位置初期化
 		SetGoalUI(XMFLOAT3(-1000.0f, 1000.0f, 9000.0f), 1200, 600, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);
 		m_pGoal = new Goal(XMFLOAT3(-1000.0f, 1200.0f, 9000.0f));
