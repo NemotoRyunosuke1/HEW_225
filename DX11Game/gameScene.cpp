@@ -328,7 +328,7 @@ GameScene::GameScene(EStage stage)
 		m_pBuliding[63].Create(XMFLOAT3( -600, 10,  600), XMFLOAT3(10.0f, 10.0f, 10.0f));
 		m_pBuliding[64].Create(XMFLOAT3( -300, 10,  600), XMFLOAT3(10.0f, 10.0f, 10.0f));
 
-		// 仲間の配置ああああ
+		// 仲間の配置
 		CrewCreate(XMFLOAT3(-1000.0f, 500.0f, -300.0f));// 1
 		CrewCreate(XMFLOAT3(-1200.0f, 500.0f, -200.0f));// 2
 		CrewCreate(XMFLOAT3(-1500.0f, 500.0f, -100.0f));// 3
