@@ -258,75 +258,44 @@ GameScene::GameScene(EStage stage)
 	switch (stage)
 	{
 	case STAGE_1:	// ステージ1
-		// メッシュフィールド初期化
+		// 地面の配置
 		InitMeshField(20, 20, 2000.0f, 2000.0f);
 
 		// ビルの配置
-		m_pBuliding[0]. Create(XMFLOAT3(-1900, 10,    0), XMFLOAT3(10.0f, 10.0f, 10.0f));  // 左横
-		m_pBuliding[1]. Create(XMFLOAT3(-2200, 10,    0), XMFLOAT3(10.0f, 10.0f, 10.0f));
-		m_pBuliding[2]. Create(XMFLOAT3(-2500, 10,    0), XMFLOAT3(10.0f, 10.0f, 10.0f));
-		m_pBuliding[3]. Create(XMFLOAT3(-2800, 10,    0), XMFLOAT3(10.0f, 10.0f, 10.0f));
-		m_pBuliding[4]. Create(XMFLOAT3(-3100, 10,    0), XMFLOAT3(10.0f, 10.0f, 10.0f));
-		m_pBuliding[5]. Create(XMFLOAT3(-3400, 10,    0), XMFLOAT3(10.0f, 10.0f, 10.0f)); 
-		m_pBuliding[6]. Create(XMFLOAT3(-3700, 10,    0), XMFLOAT3(10.0f, 10.0f, 10.0f));
-		m_pBuliding[7]. Create(XMFLOAT3(-4000, 10,    0), XMFLOAT3(10.0f, 10.0f, 10.0f));
-		m_pBuliding[8]. Create(XMFLOAT3( -900, 10,    0), XMFLOAT3(10.0f, 10.0f, 10.0f));  // 右縦
-		m_pBuliding[9]. Create(XMFLOAT3( -900, 10,  300), XMFLOAT3(10.0f, 10.0f, 10.0f));
-		m_pBuliding[10].Create(XMFLOAT3( -900, 10,  600), XMFLOAT3(10.0f, 10.0f, 10.0f));
-		m_pBuliding[11].Create(XMFLOAT3(-3200, 10,  900), XMFLOAT3(10.0f, 10.0f, 10.0f));  //真ん中横
-		m_pBuliding[12].Create(XMFLOAT3(-2900, 10,  900), XMFLOAT3(10.0f, 10.0f, 10.0f));
-		m_pBuliding[13].Create(XMFLOAT3(-2600, 10,  900), XMFLOAT3(10.0f, 10.0f, 10.0f));
-		m_pBuliding[14].Create(XMFLOAT3(-2300, 10,  900), XMFLOAT3(10.0f, 10.0f, 10.0f));
-		m_pBuliding[15].Create(XMFLOAT3(-2000, 10,  900), XMFLOAT3(10.0f, 10.0f, 10.0f));
-		m_pBuliding[16].Create(XMFLOAT3(-1700, 10,  900), XMFLOAT3(10.0f, 10.0f, 10.0f));
-		m_pBuliding[17].Create(XMFLOAT3(-1400, 10,  900), XMFLOAT3(10.0f, 10.0f, 10.0f));
-		m_pBuliding[18].Create(XMFLOAT3(-1200, 10,  900), XMFLOAT3(10.0f, 10.0f, 10.0f));
-		m_pBuliding[19].Create(XMFLOAT3( -900, 10,  900), XMFLOAT3(10.0f, 10.0f, 10.0f));
-		m_pBuliding[20].Create(XMFLOAT3( -600, 10,  900), XMFLOAT3(10.0f, 10.0f, 10.0f));
-		m_pBuliding[21].Create(XMFLOAT3( -300, 10,  900), XMFLOAT3(10.0f, 10.0f, 10.0f));
-		m_pBuliding[22].Create(XMFLOAT3(-1000, 10, 1800), XMFLOAT3(10.0f, 10.0f, 10.0f));  // 後横
-		m_pBuliding[23].Create(XMFLOAT3(-1300, 10, 1800), XMFLOAT3(10.0f, 10.0f, 10.0f));
-		m_pBuliding[24].Create(XMFLOAT3(-1600, 10, 1800), XMFLOAT3(10.0f, 10.0f, 10.0f));
-		m_pBuliding[25].Create(XMFLOAT3(-1900, 10, 1800), XMFLOAT3(10.0f, 10.0f, 10.0f));
-		m_pBuliding[26].Create(XMFLOAT3(-2200, 10, 1800), XMFLOAT3(10.0f, 10.0f, 10.0f));
-		m_pBuliding[27].Create(XMFLOAT3(-2500, 10, 1800), XMFLOAT3(10.0f, 10.0f, 10.0f));
-		m_pBuliding[28].Create(XMFLOAT3(-2800, 10, 1800), XMFLOAT3(10.0f, 10.0f, 10.0f));
-		m_pBuliding[29].Create(XMFLOAT3(-3100, 10, 1800), XMFLOAT3(10.0f, 10.0f, 10.0f));
-		m_pBuliding[30].Create(XMFLOAT3(-3400, 10, 1800), XMFLOAT3(10.0f, 10.0f, 10.0f));
-		m_pBuliding[31].Create(XMFLOAT3(-3700, 10, 1800), XMFLOAT3(10.0f, 10.0f, 10.0f));
-		m_pBuliding[32].Create(XMFLOAT3(-4000, 10, 1800), XMFLOAT3(10.0f, 10.0f, 10.0f));
-		m_pBuliding[33].Create(XMFLOAT3( -600, 10, 3600), XMFLOAT3(10.0f, 10.0f, 10.0f));  // 後ろ
-		m_pBuliding[34].Create(XMFLOAT3( -300, 10, 3600), XMFLOAT3(10.0f, 10.0f, 10.0f));
-		m_pBuliding[35].Create(XMFLOAT3(    0, 10,    0), XMFLOAT3(10.0f, 10.0f, 10.0f));  // 右端
-		m_pBuliding[36].Create(XMFLOAT3(    0, 10,  300), XMFLOAT3(10.0f, 10.0f, 10.0f));
-		m_pBuliding[37].Create(XMFLOAT3(    0, 10,  600), XMFLOAT3(10.0f, 10.0f, 10.0f));
-		m_pBuliding[38].Create(XMFLOAT3(    0, 10,  900), XMFLOAT3(10.0f, 10.0f, 10.0f));
-		m_pBuliding[39].Create(XMFLOAT3(    0, 10, 1200), XMFLOAT3(10.0f, 10.0f, 10.0f));
-		m_pBuliding[40].Create(XMFLOAT3(    0, 10, 1500), XMFLOAT3(10.0f, 10.0f, 10.0f));
-		m_pBuliding[41].Create(XMFLOAT3(    0, 10, 1800), XMFLOAT3(10.0f, 10.0f, 10.0f));
-		m_pBuliding[42].Create(XMFLOAT3(    0, 10, 2100), XMFLOAT3(10.0f, 10.0f, 10.0f));
-		m_pBuliding[43].Create(XMFLOAT3(    0, 10, 2400), XMFLOAT3(10.0f, 10.0f, 10.0f));
-		m_pBuliding[44].Create(XMFLOAT3(    0, 10, 2700), XMFLOAT3(10.0f, 10.0f, 10.0f));
-		m_pBuliding[45].Create(XMFLOAT3(    0, 10, 2700), XMFLOAT3(10.0f, 10.0f, 10.0f));
-		m_pBuliding[46].Create(XMFLOAT3(    0, 10, 3000), XMFLOAT3(10.0f, 10.0f, 10.0f));
-		m_pBuliding[47].Create(XMFLOAT3(    0, 10, 3300), XMFLOAT3(10.0f, 10.0f, 10.0f));  // 左端
-		m_pBuliding[48].Create(XMFLOAT3(-4300, 10,  300), XMFLOAT3(10.0f, 10.0f, 10.0f));
-		m_pBuliding[49].Create(XMFLOAT3(-4300, 10,  600), XMFLOAT3(10.0f, 10.0f, 10.0f));
-		m_pBuliding[50].Create(XMFLOAT3(-4300, 10,  900), XMFLOAT3(10.0f, 10.0f, 10.0f));
-		m_pBuliding[51].Create(XMFLOAT3(-4300, 10, 1200), XMFLOAT3(10.0f, 10.0f, 10.0f));
-		m_pBuliding[52].Create(XMFLOAT3(-4300, 10, 1500), XMFLOAT3(10.0f, 10.0f, 10.0f));
-		m_pBuliding[53].Create(XMFLOAT3(-4300, 10, 1800), XMFLOAT3(10.0f, 10.0f, 10.0f));
-		m_pBuliding[54].Create(XMFLOAT3(-4300, 10, 2100), XMFLOAT3(10.0f, 10.0f, 10.0f));
-		m_pBuliding[55].Create(XMFLOAT3(-4300, 10, 2400), XMFLOAT3(10.0f, 10.0f, 10.0f));
-		m_pBuliding[56].Create(XMFLOAT3(-4300, 10, 2700), XMFLOAT3(10.0f, 10.0f, 10.0f));
-		m_pBuliding[57].Create(XMFLOAT3(-4300, 10, 3000), XMFLOAT3(10.0f, 10.0f, 10.0f));
-		m_pBuliding[58].Create(XMFLOAT3(-4300, 10, 3300), XMFLOAT3(10.0f, 10.0f, 10.0f));
-		m_pBuliding[59].Create(XMFLOAT3( -600, 10,    0), XMFLOAT3(10.0f, 10.0f, 10.0f));  // 穴埋め
-		m_pBuliding[60].Create(XMFLOAT3( -300, 10,    0), XMFLOAT3(10.0f, 10.0f, 10.0f));
-		m_pBuliding[61].Create(XMFLOAT3( -600, 10,  300), XMFLOAT3(10.0f, 10.0f, 10.0f));
-		m_pBuliding[62].Create(XMFLOAT3( -300, 10,  300), XMFLOAT3(10.0f, 10.0f, 10.0f));
-		m_pBuliding[63].Create(XMFLOAT3( -600, 10,  600), XMFLOAT3(10.0f, 10.0f, 10.0f));
-		m_pBuliding[64].Create(XMFLOAT3( -300, 10,  600), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		for (int i = 0; i < 8; i++)  // 左横
+		{
+			m_pBuliding[i].Create(XMFLOAT3(-3900 + i * 300, 10, 0), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		}
+
+		for (int i = 0; i < 3; i++)  // 右側
+		{
+			for (int j = 0; j < 3; j++)
+			{
+				m_pBuliding[i * 3 + 8 + j].Create(XMFLOAT3(-900 + i * 300, 10, 0 + j * 300), XMFLOAT3(10.0f, 10.0f, 10.0f));
+			}
+		}
+		for (int i = 0; i < 11; i++)  //真ん中横
+		{
+			m_pBuliding[i + 17].Create(XMFLOAT3(-3300 + i * 300, 10, 900), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		}
+
+		for (int i = 0; i < 11; i++)  // 後横
+		{
+			m_pBuliding[i + 28].Create(XMFLOAT3(-3900 + i * 300, 10, 1800), XMFLOAT3(10.0f, 10.0f, 10.0f));
+		}
+
+		for (int i = 0; i < 2; i++)
+		{
+			m_pBuliding[i + 39].Create(XMFLOAT3(-600 + i * 300, 10, 3600), XMFLOAT3(10.0f, 10.0f, 10.0f));  // 後ろ
+		}
+
+		for (int i = 0; i < 13; i++)  // 端
+		{
+			for (int j = 0; j < 2; j++)
+			{
+				m_pBuliding[i * 2 + 41 + j].Create(XMFLOAT3(-4200 + j * 4200, 10, 0 + i * 300), XMFLOAT3(10.0f, 10.0f, 10.0f));
+			}
+		}
 
 		// 仲間の配置
 		CrewCreate(XMFLOAT3(-1000.0f, 500.0f, -300.0f));// 1
@@ -347,6 +316,7 @@ GameScene::GameScene(EStage stage)
 
 		break;
 	case STAGE_2:	// ステージ2
+		// 地面の配置
 		InitMeshField(20, 20, 2000.0f, 2000.0f);
 
 		// ビルの配置
@@ -375,7 +345,10 @@ GameScene::GameScene(EStage stage)
 
 		break;
 	case STAGE_3:	// ステージ3
+		// 地面の配置
 		InitMeshField(20, 20, 2000.0f, 2000.0f);
+
+		// ビルの配置
 		for (int i = 0; i < 12; i++)
 		{
 			for (int j = 0; j < 2; j++)
@@ -418,7 +391,7 @@ GameScene::GameScene(EStage stage)
 
 		break;
 	case STAGE_4:	// ステージ4
-		// メッシュフィールド初期化
+			// 地面の配置
 		InitMeshField(20, 20, 2000.0f, 2000.0f);
 
 		// 仲間の配置
@@ -441,7 +414,7 @@ GameScene::GameScene(EStage stage)
 
 
 
-		// ビルの生成
+		// ビルの配置
 		for (int k = 0; k < MAX_BULIDING / 16 / 5; k++)
 		{
 			for (int l = 0; l < MAX_BULIDING / 16 / 5; l++)
@@ -463,7 +436,10 @@ GameScene::GameScene(EStage stage)
 
 		break;
 	case STAGE_5:	// ステージ5
+		// 地面の配置
 		InitMeshField(20, 20, 2000.0f, 2000.0f);
+
+		// ビルの配置
 		for (int i = 0; i < 5; i++)
 		{
 			for (int j = 0; j < 4; j++)
@@ -819,8 +795,6 @@ void GameScene::Draw()
 	// Zバッファ無効(Zチェック無&Z更新無)
 	SetZBuffer(true);
 
-	
-
 	// メッシュフィールド描画
 	DrawMeshField();
 
@@ -849,9 +823,6 @@ void GameScene::Draw()
    // Zバッファ無効(Zチェック無&Z更新無)
 	SetZBuffer(true);
 
-
-
-
 	// 丸影描画
 	DrawShadow();
 
@@ -862,8 +833,8 @@ void GameScene::Draw()
 	DrawEnemy();
 
 	// 風マネージャー描画
-	m_pWindManager->Draw();
-
+	//m_pWindManager->Draw();
+   
 	// モデル描画
 	DrawModel();
 	
@@ -876,7 +847,7 @@ void GameScene::Draw()
 	// 仲間用UI描画
 	DrawCrewUI();
 
-
+	// スタミナバー
 	m_pStaminaBar->Draw();
 
 	// スコアUI描画
@@ -896,6 +867,8 @@ void GameScene::Draw()
 		// レバガチャ描画
 		m_pLever->Draw();
 	}
+
+	// 
 	if (GetEscapeCrew())
 	{
 		m_pEscapeText->Draw();
@@ -916,5 +889,5 @@ void GameScene::Draw()
 	}
 	
 
-	EFFECT->Play(0);
+	
 }

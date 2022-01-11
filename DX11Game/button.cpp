@@ -119,14 +119,14 @@ void Button::Update()
 			{
 				if (!m_bSoudTriggerDecision)
 				{
-					CSound::SetVolume(SE_SELECT, 1.0f);
+				CSound::SetVolume(SE_SELECT, 1.0f);
 					CSound::Play(SE_SELECT);
 					m_bSoudTriggerDecision = true;
 				}
 				m_flg = true;	
 			}
 	
-			// サウンドトリガー
+			// サウンドトリガー移動した時の効果音
 			if (!m_bSoudTrigger)
 			{
 				CSound::SetVolume(SE_SELECT, 1.0f);
