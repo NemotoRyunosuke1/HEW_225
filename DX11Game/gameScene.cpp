@@ -19,6 +19,7 @@
 #include "EffectManager.h"
 #include "crewUI.h"
 #include "goalUI.h"
+#include "resultScene.h"
 
 #if _DEBUG
 #define MAX_BULIDING (200)
