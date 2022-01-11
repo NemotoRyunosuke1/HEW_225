@@ -15,5 +15,6 @@ public:
 	bool m_bTrigger;
 	bool m_bPopup;
 	bool m_bPopupNum[11];
+	bool m_bPopupNum2[11];
 	int m_nCnt;
 };

@@ -10,8 +10,10 @@
 #include "Camera.h"
 #include "model.h"
 
+
 Effekseer::EffectRef m_effcet;
 Effekseer::EffectRef m_handle;
+EStage EffectManager::m_estage = STAGE_1;
 
 EffekseerRendererDX11::RendererRef EffectManager::m_renderer;
 Effekseer::ManagerRef EffectManager::m_manager;
@@ -146,75 +148,186 @@ int EffectManager::Play(int Handle)
 		{
 			// ゴール風
 			//time = 0;
-			m_handle = m_manager->Play(m_effect5, -1000.0f, 1000.0f, 9500.0f);
+			m_handle = m_manager->Play(m_effect5, -1500.0f, 500.0f, 3500.0f);
 			m_manager->SetScale(m_handle, 30.0f, 30.0f, 30.0f);
-
 		}
 	break;
 	default:
 	
-
 		break;
 	}
+
+//====================================
+//
+//ステージ毎の風
+//
+//=====================================
+	switch (m_estage)
+	{
+	case STAGE_1:
+		//=====================
+		//風_上
+		//=====================
+		if (time > 130.0f)
+		{
+			// 1個目上昇気流
+			time = 0;
+			m_handle = m_manager->Play(m_effect, -1700.0f, 100.0f, 0.0f);      //表示＆座標
+			m_manager->SetScale(m_handle, 3.0f, 3.0f, 3.0f);   //大きさ
+
+			// 2個目上昇気流
+			time = 0;
+			m_handle = m_manager->Play(m_effect, -1700.0f, 300.0f, 800.0f);      //表示＆座標
+			m_manager->SetScale(m_handle, 3.0f, 3.0f, 3.0f);   //大きさ
+
+		//======================
+		//風_横
+		//======================
+			// 追い風
+			time = 0;
+			m_handle = m_manager->Play(m_effect2, -100.0f, 800.0f, 700.0f);      //表示＆座標
+			m_manager->SetScale(m_handle, 9.0f, 9.0f, 26.0f);   //大きさ
+
+		}
+
+		
+	break;
+	
+	case STAGE_2:
+		
+		if (time > 130.0f)
+		{
+		//=====================
+		//風_上
+		//=====================
+
+
+
+
+		//======================
+		//風_横
+		//======================
+			// 向かい風_1
+			time = 0;
+			m_handle = m_manager->Play(m_effect2, -1000.0f, 700.0f, 200.0f);      //表示＆座標
+			m_manager->SetScale(m_handle, 10.0f, 10.0f, 10.0f);   //大きさ
+			m_manager->SetRotation(m_handle, 0.0f, 59.7f, 0.0f);
+
+			//// 向かい風_2
+			//m_handle = m_manager->Play(m_effect2, -1000.0f, 700.0f, 200.0f);      //表示＆座標
+			//m_manager->SetScale(m_handle, 10.0f, 10.0f, 10.0f);   //大きさ
+			//m_manager->SetRotation(m_handle, 0.0f, 59.7f, 0.0f);
+
+			//// 向かい風_3
+			//m_handle = m_manager->Play(m_effect2, -1000.0f, 700.0f, 200.0f);      //表示＆座標
+			//m_manager->SetScale(m_handle, 10.0f, 10.0f, 10.0f);   //大きさ
+			//m_manager->SetRotation(m_handle, 0.0f, 59.7f, 0.0f);
+
+			//// 向かい風_4
+			//m_handle = m_manager->Play(m_effect2, -1000.0f, 700.0f, 200.0f);      //表示＆座標
+			//m_manager->SetScale(m_handle, 10.0f, 10.0f, 10.0f);   //大きさ
+			//m_manager->SetRotation(m_handle, 0.0f, 59.7f, 0.0f);
+
+			//// 向かい風_5
+			//m_handle = m_manager->Play(m_effect2, -1000.0f, 700.0f, 200.0f);      //表示＆座標
+			//m_manager->SetScale(m_handle, 10.0f, 10.0f, 10.0f);   //大きさ
+			//m_manager->SetRotation(m_handle, 0.0f, 59.7f, 0.0f);
+
+			//// 向かい風_6
+			//m_handle = m_manager->Play(m_effect2, -1000.0f, 700.0f, 200.0f);      //表示＆座標
+			//m_manager->SetScale(m_handle, 10.0f, 10.0f, 10.0f);   //大きさ
+			//m_manager->SetRotation(m_handle, 0.0f, 59.7f, 0.0f);
+
+			//// 向かい風_7
+			//m_handle = m_manager->Play(m_effect2, -1000.0f, 700.0f, 200.0f);      //表示＆座標
+			//m_manager->SetScale(m_handle, 10.0f, 10.0f, 10.0f);   //大きさ
+			//m_manager->SetRotation(m_handle, 0.0f, 59.7f, 0.0f);
+
+			//// 向かい風_8
+			//m_handle = m_manager->Play(m_effect2, -1000.0f, 700.0f, 200.0f);      //表示＆座標
+			//m_manager->SetScale(m_handle, 10.0f, 10.0f, 10.0f);   //大きさ
+			//m_manager->SetRotation(m_handle, 0.0f, 59.7f, 0.0f);
+
+
+
+		}
+		break;
+	case STAGE_3:
+
+		break;
+	case STAGE_4:
 	//=====================
 	//風_上
 	//=====================
-	if (time > 130.0f)
-	{ 
-		// 左側上昇気流
-		time = 0;
-		m_handle = m_manager->Play(m_effect, -5000.0f, 150.0f, 3000.0f);      //表示＆座標
-		m_manager->SetScale(m_handle, 5.0f, 6.0f, 5.0f);   //大きさ
+		if (time > 130.0f)
+		{
+			// 左側上昇気流
+			time = 0;
+			m_handle = m_manager->Play(m_effect, -5000.0f, 150.0f, 3000.0f);      //表示＆座標
+			m_manager->SetScale(m_handle, 5.0f, 6.0f, 5.0f);   //大きさ
 
-		// 左側建物後ろ上昇気流
-		m_handle = m_manager->Play(m_effect, -2000.0f, 150.0f, 1000.0f);      //表示＆座標
-		m_manager->SetScale(m_handle, 5.0f, 6.0f, 5.0f);   //大きさ
+			// 左側建物後ろ上昇気流
+			m_handle = m_manager->Play(m_effect, -2000.0f, 150.0f, 1000.0f);      //表示＆座標
+			m_manager->SetScale(m_handle, 5.0f, 6.0f, 5.0f);   //大きさ
 
-		// 右側建物後ろ上昇気流
-		m_handle = m_manager->Play(m_effect, 0.0f, 150.0f, 1000.0f);      //表示＆座標
-		m_manager->SetScale(m_handle, 5.0f, 6.0f, 5.0f);   //大きさ
+			// 右側建物後ろ上昇気流
+			m_handle = m_manager->Play(m_effect, 0.0f, 150.0f, 1000.0f);      //表示＆座標
+			m_manager->SetScale(m_handle, 5.0f, 6.0f, 5.0f);   //大きさ
 
-		// 右側上昇気流
-		m_handle = m_manager->Play(m_effect, 3000.0f, 150.0f, 3000.0f);      //表示＆座標
-		m_manager->SetScale(m_handle, 5.0f, 6.0f, 5.0f);   //大きさ
+			// 右側上昇気流
+			m_handle = m_manager->Play(m_effect, 3000.0f, 150.0f, 3000.0f);      //表示＆座標
+			m_manager->SetScale(m_handle, 5.0f, 6.0f, 5.0f);   //大きさ
 
-	//======================
-	//風_横
-	//======================
-		// 左側追い風
-		m_handle = m_manager->Play(m_effect2, -3000.0f, 500.0f, -550.0f);     //表示＆座標
-		m_manager->SetScale(m_handle, 10.0f, 10.0f, 10.0f);   //大きさ
+		//======================
+		//風_横
+		//======================
+			// 左側追い風
+			m_handle = m_manager->Play(m_effect2, -3000.0f, 500.0f, -550.0f);     //表示＆座標
+			m_manager->SetScale(m_handle, 10.0f, 10.0f, 10.0f);   //大きさ
 
-		// 右側追い風
-		m_handle = m_manager->Play(m_effect2, 1000.0f, 500.0f, -550.0f);      //表示＆座標
-		m_manager->SetScale(m_handle, 10.0f, 10.0f, 10.0f);   //大きさ
+			// 右側追い風
+			m_handle = m_manager->Play(m_effect2, 1000.0f, 500.0f, -550.0f);      //表示＆座標
+			m_manager->SetScale(m_handle, 10.0f, 10.0f, 10.0f);   //大きさ
 
-		// 真ん中向かい風
-		m_handle = m_manager->Play(m_effect2, -1000.0f, 700.0f, 200.0f);      //表示＆座標
-		m_manager->SetScale(m_handle, 10.0f, 10.0f, 10.0f);   //大きさ
-		m_manager->SetRotation(m_handle, 0.0f, 59.7f, 0.0f);
+			// 真ん中向かい風
+			m_handle = m_manager->Play(m_effect2, -1000.0f, 700.0f, 200.0f);      //表示＆座標
+			m_manager->SetScale(m_handle, 10.0f, 10.0f, 10.0f);   //大きさ
+			m_manager->SetRotation(m_handle, 0.0f, 59.7f, 0.0f);
 
-		// ゴール前手前左追い風
-		m_handle = m_manager->Play(m_effect2, -1400.0f, 1250.0f, 7000.0f);		//表示＆座標
-		m_manager->SetScale(m_handle, 10.0f, 10.0f, 10.0f);
+			// ゴール前手前左追い風
+			m_handle = m_manager->Play(m_effect2, -1400.0f, 1250.0f, 7000.0f);		//表示＆座標
+			m_manager->SetScale(m_handle, 10.0f, 10.0f, 10.0f);
 
-		// ゴール前手前右追い風
-		m_handle = m_manager->Play(m_effect2, -600.0f, 1250.0f, 7000.0f);		//表示＆座標
-		m_manager->SetScale(m_handle, 10.0f, 10.0f, 10.0f);
+			// ゴール前手前右追い風
+			m_handle = m_manager->Play(m_effect2, -600.0f, 1250.0f, 7000.0f);		//表示＆座標
+			m_manager->SetScale(m_handle, 10.0f, 10.0f, 10.0f);
 
-		// ゴール前奥左追い風
-		m_handle = m_manager->Play(m_effect2, -1400.0f, 1250.0f, 8500.0f);		//表示＆座標
-		m_manager->SetScale(m_handle, 10.0f, 10.0f, 10.0f);
+			// ゴール前奥左追い風
+			m_handle = m_manager->Play(m_effect2, -1400.0f, 1250.0f, 8500.0f);		//表示＆座標
+			m_manager->SetScale(m_handle, 10.0f, 10.0f, 10.0f);
 
-		// ゴール前奥右追い風
-		m_handle = m_manager->Play(m_effect2, -600.0f, 1250.0f, 8500.0f);		//表示＆座標
-		m_manager->SetScale(m_handle, 10.0f, 10.0f, 10.0f);
+			// ゴール前奥右追い風
+			m_handle = m_manager->Play(m_effect2, -600.0f, 1250.0f, 8500.0f);		//表示＆座標
+			m_manager->SetScale(m_handle, 10.0f, 10.0f, 10.0f);
 
 
-		//SetRotationのYの数値で向きが変わります
-		//80 = 左向き風    14.1 = 右向き風    59.7 = 向かい風　　 0 = 追い風
+			//SetRotationのYの数値で向きが変わります
+			//80 = 左向き風    14.1 = 右向き風    59.7 = 向かい風　　 0 = 追い風
 
+		}
+		break;
+	case STAGE_5:
+
+		break;
+
+	default:
+		break;
 	}
+
+	//	//SetRotationのYの数値で向きが変わります
+	//	//80 = 左向き風    14.1 = 右向き風    59.7 = 向かい風　　 0 = 追い風
+
+	//}
 	//メモ
 	///m_pWind[0].Create(XMFLOAT3(-3000.0f, 500.0f, -150.0f), XMFLOAT3(500.0f, 300.0f, 1100.0f), XMFLOAT3(0.0f, 0.0f, 1.0f));  // 左側追い風
 	///m_pWind[1].Create(XMFLOAT3(-1000.0f, 700.0f, -100.0f), XMFLOAT3(600.0f, 1300.0f, 1100.0f), XMFLOAT3(0.0f, 0.0f, -1.0f));  // 真ん中向かい風
@@ -227,10 +340,8 @@ int EffectManager::Play(int Handle)
 	///m_pWind[8].Create(XMFLOAT3(-600.0f, 1250.0f, 7000.0f), XMFLOAT3(500.0f, 300.0f, 300.0f), XMFLOAT3(0.0f, 0.0f, 1.0f));  // ゴール前手前右追い風
 	///m_pWind[9].Create(XMFLOAT3(-1400.0f, 1250.0f, 8500.0f), XMFLOAT3(500.0f, 300.0f, 500.0f), XMFLOAT3(0.0f, 0.0f, 1.0f));  // ゴール前奥左追い風
 	///m_pWind[10].Create(XMFLOAT3(-600.0f, 1250.0f, 8500.0f), XMFLOAT3(500.0f, 300.0f, 500.0f), XMFLOAT3(0.0f, 0.0f, 1.0f));  // ゴール前奥右追い風
-
 	
-
-
+	
 	m_manager->Update();
 	m_renderer->SetTime(time++ / 60.0f);
 	m_renderer->BeginRendering();
@@ -238,4 +349,9 @@ int EffectManager::Play(int Handle)
 	m_renderer->EndRendering();
 
 	return 0;
+}
+
+void EffectManager::SetStage(EStage stage)
+{
+	m_estage = stage;
 }

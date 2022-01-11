@@ -79,8 +79,8 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)$(ProjectName)\</OutDir>
     <TargetName>$(ProjectName)D</TargetName>
-    <IncludePath>C:\Users\hina2\OneDrive\デスクトップ\DX22\HEW\DX11Game;C:\Users\nemot\OneDrive\デスクトップ\授業\2年生\DX22\3D_game_base\DX11Game;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\hina2\OneDrive\デスクトップ\DX22\HEW\DX11Game;C:\Users\hina2\OneDrive\デスクトップ\DX22\HEW\DX11Game\Effekseer;C:\Users\nemot\OneDrive\デスクトップ\授業\2年生\DX22\3D_game_base\DX11Game\Effekseer;C:\Users\nemot\OneDrive\デスクトップ\授業\2年生\DX22\3D_game_base\DX11Game;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\nemot\OneDrive\デスクトップ\授業\2年生\DX22\3D_game_base\DX11Game;C:\Users\naona\OneDrive\デスクトップ\HAL\2年\DX22\HEW_project_ver3\DX11Game;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\nemot\OneDrive\デスクトップ\授業\2年生\DX22\3D_game_base\DX11Game;C:\Users\nemot\OneDrive\デスクトップ\授業\2年生\DX22\3D_game_base\DX11Game\Effekseer;C:\Users\naona\OneDrive\デスクトップ\HAL\2年\DX22\HEW_project_ver3\DX11Game;C:\Users\naona\OneDrive\デスクトップ\HAL\2年\DX22\HEW_project_ver3\DX11Game\Effekseer;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -92,8 +92,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)$(ProjectName)\</OutDir>
-    <IncludePath>C:\Users\hina2\OneDrive\デスクトップ\DX22\HEW\DX11Game;C:\Users\nemot\OneDrive\デスクトップ\授業\2年生\DX22\3D_game_base\DX11Game;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\hina2\OneDrive\デスクトップ\DX22\HEW\DX11Game\Effekseer;C:\Users\hina2\OneDrive\デスクトップ\DX22\HEW\DX11Game;C:\Users\nemot\OneDrive\デスクトップ\授業\2年生\DX22\3D_game_base\DX11Game\Effekseer;C:\Users\nemot\OneDrive\デスクトップ\授業\2年生\DX22\3D_game_base\DX11Game;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\nemot\OneDrive\デスクトップ\授業\2年生\DX22\3D_game_base\DX11Game;C:\Users\naona\OneDrive\デスクトップ\HAL\2年\DX22\HEW_project_ver3\DX11Game;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\naona\OneDrive\デスクトップ\HAL\専科\ｴﾌｪｸﾄﾌﾟﾛｸﾞﾗﾐﾝｸﾞ\ソフト\EffekseerSample\DirectXProject\DirectXProject;C:\Users\nemot\OneDrive\デスクトップ\授業\2年生\DX22\3D_game_base\DX11Game\Effekseer;C:\Users\nemot\OneDrive\デスクトップ\授業\2年生\DX22\3D_game_base\DX11Game;C:\Users\naona\OneDrive\デスクトップ\HAL\2年\DX22\HEW_project_ver3\DX11Game;C:\Users\naona\OneDrive\デスクトップ\HAL\2年\DX22\HEW_project_ver3\DX11Game\Effekseer;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -116,13 +116,14 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\..\DirectXTex;..\..\Assimp\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\DirectXTex;..\..\Assimp\include;..\..\DirectShow\baseclasses;..\..\DirectShow\common</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
-      <AdditionalLibraryDirectories>..\..\DirectXTex\$(PlatformTarget)\$(Configuration);..\..\Assimp\lib\$(PlatformTarget)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\DirectXTex\$(PlatformTarget)\$(Configuration);..\..\Assimp\lib\$(PlatformTarget);..\..\DirectShow</AdditionalLibraryDirectories>
+      <AdditionalDependencies>strmiids.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -152,7 +153,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\..\DirectXTex;..\..\Assimp\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\DirectXTex;..\..\Assimp\include;..\..\DirectShow\common;..\..\DirectShow\baseclasses</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -160,7 +161,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
-      <AdditionalLibraryDirectories>..\..\DirectXTex\$(PlatformTarget)\$(Configuration);..\..\Assimp\lib\$(PlatformTarget)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\DirectXTex\$(PlatformTarget)\$(Configuration);..\..\Assimp\lib\$(PlatformTarget);C:\Users\nemot\OneDrive\デスクトップ\授業\2年生\DX22\DirectShow;.\Effekseer\$(PlatformTarget)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

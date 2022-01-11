@@ -8,11 +8,11 @@
 #include "resultScene.h"
 #include "debugproc.h"
 
-#define Star			L"data/texture/40second.png"	    //星１
-#define Result			L"data/texture/80second.png"		//星２
-#define Result			L"data/texture/130second.png"		//星３
+#define Star			L"data/texture/StarIcon1.png"	    //星１
+#define Result1			L"data/texture/80second.png"		//星２
+#define Result2			L"data/texture/130second.png"		//星３
 
-#define Result			L"data/texture/ranking000.png"		//リザルトロゴ
+#define Result3			L"data/texture/ranking000.png"		//リザルトロゴ
 //#define Result			L"data/texture/.png"		//条件1 [ステージのクリア]
 //#define Result			L"data/texture/.png"		//条件2 [仲間の数]
 //#define Result			L"data/texture/.png"		//条件3 [敵に被弾]
@@ -28,7 +28,7 @@ ResultScene::ResultScene()
 	//----------------
 
 	// 星１
-	m_pos1 = XMFLOAT3(-300, 100, 0);
+	m_pos1 = XMFLOAT3(-300,80, 0);
 	m_size1 = XMFLOAT3(100, 100, 0);
 	m_IconPos1 = XMFLOAT3(100, 100, 0);		// 位置
 	m_Iconsize1 = XMFLOAT3(100, 50, 0);	    // サイズ
@@ -86,15 +86,15 @@ ResultScene::ResultScene()
 
 	// 星２ 
 	ID3D11Device* pDevice1 = GetDevice();
-	CreateTextureFromFile(pDevice1, Result, &m_pIconTexture2);
+	CreateTextureFromFile(pDevice1, Result1, &m_pIconTexture2);
 
 	// 星３ 
 	ID3D11Device* pDevice2 = GetDevice();
-	CreateTextureFromFile(pDevice2, Result, &m_pIconTexture3);
+	CreateTextureFromFile(pDevice2, Result2, &m_pIconTexture3);
 
 	// リザルトロゴ 
-	ID3D11Device* pDevice1 = GetDevice();
-	CreateTextureFromFile(pDevice1, Result, &m_pIconTexture4);
+
+	CreateTextureFromFile(pDevice1, Result3, &m_pIconTexture4);
 
 	//// 条件1 [ステージのクリア] 
 	//ID3D11Device* pDevice1 = GetDevice();
@@ -203,7 +203,7 @@ void ResultScene::Draw()
 		//　星１ 
 		SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
 		SetPolygonSize(m_size1.x, m_size1.y);
-		SetPolygonPos(m_pos1.x + (i * m_size1.x*2 + 50), m_pos1.y);
+		SetPolygonPos(m_pos1.x , m_pos1.y - (i * (m_size1.x  + 10)));
 		SetPolygonTexture(m_pIconTexture1);
 		SetPolygonUV(0.0f, 0.0f);
 		DrawPolygon(pBC);
