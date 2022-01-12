@@ -144,12 +144,12 @@ int EffectManager::Play(int Handle)
 
 	case 3:
 		//風_上_黄色
-		if (time > 125.0f)
+		if (time > 129.9f)
 		{
 			// ゴール風
 			time = 0;
-			m_handle = m_manager->Play(m_effect5, -1500.0f, 500.0f, 3500.0f);
-			m_manager->SetScale(m_handle, 30.0f, 30.0f, 30.0f);
+			m_handle = m_manager->Play(m_effect5, -1300.0f, 500.0f, 3000.0f);
+			m_manager->SetScale(m_handle, 20.0f, 25.0f, 20.0f);
 		}
 	break;
 	default:
@@ -247,8 +247,6 @@ int EffectManager::Play(int Handle)
 			m_handle = m_manager->Play(m_effect, -1000.0f, 200.0f, 2500.0f);      //表示＆座標
 			m_manager->SetScale(m_handle, 3.0f, 3.0f, 3.0f);   //大きさ
 
-
-
 		}
 		break;
 	case STAGE_3:
@@ -306,7 +304,7 @@ int EffectManager::Play(int Handle)
 
 			// 真ん中向かい風
 			m_handle = m_manager->Play(m_effect2, -1000.0f, 700.0f, 0.0f);      //表示＆座標
-			m_manager->SetScale(m_handle, 12.0f, 10.0f, 12.0f);   //大きさ
+			m_manager->SetScale(m_handle, 12.0f, 16.0f, 12.0f);   //大きさ
 			m_manager->SetRotation(m_handle, 0.0f, 59.7f, 0.0f);
 
 			// ゴール前手前左追い風
