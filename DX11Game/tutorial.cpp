@@ -152,7 +152,7 @@ void Tutorial::Update(EStage stage)
 				break;
 			}
 		}
-		if (m_bPopupNum2[0])
+		if (m_bPopupNum2[10])
 		{
 			if (m_nCnt > 1) m_nCnt = 1;
 			if (m_nCnt < 0) m_nCnt = 0;

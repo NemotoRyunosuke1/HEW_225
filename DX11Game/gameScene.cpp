@@ -841,6 +841,9 @@ void GameScene::Draw()
 	// Zバッファ無効(Zチェック無&Z更新無)
 	SetZBuffer(true);
 
+	// 仲間用UI描画
+	DrawCrewUI();
+
 	// メッシュフィールド描画
 	DrawMeshField();
 
@@ -863,8 +866,7 @@ void GameScene::Draw()
 	{
 		DrawGoalUI();
 	}
-
-
+	
 	// 3D描画
    // Zバッファ無効(Zチェック無&Z更新無)
 	SetZBuffer(true);
@@ -879,7 +881,7 @@ void GameScene::Draw()
 	DrawEnemy();
 
 	// 風マネージャー描画
-	m_pWindManager->Draw();
+	//m_pWindManager->Draw();
    
 	// モデル描画
 	DrawModel();
@@ -890,9 +892,7 @@ void GameScene::Draw()
 
 	EFFECT->Play(0);
 
-	// 仲間用UI描画
-	DrawCrewUI();
-
+	
 	// スタミナバー
 	m_pStaminaBar->Draw();
 
@@ -918,7 +918,7 @@ void GameScene::Draw()
 	if (GetEscapeCrew())
 	{
 		m_pEscapeText->Draw();
-   }
+    }
 	
 
 	// タイマーUI更新
