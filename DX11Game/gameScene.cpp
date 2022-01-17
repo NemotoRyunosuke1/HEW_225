@@ -300,7 +300,7 @@ GameScene::GameScene(EStage stage)
 
 		for (int i = 0; i < 13; i++)  // ƒS[ƒ‹‚ÌŒã‚ë
 		{
-			m_pBuliding[i + 77].Create(XMFLOAT3(-3900 + i * 300, 10, 4500), XMFLOAT3(10.0f, 8.0f + rand() % 5, 10.0f));
+			m_pBuliding[i + 77].Create(XMFLOAT3(-3900 + i * 300, 10, 5100), XMFLOAT3(10.0f, 8.0f + rand() % 5, 10.0f));
 		}
 
 		// ’‡ŠÔ‚Ì”z’u
