@@ -190,7 +190,6 @@ int EffectManager::Play(int Handle)
 
 		}
 
-		
 	break;
 	
 	case STAGE_2:

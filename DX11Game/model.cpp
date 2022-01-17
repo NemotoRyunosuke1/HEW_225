@@ -217,6 +217,7 @@ void UpdateModel(void)
 		EffectManager::Play(1);
 
 		g_posModel.y -= 1.1f;
+
 		// ƒŒƒoƒKƒ`ƒƒ”»’è
 		if (stickY > 20000 || stickX > 20000 || stickY < -20000 || stickX < -20000)
 		{
