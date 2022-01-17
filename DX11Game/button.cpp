@@ -18,11 +18,11 @@
 #define PATH_BUTTON_PAUSE_TEXTURE1 L"data/texture/scenesenni/pause/restart.png"
 #define PATH_BUTTON_PAUSE_TEXTURE2 L"data/texture/scenesenni/pause/backgame.png"
 #define PATH_BUTTON_PAUSE_TEXTURE3 L"data/texture/scenesenni/pause/backstageselect.png"
-#define PATH_BUTTON_STAGE1_TEXTURE L"data/texture/scenesenni/stageselect/stage1.png"
-#define PATH_BUTTON_STAGE2_TEXTURE L"data/texture/scenesenni/stageselect/stage2.png"
-#define PATH_BUTTON_STAGE3_TEXTURE L"data/texture/scenesenni/stageselect/stage3.png"
-#define PATH_BUTTON_STAGE4_TEXTURE L"data/texture/scenesenni/stageselect/stage4.png"
-#define PATH_BUTTON_STAGE5_TEXTURE L"data/texture/scenesenni/stageselect/stage5.png"
+#define PATH_BUTTON_STAGE1_TEXTURE L"data/texture/scenesenni/stageselect/1-1.png"
+#define PATH_BUTTON_STAGE2_TEXTURE L"data/texture/scenesenni/stageselect/1-2.png"
+#define PATH_BUTTON_STAGE3_TEXTURE L"data/texture/scenesenni/stageselect/1-3.png"
+#define PATH_BUTTON_STAGE4_TEXTURE L"data/texture/scenesenni/stageselect/1-4.png"
+#define PATH_BUTTON_STAGE5_TEXTURE L"data/texture/scenesenni/stageselect/1-5.png"
 
 
 
@@ -69,6 +69,7 @@ HRESULT Button::Init()
 
 	m_pos = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	m_size = XMFLOAT3(100.0f, 50.0f, 0.0f);
+	m_color = XMFLOAT3(1.0f, 1.0f, 1.0f);
 	m_flg = false;
 	m_use = false;
 	m_frameNum = 0;
@@ -112,10 +113,10 @@ void Button::Update()
 			m_size.y = m_sizeUpDown.y * 1.1f;
 
 			// カラー変更(黄色)
-			m_color = XMFLOAT3(1.0f, 1.0f, 0.0f);
+			//m_color = XMFLOAT3(1.0f, 1.0f, 0.0f);
 
 			//　決定
-			if (GetJoyRelease(0, JOYSTICKID1) || GetKeyRelease(VK_RETURN))
+			if (GetJoyRelease(0, JOYSTICKID1) || GetKeyRelease(VK_RETURN) || GetKeyTrigger(VK_SPACE))
 			{
 				if (!m_bSoudTriggerDecision)
 				{

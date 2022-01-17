@@ -147,9 +147,9 @@ int EffectManager::Play(int Handle)
 		if (time > 129.9f)
 		{
 			// ゴール風
-			//time = 0;
-			m_handle = m_manager->Play(m_effect5, -1500.0f, 500.0f, 3500.0f);
-			m_manager->SetScale(m_handle, 30.0f, 30.0f, 30.0f);
+			time = 0;
+			m_handle = m_manager->Play(m_effect5, -1300.0f, 500.0f, 3000.0f);
+			m_manager->SetScale(m_handle, 20.0f, 25.0f, 20.0f);
 		}
 	break;
 	default:
@@ -209,51 +209,64 @@ int EffectManager::Play(int Handle)
 		//======================
 			// 向かい風_1
 			time = 0;
-			m_handle = m_manager->Play(m_effect2, -1000.0f, 700.0f, 200.0f);      //表示＆座標
+			m_handle = m_manager->Play(m_effect2, -80.0f, 500.0f, -600.0f);      //表示＆座標
+			m_manager->SetScale(m_handle, 8.0f, 8.0f, 8.0f);   //大きさ
+			m_manager->SetRotation(m_handle, 0.0f, 59.7f, 0.0f);
+
+			// 向かい風_2
+			m_handle = m_manager->Play(m_effect2, -700.0f, 500.0f, -600.0f);      //表示＆座標
 			m_manager->SetScale(m_handle, 10.0f, 10.0f, 10.0f);   //大きさ
 			m_manager->SetRotation(m_handle, 0.0f, 59.7f, 0.0f);
 
-			//// 向かい風_2
-			//m_handle = m_manager->Play(m_effect2, -1000.0f, 700.0f, 200.0f);      //表示＆座標
-			//m_manager->SetScale(m_handle, 10.0f, 10.0f, 10.0f);   //大きさ
-			//m_manager->SetRotation(m_handle, 0.0f, 59.7f, 0.0f);
+			// 向かい風_3
+			m_handle = m_manager->Play(m_effect2, -1300.0f, 500.0f, -600.0f);      //表示＆座標
+			m_manager->SetScale(m_handle, 10.0f, 10.0f, 10.0f);   //大きさ
+			m_manager->SetRotation(m_handle, 0.0f, 59.7f, 0.0f);
 
-			//// 向かい風_3
-			//m_handle = m_manager->Play(m_effect2, -1000.0f, 700.0f, 200.0f);      //表示＆座標
-			//m_manager->SetScale(m_handle, 10.0f, 10.0f, 10.0f);   //大きさ
-			//m_manager->SetRotation(m_handle, 0.0f, 59.7f, 0.0f);
+			// 向かい風_4
+			m_handle = m_manager->Play(m_effect2, -1900.0f, 500.0f, 400.0f);      //表示＆座標
+			m_manager->SetScale(m_handle, 10.0f, 10.0f, 10.0f);   //大きさ
+			m_manager->SetRotation(m_handle, 0.0f, 59.7f, 0.0f);
 
-			//// 向かい風_4
-			//m_handle = m_manager->Play(m_effect2, -1000.0f, 700.0f, 200.0f);      //表示＆座標
-			//m_manager->SetScale(m_handle, 10.0f, 10.0f, 10.0f);   //大きさ
-			//m_manager->SetRotation(m_handle, 0.0f, 59.7f, 0.0f);
+			// 向かい風_5
+			m_handle = m_manager->Play(m_effect2, -1300.0f, 500.0f, 400.0f);      //表示＆座標
+			m_manager->SetScale(m_handle, 10.0f, 10.0f, 10.0f);   //大きさ
+			m_manager->SetRotation(m_handle, 0.0f, 59.7f, 0.0f);
 
-			//// 向かい風_5
-			//m_handle = m_manager->Play(m_effect2, -1000.0f, 700.0f, 200.0f);      //表示＆座標
-			//m_manager->SetScale(m_handle, 10.0f, 10.0f, 10.0f);   //大きさ
-			//m_manager->SetRotation(m_handle, 0.0f, 59.7f, 0.0f);
+			// 向かい風_6
+			m_handle = m_manager->Play(m_effect2, -700.0f, 500.0f, 400.0f);      //表示＆座標
+			m_manager->SetScale(m_handle, 10.0f, 10.0f, 10.0f);   //大きさ
+			m_manager->SetRotation(m_handle, 0.0f, 59.7f, 0.0f);
 
-			//// 向かい風_6
-			//m_handle = m_manager->Play(m_effect2, -1000.0f, 700.0f, 200.0f);      //表示＆座標
-			//m_manager->SetScale(m_handle, 10.0f, 10.0f, 10.0f);   //大きさ
-			//m_manager->SetRotation(m_handle, 0.0f, 59.7f, 0.0f);
+			// 左追い風
+			m_handle = m_manager->Play(m_effect2, 100.0f, 400.0f, 1300.0f);      //表示＆座標
+			m_manager->SetScale(m_handle, 10.0f, 10.0f, 10.0f);   //大きさ
+			m_manager->SetRotation(m_handle, 0.0f, 80.0f, 0.0f);
 
-			//// 向かい風_7
-			//m_handle = m_manager->Play(m_effect2, -1000.0f, 700.0f, 200.0f);      //表示＆座標
-			//m_manager->SetScale(m_handle, 10.0f, 10.0f, 10.0f);   //大きさ
-			//m_manager->SetRotation(m_handle, 0.0f, 59.7f, 0.0f);
-
-			//// 向かい風_8
-			//m_handle = m_manager->Play(m_effect2, -1000.0f, 700.0f, 200.0f);      //表示＆座標
-			//m_manager->SetScale(m_handle, 10.0f, 10.0f, 10.0f);   //大きさ
-			//m_manager->SetRotation(m_handle, 0.0f, 59.7f, 0.0f);
-
-
+			// 上昇気流1
+			m_handle = m_manager->Play(m_effect, -1000.0f, 200.0f, 2500.0f);      //表示＆座標
+			m_manager->SetScale(m_handle, 3.0f, 3.0f, 3.0f);   //大きさ
 
 		}
 		break;
 	case STAGE_3:
+		if (time > 130.0f)
+		{
+			time = 0;
+			// 左追い風
+			m_handle = m_manager->Play(m_effect2, -1300.0f, 500.0f, -600.0f);      //表示＆座標
+			m_manager->SetScale(m_handle, 10.0f, 10.0f, 10.0f);   //大きさ
+			m_manager->SetRotation(m_handle, 0.0f, 80.0f, 0.0f);
 
+			// 右追い風
+			m_handle = m_manager->Play(m_effect2, -600.0f, 500.0f, -600.0f);      //表示＆座標
+			m_manager->SetScale(m_handle, 10.0f, 10.0f, 10.0f);   //大きさ
+			m_manager->SetRotation(m_handle, 0.0f, 14.1f, 0.0f);
+
+			// 上昇気流1
+			m_handle = m_manager->Play(m_effect, -1000.0f, 200.0f, 3000.0f);      //表示＆座標
+			m_manager->SetScale(m_handle, 3.0f, 3.0f, 3.0f);   //大きさ
+		}
 		break;
 	case STAGE_4:
 	//=====================
@@ -290,8 +303,8 @@ int EffectManager::Play(int Handle)
 			m_manager->SetScale(m_handle, 10.0f, 10.0f, 10.0f);   //大きさ
 
 			// 真ん中向かい風
-			m_handle = m_manager->Play(m_effect2, -1000.0f, 700.0f, 200.0f);      //表示＆座標
-			m_manager->SetScale(m_handle, 10.0f, 10.0f, 10.0f);   //大きさ
+			m_handle = m_manager->Play(m_effect2, -1000.0f, 700.0f, 0.0f);      //表示＆座標
+			m_manager->SetScale(m_handle, 12.0f, 16.0f, 12.0f);   //大きさ
 			m_manager->SetRotation(m_handle, 0.0f, 59.7f, 0.0f);
 
 			// ゴール前手前左追い風
@@ -316,8 +329,35 @@ int EffectManager::Play(int Handle)
 
 		}
 		break;
-	case STAGE_5:
 
+	case STAGE_5:
+		if (time > 130.0f)
+		{
+			// 真ん中向かい風
+			time = 0;
+			m_handle = m_manager->Play(m_effect2, -1000.0f, 500.0f, -500.0f);      //表示＆座標
+			m_manager->SetScale(m_handle, 12.0f, 10.0f, 12.0f);   //大きさ
+			m_manager->SetRotation(m_handle, 0.0f, 59.7f, 0.0f);
+
+			// 左追い風1
+			m_handle = m_manager->Play(m_effect2, -500.0f, 500.0f, 1000.0f);      //表示＆座標
+			m_manager->SetScale(m_handle, 10.0f, 10.0f, 10.0f);   //大きさ
+			m_manager->SetRotation(m_handle, 0.0f, 80.0f, 0.0f);
+
+			// 左追い風2
+			m_handle = m_manager->Play(m_effect2, -500.0f, 500.0f, 2800.0f);      //表示＆座標
+			m_manager->SetScale(m_handle, 10.0f, 10.0f, 10.0f);   //大きさ
+			m_manager->SetRotation(m_handle, 0.0f, 80.0f, 0.0f);
+
+			// 上昇気流1
+			m_handle = m_manager->Play(m_effect, -2500.0f, 300.0f, 1000.0f);      //表示＆座標
+			m_manager->SetScale(m_handle, 5.0f, 6.0f, 5.0f);   //大きさ
+
+			// 上昇気流2
+			m_handle = m_manager->Play(m_effect, -900.0f, 500.0f, 1800.0f);      //表示＆座標
+			m_manager->SetScale(m_handle, 5.0f, 6.0f, 5.0f);   //大きさ
+
+		}
 		break;
 
 	default:

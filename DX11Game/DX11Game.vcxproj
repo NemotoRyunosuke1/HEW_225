@@ -86,6 +86,8 @@
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)$(ProjectName)\</OutDir>
     <TargetName>$(ProjectName)x86</TargetName>
+    <IncludePath>C:\Users\takum\Desktop\DX22\HEW_225\DX11Game;C:\Users\takum\Desktop\DX22\HEW_225\DX11Game\Effekseer;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\takum\Desktop\DX22\HEW_225\DX11Game;C:\Users\takum\Desktop\DX22\HEW_225\DX11Game\Effekseer;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
