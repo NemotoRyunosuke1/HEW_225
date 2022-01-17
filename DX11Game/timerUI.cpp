@@ -18,6 +18,7 @@ TimerUI::TimerUI()
 	m_size = XMFLOAT3(1000, 30, 0);
 	m_fRemainTimer = GAMEOVER_TIME;
 	m_nScoreNum = 3;	// 星野数
+	m_timer = 0;
 }
 TimerUI::~TimerUI()
 {
@@ -29,7 +30,7 @@ void TimerUI::Update()
 {
 	//スタートタイマー
 	m_fCurrentTime = (float)timeGetTime();
-	m_timer = (m_fCurrentTime - m_fRemainTime) / 1000;
+	m_timer += 1.0f/60.0f;
 	m_fRemainTimer = GAMEOVER_TIME - m_timer;
 
 	// 星野獲得数変化

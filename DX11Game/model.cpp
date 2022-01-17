@@ -34,6 +34,8 @@
 
 #define MAX_FLY_Y (2000)	// 最高高度		
 
+#define WING_STN_DICREASE (20)	// スタミナ消費量
+
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
@@ -202,6 +204,15 @@ void UpdateModel(void)
 
 	}
 
+	// 移動範囲制限
+	if (g_posModel.y < 0.0f)	// 地面 
+	{
+		g_posModel.y = 0.0f;
+	}
+	if (g_posModel.y > MAX_FLY_Y)	// 地面 
+	{
+		g_posModel.y = MAX_FLY_Y;
+	}
 	// スタン時
 	if (g_bStan)
 	{
@@ -219,7 +230,7 @@ void UpdateModel(void)
 		g_posModel.y -= 1.1f;
 
 		// レバガチャ判定
-		if (stickY > 20000 || stickX > 20000 || stickY < -20000 || stickX < -20000)
+		if (stickY > 20000 || stickX > 20000 || stickY < -20000 || stickX < -20000 || GetKeyTrigger(VK_A) ||  GetKeyTrigger(VK_D) || GetKeyTrigger(VK_W) || GetKeyTrigger(VK_S))
 		{
 			if (!g_bStickTrigger)
 			{
@@ -499,7 +510,7 @@ void UpdateModel(void)
 		}
 	}
 	// キー旋回
-	if ((GetKeyPress(VK_LEFT )|| GetKeyPress(VK_A))&& !bWind )
+	if ((GetKeyPress(VK_LEFT )|| GetKeyPress(VK_A))&& !bWind && !g_bOverHeart)
 	{	
 		// 機体のロール
 		g_rotDestModel.z = -30.0f;
@@ -510,7 +521,7 @@ void UpdateModel(void)
 		{
 			// スタミナ減少
 			g_fStaminaDecrease = -0.3f;
-			g_stm += g_fStaminaDecrease;	
+				
 			g_rotDestModel.y -= 2.0f;
 			g_bSharpTurn = true;
 		}
@@ -520,7 +531,7 @@ void UpdateModel(void)
 		}
 		
 	}
-	else if ((GetKeyPress(VK_RIGHT) || GetKeyPress(VK_D)) && !bWind)
+	else if ((GetKeyPress(VK_RIGHT) || GetKeyPress(VK_D)) && !bWind && !g_bOverHeart)
 	{
 		// 機体のロール
 		g_rotDestModel.z = 30.0f;
@@ -531,7 +542,7 @@ void UpdateModel(void)
 		{
 			// スタミナ減少
 			g_fStaminaDecrease = -0.3f;
-			g_stm += g_fStaminaDecrease;
+		
 			g_rotDestModel.y += 2.0f;
 			g_bSharpTurn = true;
 		}
@@ -542,7 +553,7 @@ void UpdateModel(void)
 	} 
 	
 	
-	if (GetJoyCount() > 0)
+	if (GetJoyCount() > 0 && !g_bOverHeart)
 	{
 		// 左アナログスティック旋回
 		g_rotDestModel.y +=  1.0f * stickX / 20000;
@@ -552,8 +563,8 @@ void UpdateModel(void)
 		// 羽ばたきｶｿｸ
 		if (GetJoyButton(0, JOYSTICKID6) && !g_bOverHeart)
 		{
-			g_fStaminaDecrease = -0.3f;
-			g_stm += g_fStaminaDecrease;	// スタミナ減少
+			//g_fStaminaDecrease = -0.3f;
+		
 			g_rotDestModel.y += 1.0f * stickX / 9000;
 			g_bSharpTurn = true;
 		}
@@ -586,7 +597,7 @@ void UpdateModel(void)
 		g_rotDestModel.z += 30;
 		CSound::Play(SE_SWING);
 		g_bWing = true;
-		//g_stm -= 10.0f;	// スタミナ減少
+		g_stm -= WING_STN_DICREASE;	// スタミナ減少
 	}
 
 	// スペースキー羽ばた
@@ -596,7 +607,8 @@ void UpdateModel(void)
 		g_accModel.y += 3;
 		g_accModel.z += 3;
 		CSound::Play(SE_SWING);
-		g_bWing = true;
+		g_bWing = true;		
+		g_stm -= WING_STN_DICREASE;	// スタミナ減少
 		/*CSound::SetVolume(SE_SWING, 5.0f);
 		CSound::Play(SE_SWING);*/
 		//g_rotDestModel.y += 1.0f;// *g_rotDestModel.y / 10;
@@ -794,15 +806,6 @@ void UpdateModel(void)
 	g_moveModel.y += (0.0f - g_moveModel.y) * RATE_MOVE_MODEL;
 	g_moveModel.z += (0.0f - g_moveModel.z) * RATE_MOVE_MODEL;
 
-	// 移動範囲制限
-	if (g_posModel.y < 0.0f)	// 地面 
-	{
-		g_posModel.y = 0.0f;
-	}
-	if (g_posModel.y > MAX_FLY_Y)	// 地面 
-	{
-		g_posModel.y = MAX_FLY_Y;
-	}
 	/*if (g_posModel.x < -310.0f) {
 		g_posModel.x = -310.0f;
 	}
@@ -840,7 +843,7 @@ void UpdateModel(void)
 		}
 
 	}
-	else if(!g_bSharpTurn)
+	else 
 	{
 		// スタミナ回復
 		if (!bWind)	// 風に乗ってないとき

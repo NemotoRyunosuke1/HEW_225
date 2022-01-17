@@ -387,7 +387,7 @@ void UpdateEnemy(void)
 		else	//　プレイヤーが探索範囲に入っていないとき
 		{
 			// 初期位置にいる時
-			if (CollisionSphere(g_enemy[i].m_initPos, 10, g_enemy[i].m_pos, 10.0f))
+			if (CollisionSphere(g_enemy[i].m_initPos, 200, g_enemy[i].m_pos, 200))
 			{
 				// 角度を戻す
 				// X軸
