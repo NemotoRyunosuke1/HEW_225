@@ -2,7 +2,7 @@
 //
 // リザルトシーンシーン処理 [resultScene.cpp]
 // Author : SuzukiTakumi 
-//
+//  
 //=============================================================================
 #include "resultScene.h"
 #include "debugproc.h"
