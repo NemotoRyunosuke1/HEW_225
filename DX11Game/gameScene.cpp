@@ -789,7 +789,7 @@ void GameScene::Update()
 			StartStanModel();
 			CollisionObjectModel(pos,size1,size2,false);
 		}
-
+		CollisionEnemy(pos, size1, size2, false);
 	}
 
 	// オーバーヒートかスタンしたら

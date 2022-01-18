@@ -1,6 +1,7 @@
 #pragma once
 
 #include "object.h"
+#include "Sound.h"
 
 enum EButtonTexture
 {
@@ -32,6 +33,7 @@ public:
 	~Button();
 	HRESULT Init();
 	void Update();
+	void Update(eSE se);
 	void Draw();
 	bool GetFlg();
 	void SetFlg(bool);
