@@ -159,6 +159,9 @@
     <ClCompile Include="wind.cpp">
       <Filter>ソースファイル\scene\gameScene\object</Filter>
     </ClCompile>
+    <ClCompile Include="windManager.cpp">
+      <Filter>ソースファイル\scene\gameScene\object</Filter>
+    </ClCompile>
     <ClCompile Include="gameOverScene.cpp">
       <Filter>ソースファイル\scene\gameOverScene</Filter>
     </ClCompile>
@@ -180,11 +183,11 @@
     <ClCompile Include="escapeText.cpp">
       <Filter>ソースファイル\scene\gameScene\UI</Filter>
     </ClCompile>
-    <ClCompile Include="windManager.cpp">
-      <Filter>ソースファイル\scene\gameScene\object</Filter>
-    </ClCompile>
     <ClCompile Include="tutorial.cpp">
-      <Filter>ソースファイル\scene\gameScene\UI</Filter>
+      <Filter>ソースファイル\scene\gameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Cunt.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -361,6 +364,9 @@
     </ClInclude>
     <ClInclude Include="tutorial.h">
       <Filter>ヘッダーファイル\scene\gameScene\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Cunt.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

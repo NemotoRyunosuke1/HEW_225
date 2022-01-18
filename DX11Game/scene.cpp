@@ -34,7 +34,7 @@ Scene::Scene()
 	// ゲームの開始するときのシーン
 	m_eScene = SCENE_TITLE;
 	// ステージ初期化
-	m_eStage = STAGE_4;
+	m_eStage = STAGE_1;
 #endif
 	
 	// サウンド初期化

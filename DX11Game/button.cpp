@@ -1,7 +1,7 @@
 #include "button.h"
 #include "input.h"
 #include "debugproc.h"
-#include "Sound.h"
+
 
 //*****************************************************************************
 // 
@@ -18,11 +18,11 @@
 #define PATH_BUTTON_PAUSE_TEXTURE1 L"data/texture/scenesenni/pause/restart.png"
 #define PATH_BUTTON_PAUSE_TEXTURE2 L"data/texture/scenesenni/pause/backgame.png"
 #define PATH_BUTTON_PAUSE_TEXTURE3 L"data/texture/scenesenni/pause/backstageselect.png"
-#define PATH_BUTTON_STAGE1_TEXTURE L"data/texture/scenesenni/stageselect/stage1.png"
-#define PATH_BUTTON_STAGE2_TEXTURE L"data/texture/scenesenni/stageselect/stage2.png"
-#define PATH_BUTTON_STAGE3_TEXTURE L"data/texture/scenesenni/stageselect/stage3.png"
-#define PATH_BUTTON_STAGE4_TEXTURE L"data/texture/scenesenni/stageselect/stage4.png"
-#define PATH_BUTTON_STAGE5_TEXTURE L"data/texture/scenesenni/stageselect/stage5.png"
+#define PATH_BUTTON_STAGE1_TEXTURE L"data/texture/scenesenni/stageselect/1-1.png"
+#define PATH_BUTTON_STAGE2_TEXTURE L"data/texture/scenesenni/stageselect/1-2.png"
+#define PATH_BUTTON_STAGE3_TEXTURE L"data/texture/scenesenni/stageselect/1-3.png"
+#define PATH_BUTTON_STAGE4_TEXTURE L"data/texture/scenesenni/stageselect/1-4.png"
+#define PATH_BUTTON_STAGE5_TEXTURE L"data/texture/scenesenni/stageselect/1-5.png"
 
 
 
@@ -69,6 +69,7 @@ HRESULT Button::Init()
 
 	m_pos = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	m_size = XMFLOAT3(100.0f, 50.0f, 0.0f);
+	m_color = XMFLOAT3(1.0f, 1.0f, 1.0f);
 	m_flg = false;
 	m_use = false;
 	m_frameNum = 0;
@@ -112,10 +113,10 @@ void Button::Update()
 			m_size.y = m_sizeUpDown.y * 1.1f;
 
 			// カラー変更(黄色)
-			m_color = XMFLOAT3(1.0f, 1.0f, 0.0f);
+			//m_color = XMFLOAT3(1.0f, 1.0f, 0.0f);
 
 			//　決定
-			if (GetJoyRelease(0, JOYSTICKID1) || GetKeyRelease(VK_RETURN))
+			if (GetJoyRelease(0, JOYSTICKID1) || GetKeyRelease(VK_RETURN) || GetKeyTrigger(VK_SPACE))
 			{
 				if (!m_bSoudTriggerDecision)
 				{
@@ -148,6 +149,81 @@ void Button::Update()
 	PrintDebugProc("[ﾏｳｽ ｲﾁ : (%d : %d )]\n", point.x, point.y);
 	PrintDebugProc("[ﾏｳｽ ｲﾁ : (%d : %d )]\n", GetMousePosition()->x, GetMousePosition()->y);
 	
+
+#endif
+}
+void Button::Update(eSE se)
+{
+	POINT point;
+	GetCursorPos(&point);
+	BOOL pointW = ScreenToClient(GetMainWnd(), &point);
+
+	// 使われている時
+	if (m_use)
+	{
+		//カーソルがあわされた時
+		if ((GetMousePosition()->x > (long)(m_pos.x - m_size.x / 2 + FULLSCREEN_WIDTH / 2)) && (GetMousePosition()->x < (long)(m_pos.x + m_size.x / 2 + FULLSCREEN_WIDTH / 2)) && (-GetMousePosition()->y < (long)(m_pos.y + m_size.y / 2 - FULLSCREEN_HEIGHT / 2)) && (-GetMousePosition()->y > (long)(m_pos.y - m_size.y / 2 - FULLSCREEN_HEIGHT / 2)))
+		{
+			if (GetMouseButton(MOUSEBUTTON_L))
+			{
+				if (!g_bButton)
+				{
+
+					g_bButton = true;
+				}
+				m_flg = true;
+			}
+			else
+			{
+				m_flg = false;
+				g_bButton = false;
+			}
+		}
+
+		// 選択されてる時
+		if (m_select)
+		{
+			// 大きさアップ
+			m_size.x = m_sizeUpDown.x * 1.1f;
+			m_size.y = m_sizeUpDown.y * 1.1f;
+
+			// カラー変更(黄色)
+			//m_color = XMFLOAT3(1.0f, 1.0f, 0.0f);
+
+			//　決定
+			if (GetJoyRelease(0, JOYSTICKID1) || GetKeyRelease(VK_RETURN) || GetKeyTrigger(VK_SPACE))
+			{
+				if (!m_bSoudTriggerDecision)
+				{
+					CSound::SetVolume(se, 1.0f);
+					CSound::Play(se);
+					m_bSoudTriggerDecision = true;
+				}
+				m_flg = true;
+			}
+
+			// サウンドトリガー移動した時の効果音
+			if (!m_bSoudTrigger)
+			{
+				CSound::SetVolume(SE_SELECT2, 1.0f);
+				CSound::Play(SE_SELECT2);
+				m_bSoudTrigger = true;
+			}
+		}
+		else
+		{
+			m_size.x = m_sizeUpDown.x;
+			m_size.y = m_sizeUpDown.y;
+			m_color = XMFLOAT3(1.0f, 1.0f, 1.0f);
+			m_bSoudTrigger = false;
+		}
+	}
+#if _DEBUG
+	// デバック用文字列
+	// デバック用文字列
+	PrintDebugProc("[ﾏｳｽ ｲﾁ : (%d : %d )]\n", point.x, point.y);
+	PrintDebugProc("[ﾏｳｽ ｲﾁ : (%d : %d )]\n", GetMousePosition()->x, GetMousePosition()->y);
+
 
 #endif
 }

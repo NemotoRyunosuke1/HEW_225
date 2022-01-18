@@ -204,12 +204,12 @@ void StageButton::Update()
 
 	// –ß‚éƒ{ƒ^ƒ“
 	m_bBack = m_pButton[0].GetFlg();
-
-	for (int i = 0; i < MAX_BUTTON; i++)
+	m_pButton[0].Update();
+	for (int i = 1; i < MAX_BUTTON; i++)
 	{
 		// Žg‚í‚ê‚Ä‚¢‚È‚©‚Á‚½‚çˆ—‚µ‚È‚¢
 		if (!m_pButton[i].GetUse())continue;
-		m_pButton[i].Update();
+		m_pButton[i].Update(SE_WIND);
 		
 	}
 #if _DEBUG

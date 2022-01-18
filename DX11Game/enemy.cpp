@@ -387,7 +387,7 @@ void UpdateEnemy(void)
 		else	//　プレイヤーが探索範囲に入っていないとき
 		{
 			// 初期位置にいる時
-			if (CollisionSphere(g_enemy[i].m_initPos, 10, g_enemy[i].m_pos, 10.0f))
+			if (CollisionSphere(g_enemy[i].m_initPos, 200, g_enemy[i].m_pos, 200))
 			{
 				// 角度を戻す
 				// X軸
@@ -460,4 +460,73 @@ void UpdateEnemy(void)
 			break;
 		}
 		
+	}
+	void CollisionEnemy(XMFLOAT3 pos, XMFLOAT3 size1, XMFLOAT3 size2, bool bAout)
+	{
+		for (int i = 0; i < MAX_ENEMY; i++)
+		{
+			if (g_enemy[i].m_use)continue;
+			
+			// 当たったらそこで止まる処理
+			if (bAout)	// size2を使わないとき
+			{
+				if (g_enemy[i].m_pos.x + g_enemy[i].collisionSize / 2 > pos.x - size1.x / 2)
+				{
+					g_enemy[i].m_pos.x = pos.x - size1.x / 2;
+				}
+				if (g_enemy[i].m_pos.x - g_enemy[i].collisionSize / 2 < pos.x + size1.x / 2)
+				{
+					g_enemy[i].m_pos.x = pos.x + size1.x / 2;
+				}
+				if (g_enemy[i].m_pos.y + g_enemy[i].collisionSize / 2 > pos.y - size1.y / 2)
+				{
+					g_enemy[i].m_pos.y = pos.y - size1.y / 2;
+				}
+				if (g_enemy[i].m_pos.y - g_enemy[i].collisionSize / 2 < pos.y + size1.y / 2)
+				{
+					g_enemy[i].m_pos.y = pos.x + size1.y / 2;
+				}
+				if (g_enemy[i].m_pos.z + g_enemy[i].collisionSize / 2 > pos.z - size1.z / 2)
+				{
+					g_enemy[i].m_pos.z = pos.y - size1.z / 2;
+				}
+				if (g_enemy[i].m_pos.z - g_enemy[i].collisionSize / 2 < pos.z + size1.z / 2)
+				{
+					g_enemy[i].m_pos.z = pos.x + size1.z / 2;
+				}
+			}
+			else   // size2を使うとき(多分ビルだけにしか使わん)
+			{
+				if (g_enemy[i].m_pos.x > pos.x + size2.x)
+				{
+					g_enemy[i].m_pos.x = pos.x + size2.x + g_enemy[i].collisionSize / 2;
+				}
+				if (g_enemy[i].m_pos.x < pos.x + size1.x)
+				{
+					g_enemy[i].m_pos.x = pos.x + size1.x - g_enemy[i].collisionSize / 2;
+				}
+				if (g_enemy[i].m_pos.y + g_enemy[i].collisionSize / 2 > pos.y + size1.y / 2)
+				{
+					//g_enemy[i].m_pos.y = pos.y + size1.y / 2;
+				}
+				if (g_enemy[i].m_pos.y - g_enemy[i].collisionSize / 2 < pos.y + size2.y &&g_enemy[i].m_pos.x  < pos.x + size2.x&&g_enemy[i].m_pos.x > pos.x + size1.x&&g_enemy[i].m_pos.z > pos.z + size1.z&&g_enemy[i].m_pos.z < pos.z + size2.z)
+				{
+					g_enemy[i].m_pos.y = pos.y + size2.y + g_enemy[i].collisionSize / 2;
+				}
+				if (g_enemy[i].m_pos.z < pos.z + size1.z)
+				{
+					g_enemy[i].m_pos.z = pos.z + size1.z - g_enemy[i].collisionSize / 2;
+				}
+				if (g_enemy[i].m_pos.z > pos.z + size2.z)
+				{
+					g_enemy[i].m_pos.z = pos.z + size2.z + g_enemy[i].collisionSize / 2;
+				}
+			}
+
+		}
+		
+
+		
+
+
 	}
