@@ -20,7 +20,7 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-#define MODEL_PLANE			"data/model/mukudorianime2.fbx"
+#define MODEL_PLANE			"data/model/skydome.fbx"
 
 
 #define	VALUE_MOVE_MODEL	(0.50f)		// 移動速度
