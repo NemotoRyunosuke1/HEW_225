@@ -916,7 +916,7 @@ void GameScene::Draw()
 	{
 		m_pResult->Draw();
 	}
-	m_pResult->Draw();
+	
 	if (GetOverHeartModel() || GetStanModel())
 	{
 		// ƒŒƒoƒKƒ`ƒƒ•`‰æ

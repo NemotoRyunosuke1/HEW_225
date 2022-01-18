@@ -60,7 +60,7 @@ void StageSelectBG::Draw()
 	DrawPolygon(pDC);				// ポリゴン描画
 
 	SetPolygonSize(800, 300);	// ポリゴンサイズ
-	SetPolygonPos(-FULLSCREEN_WIDTH/2 + 800, 300);	// ポリゴン位置
+	SetPolygonPos(-FULLSCREEN_WIDTH/2 + 600, 300);	// ポリゴン位置
 	SetPolygonTexture(m_pTexture3);	// ポリゴンテクスチャ
 	SetPolygonUV(0.0f, 0.0f);		// ポリゴンUV座標開始位置
 	SetPolygonAlpha(1.0f);			// ポリゴン透明度
