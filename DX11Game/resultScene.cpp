@@ -7,7 +7,6 @@
 #include "resultScene.h"
 #include "debugproc.h"
 
-
 #define Star1			L"data/texture/StarIcon.png"	    //¯‚P
 #define Star2			L"data/texture/StarIcon.png"		//¯‚Q
 #define Star3			L"data/texture/StarIcon.png"		//¯‚R
