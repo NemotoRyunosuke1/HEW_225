@@ -126,6 +126,9 @@ void CCamera::Update()
 	}
 	else	// マウス視点移動
 	{
+		m_vDestAngle.y = GetModelRot().y;
+		m_vDestAngle.x = GetModelRot().x;
+
 		/*if (mouseMoveX == 0 && mouseMoveY == 0)
 		{
 			m_vSrcPos.x = SinDeg(GetModelRot().y) * m_fLengthInterval + CAM_POS_P_X;
