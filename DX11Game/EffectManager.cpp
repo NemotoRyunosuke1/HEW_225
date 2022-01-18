@@ -148,10 +148,22 @@ int EffectManager::Play(int Handle)
 		{
 			// ƒS[ƒ‹•—
 			time = 0;
-			m_handle = m_manager->Play(m_effect5, -1300.0f, 500.0f, 3000.0f);
+			m_handle = m_manager->Play(m_effect5, -1000.0f, 600.0f, 4000.0f);
 			m_manager->SetScale(m_handle, 20.0f, 25.0f, 20.0f);
 		}
+
 	break;
+	case 4:
+		//•—_ã_‰©F
+		if (time > 129.9f)
+		{
+			// ƒS[ƒ‹•—
+			time = 0;
+			m_handle = m_manager->Play(m_effect5, -1000.0f, 600.0f, 2000.0f);
+			m_manager->SetScale(m_handle, 20.0f, 25.0f, 20.0f);
+		}
+
+		break;
 	default:
 	
 		break;
