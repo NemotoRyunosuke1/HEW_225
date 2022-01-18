@@ -357,7 +357,7 @@ GameScene::GameScene(EStage stage)
 		CrewCreate(XMFLOAT3(-1000.0f, 200.0f, 1800.0f));// 6
 		CrewCreate(XMFLOAT3(-1000.0f, 800.0f, 2200.0f));// 7
 		CrewCreate(XMFLOAT3(-1000.0f, 500.0f, 2500.0f));// 8
-
+		
 		// ゴールUI位置初期化
 		SetGoalUI(XMFLOAT3(-1000.0f, 600.0f,2000.0f), 1200, 600, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);
 		m_pGoal = new Goal(XMFLOAT3(-1000.0f, 600.0f, 2000.0f));
@@ -368,16 +368,20 @@ GameScene::GameScene(EStage stage)
 		InitMeshField(20, 20, 2000.0f, 2000.0f);
 
 		// ビルの配置
-		for (int i = 0; i < 12; i++)
+		for (int i = 0; i < 22; i++)
 		{
 			for (int j = 0; j < 2; j++)
 			{
-				m_pBuliding[i + j * 12].Create(XMFLOAT3(-3800 + j * 5100, 10, 0 + i * 300), XMFLOAT3(10.0f, 8.0f + rand() % 5, 10.0f));
+				m_pBuliding[i + j * 22].Create(XMFLOAT3(-3650 + j * 4800, 10, -2600 + i * 300), XMFLOAT3(10.0f, 8.0f + rand() % 5, 10.0f));
 			}
 		}
 		for (int i = 0; i < 15; i++)
 		{
-			m_pBuliding[i + 24].Create(XMFLOAT3(-3350 + i * 300, 10, 3300), XMFLOAT3(10.0f, 8.0f + rand() % 5, 10.0f));
+			m_pBuliding[i + 44].Create(XMFLOAT3(-3350 + i * 300, 10, 3700), XMFLOAT3(10.0f, 8.0f + rand() % 5, 10.0f));
+		}
+		for (int i = 0; i < 15; i++)
+		{
+			m_pBuliding[i + 59].Create(XMFLOAT3(-3350 + i * 300, 10, -2600), XMFLOAT3(10.0f, 8.0f + rand() % 5, 10.0f));
 		}
 
 		// ゴールUI位置初期化
@@ -385,12 +389,12 @@ GameScene::GameScene(EStage stage)
 		m_pGoal = new Goal(XMFLOAT3(-1000.0f, 1200.0f, 6000.0f));
 
 		// 仲間の配置
-		CrewCreate(XMFLOAT3(-1000.0f, 500.0f, -600.0f));// 1
-		CrewCreate(XMFLOAT3(-1000.0f, 500.0f, 600.0f));// 2
-		CrewCreate(XMFLOAT3(-300.0f, 500.0f, 1800.0f));// 3
-		CrewCreate(XMFLOAT3(-1700.0f, 500.0f, 1800.0f));// 4
+		//CrewCreate(XMFLOAT3(-1000.0f, 500.0f, -600.0f));// 1
+		//CrewCreate(XMFLOAT3(-1000.0f, 500.0f, 600.0f));// 2
+		//CrewCreate(XMFLOAT3(-300.0f, 500.0f, 1800.0f));// 3
+		//CrewCreate(XMFLOAT3(-1700.0f, 500.0f, 1800.0f));// 4
 
-		CrewCreate(XMFLOAT3(-1000.0f, 500.0f, 3000.0f));// 5
+		//CrewCreate(XMFLOAT3(-1000.0f, 500.0f, 3000.0f));// 5
 
 		// 敵の配置
 		CreateEnemy(XMFLOAT3(-1000.0f, 500.0f, 0.0f));// 1
