@@ -11,6 +11,10 @@
 // マクロ定義
 //*****************************************************************************
 #define FADE_RATE 0.02f // フェードイン/アウトの刻み
+#define PATH_CURRNET_CREW	L"data/texture/画面切り替え.png"
+
+#define FRAME_COUNT_X 5	
+#define FRAME_COUNT_Y 18	
 
 //*****************************************************************************
 // グローバル変数
@@ -24,6 +28,10 @@ float g_fGreen = 0.0f;
 float g_fBlue = 0.0f;
 float g_fAlpha = 1.0f; // 不透明度
 bool  g_bFlg;
+
+static int g_nAnimFrame;
+
+ID3D11ShaderResourceView* g_pTexture;
 
 //=============================================================================
 // コンストラクタ
@@ -52,6 +60,9 @@ EScene Fade::GetScene()
 //=============================================================================
 HRESULT InitFade()
 {
+	ID3D11Device* pDevice = GetDevice();
+	CreateTextureFromFile(pDevice, PATH_CURRNET_CREW, &g_pTexture);
+	g_nAnimFrame = 0;
 	g_eFade = FADE_IN;
 	g_fAlpha = 1.0f;
 	g_bFlg = false;
@@ -75,14 +86,15 @@ void UpdateFade()
 	case FADE_NONE:
 		break;
 	case FADE_OUT:
+		g_nAnimFrame++;
 		g_fAlpha += FADE_RATE; // 不透明度を増す
-		if (g_fAlpha >= 1.0f) {
+		if (g_nAnimFrame >= 60) {
 			// フェードイン処理に切り替え
 			g_fAlpha = 1.0f;
 			g_eFade = FADE_IN;
 			// シーン切替
 			g_bFlg = true;
-			
+			g_nAnimFrame = 60;
 			Scene::SetScene(g_eNext);
 		}
 		// ボリュームもフェードアウト
@@ -90,9 +102,11 @@ void UpdateFade()
 		break;
 	case FADE_IN:
 		g_fAlpha -= FADE_RATE; // 透明度を増す
-		if (g_fAlpha <= 0.0f) {
+		g_nAnimFrame--;
+		if (g_nAnimFrame <= 0.0f) {
 			// フェードインを終了する
 			g_fAlpha = 0.0f;
+			g_nAnimFrame = 0;
 			g_eFade = FADE_NONE;
 		}
 		// ボリュームもフェードイン
@@ -111,12 +125,12 @@ void DrawFade()
 	// 画面全体に半透明の矩形を描画
 	SetPolygonPos(0.0f, 0.0f);					   	// ポリゴン位置
 	SetPolygonSize(SCREEN_WIDTH, SCREEN_HEIGHT);   	// ポリゴンサイズ	
-	SetPolygonUV(0.0f, 0.0f);			// ポリゴンUV座標開始位置			   
-	SetPolygonFrameSize(1.0f, 1.0f);	// ポリゴンテクスチャサイズ			  
-	SetPolygonTexture(nullptr);			// ポリゴンテクスチャ		   
+	SetPolygonUV((g_nAnimFrame % FRAME_COUNT_X)/(float)FRAME_COUNT_X, (g_nAnimFrame / FRAME_COUNT_X) / (float)FRAME_COUNT_Y);			// ポリゴンUV座標開始位置			   
+	SetPolygonFrameSize(1.0f/ FRAME_COUNT_X, 1.0f/ FRAME_COUNT_Y);	// ポリゴンテクスチャサイズ			  
+	SetPolygonTexture(g_pTexture);			// ポリゴンテクスチャ		   
 	SetPolygonColor(g_fRed, g_fGreen, g_fBlue);		// ポリゴンカラー
 	SetBlendState(BS_ALPHABLEND);	// アルファブレンド有効				  
-	SetPolygonAlpha(g_fAlpha);		// ポリゴン透明度
+	SetPolygonAlpha(1.0f);		// ポリゴン透明度
 	
 	DrawPolygon(pDC);	 // ポリゴン描画
 	// 元に戻す

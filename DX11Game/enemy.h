@@ -18,3 +18,4 @@ void DrawEnemy(void);
 
 int EnemyStartChase(int i, XMFLOAT3 pos);
 void CreateEnemy(XMFLOAT3 pos);
+void CollisionEnemy(XMFLOAT3 pos, XMFLOAT3 size1, XMFLOAT3 size2, bool aout);

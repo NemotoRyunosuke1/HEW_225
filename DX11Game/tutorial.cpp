@@ -16,6 +16,8 @@
 #define PATH_POPUP10_TEXTURE L"data/texture/tutorial/popup10.png"
 #define PATH_POPUP11_TEXTURE L"data/texture/tutorial/popup11.png"
 
+bool Tutorial::m_bPopupNum[] = {false,false, false, false, false, false, false, false, false, false, false, };
+bool Tutorial::m_bPopupNum2[] = { false,false, false, false, false, false, false, false, false, false, false, };
 
 Tutorial::Tutorial()
 {
@@ -27,10 +29,7 @@ Tutorial::Tutorial()
 	m_bPopup = false;
 	m_bTrigger = false;
 	m_nCnt = 0;
-	for (int i = 0; i < 11; i++)
-	{
-		m_bPopupNum[i] = false;
-	}
+	
 	// テクスチャ読込
 	CreateTextureFromFile(pDevice, PATH_POPUP1_TEXTURE, &m_pTexture);
 }
@@ -43,7 +42,7 @@ void Tutorial::Update(EStage stage)
 {
 	ID3D11Device* pDevice = GetDevice();
 	// ゲームに戻る
-	if (GetJoyRelease(0, JOYSTICKID1))	// コントローラーAボタン
+	if (GetJoyRelease(0, JOYSTICKID1) || GetKeyTrigger(VK_RETURN) || GetKeyTrigger(VK_SPACE))	// コントローラーAボタン
 	{
 		if (m_bPopup)
 		{
@@ -56,13 +55,13 @@ void Tutorial::Update(EStage stage)
 	if (m_bPopup)
 	{
 		m_size.x += 100.0f;
-		if (m_size.x > SCREEN_WIDTH)
+		if (m_size.x > SCREEN_WIDTH-300)
 		{
-			m_size.x = SCREEN_WIDTH;
+			m_size.x = SCREEN_WIDTH-300;
 			m_size.y += 100.0f;
-			if (m_size.y > SCREEN_HEIGHT)
+			if (m_size.y > SCREEN_HEIGHT-100)
 			{
-				m_size.y = SCREEN_HEIGHT;
+				m_size.y = SCREEN_HEIGHT-100;
 			}
 		}
 
@@ -87,22 +86,108 @@ void Tutorial::Update(EStage stage)
 			stickRY = 0;
 			m_bTrigger = false;
 		}	// スティックを下に傾けたとき
-		else if (stickLX > 20000 || stickRX > 20000)
+		else if (stickLX > 20000 || stickRX > 20000 )
 		{
 			if (!m_bTrigger)
 			{
 				m_nCnt++;
 				m_bTrigger = true;
-				if (m_nCnt > 5) m_nCnt = 0;
+				//if (m_nCnt > 5) m_nCnt = 0;
 			}
-		}	// スティックを上に傾けたとき
+		}
+		// スティックを上に傾けたとき
 		else if (stickLX < -20000 || stickRX < -20000)
 		{
 			if (!m_bTrigger)
 			{
 				m_nCnt--;
 				m_bTrigger = true;
-				if (m_nCnt < 0) m_nCnt = 5;
+				//if (m_nCnt < 0) m_nCnt = 5;
+			}
+		}
+		else
+		{
+			m_bTrigger = false;
+		}
+
+		if (GetKeyTrigger(VK_RIGHT))
+		{
+			m_nCnt++;
+			
+		 }
+
+		if (GetKeyTrigger(VK_LEFT))
+		{
+			m_nCnt--;
+			
+		}
+
+		if (m_bPopupNum2[0])
+		{
+			if (m_nCnt > 3) m_nCnt = 3;
+			if (m_nCnt < 0) m_nCnt = 0;
+			switch (m_nCnt)
+			{
+			case 0:
+				CreateTextureFromFile(pDevice, PATH_POPUP1_TEXTURE, &m_pTexture);
+				break;
+			case 1:
+				CreateTextureFromFile(pDevice, PATH_POPUP2_TEXTURE, &m_pTexture);
+				break;
+			case 2:
+				CreateTextureFromFile(pDevice, PATH_POPUP3_TEXTURE, &m_pTexture);
+				break;
+			case 3:
+				CreateTextureFromFile(pDevice, PATH_POPUP4_TEXTURE, &m_pTexture);
+				break;
+			case 4:
+				CreateTextureFromFile(pDevice, PATH_POPUP6_TEXTURE, &m_pTexture);
+				break;
+			case 5:
+				CreateTextureFromFile(pDevice, PATH_POPUP7_TEXTURE, &m_pTexture);
+				break;
+			case 6:
+				CreateTextureFromFile(pDevice, PATH_POPUP8_TEXTURE, &m_pTexture);
+				break;
+			case 7:
+				CreateTextureFromFile(pDevice, PATH_POPUP4_TEXTURE, &m_pTexture);
+				break;
+			default:
+				break;
+			}
+		}
+		if (m_bPopupNum2[6])
+		{
+			if (m_nCnt > 1) m_nCnt = 1;
+			if (m_nCnt < 0) m_nCnt = 0;
+			switch (m_nCnt)
+			{
+			case 0:
+				CreateTextureFromFile(pDevice, PATH_POPUP5_TEXTURE, &m_pTexture);
+				break;
+			case 1:
+				CreateTextureFromFile(pDevice, PATH_POPUP6_TEXTURE, &m_pTexture);
+				break;
+
+			default:
+				break;
+			}
+		}
+		if (m_bPopupNum2[10])
+		{
+			if (m_nCnt > 1) m_nCnt = 1;
+			if (m_nCnt < 0) m_nCnt = 0;
+			switch (m_nCnt)
+			{
+			case 0:
+				CreateTextureFromFile(pDevice, PATH_POPUP10_TEXTURE, &m_pTexture);
+				break;
+			case 1:
+				CreateTextureFromFile(pDevice, PATH_POPUP11_TEXTURE, &m_pTexture);
+				break;
+			
+			default:
+				break;
 			}
 		}
 	}
@@ -119,7 +204,10 @@ void Tutorial::Update(EStage stage)
 
 			}
 		}
-		
+		m_bPopupNum2[0] = false;
+		m_bPopupNum2[6] = false;
+		m_bPopupNum2[10] = false;
+
 	}
 
 	//
@@ -127,47 +215,51 @@ void Tutorial::Update(EStage stage)
 	{
 		
 	case STAGE_1:
-		// ポップアップ1
+		// ポップアップ1～4
 		if (!m_bPopupNum[0] && CollisionAABB(GetModelPos(),XMFLOAT3(10,1000,10), XMFLOAT3(-1000, 600, -1500),XMFLOAT3(100, 1000, 100)))
 		{
-			switch (m_nCnt)
-			{
-			case 0:
-				CreateTextureFromFile(pDevice, PATH_POPUP1_TEXTURE, &m_pTexture);
-				break;
-			case 1:
-				CreateTextureFromFile(pDevice, PATH_POPUP2_TEXTURE, &m_pTexture);
-				break;
-			case 2:
-				CreateTextureFromFile(pDevice, PATH_POPUP3_TEXTURE, &m_pTexture);
-				break;
-			case 3:
-				CreateTextureFromFile(pDevice, PATH_POPUP4_TEXTURE, &m_pTexture);
-				break;
-			case 4:
-				CreateTextureFromFile(pDevice, PATH_POPUP5_TEXTURE, &m_pTexture);
-				break;
-			default:
-				break;
-			}
-			CreateTextureFromFile(pDevice, PATH_POPUP1_TEXTURE, &m_pTexture);
+			
+			//CreateTextureFromFile(pDevice, PATH_POPUP1_TEXTURE, &m_pTexture);
 			m_bPopupNum[0] = true;
+			m_bPopupNum2[0] = true;
+
 			m_bPopup = true;
 		}
 
-		//	ポップアップ2
-		if (!m_bPopupNum[1] && CollisionAABB(GetModelPos(), XMFLOAT3(10, 1000, 10), XMFLOAT3(-1000, 600, -1000), XMFLOAT3(100, 1000, 100)))
+		// ポップアップ5～6
+		if (!m_bPopupNum[6] && CollisionAABB(GetModelPos(), XMFLOAT3(10, 1000, 10), XMFLOAT3(-1300, 600, 0), XMFLOAT3(100, 1000, 100)))
 		{
-			CreateTextureFromFile(pDevice, PATH_POPUP2_TEXTURE, &m_pTexture);
-			m_bPopupNum[1] = true;
+
+			//CreateTextureFromFile(pDevice, PATH_POPUP7_TEXTURE, &m_pTexture);
+			m_bPopupNum[6] = true;
+			m_bPopupNum2[6] = true;
+
 			m_bPopup = true;
 		}
 
+		// ポップアップ7
+		if (!m_bPopupNum[7] && CollisionAABB(GetModelPos(), XMFLOAT3(10, 1000, 10), XMFLOAT3(-600, 800, 900), XMFLOAT3(100, 1000, 100)))
+		{
+
+			CreateTextureFromFile(pDevice, PATH_POPUP7_TEXTURE, &m_pTexture);
+			m_bPopupNum[7] = true;
+			m_bPopupNum2[7] = true;
+
+			m_bPopup = true;
+		}
 
 		// ポップアップ4
-		if (!m_bPopupNum[4]&&GetSTM() < 100)
+		/*if (!m_bPopupNum[3]&&GetSTM() < 100)
 		{
-			CreateTextureFromFile(pDevice, PATH_POPUP4_TEXTURE, &m_pTexture);
+			CreateTextureFromFile(pDevice, PATH_POPUP3_TEXTURE, &m_pTexture);
+			m_bPopupNum[3] = true;
+			m_bPopup = true;
+		}*/
+
+		// スタン回復Tips
+		if (!m_bPopupNum[4] && (GetStanModel() || GetOverHeartModel()))
+		{
+			CreateTextureFromFile(pDevice, PATH_POPUP5_TEXTURE, &m_pTexture);
 			m_bPopupNum[4] = true;
 			m_bPopup = true;
 		}
@@ -175,6 +267,14 @@ void Tutorial::Update(EStage stage)
 	case STAGE_2:
 		break;
 	case STAGE_3:
+		// 敵攻撃Tips
+		if (!m_bPopupNum[10] && CollisionAABB(GetModelPos(), XMFLOAT3(10, 1000, 10), GetModelPos(), XMFLOAT3(100, 1000, 100)))
+		{
+			//CreateTextureFromFile(pDevice, PATH_POPUP5_TEXTURE, &m_pTexture);
+			m_bPopupNum[10] = true;
+			m_bPopupNum2[10] = true;
+			m_bPopup = true;
+		}
 		break;
 	case STAGE_4:
 		break;

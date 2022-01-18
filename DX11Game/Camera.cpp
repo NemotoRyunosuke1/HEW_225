@@ -61,7 +61,7 @@ void CCamera::Init()
 	m_vAngle = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	m_vDestAngle = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	m_vDestTargetAngle = XMFLOAT3(0.0f, 0.0f, 0.0f);
-
+	m_vLightAngle = XMFLOAT3(0.0f, -1.0f, 1.0f);
 	m_fAspectRatio = VIEW_ASPECT;		// 縦横比
 	m_fFovY = VIEW_ANGLE;				// 視野角(単位:Degree)
 	m_fNearZ = VIEW_NEAR_Z;				// 前方クリップ距離
@@ -85,7 +85,10 @@ void CCamera::Update()
 	LONG mouseMoveX = mouseX - SCREEN_CENTER_X;
 	LONG mouseMoveY = mouseY - SCREEN_CENTER_Y;
 
-	
+	// ライト方向処理
+	m_vLightAngle.x = -SinDeg(m_vDestAngle.y);
+	m_vLightAngle.z = -CosDeg(m_vDestAngle.y);
+	m_vLightAngle.y = -CosDeg(m_vDestAngle.x);
 	
 
 	// アナログスティックステート
@@ -117,12 +120,15 @@ void CCamera::Update()
 			m_vSrcPos.x = SinDeg(m_vDestAngle.y) * m_fLengthInterval + CAM_POS_P_X;
 			m_vSrcPos.y = -SinDeg(m_vDestAngle.x) * m_fLengthInterval + CAM_POS_P_Y;
 			m_vSrcPos.z = CosDeg(m_vDestAngle.y) * m_fLengthInterval + CAM_POS_P_Z;
-
+			m_vDestAngle.y += stickX/32727 * 5.0f;
 		}
 
 	}
 	else	// マウス視点移動
 	{
+		m_vDestAngle.y = GetModelRot().y;
+		m_vDestAngle.x = GetModelRot().x;
+
 		/*if (mouseMoveX == 0 && mouseMoveY == 0)
 		{
 			m_vSrcPos.x = SinDeg(GetModelRot().y) * m_fLengthInterval + CAM_POS_P_X;

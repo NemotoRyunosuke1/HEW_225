@@ -184,7 +184,7 @@
       <Filter>ソースファイル\scene\gameScene\UI</Filter>
     </ClCompile>
     <ClCompile Include="tutorial.cpp">
-      <Filter>ソースファイル\scene\gameScene\UI</Filter>
+      <Filter>ソースファイル\scene\gameScene</Filter>
     </ClCompile>
     <ClCompile Include="Cunt.cpp">
       <Filter>ソース ファイル</Filter>
