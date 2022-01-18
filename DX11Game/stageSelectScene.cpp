@@ -86,7 +86,7 @@ void StageSlectScene::Update()
 	}
 
 	// –ß‚é
-	if (m_pStageButton->GetBack())
+	if (GetJoyRelease(0, JOYSTICKID2))
 	{
 		if (!StageTrrger)
 		{
