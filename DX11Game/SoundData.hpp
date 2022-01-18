@@ -19,7 +19,8 @@ LPCWSTR g_pszFileSE[MAX_SE] = {
 	L"nakama.mp3",						// ‰ñû‰¹
 	L"Wind.mp3",						// •—
 	L"habataki.mp3",						// ‚Í‚Î‚½‚«‰¹
-	L"hidame.mp3",						// ”íƒ_ƒ‰¹
+	L"hiyoko.mp3",						// ”íƒ_ƒ‰¹
+	L"warning.mp3",						// Œx‰¹
 
 
 };
