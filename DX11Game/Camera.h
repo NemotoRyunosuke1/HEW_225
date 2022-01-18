@@ -35,6 +35,8 @@ private:
 	XMFLOAT3 m_vDestTargetAngle;	// 注視点の目的の向き
 	float m_fLengthInterval;		// カメラの視点と注視点の距離
 
+	XMFLOAT3 m_vLightAngle;				// 明かりの角度
+
 	static CCamera* m_pCamera;		// 現在のカメラ
 
 public:
@@ -66,6 +68,7 @@ public:
 	XMFLOAT4X4& GetViewMatrix() { return m_mtxView; }
 	XMFLOAT4X4& GetProjMatrix() { return m_mtxProj; }
 	XMFLOAT3& GetAngle() { return m_vAngle; }
+	XMFLOAT3& GetLightAngle() { return m_vLightAngle; }
 
 	static CCamera* Get() { return m_pCamera; }
 	static void Set(CCamera* pCamera) { m_pCamera = pCamera; }

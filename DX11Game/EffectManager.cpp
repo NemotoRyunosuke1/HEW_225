@@ -143,27 +143,33 @@ int EffectManager::Play(int Handle)
 	break;
 
 	case 3:
-		//•—_ã_‰©F
-		if (time > 129.9f)
+		
+		switch (m_estage)
 		{
-			// ƒS[ƒ‹•—
-			time = 0;
-			m_handle = m_manager->Play(m_effect5, -1000.0f, 600.0f, 4000.0f);
-			m_manager->SetScale(m_handle, 20.0f, 25.0f, 20.0f);
+		case STAGE_1:
+			//•—_ã_‰©F
+			if (time > 129.9f)
+			{
+				// ƒS[ƒ‹•—
+				time = 0;
+				m_handle = m_manager->Play(m_effect5, -1000.0f, 600.0f, 4000.0f);
+				m_manager->SetScale(m_handle, 20.0f, 25.0f, 20.0f);
+			}
+			break;
+		case STAGE_2:
+			break;
+		case STAGE_3:
+			break;
+		case STAGE_4:
+			break;
+		case STAGE_5:
+			break;
+		case MAX_STAGE:
+			break;
+		default:
+			break;
 		}
-
 	break;
-	case 4:
-		//•—_ã_‰©F
-		if (time > 129.9f)
-		{
-			// ƒS[ƒ‹•—
-			time = 0;
-			m_handle = m_manager->Play(m_effect5, -1000.0f, 600.0f, 2000.0f);
-			m_manager->SetScale(m_handle, 20.0f, 25.0f, 20.0f);
-		}
-
-		break;
 	default:
 	
 		break;
@@ -202,6 +208,7 @@ int EffectManager::Play(int Handle)
 
 		}
 
+		
 	break;
 	
 	case STAGE_2:

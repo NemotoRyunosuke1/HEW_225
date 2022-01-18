@@ -869,7 +869,7 @@ void UpdateModel(void)
 	if (g_bOverHeart)
 	{
 		// ƒŒƒoƒKƒ`ƒƒ”»’è
-		if (stickY > 20000 || stickX > 20000 || stickY < -20000 || stickX < -20000)
+		if (stickY > 20000 || stickX > 20000 || stickY < -20000 || stickX < -20000 || GetKeyTrigger(VK_A) || GetKeyTrigger(VK_W) || GetKeyTrigger(VK_S) || GetKeyTrigger(VK_D))
 		{
 			if (!g_bStickTrigger)
 			{
@@ -885,7 +885,14 @@ void UpdateModel(void)
 		{
 			g_bStickTrigger = false;
 		}
-		
+		/*if (GetKeyTrigger(VK_A)|| GetKeyTrigger(VK_W) || GetKeyTrigger(VK_S) || GetKeyTrigger(VK_D))
+		{
+			g_fOverHeartRecoverySpeed = 1.5f;
+		}
+		else
+		{
+			g_fOverHeartRecoverySpeed = 0;
+		}*/
 	}
 	else
 	{
