@@ -324,7 +324,7 @@ GameScene::GameScene(EStage stage)
 		m_pBuliding[64].Create(XMFLOAT3( -300, 10,  600), XMFLOAT3(10.0f, 10.0f, 10.0f));
 
 		// 仲間の配置
-		CrewCreate(XMFLOAT3(-1000.0f,250.0f, 0.0f));// 1
+		CrewCreate(XMFLOAT3(-1000.0f,250.0f, 0.0f)); // 1
 
 		// ゴール位置初期化
 		SetGoalUI(XMFLOAT3(-1000.0f, 600.0f, 4000.0f), 1200, 600, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);
@@ -537,7 +537,7 @@ void GameScene::Update()
 		m_pPause->SetBack(false);
 	}
 	// チュートリアル更新
-	m_pTutorial->Update(m_eStage);
+	//m_pTutorial->Update(m_eStage);
 
 	// チュートリアル
 	if (m_pTutorial->GetPopup())return;
@@ -812,9 +812,9 @@ void GameScene::Draw()
 	// リザルト表示
 	if (m_bGoal)
 	{
-		m_pResult->Draw();
+		
 	}
-
+	m_pResult->Draw();
 	if (GetOverHeartModel() || GetStanModel())
 	{
 		// レバガチャ描画
