@@ -345,7 +345,7 @@ GameScene::GameScene(EStage stage)
 		
 		for (int i = 0; i < 11; i++)
 		{
-			m_pBuliding[i + 49].Create(XMFLOAT3(-2900 + i * 300, 10, 3600), XMFLOAT3(10.0f, 8.0f + rand() % 5, 10.0f));
+			m_pBuliding[i + 49].Create(XMFLOAT3(-2900 + i * 300, 10, 4800), XMFLOAT3(10.0f, 8.0f + rand() % 5, 10.0f));
 		}
 
 		// 仲間の配置
@@ -368,51 +368,63 @@ GameScene::GameScene(EStage stage)
 		InitMeshField(20, 20, 2000.0f, 2000.0f);
 
 		// ビルの配置
-		for (int i = 0; i < 22; i++)
+		for (int i = 0; i < 30; i++)
 		{
 			for (int j = 0; j < 2; j++)
 			{
-				m_pBuliding[i + j * 22].Create(XMFLOAT3(-3650 + j * 4800, 10, -2600 + i * 300), XMFLOAT3(10.0f, 8.0f + rand() % 5, 10.0f));
+				m_pBuliding[i + j * 30].Create(XMFLOAT3(-3650 + j * 4500, 10, -2600 + i * 300), XMFLOAT3(10.0f, 8.0f + rand() % 5, 10.0f));
 			}
 		}
 		for (int i = 0; i < 15; i++)
 		{
-			m_pBuliding[i + 44].Create(XMFLOAT3(-3350 + i * 300, 10, 3700), XMFLOAT3(10.0f, 8.0f + rand() % 5, 10.0f));
+			m_pBuliding[i + 60].Create(XMFLOAT3(-3350 + i * 300, 10, 5500), XMFLOAT3(10.0f, 8.0f + rand() % 5, 10.0f));
 		}
 		for (int i = 0; i < 15; i++)
 		{
-			m_pBuliding[i + 59].Create(XMFLOAT3(-3350 + i * 300, 10, -2600), XMFLOAT3(10.0f, 8.0f + rand() % 5, 10.0f));
+			m_pBuliding[i + 75].Create(XMFLOAT3(-3350 + i * 300, 10, -2600), XMFLOAT3(10.0f, 8.0f + rand() % 5, 10.0f));
 		}
+		for (int i = 0; i < 4; i++)
+		{
+			for (int j = 0; j < 2; j++)
+			{
+				for (int k = 0; k < 2; k++)
+				{
+					for (int l = 0; l < 2; l++)
+					{
+						m_pBuliding[l + k * 2 + j * 4 + i * 16 + 75].Create(XMFLOAT3(-2150 + k * 300 + j * 1200, 10, 0 + l * 300 + i * 1200), XMFLOAT3(10.0f, 8.0f + rand() % 5, 10.0f));
+					}
+				}
+			}
+		}
+			// ゴールUI位置初期化
+			SetGoalUI(XMFLOAT3(-1000.0f, 1200.0f, 6000.0f), 1200, 600, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);
+			m_pGoal = new Goal(XMFLOAT3(-1000.0f, 1200.0f, 6000.0f));
 
-		// ゴールUI位置初期化
-		SetGoalUI(XMFLOAT3(-1000.0f, 1200.0f, 6000.0f), 1200, 600, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);
-		m_pGoal = new Goal(XMFLOAT3(-1000.0f, 1200.0f, 6000.0f));
+			// 仲間の配置
+			//CrewCreate(XMFLOAT3(-1000.0f, 500.0f, -600.0f));// 1
+			//CrewCreate(XMFLOAT3(-1000.0f, 500.0f, 600.0f));// 2
+			//CrewCreate(XMFLOAT3(-300.0f, 500.0f, 1800.0f));// 3
+			//CrewCreate(XMFLOAT3(-1700.0f, 500.0f, 1800.0f));// 4
 
-		// 仲間の配置
-		//CrewCreate(XMFLOAT3(-1000.0f, 500.0f, -600.0f));// 1
-		//CrewCreate(XMFLOAT3(-1000.0f, 500.0f, 600.0f));// 2
-		//CrewCreate(XMFLOAT3(-300.0f, 500.0f, 1800.0f));// 3
-		//CrewCreate(XMFLOAT3(-1700.0f, 500.0f, 1800.0f));// 4
+			//CrewCreate(XMFLOAT3(-1000.0f, 500.0f, 3000.0f));// 5
 
-		//CrewCreate(XMFLOAT3(-1000.0f, 500.0f, 3000.0f));// 5
+			// 敵の配置
+			CreateEnemy(XMFLOAT3(-1000.0f, 500.0f, 0.0f));// 1
+			CreateEnemy(XMFLOAT3(-500.0f, 500.0f, 500.0f));// 2
+			CreateEnemy(XMFLOAT3(-1500.0f, 500.0f, 500.0f));// 3
+			CreateEnemy(XMFLOAT3(500.0f, 500.0f, 1500.0f));// 4
+			CreateEnemy(XMFLOAT3(-2500.0f, 500.0f, 1500.0f));// 5
 
-		// 敵の配置
-		CreateEnemy(XMFLOAT3(-1000.0f, 500.0f, 0.0f));// 1
-		CreateEnemy(XMFLOAT3(-500.0f, 500.0f, 500.0f));// 2
-		CreateEnemy(XMFLOAT3(-1500.0f, 500.0f, 500.0f));// 3
-		CreateEnemy(XMFLOAT3(500.0f, 500.0f, 1500.0f));// 4
-		CreateEnemy(XMFLOAT3(-2500.0f, 500.0f, 1500.0f));// 5
+			CreateEnemy(XMFLOAT3(-1200.0f, 500.0f, 3700.0f));// 6
+			CreateEnemy(XMFLOAT3(-1800.0f, 500.0f, 3300.0f));// 7
+			CreateEnemy(XMFLOAT3(-1200.0f, 500.0f, 2300.0f));// 8
+			CreateEnemy(XMFLOAT3(-1800.0f, 500.0f, 2700.0f));// 7
+			CreateEnemy(XMFLOAT3(-800.0f, 500.0f, 3700.0f));// 9
+			CreateEnemy(XMFLOAT3(-200.0f, 500.0f, 3300.0f));// 10
+			CreateEnemy(XMFLOAT3(-800.0f, 500.0f, 2300.0f));// 11
+			CreateEnemy(XMFLOAT3(-200.0f, 500.0f, 2700.0f));// 12
 
-		CreateEnemy(XMFLOAT3(-1200.0f, 500.0f, 3700.0f));// 6
-		CreateEnemy(XMFLOAT3(-1800.0f, 500.0f, 3300.0f));// 7
-		CreateEnemy(XMFLOAT3(-1200.0f, 500.0f, 2300.0f));// 8
-		CreateEnemy(XMFLOAT3(-1800.0f, 500.0f, 2700.0f));// 7
-		CreateEnemy(XMFLOAT3(-800.0f, 500.0f, 3700.0f));// 9
-		CreateEnemy(XMFLOAT3(-200.0f, 500.0f, 3300.0f));// 10
-		CreateEnemy(XMFLOAT3(-800.0f, 500.0f, 2300.0f));// 11
-		CreateEnemy(XMFLOAT3(-200.0f, 500.0f, 2700.0f));// 12
-
-		break;
+			break;
 	case STAGE_4:	// ステージ4
 			// 地面の配置
 		InitMeshField(20, 20, 2000.0f, 2000.0f);
@@ -453,7 +465,7 @@ GameScene::GameScene(EStage stage)
 		}
 
 		// ゴールUI位置初期化
-		SetGoalUI(XMFLOAT3(-1000.0f, 1000.0f, 9000.0f), 1200, 600, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);	
+		SetGoalUI(XMFLOAT3(-1000.0f, 1000.0f, 9000.0f), 1200, 600, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);
 		m_pGoal = new Goal(XMFLOAT3(-1000.0f, 1200.0f, 9000.0f));
 
 		break;
@@ -470,7 +482,7 @@ GameScene::GameScene(EStage stage)
 				{
 					for (int l = 0; l < 2; l++)
 					{
-						m_pBuliding[l + k * 2 + j * 4 + i * 16].Create(XMFLOAT3(-2900 + k * 300 + j * 900, 10, 0 + l * 300 + i * 900), XMFLOAT3(10.0f, 8.0f + rand() % 5, 10.0f));
+						m_pBuliding[l + k * 2 + j * 4 + i * 16].Create(XMFLOAT3(-2900 + k * 300 + j * 900, 10, 0 + l * 300 + i * 1200), XMFLOAT3(10.0f, 8.0f + rand() % 5, 10.0f));
 					}
 				}
 			}
