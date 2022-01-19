@@ -36,7 +36,7 @@ bool g_bButton = false;
 //****************************************
 Button::Button()
 {
-	m_pos  = XMFLOAT3(  0.0f,  0.0f, 0.0f);
+	m_pos  = m_initPos = XMFLOAT3(  0.0f,  0.0f, 0.0f);
 	m_size = m_sizeUpDown = XMFLOAT3(100.0f, 50.0f, 0.0f);
 	m_color = XMFLOAT3(1.0f, 1.0f, 1.0f);
 	m_flg = false;
@@ -109,6 +109,8 @@ void Button::Update()
 		if (m_select)
 		{
 			// 大きさアップ
+			//m_size.x = m_sizeUpDown.x * 1.1f;
+			//m_size.y = m_sizeUpDown.y * 1.1f;
 			m_size.x = m_sizeUpDown.x * 1.1f;
 			m_size.y = m_sizeUpDown.y * 1.1f;
 
@@ -227,6 +229,132 @@ void Button::Update(eSE se)
 
 #endif
 }
+void Button::Update(EScene scene)
+{
+	POINT point;
+	GetCursorPos(&point);
+	BOOL pointW = ScreenToClient(GetMainWnd(), &point);
+
+	// 使われている時
+	if (m_use)
+	{
+		
+		//カーソルがあわされた時
+		if ((GetMousePosition()->x > (long)(m_pos.x - m_size.x / 2 + FULLSCREEN_WIDTH / 2)) && (GetMousePosition()->x < (long)(m_pos.x + m_size.x / 2 + FULLSCREEN_WIDTH / 2)) && (-GetMousePosition()->y < (long)(m_pos.y + m_size.y / 2 - FULLSCREEN_HEIGHT / 2)) && (-GetMousePosition()->y > (long)(m_pos.y - m_size.y / 2 - FULLSCREEN_HEIGHT / 2)))
+		{
+			if (GetMouseButton(MOUSEBUTTON_L))
+			{
+				if (!g_bButton)
+				{
+
+					g_bButton = true;
+				}
+				m_flg = true;
+			}
+			else
+			{
+				m_flg = false;
+				g_bButton = false;
+			}
+		}
+
+		// 選択されてる時
+		if (m_select)
+		{
+			static float size = 0;
+			size += 2.0f;
+			if (size > 1000000)size = 0;
+
+			// カラー変更(黄色)
+			//m_color = XMFLOAT3(1.0f, 1.0f, 0.0f);
+
+			switch (scene)
+			{
+			case SCENE_TITLE:
+				break;
+			case SCENE_STAGE_SELECT:
+				
+				// 上下移動
+				//m_size.x += CosDeg(size);
+				
+				m_pos.y += CosDeg(size);
+
+				break;
+			case SCENE_GAME:
+
+				break;
+			case SCENE_RESULT:
+
+				break;
+			case SCENE_GAMEOVER:
+				break;
+			case MAX_SCENE:
+				break;
+			default:
+				break;
+			}
+
+			//　決定
+			if (GetJoyRelease(0, JOYSTICKID1) || GetKeyRelease(VK_RETURN) || GetKeyTrigger(VK_SPACE))
+			{
+				if (!m_bSoudTriggerDecision)
+				{
+					// SE分岐
+					switch (scene)
+					{
+					case SCENE_TITLE:
+						break;
+					case SCENE_STAGE_SELECT:
+
+						CSound::SetVolume(SE_SELECT, 1.0f);
+						CSound::Play(SE_SELECT);
+
+						break;
+					case SCENE_GAME:
+
+						break;
+					case SCENE_RESULT:
+
+						break;
+					case SCENE_GAMEOVER:
+						break;
+					case MAX_SCENE:
+						break;
+					default:
+						break;
+					}
+					
+					m_bSoudTriggerDecision = true;
+				}
+				m_flg = true;
+			}
+
+			// サウンドトリガー移動した時の効果音
+			if (!m_bSoudTrigger)
+			{
+				CSound::SetVolume(SE_SELECT2, 1.0f);
+				CSound::Play(SE_SELECT2);
+				m_bSoudTrigger = true;
+			}
+		}
+		else
+		{
+			m_pos = m_initPos;
+			m_size.x = m_sizeUpDown.x;
+			m_size.y = m_sizeUpDown.y;
+			m_color = XMFLOAT3(1.0f, 1.0f, 1.0f);
+			m_bSoudTrigger = false;
+		}
+	}
+#if _DEBUG
+	// デバック用文字列
+	// デバック用文字列
+	PrintDebugProc("[ﾏｳｽ ｲﾁ : (%d : %d )]\n", point.x, point.y);
+	PrintDebugProc("[ﾏｳｽ ｲﾁ : (%d : %d )]\n", GetMousePosition()->x, GetMousePosition()->y);
+
+
+#endif
+}
 void Button::Draw()
 {
 	ID3D11DeviceContext*  pBC = GetDeviceContext();
@@ -256,7 +384,7 @@ void Button::Draw()
 void Button::CreateButton(XMFLOAT3 size, XMFLOAT3 pos, int textureNum)
 {
 	m_size = m_sizeUpDown =size;
-	m_pos = pos;
+	m_pos = m_initPos = pos;
 	m_use = true;
 	ID3D11Device* pDevice = GetDevice();
 	/*STAGE_SELECT_1_1_BTN = 0,

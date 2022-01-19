@@ -34,6 +34,7 @@ public:
 	HRESULT Init();
 	void Update();
 	void Update(eSE se);
+	void Update(EScene scene);
 	void Draw();
 	bool GetFlg();
 	void SetFlg(bool);
@@ -56,6 +57,7 @@ private:
 	int m_frameNum;
 	XMFLOAT3 m_sizeUpDown;
 	XMFLOAT3 m_color;
+	XMFLOAT3 m_initPos;
 	ID3D11ShaderResourceView* m_pTexture1;
 	ID3D11ShaderResourceView* m_pTexture2;
 	ID3D11ShaderResourceView* m_pTexture3;

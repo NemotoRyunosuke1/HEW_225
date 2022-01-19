@@ -6,6 +6,7 @@
 #define PATH_STAGE_SELECT_BGTEXTURE	L"data/texture/stageSelectScene/ステージセレクト背景.png"
 #define PATH_STAGE_SELECT_BG2TEXTURE	L"data/texture/stageSelectScene/ステージセレクト地図.png"
 #define PATH_STAGE_SELECT_TEXT_TEXTURE	L"data/texture/stageSelectScene/ステージセレクトUI.png"
+#define PATH_STAGE_SELECT_TEXT2_TEXTURE	L"data/texture/stageSelectScene/ボタンUI.png"
 
 
 StageSelectBG::StageSelectBG()
@@ -20,6 +21,7 @@ StageSelectBG::StageSelectBG()
 	CreateTextureFromFile(pDevice, PATH_STAGE_SELECT_BGTEXTURE, &m_pTexture);
 	CreateTextureFromFile(pDevice, PATH_STAGE_SELECT_BG2TEXTURE, &m_pTexture2);
 	CreateTextureFromFile(pDevice, PATH_STAGE_SELECT_TEXT_TEXTURE, &m_pTexture3);
+	CreateTextureFromFile(pDevice, PATH_STAGE_SELECT_TEXT2_TEXTURE, &m_pTexture4);
 
 }
 StageSelectBG::~StageSelectBG()
@@ -28,6 +30,7 @@ StageSelectBG::~StageSelectBG()
 	SAFE_RELEASE(m_pTexture);
 	SAFE_RELEASE(m_pTexture2);
 	SAFE_RELEASE(m_pTexture3);
+	SAFE_RELEASE(m_pTexture4);
 }
 
 void StageSelectBG::Update()
@@ -60,8 +63,16 @@ void StageSelectBG::Draw()
 	DrawPolygon(pDC);				// ポリゴン描画
 
 	SetPolygonSize(800, 300);	// ポリゴンサイズ
-	SetPolygonPos(-FULLSCREEN_WIDTH/2 + 600, 300);	// ポリゴン位置
+	SetPolygonPos(-FULLSCREEN_WIDTH/2 + 630, 300);	// ポリゴン位置
 	SetPolygonTexture(m_pTexture3);	// ポリゴンテクスチャ
+	SetPolygonUV(0.0f, 0.0f);		// ポリゴンUV座標開始位置
+	SetPolygonAlpha(1.0f);			// ポリゴン透明度
+
+	DrawPolygon(pDC);				// ポリゴン描画
+
+	SetPolygonSize(300, 200);	// ポリゴンサイズ
+	SetPolygonPos(-FULLSCREEN_WIDTH / 2 + 430, -280);	// ポリゴン位置
+	SetPolygonTexture(m_pTexture4);	// ポリゴンテクスチャ
 	SetPolygonUV(0.0f, 0.0f);		// ポリゴンUV座標開始位置
 	SetPolygonAlpha(1.0f);			// ポリゴン透明度
 

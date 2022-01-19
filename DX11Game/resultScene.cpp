@@ -12,7 +12,7 @@
 #define Star2			L"data/texture/StarIcon.png"		//星２
 #define Star3			L"data/texture/StarIcon.png"		//星３
 
-#define Result			L"data/texture/ranking000.png"		//リザルトロゴ
+#define Result			L"data/texture/ムレキドリUIまとめ2/リザルト.png"		//リザルトロゴ
 #define Result1			L"data/texture/40second.png"		//条件1 [40秒残し]
 #define Result2			L"data/texture/80second.png"		//条件2 [80秒残し]
 #define Result3			L"data/texture/130second.png"		//条件3 [130秒残し]
@@ -47,7 +47,7 @@ ResultScene::ResultScene()
 
 	// リザルトロゴ
 	m_pos4 = XMFLOAT3(0, 250, 0);
-	m_size4 = XMFLOAT3(300, 100, 0);
+	m_size4 = XMFLOAT3(500, 300, 0);
 	m_IconPos4 = XMFLOAT3(100, 100, 0);		// 位置
 	m_Iconsize4 = XMFLOAT3(100, 50, 0);	    // サイズ
 
