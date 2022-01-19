@@ -1,7 +1,8 @@
 #include "pause.h"
 #include "input.h"
 
-#define PATH_PAUSE_BG	L"data/texture/scenesenni/pause/pauseBG.png"
+#define PATH_PAUSE_BG	L"data/texture/ムレキドリUIまとめ2/ポーズ中スライド.png"
+#define PATH_PAUSE_TEXT	L"data/texture/ムレキドリUIまとめ2/ポーズ中.png"
 #define MAX_BUTTON (3)
 
 Pause::Pause()
@@ -16,6 +17,7 @@ Pause::Pause()
 	// テクスチャ読み込み
 	ID3D11Device* pDevice = GetDevice();
 	CreateTextureFromFile(pDevice, PATH_PAUSE_BG, &m_pTextureBG);
+	CreateTextureFromFile(pDevice, PATH_PAUSE_TEXT, &m_pTextureText);
 	m_posBG = XMFLOAT3(0.0f,0.0f,0.0f);
 	m_sizeBG = XMFLOAT3(1280, 760, 0.0f);
 
@@ -141,14 +143,7 @@ void Pause::Draw()
 	SetBlendState(BS_ALPHABLEND);	// アルファブレンド有効	
 	
 									
-	//BG
-	SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
-	SetPolygonSize(m_sizeBG.x, m_sizeBG.y);
-	SetPolygonPos(m_posBG.x, m_posBG.y);
-	SetPolygonTexture(m_pTextureBG);
-	SetPolygonUV(0.0f, 0.0f);
-	SetPolygonAlpha(0.3f);
-	DrawPolygon(pBC);
+	
 
 	//暗幕
 	SetPolygonColor(0.0f, 0.0f, 0.0f);	//ポリゴンカラー
@@ -159,6 +154,26 @@ void Pause::Draw()
 	SetPolygonAlpha(0.3f);
 	DrawPolygon(pBC);
 	SetPolygonAlpha(1.0f);
+
+	//BG
+	SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
+	SetPolygonSize(m_sizeBG.x, m_sizeBG.y);
+	SetPolygonPos(m_posBG.x, m_posBG.y);
+	SetPolygonTexture(m_pTextureBG);
+	SetPolygonUV(0.0f, 0.0f);
+	SetPolygonAlpha(1.0f);
+	DrawPolygon(pBC);
+
+	//テキスト
+	SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
+	SetPolygonSize(500, 300);
+	SetPolygonPos(-300, 0);
+	SetPolygonTexture(m_pTextureText);
+	SetPolygonUV(0.0f, 0.0f);
+	SetPolygonAlpha(1.0f);
+	DrawPolygon(pBC);
+
+	// ボタン描画
 	for (int i = 0; i < MAX_BUTTON; i++)
 	{
 		// 使われていなかったら処理しない

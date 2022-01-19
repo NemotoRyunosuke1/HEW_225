@@ -46,10 +46,10 @@ struct TAssimpMaterial {
 	ID3D11ShaderResourceView*	pTexTransparent;// 透過テクスチャ
 	TAssimpMaterial()
 	{
-		Ka = DirectX::XMFLOAT4(0, 0, 0, 0);
+		Ka = DirectX::XMFLOAT4(0.5f, 0.5f, 0.5f, 1);
 		Kd = DirectX::XMFLOAT4(1, 1, 1, 1);
-		Ks = DirectX::XMFLOAT4(0, 0, 0, 0);
-		Ke = DirectX::XMFLOAT4(0, 0, 0, 0);
+		Ks = DirectX::XMFLOAT4(0.5f, 0.5f, 0.5f, 1);
+		Ke = DirectX::XMFLOAT4(0.5f, 0.5f, 0.5f, 1);
 		pTexture = nullptr;
 		pTexEmmisive = nullptr;
 		pTexSpecular = nullptr;
