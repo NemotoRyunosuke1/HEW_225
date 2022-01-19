@@ -377,7 +377,7 @@ GameScene::GameScene(EStage stage)
 		}
 		for (int i = 0; i < 15; i++)
 		{
-			m_pBuliding[i + 60].Create(XMFLOAT3(-3350 + i * 300, 10, 5500), XMFLOAT3(10.0f, 8.0f + rand() % 5, 10.0f));
+			m_pBuliding[i + 60].Create(XMFLOAT3(-3350 + i * 300, 10, 5800), XMFLOAT3(10.0f, 8.0f + rand() % 5, 10.0f));
 		}
 		for (int i = 0; i < 15; i++)
 		{
