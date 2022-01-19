@@ -17,6 +17,7 @@ Buliding::Buliding()
 	if (!m_model.Load(pDevice, pDeviceContext, MODEL_PLANE)) {
 		MessageBoxA(GetMainWnd(), "モデルデータ読み込みエラー", "InitModel", MB_OK);
 	}
+	//m_model.GetMaterial()->SetReflectLight();
 }
 
 Buliding::~Buliding()

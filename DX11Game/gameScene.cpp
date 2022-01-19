@@ -311,10 +311,10 @@ GameScene::GameScene(EStage stage)
 		//CrewCreate(XMFLOAT3(-3200.0f, 675.0f, 300.0f));// 5
 		//CrewCreate(XMFLOAT3(-3000.0f, 500.0f, 700.0f));// 6
 
-		CrewCreate(XMFLOAT3(-1000.0f, 850.0f, 2500.0f));// 7
-		CrewCreate(XMFLOAT3(-1200.0f, 850.0f, 2800.0f));// 8
-		CrewCreate(XMFLOAT3(-800.0f, 850.0f, 3200.0f));// 9
-		CrewCreate(XMFLOAT3(-1000.0f, 850.0f, 3500.0f));// 10
+		CrewCreate(XMFLOAT3(-100.0f, 850.0f, 2400.0f));// 7
+		CrewCreate(XMFLOAT3(-500.0f, 850.0f, 2700.0f));// 8
+		CrewCreate(XMFLOAT3(-600.0f, 850.0f, 3200.0f));// 9
+		CrewCreate(XMFLOAT3(-900.0f, 850.0f, 3500.0f));// 10
 
 
 		// ゴール位置初期化
@@ -349,9 +349,9 @@ GameScene::GameScene(EStage stage)
 		}
 
 		// 仲間の配置
-		CrewCreate(XMFLOAT3( -700.0f, 500.0f, -1300.0f));// 1
+		CrewCreate(XMFLOAT3(-700.0f, 500.0f, -1300.0f));// 1
 		CrewCreate(XMFLOAT3(-1900.0f, 500.0f, -600.0f));// 2
-		CrewCreate(XMFLOAT3(-1000.0f, 500.0f, 0.0f));// 3
+		CrewCreate(XMFLOAT3(-1000.0f, 500.0f, -200.0f));// 3
 		CrewCreate(XMFLOAT3(-100.0f, 500.0f, 600.0f));// 4
 		CrewCreate(XMFLOAT3(-1000.0f, 500.0f, 1500.0f));// 5
 		CrewCreate(XMFLOAT3(-1000.0f, 200.0f, 1800.0f));// 6
@@ -401,12 +401,12 @@ GameScene::GameScene(EStage stage)
 			m_pGoal = new Goal(XMFLOAT3(-1000.0f, 1200.0f, 6000.0f));
 
 			// 仲間の配置
-			//CrewCreate(XMFLOAT3(-1000.0f, 500.0f, -600.0f));// 1
-			//CrewCreate(XMFLOAT3(-1000.0f, 500.0f, 600.0f));// 2
-			//CrewCreate(XMFLOAT3(-300.0f, 500.0f, 1800.0f));// 3
-			//CrewCreate(XMFLOAT3(-1700.0f, 500.0f, 1800.0f));// 4
+			CrewCreate(XMFLOAT3(-1000.0f, 500.0f, -600.0f));// 1
+			CrewCreate(XMFLOAT3(-1000.0f, 500.0f, 600.0f));// 2
+			CrewCreate(XMFLOAT3(-300.0f, 500.0f, 1800.0f));// 3
+			CrewCreate(XMFLOAT3(-1700.0f, 500.0f, 1800.0f));// 4
 
-			//CrewCreate(XMFLOAT3(-1000.0f, 500.0f, 3000.0f));// 5
+			CrewCreate(XMFLOAT3(-1000.0f, 500.0f, 3000.0f));// 5
 
 			// 敵の配置
 			CreateEnemy(XMFLOAT3(-1000.0f, 500.0f, 0.0f));// 1
@@ -500,11 +500,11 @@ GameScene::GameScene(EStage stage)
 		}
 		// 仲間の配置
 		CrewCreate(XMFLOAT3(-100.0f, 500.0f, -1000.0f));// 1
-		//CrewCreate(XMFLOAT3(1000.0f, 500.0f, 0.0f));// 2
+		CrewCreate(XMFLOAT3(750.0f, 500.0f, 0.0f));// 2
 		CrewCreate(XMFLOAT3(-100.0f, 500.0f, 500.0f));// 3
 		CrewCreate(XMFLOAT3(-1500.0f, 500.0f, 0.0f));// 4
 		CrewCreate(XMFLOAT3(-1900.0f, 200.0f, -500.0f));// 5
-		//CrewCreate(XMFLOAT3(-3000.0f, 200.0f, 500.0f));// 6
+		CrewCreate(XMFLOAT3(-2800.0f, 200.0f, 500.0f));// 6
 		CrewCreate(XMFLOAT3(-1900.0f, 800.0f, 1500.0f));// 7
 		CrewCreate(XMFLOAT3(-1500.0f, 200.0f, 1900.0f));// 8
 		CrewCreate(XMFLOAT3(-500.0f, 800.0f, 1900.0f));// 9
@@ -923,12 +923,7 @@ void GameScene::Draw()
 	// 鳥残機カウント描画
 	m_pCunt->Draw();
 
-	// リザルト表示
-	if (m_bGoal)
-	{
-		m_pResult->Draw();
-	}
-
+	
 	if (GetOverHeartModel() || GetStanModel())
 	{
 		// レバガチャ描画
@@ -948,6 +943,11 @@ void GameScene::Draw()
 	// チュートリアル描画
 	m_pTutorial->Draw();
 
+	// リザルト表示
+	if (m_bGoal)
+	{
+		m_pResult->Draw();
+	}
 
 	// ポーズ中の処理
 	if (m_bPause)
