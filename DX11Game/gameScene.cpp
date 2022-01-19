@@ -890,7 +890,7 @@ void GameScene::Draw()
 	DrawEnemy();
 
 	// 風マネージャー描画
-	//m_pWindManager->Draw();
+	m_pWindManager->Draw();
    
 	// モデル描画
 	DrawModel();
@@ -911,11 +911,7 @@ void GameScene::Draw()
 	// 鳥残機カウント描画
 	m_pCunt->Draw();
 
-	// リザルト表示
-	if (m_bGoal)
-	{
-		m_pResult->Draw();
-	}
+	
 	
 	if (GetOverHeartModel() || GetStanModel())
 	{
@@ -929,13 +925,17 @@ void GameScene::Draw()
 		m_pEscapeText->Draw();
     }
 	
-
-	// タイマーUI更新
-	m_pTimerUI->Draw();
-
 	// チュートリアル描画
 	m_pTutorial->Draw();
 
+
+	// リザルト表示
+	if (m_bGoal)
+	{
+		m_pResult->Draw();
+	}
+	
+	
 
 	// ポーズ中の処理
 	if (m_bPause)

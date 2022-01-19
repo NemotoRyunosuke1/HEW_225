@@ -45,8 +45,8 @@ WindManager::WindManager(EStage stage)
 	switch (stage)
 	{
 	case STAGE_1:
-		m_pWind[0].Create(XMFLOAT3(-1700.0f, 200.0f, 0.0f), XMFLOAT3(200.0f, 500.0f, 300.0f), XMFLOAT3(-1.0f, 1.0f, 0.0f));    // 1個目上昇気流
-		m_pWind[1].Create(XMFLOAT3(-1700.0f, 300.0f, 800.0f), XMFLOAT3(200.0f, 500.0f, 300.0f), XMFLOAT3(1.0f, 1.0f, 0.0f));   // 2個目上昇気流
+		m_pWind[0].Create(XMFLOAT3(-1700.0f, 400.0f, 0.0f), XMFLOAT3(200.0f, 700.0f, 300.0f), XMFLOAT3(-1.0f, 1.0f, 0.0f));    // 1個目上昇気流
+		m_pWind[1].Create(XMFLOAT3(-1700.0f, 400.0f, 800.0f), XMFLOAT3(200.0f, 700.0f, 300.0f), XMFLOAT3(1.0f, 1.0f, 0.0f));   // 2個目上昇気流
 		m_pWind[2].Create(XMFLOAT3(-200.0f, 800.0f, 1300.0f), XMFLOAT3(300.0f, 300.0f, 1200.0f), XMFLOAT3(0.0f, 0.0f, 1.0f));  // 追い風
 		break;
 

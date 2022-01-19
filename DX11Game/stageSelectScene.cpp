@@ -86,7 +86,7 @@ void StageSlectScene::Update()
 	}
 
 	// –ß‚é
-	if (GetJoyRelease(0, JOYSTICKID2))
+	if (GetJoyRelease(0, JOYSTICKID2) || GetKeyTrigger(VK_BACK) || GetKeyTrigger(VK_ESCAPE))
 	{
 		if (!StageTrrger)
 		{
