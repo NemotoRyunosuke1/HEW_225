@@ -823,6 +823,12 @@ void UpdateModel(void)
 	if (g_posModel.y > 80.0f) {
 		g_posModel.y = 80.0f;
 	}*/
+	// オーバーヒート
+	if (g_stm <= 0.0f)
+	{
+		g_bOverHeart = true;
+		g_stm = 0.0f;
+	}
 
 	// スタミナ処理
 	if (g_rotModel.x > 3 && !g_bWindDelay)
@@ -834,13 +840,7 @@ void UpdateModel(void)
 			g_stm += g_fStaminaDecrease;
 		}
 	
-		// オーバーヒート
-		if (g_stm <= 0.0f)
-		{
-			g_bOverHeart = true;
-			g_stm = 0.0f;
-		}
-
+		
 	}
 	else 
 	{
