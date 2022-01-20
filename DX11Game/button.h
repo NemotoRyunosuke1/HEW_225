@@ -3,6 +3,7 @@
 #include "object.h"
 #include "Sound.h"
 
+// ƒ{ƒ^ƒ“‚ÌŽí—Þ
 enum EButtonTexture
 {
 	STAGE_SELECT_1_1_BTN = 0,
@@ -21,6 +22,7 @@ enum EButtonTexture
 	STAGE_3_BTN,
 	STAGE_4_BTN,
 	STAGE_5_BTN,
+
 
 	MAX_BTN_TEXTURE
 };
