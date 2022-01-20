@@ -15,7 +15,7 @@ Goal::Goal()
 	m_rot = XMFLOAT3(0.0f, 0.0f, 0.0f);	// 向き
 	
 	m_use = false;
-
+	
 	ID3D11Device* pDevice = GetDevice();
 	ID3D11DeviceContext* pDeviceContext = GetDeviceContext();
 	// モデルデータの読み込み
