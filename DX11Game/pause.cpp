@@ -23,10 +23,11 @@ Pause::Pause()
 
 	// É{É^ÉìÉÅÉÇÉäämï€
 	m_pButton = new Button[MAX_BUTTON];
-	m_pButton[0].CreateButton(XMFLOAT3(300.0f, 150.0f, 0.0f), XMFLOAT3(0.0f, -100.0f, 0.0f), BACK_GAME_BTN);
+	m_pButton[0].CreateButton(XMFLOAT3(600.0f, 350.0f, 0.0f), XMFLOAT3(FULLSCREEN_WIDTH / 4 - 30, 210.0f, 0.0f), BACK_GAME_BTN);	// ë±ÇØÇÈ
 	m_pButton[0].SetSelect(true);
-	m_pButton[1].CreateButton(XMFLOAT3(300.0f, 150.0f, 0.0f), XMFLOAT3(0.0f, -200.0f, 0.0f), RESTART_BTN);
-	m_pButton[2].CreateButton(XMFLOAT3(300.0f, 150.0f, 0.0f), XMFLOAT3(0.0f, -300.0f, 0.0f), BACK_STAGE_SELECT_BTN);
+	m_pButton[1].CreateButton(XMFLOAT3(600.0f, 350.0f, 0.0f), XMFLOAT3(FULLSCREEN_WIDTH / 4 - 30, 0.0f, 0.0f), RESTART_BTN);  // Ç‚ÇËíºÇ∑
+	m_pButton[2].CreateButton(XMFLOAT3(600.0f, 350.0f, 0.0f), XMFLOAT3(FULLSCREEN_WIDTH / 4 - 30, -210.0f, 0.0f), BACK_STAGE_SELECT_BTN);  // Ç†Ç´ÇÁÇﬂÇÈ
+
 
 }
 Pause::~Pause()
