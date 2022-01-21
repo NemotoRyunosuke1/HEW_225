@@ -20,6 +20,7 @@
 #include "crewUI.h"
 #include "goalUI.h"
 #include "resultScene.h"
+#include "Sound.h"
 
 #if _DEBUG
 #define MAX_BULIDING (200)
@@ -32,6 +33,8 @@
 #define STOP_TIME (3)
 
 EStage GameScene::m_eStage = STAGE_1;
+
+bool g_GoalTrriger;
 
 //=============================================================================
 // 初期化処理　※多分使わん、念のため
@@ -125,6 +128,9 @@ GameScene::GameScene()
 
 	// チュートリアル初期化
 	m_pTutorial = new Tutorial;
+
+	//ゴールトリガー初期化	
+	g_GoalTrriger = false;
 
 
 	// ビルの生成
@@ -685,6 +691,12 @@ void GameScene::Update()
 	// ゴールフラグが立った時
 	if (m_bGoal)
 	{
+		if (!g_GoalTrriger)
+		{
+			CSound::SetVolume(SE_GOAL,1.0f);
+			CSound::Play(SE_GOAL);
+			g_GoalTrriger = true;
+		}
 		// リザルトUI表示時間
 		if (!m_bTrigger_result)
 		{
