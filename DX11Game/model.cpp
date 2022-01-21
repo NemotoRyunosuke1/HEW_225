@@ -195,7 +195,7 @@ void UpdateModel(void)
 	// 死亡条件
 	if (g_posModel.y <= 0.0f)	// 地面 
 	{
-		EffectManager::Play(2);
+		EffectManager::Play(SAND_EFFECT);
 #if  _DEBUG
 		StartFadeOut(SCENE_GAMEOVER);
 #else
@@ -225,7 +225,7 @@ void UpdateModel(void)
 		}
 
 		//スタンエフェクト表示
-		EffectManager::Play(1);
+		EffectManager::Play(STN_EFFECT);
 
 		g_posModel.y -= 1.1f;
 
