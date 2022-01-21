@@ -23,6 +23,19 @@
 
 #define EFFECT (EffectManager::Instance())
 
+enum EEffect
+{
+	STN_EFFECT = 0,
+	SAND_EFFECT,
+	GOAL_EFFECT,
+	WIND_EFFECT,
+
+	NONE_EFFECT,
+	MAX_EFFECT
+
+};
+
+
 class EffectManager
 {
 public:
@@ -35,7 +48,7 @@ public:
 	static EffectManager *Instance();
 
 	int Load(const char *fileName);
-	static int Play(int Handle);
+	static int Play(EEffect Handle);
 	
 	static void SetStage(EStage);
 
@@ -50,6 +63,7 @@ private:
 	static Effekseer::EffectRef m_effect3;	//ÉXÉ^Éì
 	static Effekseer::EffectRef m_effect4;	//çªö∫
 	static Effekseer::EffectRef m_effect5;	//ïó_è„_â©êF
+	static Effekseer::EffectRef m_effect6;	//ïó_â°_ver2
 	static Effekseer::Handle m_handle;
 
 	static EStage m_estage;

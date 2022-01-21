@@ -87,7 +87,7 @@ GameScene::GameScene()
 	// 鳥残機カウント初期化
 	m_pCunt = new Cunt;
 
-	//エフェクトマネージャー終了
+	//エフェクトマネージャー初期化
 	EffectManager::Create();
 
 	// 風マネージャー初期化
@@ -855,13 +855,21 @@ void GameScene::Draw()
 
 	// メッシュフィールド描画
 	DrawMeshField();
+	
+	//エフェクト描画
+	//EFFECT->Play(1);
 
+	//EffectManager::Play(WIND_EFFECT);
+
+	
 	// ビル描画
 	for (int i = 0; i < MAX_BULIDING; i++)
 	{
 		m_pBuliding[i].Draw();
 	}
-
+	
+	EffectManager::Play(NONE_EFFECT);
+	
 	// 雲マネージャー描画
 	m_pCloudManager->Draw();
 
@@ -899,8 +907,7 @@ void GameScene::Draw()
 	// Zバッファ無効(Zチェック無&Z更新無)
 	SetZBuffer(false);
 
-	EFFECT->Play(0);
-
+	
 	
 	// スタミナバー
 	m_pStaminaBar->Draw();
