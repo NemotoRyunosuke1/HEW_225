@@ -361,7 +361,7 @@ void UpdateEnemy(void)
 						StartEscapeCrew();	// –¡•û‚Ì“¦‘–
 						CSound::SetVolume(SE_DAMAGE, 1.0f);
 						CSound::Play(SE_DAMAGE);
-
+						
 						g_bTrigger = true;
 					}		
 				}

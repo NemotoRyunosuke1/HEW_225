@@ -23,6 +23,8 @@ enum eSE {
 	SE_SWING,		// ‚Í‚Î‚½‚«‰¹
 	SE_DAMAGE,		// ”í’e‰¹
 	SE_WARNING,     // Œx‰¹
+	SE_PAPER,       // Ž†‰¹
+	SE_GOAL,        // ƒS[ƒ‹‰¹
 
 	MAX_SE
 };
