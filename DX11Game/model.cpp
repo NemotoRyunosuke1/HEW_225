@@ -738,7 +738,7 @@ void UpdateModel(void)
 		{
 			g_rotDestModel.x = -90;
 		}
-		g_bWindDelay = false;
+		
 	}
 	
 	if (g_rotDestModel.y >= 360)
@@ -832,7 +832,7 @@ void UpdateModel(void)
 	}
 
 	// スタミナ処理
-	if (g_rotModel.x > 3 && !g_bWindDelay)
+	if (g_rotModel.x > 3 && !g_bWindDelay &&!bFlg)
 	{
 		// スタミナ減少
 		if (!bWind)	// 風に乗ってないとき
@@ -911,7 +911,7 @@ void UpdateModel(void)
 	PrintDebugProc("[ﾓﾃﾞﾙﾑｷ : (%f : %f : %f)]\n", g_rotDestModel.x, g_posModel.y, g_posModel.z);
 	PrintDebugProc("[ﾓﾃﾞﾙｶｿｸ : (%f : %f : %f)]\n",g_accModel.x, g_accModel.y, g_accModel.z);
 	PrintDebugProc("[ｶｾﾞﾙｶｿｸ : (%f : %f : %f)]\n", WindVec[1].x, WindVec[1].y, WindVec[1].z);
-	PrintDebugProc("[ｶｾﾞｱﾀﾘﾊﾝﾃｲ : (%d: %d )]\n", bFlg, bWind1[1]);
+	PrintDebugProc("[ｶｾﾞｱﾀﾘﾊﾝﾃｲ : (%d: %d )]\n", bFlg, bWind);
 	//PrintDebugProc("\n");
 	PrintDebugProc("*** ﾋｺｳｷ ｿｳｻ ***\n");
 	PrintDebugProc("ﾏｴ   ｲﾄﾞｳ : \x1e\n");//↑

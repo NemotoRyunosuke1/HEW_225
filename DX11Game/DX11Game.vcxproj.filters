@@ -189,6 +189,9 @@
     <ClCompile Include="Cunt.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="skyDome.cpp">
+      <Filter>ソースファイル\scene\gameScene\object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AssimpModel.h">
@@ -367,6 +370,9 @@
     </ClInclude>
     <ClInclude Include="Cunt.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="skyDome.h">
+      <Filter>ヘッダーファイル\scene\gameScene\object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
