@@ -31,12 +31,8 @@ Tutorial::Tutorial()
 	m_bTrigger = false;
 	m_nCnt = 0;
 
-	for ( int i = 0; i < 1; i++)
-	{
-		m_bPaperTrigger[i] = false;
-
-	}
-	m_bPaperTrriger = false;
+	
+	m_bPaperTrigger = false;
 	// テクスチャ読込
 	CreateTextureFromFile(pDevice, PATH_POPUP1_TEXTURE, &m_pTexture);
 }
@@ -61,11 +57,11 @@ void Tutorial::Update(EStage stage)
 	// ポップアップ表示されたとき
 	if (m_bPopup)
 	{
-		if (!m_bPaperTrriger)
+		if (!m_bPaperTrigger)
 		{
-			CSound::SetVolume(SE_PAPER, 1.0f);
+			CSound::SetVolume(SE_PAPER, 1.5f);
 			CSound::Play(SE_PAPER);
-			m_bPaperTrriger = true;
+			m_bPaperTrigger = true;
 		}
 		m_size.x += 100.0f;
 		if (m_size.x > SCREEN_WIDTH-300)
@@ -105,7 +101,7 @@ void Tutorial::Update(EStage stage)
 			{
 				m_nCnt++;
 				m_bTrigger = true;
-				CSound::SetVolume(SE_PAPER, 1.0f);
+				CSound::SetVolume(SE_PAPER, 1.5f);
 				CSound::Play(SE_PAPER);
 				//if (m_nCnt > 5) m_nCnt = 0;
 			}
@@ -117,7 +113,7 @@ void Tutorial::Update(EStage stage)
 			{
 				m_nCnt--;
 				m_bTrigger = true;
-				CSound::SetVolume(SE_PAPER, 1.0f);
+				CSound::SetVolume(SE_PAPER, 1.5f);
 				CSound::Play(SE_PAPER);
 				//if (m_nCnt < 0) m_nCnt = 5;
 			}
@@ -130,14 +126,14 @@ void Tutorial::Update(EStage stage)
 		if (GetKeyTrigger(VK_RIGHT) || GetKeyTrigger(VK_D))
 		{
 			m_nCnt++;
-			CSound::SetVolume(SE_PAPER, 1.0f);
+			CSound::SetVolume(SE_PAPER, 1.5f);
 			CSound::Play(SE_PAPER);
 		 }
 
 		if (GetKeyTrigger(VK_LEFT) || GetKeyTrigger(VK_A))
 		{
 			m_nCnt--;
-			CSound::SetVolume(SE_PAPER, 1.0f);
+			CSound::SetVolume(SE_PAPER, 1.5f);
 			CSound::Play(SE_PAPER);
 		}
 
@@ -226,7 +222,7 @@ void Tutorial::Update(EStage stage)
 		m_bPopupNum2[0] = false;
 		m_bPopupNum2[6] = false;
 		m_bPopupNum2[10] = false;
-		m_bPaperTrriger = false;
+		m_bPaperTrigger = false;
 	}
 
 	//

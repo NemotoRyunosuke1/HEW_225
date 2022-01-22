@@ -34,7 +34,7 @@
 
 EStage GameScene::m_eStage = STAGE_1;
 
-bool g_GoalTrriger;
+bool g_GoalTrigger;
 
 //=============================================================================
 // 初期化処理　※多分使わん、念のため
@@ -130,7 +130,7 @@ GameScene::GameScene()
 	m_pTutorial = new Tutorial;
 
 	//ゴールトリガー初期化	
-	g_GoalTrriger = false;
+	g_GoalTrigger = false;
 
 
 	// ビルの生成
@@ -691,11 +691,11 @@ void GameScene::Update()
 	// ゴールフラグが立った時
 	if (m_bGoal)
 	{
-		if (!g_GoalTrriger)
+		if (!g_GoalTrigger)
 		{
 			CSound::SetVolume(SE_GOAL,1.0f);
 			CSound::Play(SE_GOAL);
-			g_GoalTrriger = true;
+			g_GoalTrigger = true;
 		}
 		// リザルトUI表示時間
 		if (!m_bTrigger_result)
