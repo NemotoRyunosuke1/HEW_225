@@ -64,6 +64,9 @@ private:
 	XMFLOAT3 m_IconPos8;	// 位置
 	XMFLOAT3 m_Iconsize8;	// サイズ
 
+	XMFLOAT3 m_posFinish;		// 位置
+	XMFLOAT3 m_sizeFinish;		// サイズ
+
 	ID3D11ShaderResourceView* m_pTexture;
 	ID3D11ShaderResourceView* m_pIconTexture1;
 	ID3D11ShaderResourceView* m_pIconTexture2;
@@ -73,7 +76,9 @@ private:
 	ID3D11ShaderResourceView* m_pIconTexture6;
 	ID3D11ShaderResourceView* m_pIconTexture7;
 	ID3D11ShaderResourceView* m_pIconTexture8;
-
+	ID3D11ShaderResourceView* m_pTextureFinish;
 	float m_fAlpha;	// 透明度
 	int m_nScore;
+	bool m_bResult;
+
 };

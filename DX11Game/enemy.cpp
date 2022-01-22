@@ -13,6 +13,7 @@
 #include "collision.h"
 #include <stdlib.h>
 #include "crew.h"
+#include "Sound.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -58,6 +59,7 @@ struct TEnemy {
 	bool m_use;
 	bool m_bAtack;
 	double dAnimTime;
+	bool m_SoundTrriger;
 };
 
 typedef struct D3DXVECTOR3 {
@@ -79,6 +81,7 @@ static TEnemy		g_enemy[MAX_ENEMY];	      // 敵の情報
 static ID3D11ShaderResourceView* g_pTexture;
 static int		g_nEnemy;			          // 敵現在数
 static bool g_bTrigger;	// トリガーフラグ
+//static bool g_SoundTrigger;
 //=============================================================================
 // 初期化処理
 //=============================================================================
@@ -115,11 +118,12 @@ HRESULT InitEnemy(void)
 		g_enemy[i].m_bAtack = false;
 		g_enemy[i].collisionSize = 500;
 		g_enemy[i].dAnimTime = 0.0f;
-
+		g_enemy[i].m_SoundTrriger = false;
 			}
 
 	//CreateEnemy(XMFLOAT3(0.0f, 500.0f, 0.0f));
 	g_bTrigger = false;
+	//g_SoundTrigger = false;
 	return hr;
 }
 
@@ -355,6 +359,9 @@ void UpdateEnemy(void)
 					if (!g_bTrigger)
 					{
 						StartEscapeCrew();	// 味方の逃走
+						CSound::SetVolume(SE_DAMAGE, 1.0f);
+						CSound::Play(SE_DAMAGE);
+						
 						g_bTrigger = true;
 					}		
 				}
@@ -381,11 +388,20 @@ void UpdateEnemy(void)
 			if (radianX > 80)radianX = 80;		// 角度制限(上)
 			if (radianX < -80)radianX = -80;	// 角度制限(下)
 			g_enemy[i].m_rotDest.x = radianX;	// 角度代入
+			// SE
+			if (!g_enemy[i].m_SoundTrriger)
+			{
+				CSound::SetVolume(SE_WARNING, 1.0f);
+				CSound::Play(SE_WARNING);
+				g_enemy[i].m_SoundTrriger = true;
+			}
 			
+
 			return 1;
 		}
 		else	//　プレイヤーが探索範囲に入っていないとき
 		{
+			g_enemy[i].m_SoundTrriger = false;
 			// 初期位置にいる時
 			if (CollisionSphere(g_enemy[i].m_initPos, 200, g_enemy[i].m_pos, 200))
 			{
