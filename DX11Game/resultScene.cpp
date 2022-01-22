@@ -123,6 +123,7 @@ ResultScene::ResultScene()
 	m_fAlpha = 0.0f;	// 透明度
 	m_nScore = 3;	// 星の数
 	m_bResult = false;
+	m_bResult2 = false;
 }
 //=============================================================================
 // デストラクタ
@@ -174,9 +175,9 @@ void ResultScene::Update()
 	
 	if (!m_bResult)
 	{
-		m_sizeFinish.x +=  5;
+		m_sizeFinish.x += 5;
 		m_sizeFinish.y += 5;
-		if (m_sizeFinish.x > 300)   m_bResult = true;
+		if (m_sizeFinish.x > 300)m_bResult = true;
 	}
 	else
 	{

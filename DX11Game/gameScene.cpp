@@ -780,7 +780,7 @@ void GameScene::Update()
 	m_pWindManager->Update();
 
 	// 雲マネージャー更新
-	m_pCloudManager->Update();
+	//m_pCloudManager->Update();
 
 	// ゴール更新
 	m_pGoal->Update();
@@ -928,7 +928,7 @@ void GameScene::Draw()
 	EffectManager::Play(NONE_EFFECT);
 	
 	// 雲マネージャー描画
-	m_pCloudManager->Draw();
+	//m_pCloudManager->Draw();
 
 
 	
