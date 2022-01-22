@@ -939,7 +939,9 @@ void GameScene::Draw()
 	// 鳥残機カウント描画
 	m_pCunt->Draw();
 
-	
+	// タイマーUI更新
+	m_pTimerUI->Draw();
+
 	if (GetOverHeartModel() || GetStanModel())
 	{
 		// レバガチャ描画
@@ -953,9 +955,7 @@ void GameScene::Draw()
     }
 	
 
-	// タイマーUI更新
-	m_pTimerUI->Draw();
-
+	
 	// チュートリアル描画
 	m_pTutorial->Draw();
 
