@@ -30,7 +30,7 @@ Scene::Scene()
 	// ゲームの開始するときのシーン
 	m_eScene = SCENE_GAME;
 	// ステージ初期化
-	m_eStage = STAGE_4;
+	m_eStage = STAGE_3;
 #else
 	// ゲームの開始するときのシーン
 	m_eScene = SCENE_TITLE;
