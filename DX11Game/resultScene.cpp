@@ -282,7 +282,16 @@ void ResultScene::Draw()
 		SetPolygonUV(0.0f, 0.0f);
 		DrawPolygon(pBC);
 	}
-
+	else
+	{
+		// フィニッシュ
+		SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
+		SetPolygonSize(m_sizeFinish.x, m_sizeFinish.y);
+		SetPolygonPos(m_posFinish.x, m_posFinish.y);
+		SetPolygonTexture(m_pTextureFinish);
+		SetPolygonUV(0.0f, 0.0f);
+		DrawPolygon(pBC);
+	}
 
 	
 
@@ -294,13 +303,7 @@ void ResultScene::Draw()
 	//SetPolygonUV(0.0f, 0.0f);
 	//DrawPolygon(pBC);
 
-	 // フィニッシュ
-	SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
-	SetPolygonSize(m_sizeFinish.x, m_sizeFinish.y);
-	SetPolygonPos(m_posFinish.x, m_posFinish.y);
-	SetPolygonTexture(m_pTextureFinish);
-	SetPolygonUV(0.0f, 0.0f);
-	DrawPolygon(pBC);
+	
 
 	 //2D描画
 	 //Zバッファ無効(Zチェック無&Z更新無)
