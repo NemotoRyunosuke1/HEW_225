@@ -243,17 +243,17 @@ void Tutorial::Update(EStage stage)
 			switch (m_nCnt)
 			{
 			case 0:
-				CreateTextureFromFile(pDevice, PATH_POPUP10_TEXTURE, &m_pTexture);
+				CreateTextureFromFile(pDevice, PATH_POPUP9_TEXTURE, &m_pTexture);
 				break;
 			case 1:
-				CreateTextureFromFile(pDevice, PATH_POPUP11_TEXTURE, &m_pTexture);
+				CreateTextureFromFile(pDevice, PATH_POPUP10_TEXTURE, &m_pTexture);
 				break;
 			
 			default:
 				break;
 			}
 		}
-	}
+	}							  
 	else
 	{
 		m_size.y -= 100.0f;

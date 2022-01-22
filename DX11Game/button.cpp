@@ -175,8 +175,9 @@ void Button::Update(eSE se)
 	if (m_use)
 	{
 		//カーソルがあわされた時
-		if ((GetMousePosition()->x > (long)(m_pos.x - m_size.x / 2 + FULLSCREEN_WIDTH / 2)) && (GetMousePosition()->x < (long)(m_pos.x + m_size.x / 2 + FULLSCREEN_WIDTH / 2)) && (-GetMousePosition()->y < (long)(m_pos.y + m_size.y / 2 - FULLSCREEN_HEIGHT / 2)) && (-GetMousePosition()->y > (long)(m_pos.y - m_size.y / 2 - FULLSCREEN_HEIGHT / 2)))
+		if ((GetMousePosition()->x - FULLSCREEN_WIDTH / 2 > (long)(m_pos.x - m_size.x / 2 )) && (GetMousePosition()->x - FULLSCREEN_WIDTH / 2 < (long)(m_pos.x + m_size.x / 2 )) && (-GetMousePosition()->y + FULLSCREEN_HEIGHT / 2 < (long)(m_pos.y + m_size.y / 2 )) && (-GetMousePosition()->y + FULLSCREEN_HEIGHT / 2 > (long)(m_pos.y - m_size.y / 2 )))
 		{
+			m_select = true;
 			if (GetMouseButton(MOUSEBUTTON_L))
 			{
 				if (!g_bButton)
@@ -253,6 +254,7 @@ void Button::Update(EScene scene)
 		//カーソルがあわされた時
 		if ((GetMousePosition()->x > (long)(m_pos.x - m_size.x / 2 + FULLSCREEN_WIDTH / 2)) && (GetMousePosition()->x < (long)(m_pos.x + m_size.x / 2 + FULLSCREEN_WIDTH / 2)) && (-GetMousePosition()->y < (long)(m_pos.y + m_size.y / 2 - FULLSCREEN_HEIGHT / 2)) && (-GetMousePosition()->y > (long)(m_pos.y - m_size.y / 2 - FULLSCREEN_HEIGHT / 2)))
 		{
+			m_select = true;
 			if (GetMouseButton(MOUSEBUTTON_L))
 			{
 				if (!g_bButton)
@@ -449,8 +451,9 @@ void Button::Update(EScene scene)
 	// デバック用文字列
 	// デバック用文字列
 	PrintDebugProc("[ﾏｳｽ ｲﾁ : (%d : %d )]\n", point.x, point.y);
-	PrintDebugProc("[ﾏｳｽ ｲﾁ : (%d : %d )]\n", GetMousePosition()->x, GetMousePosition()->y);
-	PrintDebugProc("[ﾃｸｽﾁｬ ﾊﾞﾝｺﾞｳ : %d]\n", m_textureNum);
+	PrintDebugProc("[ﾎﾞﾀﾝ ｻｲｽﾞ : (%f : %f )]\n", m_size.x, m_size.y);
+	PrintDebugProc("[ﾎﾞﾀﾝ ｲﾁ : (%f : %f )]\n", m_pos.x, m_pos.y);
+	
 
 
 #endif
