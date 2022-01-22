@@ -80,5 +80,6 @@ private:
 	float m_fAlpha;	// “§–¾“x
 	int m_nScore;
 	bool m_bResult;
+	bool m_bResult2;
 
 };
