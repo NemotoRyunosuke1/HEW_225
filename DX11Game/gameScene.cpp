@@ -291,7 +291,7 @@ GameScene::GameScene(EStage stage)
 			m_pBuliding[i + 28].Create(XMFLOAT3(-3900 + i * 300, 10, 1800), XMFLOAT3(10.0f, 8.0f + rand() % 5, 10.0f));
 		}
 
-		for (int i = 0; i < 2; i++)  // •Ç
+		for (int i = 0; i < 2; i++)  // ’Ç‚¢•—‚ÌŒã‚Ì•Ç
 		{
 			m_pBuliding[i + 39].Create(XMFLOAT3(-600 + i * 300, 10, 3600), XMFLOAT3(10.0f, 8.0f + rand() % 5, 10.0f));  // Œã‚ë
 		}
@@ -313,6 +313,7 @@ GameScene::GameScene(EStage stage)
 		{
 			m_pBuliding[i + 104].Create(XMFLOAT3(-3900 + i * 300, 10, -2100), XMFLOAT3(10.0f, 8.0f + rand() % 5, 10.0f));
 		}
+
 		// ’‡ŠÔ‚Ì”z’u
 		CrewCreate(XMFLOAT3(-1000.0f, 500.0f, -300.0f));// 1
 		CrewCreate(XMFLOAT3(-1200.0f, 500.0f, -200.0f));// 2
