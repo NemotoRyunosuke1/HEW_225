@@ -170,6 +170,9 @@ GameScene::GameScene()
 	m_timer;
 	m_bGoal = false;
 
+	// スカイドーム初期化
+	m_pSkyDome = new SkyDome;
+
 	// リザルト用変数初期化
 	m_fRemainTime = m_fCurrentTime_result = (float)timeGetTime();
 	m_bTrigger_result = false;
@@ -218,6 +221,9 @@ GameScene::GameScene(EStage stage)
 
 	//エフェクトマネージャー終了
 	EffectManager::Create();
+
+	// スカイドーム初期化
+	m_pSkyDome = new SkyDome;
 
 	// 風マネージャー初期化
 	m_pWindManager = new WindManager(stage);
@@ -359,8 +365,8 @@ GameScene::GameScene(EStage stage)
 		CrewCreate(XMFLOAT3(-1000.0f, 500.0f, 2500.0f));// 8
 		
 		// ゴールUI位置初期化
-		SetGoalUI(XMFLOAT3(-1000.0f, 600.0f,2000.0f), 1200, 600, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);
-		m_pGoal = new Goal(XMFLOAT3(-1000.0f, 600.0f, 2000.0f));
+		SetGoalUI(XMFLOAT3(-950.0f, 600.0f,3600.0f), 500, 200, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);
+		m_pGoal = new Goal(XMFLOAT3(-950.0f, 600.0f, 3600.0f));
 
 		break;
 	case STAGE_3:	// ステージ3
@@ -401,28 +407,28 @@ GameScene::GameScene(EStage stage)
 			m_pGoal = new Goal(XMFLOAT3(-1000.0f, 1200.0f, 6000.0f));
 
 			// 仲間の配置
-			CrewCreate(XMFLOAT3(-1000.0f, 500.0f, -600.0f));// 1
-			CrewCreate(XMFLOAT3(-1000.0f, 500.0f, 600.0f));// 2
-			CrewCreate(XMFLOAT3(-300.0f, 500.0f, 1800.0f));// 3
-			CrewCreate(XMFLOAT3(-1700.0f, 500.0f, 1800.0f));// 4
-
-			CrewCreate(XMFLOAT3(-1000.0f, 500.0f, 3000.0f));// 5
+			CrewCreate(XMFLOAT3(-1000.0f, 500.0f, -1000.0f));// 1
+			CrewCreate(XMFLOAT3(-1000.0f, 500.0f, 1200.0f));// 2
+			CrewCreate(XMFLOAT3(-400.0f, 500.0f, 1500.0f));// 3
+			CrewCreate(XMFLOAT3(-1600.0f, 500.0f, 1500.0f));// 4
+			CrewCreate(XMFLOAT3(-1000.0f, 100.0f, 4500.0f));// 5
 
 			// 敵の配置
-			CreateEnemy(XMFLOAT3(-1000.0f, 500.0f, 0.0f));// 1
-			CreateEnemy(XMFLOAT3(-500.0f, 500.0f, 500.0f));// 2
-			CreateEnemy(XMFLOAT3(-1500.0f, 500.0f, 500.0f));// 3
-			CreateEnemy(XMFLOAT3(500.0f, 500.0f, 1500.0f));// 4
-			CreateEnemy(XMFLOAT3(-2500.0f, 500.0f, 1500.0f));// 5
+			CreateEnemy(XMFLOAT3(-1000.0f, 500.0f, -300.0f));// 1
+			CreateEnemy(XMFLOAT3(-1000.0f, 500.0f, 400.0f));// 2
 
-			CreateEnemy(XMFLOAT3(-1200.0f, 500.0f, 3700.0f));// 6
-			CreateEnemy(XMFLOAT3(-1800.0f, 500.0f, 3300.0f));// 7
-			CreateEnemy(XMFLOAT3(-1200.0f, 500.0f, 2300.0f));// 8
-			CreateEnemy(XMFLOAT3(-1800.0f, 500.0f, 2700.0f));// 7
-			CreateEnemy(XMFLOAT3(-800.0f, 500.0f, 3700.0f));// 9
-			CreateEnemy(XMFLOAT3(-200.0f, 500.0f, 3300.0f));// 10
-			CreateEnemy(XMFLOAT3(-800.0f, 500.0f, 2300.0f));// 11
-			CreateEnemy(XMFLOAT3(-200.0f, 500.0f, 2700.0f));// 12
+			CreateEnemy(XMFLOAT3(-2100.0f, 500.0f, 2500.0f));// 3
+			CreateEnemy(XMFLOAT3(100.0f, 500.0f, 2500.0f));// 4
+
+			CreateEnemy(XMFLOAT3(-2100.0f, 500.0f, 3500.0f));// 5
+			CreateEnemy(XMFLOAT3(100.0f, 500.0f, 3500.0f));// 6
+			CreateEnemy(XMFLOAT3(-1600.0f, 500.0f, 4200.0f));// 7
+			CreateEnemy(XMFLOAT3(-400.0f, 500.0f, 4200.0f));// 8
+			CreateEnemy(XMFLOAT3(-1000.0f, 500.0f, 4700.0f));// 7
+			//CreateEnemy(XMFLOAT3(-800.0f, 500.0f, 3700.0f));// 9
+			//CreateEnemy(XMFLOAT3(-200.0f, 500.0f, 3300.0f));// 10
+			//CreateEnemy(XMFLOAT3(-800.0f, 500.0f, 2300.0f));// 11
+			//CreateEnemy(XMFLOAT3(-200.0f, 500.0f, 2700.0f));// 12
 
 			break;
 	case STAGE_4:	// ステージ4
@@ -443,9 +449,9 @@ GameScene::GameScene(EStage stage)
 		CrewCreate(XMFLOAT3(-1000.0f, 500.0f, 8000.0f));// 10
 
 		// 敵の配置
-		CreateEnemy(XMFLOAT3(-1000.0f, 500.0f, 3500.0f));// 1
-		CreateEnemy(XMFLOAT3(-1000.0f, 500.0f, 6500.0f));// 2
-		CreateEnemy(XMFLOAT3(-1000.0f, 500.0f, 7500.0f));// 3
+		CreateEnemy(XMFLOAT3(-1000.0f, 100.0f, 6000.0f));// 1
+		CreateEnemy(XMFLOAT3(-1000.0f, 100.0f, 8000.0f));// 2
+		CreateEnemy(XMFLOAT3(-1000.0f, 100.0f, 9200.0f));// 3
 
 
 		// ビルの配置
@@ -555,6 +561,9 @@ GameScene::~GameScene()
 	UninitCrewUI();
 
 	UninitGoalUI();
+
+	// スカイドーム終了
+	delete m_pSkyDome;
 
 	// 鳥残機カウント終了処理
 	delete m_pCunt;
@@ -668,6 +677,10 @@ void GameScene::Update()
 
 	// リザルトシーン更新
 	m_pResult->SetScore(m_pTimerUI->GetScore());
+
+	// スカイドーム
+	m_pSkyDome->Update();
+	m_pSkyDome->SetPos(XMFLOAT3(GetModelPos().x,400, GetModelPos().z));
 
 	// ゴールフラグが立った時
 	if (m_bGoal)
@@ -862,6 +875,8 @@ void GameScene::Draw()
 	// Zバッファ無効(Zチェック無&Z更新無)
 	SetZBuffer(true);
 
+	m_pSkyDome->Draw();
+
 	// 仲間用UI描画
 	DrawCrewUI();
 
@@ -902,8 +917,9 @@ void GameScene::Draw()
 	DrawEnemy();
 
 	// 風マネージャー描画
-	//m_pWindManager->Draw();
-   
+#if _DEBUG
+	m_pWindManager->Draw();
+#endif
 	// モデル描画
 	DrawModel();
 	

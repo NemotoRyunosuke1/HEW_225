@@ -142,7 +142,7 @@ int EffectManager::Play(int Handle)
 		}
 	break;
 
-	case 3:
+	case 3:	// ƒS[ƒ‹•—
 		
 		switch (m_estage)
 		{
@@ -150,13 +150,18 @@ int EffectManager::Play(int Handle)
 			//•—_ã_‰©F
 			if (time > 129.9f)
 			{
-				// ƒS[ƒ‹•—
 				time = 0;
 				m_handle = m_manager->Play(m_effect5, -1000.0f, 600.0f, 4000.0f);
 				m_manager->SetScale(m_handle, 20.0f, 25.0f, 20.0f);
 			}
 			break;
 		case STAGE_2:
+			if (time > 129.9f)
+			{
+				time = 0;
+				m_handle = m_manager->Play(m_effect5, -950.0f, 0.0f, 3600.0f);
+				m_manager->SetScale(m_handle, 20.0f, 25.0f, 20.0f);
+			}
 			break;
 		case STAGE_3:
 			break;

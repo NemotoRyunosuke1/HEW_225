@@ -14,6 +14,7 @@
 #include "escapeText.h"
 #include "timerUI.h"
 #include "tutorial.h"
+#include "skyDome.h"
 
 class GameScene :public SceneBase
 {
@@ -42,6 +43,7 @@ private:
 	EscapeText* m_pEscapeText;
 	TimerUI* m_pTimerUI;
 	Tutorial* m_pTutorial;
+	SkyDome* m_pSkyDome;
 
 	static EStage m_eStage;
 
