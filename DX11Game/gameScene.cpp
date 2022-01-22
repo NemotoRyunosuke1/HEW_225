@@ -693,6 +693,7 @@ void GameScene::Update()
 	{
 		if (!g_GoalTrigger)
 		{
+			CSound::Stop(GAME_BGM_001);
 			CSound::SetVolume(SE_GOAL,1.0f);
 			CSound::Play(SE_GOAL);
 			g_GoalTrigger = true;
