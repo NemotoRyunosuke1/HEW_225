@@ -9,13 +9,17 @@
 #include "debugproc.h"
 
 #define Star1			L"data/texture/StarIcon.png"	    //星１
-#define Star2			L"data/texture/StarIcon.png"		//星２
-#define Star3			L"data/texture/StarIcon.png"		//星３
+#define Star2			L"data/texture/star.png"		    //星２
+#define Star3			L"data/texture/star.png"		    //星３
 
 #define Result			L"data/texture/ranking000.png"		//リザルトロゴ
-#define Result1			L"data/texture/40second.png"		//条件1 [40秒残し]
-#define Result2			L"data/texture/80second.png"		//条件2 [80秒残し]
-#define Result3			L"data/texture/130second.png"		//条件3 [130秒残し]
+#define Result1			L"data/texture/10second.png"		//条件1 [40秒残し]
+#define Result2			L"data/texture/50second.png"		//条件2 [80秒残し]
+#define Result3			L"data/texture/100second.png"		//条件3 [130秒残し]
+//#define Result4         L"data/texture/.png"                //シーン遷移ロゴ
+
+//#define STER_TIMER (180)  // 星獲得時間
+
 //=============================================================================
 // コンストラクタ
 //=============================================================================
@@ -26,7 +30,7 @@ ResultScene::ResultScene()
 	//----------------
 
 	// 星１
-	m_pos1 = XMFLOAT3(-300, 100, 0);
+	m_pos1 = XMFLOAT3(-300, 80, 0);
 	m_size1 = XMFLOAT3(100, 100, 0);
 	m_IconPos1 = XMFLOAT3(100, 100, 0);		// 位置
 	m_Iconsize1 = XMFLOAT3(100, 50, 0);	    // サイズ
@@ -52,24 +56,24 @@ ResultScene::ResultScene()
 	m_Iconsize4 = XMFLOAT3(100, 50, 0);	    // サイズ
 
 	// 条件1 [40秒残し]
-	m_pos5 = XMFLOAT3(0, 100, 0);
+	m_pos5 = XMFLOAT3(0, 70, 0);
 	m_size5 = XMFLOAT3(500, 150, 0);
 	m_IconPos5 = XMFLOAT3(100, 100, 0);		// 位置
 	m_Iconsize5 = XMFLOAT3(100, 50, 0);	    // サイズ
 
 	// 条件2 [80秒残し]
-	m_pos6 = XMFLOAT3(0, 0, 0);
+	m_pos6 = XMFLOAT3(0, -30, 0);
 	m_size6 = XMFLOAT3(500, 150, 0);
 	m_IconPos6 = XMFLOAT3(100, 100, 0);		// 位置
 	m_Iconsize6 = XMFLOAT3(100, 50, 0);	    // サイズ
 
 	// 条件3 [130秒残し]
-	m_pos7 = XMFLOAT3(0, -100, 0);
+	m_pos7 = XMFLOAT3(0, -130, 0);
 	m_size7 = XMFLOAT3(500, 150, 0);
 	m_IconPos7 = XMFLOAT3(100, 100, 0);		// 位置
 	m_Iconsize7 = XMFLOAT3(100, 50, 0);	    // サイズ
 
-	//// シーン遷移ロゴ
+	// シーン遷移ロゴ
 	//m_pos8 = XMFLOAT3(0, 250, 0);
 	//m_size8 = XMFLOAT3(300, 100, 0);
 	//m_IconPos8 = XMFLOAT3(200, 200, 0);		// 位置
@@ -107,6 +111,7 @@ ResultScene::ResultScene()
 	// 条件3 [130秒残し] 
 	ID3D11Device* pDevice6 = GetDevice();
 	CreateTextureFromFile(pDevice6, Result3, &m_pIconTexture7);
+
 	// シーン遷移ロゴ 
 	//ID3D11Device* pDevice1 = GetDevice();
 	//CreateTextureFromFile(pDevice1, Result, &m_pIconTexture8);
@@ -114,6 +119,15 @@ ResultScene::ResultScene()
 	// 変数初期化
 	m_fAlpha = 0.0f;	// 透明度
 	m_nScore = 3;	// 星の数
+
+	////時間取得	
+	//m_fCurrentTime = m_fRemainTime = (float)timeGetTime();
+
+	//// タイマー用変数
+	//m_fRemainTimer = STER_TIMER;
+    //m_timer = 0;        // 時間
+
+	//int m_nScoreNum;	// 星の数	
 }
 //=============================================================================
 // デストラクタ
@@ -153,6 +167,33 @@ ResultScene::~ResultScene()
 //=============================================================================
 void ResultScene::Update()
 {
+
+	//// 星の獲得時間
+	//if (m_fRemainTimer > STER_TIMER - 150)
+	//{
+	//	m_nScoreNum = 3;
+	//}
+	//else if (m_fRemainTimer > STER_TIMER - 100)
+	//{
+	//	m_nScoreNum = 2;
+	//}
+	//else if (m_fRemainTimer > STER_TIMER - 50)
+	//{
+	//	m_nScoreNum = 1;
+	//}
+
+	/*m_timer += 0.5f;
+	if (m_timer >= 0.5f)
+	{
+		m_timer = 0.5f;
+	}
+
+	m_fAlpha += 0.008f;
+	if (m_fAlpha >= 0.5f)
+	{
+		m_fAlpha = 0.5f;
+	}*/
+
 	//次のシーンへ移る条件
 	if (GetAsyncKeyState(VK_RETURN) & 0x8000)
 	{
@@ -165,6 +206,7 @@ void ResultScene::Update()
 	{
 		m_fAlpha = 0.5f;
 	}
+
 
 #if _DEBUG
 	// デバック用文字列

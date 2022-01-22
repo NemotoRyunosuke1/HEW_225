@@ -76,4 +76,15 @@ private:
 
 	float m_fAlpha;	// 透明度
 	int m_nScore;
+
+	//int m_nTimer; // 星の表示時差
+
+	//// タイマー用変数
+	//float m_fRemainTime;
+	//float m_fCurrentTime;
+	//float m_timer;
+	//float m_fRemainTimer;
+
+	//int m_nScoreNum;	// 星の数
+	//int m_StarTimer;
 };

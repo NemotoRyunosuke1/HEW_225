@@ -86,7 +86,7 @@ void Tutorial::Update(EStage stage)
 			stickRY = 0;
 			m_bTrigger = false;
 		}	// スティックを下に傾けたとき
-		else if (stickLX > 20000 || stickRX > 20000 )
+		else if (stickLX > 21000 || stickRX > 21000 )
 		{
 			if (!m_bTrigger)
 			{
@@ -96,7 +96,7 @@ void Tutorial::Update(EStage stage)
 			}
 		}
 		// スティックを上に傾けたとき
-		else if (stickLX < -20000 || stickRX < -20000)
+		else if (stickLX < -21000 || stickRX < -21000)
 		{
 			if (!m_bTrigger)
 			{
@@ -216,7 +216,7 @@ void Tutorial::Update(EStage stage)
 		
 	case STAGE_1:
 		// ポップアップ1～4
-		if (!m_bPopupNum[0] && CollisionAABB(GetModelPos(),XMFLOAT3(10,1000,10), XMFLOAT3(-1000, 600, -1500),XMFLOAT3(100, 1000, 100)))
+		if (!m_bPopupNum[0] && CollisionAABB(GetModelPos(),XMFLOAT3(10,1000,10), XMFLOAT3(-1300, 400, -1500),XMFLOAT3(100, 1000, 100)))
 		{
 			
 			//CreateTextureFromFile(pDevice, PATH_POPUP1_TEXTURE, &m_pTexture);
@@ -225,6 +225,7 @@ void Tutorial::Update(EStage stage)
 
 			m_bPopup = true;
 		}
+
 
 		// ポップアップ5～6
 		if (!m_bPopupNum[6] && CollisionAABB(GetModelPos(), XMFLOAT3(10, 1000, 10), XMFLOAT3(-1300, 600, 0), XMFLOAT3(100, 1000, 100)))
@@ -236,9 +237,9 @@ void Tutorial::Update(EStage stage)
 
 			m_bPopup = true;
 		}
-
+		
 		// ポップアップ7
-		if (!m_bPopupNum[7] && CollisionAABB(GetModelPos(), XMFLOAT3(10, 1000, 10), XMFLOAT3(-600, 800, 900), XMFLOAT3(100, 1000, 100)))
+		if (!m_bPopupNum[7] && CollisionAABB(GetModelPos(), XMFLOAT3(10, 1000, 10), XMFLOAT3(-600, 900, 800), XMFLOAT3(100, 1000, 100)))
 		{
 
 			CreateTextureFromFile(pDevice, PATH_POPUP7_TEXTURE, &m_pTexture);
