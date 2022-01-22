@@ -230,20 +230,18 @@ void UpdateModel(void)
 		g_posModel.y -= 1.1f;
 
 		// ƒŒƒoƒKƒ`ƒƒ”»’è
-		if (stickY > 20000 || stickX > 20000 || stickY < -20000 || stickX < -20000 || GetKeyTrigger(VK_A) ||  GetKeyTrigger(VK_D) || GetKeyTrigger(VK_W) || GetKeyTrigger(VK_S))
+		if (stickY > 20000 || stickX > 20000 || stickY < -20000 || stickX < -20000 || GetKeyTrigger(VK_A) || GetKeyTrigger(VK_D) || GetKeyTrigger(VK_W) || GetKeyTrigger(VK_S))
 		{
 			if (!g_bStickTrigger)
 			{
 				g_fStanRecoverySpeed = 0.1f;
 				g_bStickTrigger = true;
 			}
-			else
-			{
-				g_fStanRecoverySpeed = 0.0f;
-			}
+			
 		}
 		else
 		{
+			g_fStanRecoverySpeed = 0.0f;
 			g_bStickTrigger = false;
 		}
 
@@ -883,6 +881,7 @@ void UpdateModel(void)
 		}
 		else
 		{
+			g_fOverHeartRecoverySpeed = 0;
 			g_bStickTrigger = false;
 		}
 		/*if (GetKeyTrigger(VK_A)|| GetKeyTrigger(VK_W) || GetKeyTrigger(VK_S) || GetKeyTrigger(VK_D))
