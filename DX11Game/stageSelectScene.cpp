@@ -154,6 +154,6 @@ EStage StageSlectScene::GetStage()
 	}
 	else
 	{
-		return STAGE_1;
+		return m_eStage;
 	}
 }
