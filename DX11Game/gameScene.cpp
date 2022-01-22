@@ -465,9 +465,9 @@ GameScene::GameScene(EStage stage)
 		CrewCreate(XMFLOAT3(-1000.0f, 1200.0f, 9200.0f));// 10
 
 		// 敵の配置
-		CreateEnemy(XMFLOAT3(-1000.0f, 1200.0f, 6000.0f));// 1
-		CreateEnemy(XMFLOAT3(-1000.0f, 1200.0f, 8000.0f));// 2
-		CreateEnemy(XMFLOAT3(-1000.0f, 1200.0f, 9200.0f));// 3
+		CreateEnemy(XMFLOAT3(-1000.0f, 1200.0f, 5000.0f));// 1
+		CreateEnemy(XMFLOAT3(-1000.0f, 1200.0f, 7000.0f));// 2
+		CreateEnemy(XMFLOAT3(-1000.0f, 1200.0f, 8600.0f));// 3
 
 
 		// ビルの配置
