@@ -135,8 +135,8 @@ void Scene::Update()
 		break;
 
 	case SCENE_GAME:
-		CSound::SetVolume(GAME_BGM_001, 0.2f);
-		CSound::Play(GAME_BGM_001);
+		/*CSound::SetVolume(GAME_BGM_001, 0.2f);
+		CSound::Play(GAME_BGM_001);*/
 		m_pGameScene->Update();
 	
 		break;
@@ -243,7 +243,7 @@ void Scene::SetScene(EScene eScene)
 
 	case SCENE_STAGE_SELECT://メニューシーン
 		CSound::Stop(BGM_000); //タイトルBGMストップ
-		//CSound::Stop(BGM_004);//セレクトBGMストップ
+	//	CSound::Stop(BGM_004);//セレクトBGMストップ
 		m_pGameScene->SetStage(m_pStageSelectScene->GetStage());
 
 		delete m_pStageSelectScene;

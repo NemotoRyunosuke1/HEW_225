@@ -35,6 +35,7 @@
 EStage GameScene::m_eStage = STAGE_1;
 
 bool g_GoalTrigger;
+float g_BGMSound;
 
 //=============================================================================
 // 初期化処理　※多分使わん、念のため
@@ -129,9 +130,7 @@ GameScene::GameScene()
 	// チュートリアル初期化
 	m_pTutorial = new Tutorial;
 
-	//ゴールトリガー初期化	
-	g_GoalTrigger = false;
-
+	
 
 	// ビルの生成
 	for (int k = 0; k < MAX_BULIDING / 16 / 5; k++)
@@ -266,6 +265,10 @@ GameScene::GameScene(EStage stage)
 
 	// チュートリアル初期化
 	m_pTutorial = new Tutorial;
+
+	//ゴールトリガー初期化	
+	g_GoalTrigger = false;
+
 
 	// ステージごとの初期化  (モデル位置 x軸:-1000 y軸:600 z軸:-2000)
 	switch (stage)
@@ -626,12 +629,13 @@ void GameScene::Update()
 	PrintDebugProc("ｽﾃｰｼﾞ:%d\n", m_eStage + 1);
 	PrintDebugProc("\n");
 #endif
-
+	CSound::SetVolume(GAME_BGM_001, 0.2f);
+	CSound::Play(GAME_BGM_001);
 	//スタートタイマー
 	m_fCurrentTime = (float)timeGetTime();
 	m_timer = (m_fCurrentTime - m_fRemainTime) / 1000;
 
-
+	
 	// ポーズ
 	if (GetJoyRelease(0, JOYSTICKID8) || GetKeyRelease(VK_ESCAPE))	// コントローラーSTARTボタン
 	{
@@ -691,9 +695,15 @@ void GameScene::Update()
 	// ゴールフラグが立った時
 	if (m_bGoal)
 	{
-		if (!g_GoalTrigger)
+		CSound::SetVolume(GAME_BGM_001, g_BGMSound);
+		g_BGMSound -= 0.03f;
+		if (g_BGMSound < 0)
 		{
 			CSound::Stop(GAME_BGM_001);
+		}
+		if (!g_GoalTrigger)
+		{
+			
 			CSound::SetVolume(SE_GOAL,1.0f);
 			CSound::Play(SE_GOAL);
 			g_GoalTrigger = true;
