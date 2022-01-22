@@ -146,7 +146,7 @@ int EffectManager::Play(EEffect Handle)
 				{
 					// ƒS[ƒ‹•—
 					time = 0;
-					m_handle = m_manager->Play(m_effect5, -1000.0f, 600.0f, 4000.0f);
+					m_handle = m_manager->Play(m_effect5, -1000.0f, 0.0f, 4000.0f);
 					m_manager->SetScale(m_handle, 20.0f, 25.0f, 20.0f);
 				}
 				break;

@@ -330,7 +330,7 @@ GameScene::GameScene(EStage stage)
 
 
 		// ゴール位置初期化
-		SetGoalUI(XMFLOAT3(-1000.0f, 600.0f, 4000.0f), 1200, 600, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);
+		SetGoalUI(XMFLOAT3(-1000.0f, 600.0f, 4000.0f), 500, 200, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);
 		m_pGoal = new Goal(XMFLOAT3(-1000.0f, 600.0f, 4000.0f));
 
 
@@ -414,7 +414,7 @@ GameScene::GameScene(EStage stage)
 			}
 		}
 			// ゴールUI位置初期化
-			SetGoalUI(XMFLOAT3(-1000.0f, 1200.0f, 6000.0f), 1200, 600, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);
+			SetGoalUI(XMFLOAT3(-1000.0f, 1200.0f, 6000.0f), 500, 200, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);
 			m_pGoal = new Goal(XMFLOAT3(-1000.0f, 1200.0f, 6000.0f));
 
 			// 仲間の配置
@@ -482,7 +482,7 @@ GameScene::GameScene(EStage stage)
 		}
 
 		// ゴールUI位置初期化
-		SetGoalUI(XMFLOAT3(-1000.0f, 1000.0f, 9000.0f), 1200, 600, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);
+		SetGoalUI(XMFLOAT3(-1000.0f, 1000.0f, 9000.0f), 500, 200, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);
 		m_pGoal = new Goal(XMFLOAT3(-1000.0f, 1200.0f, 9000.0f));
 
 		break;
@@ -544,7 +544,7 @@ GameScene::GameScene(EStage stage)
 		CreateEnemy(XMFLOAT3(-1300.0f, 500.0f, 3000.0f));// 9
 
 		// ゴールUI位置初期化
-		SetGoalUI(XMFLOAT3(-1000.0f, 1000.0f, 5500.0f), 1200, 600, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);
+		SetGoalUI(XMFLOAT3(-1000.0f, 1000.0f, 5500.0f), 500, 200, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);
 		m_pGoal = new Goal(XMFLOAT3(-1000.0f, 1200.0f, 9000.0f));
 
 		break;
@@ -720,6 +720,7 @@ void GameScene::Update()
 
 		// リザルト更新
 		m_pResult->Update();
+
 		if (m_pResult->GetFade() >= 0.5f)
 		{
 			if (GetJoyRelease(0, JOYSTICKID1) || GetKeyTrigger(VK_SPACE))	// コントローラーAボタン
@@ -903,6 +904,12 @@ void GameScene::Draw()
 	// 仲間用UI描画
 	DrawCrewUI();
 
+	// ゴールUI
+	if (GetGoalFlgCrew())
+	{
+		DrawGoalUI();
+	}
+
 	// メッシュフィールド描画
 	DrawMeshField();
 	
@@ -911,7 +918,7 @@ void GameScene::Draw()
 
 	//EffectManager::Play(WIND_EFFECT);
 
-	
+	 
 	// ビル描画
 	for (int i = 0; i < MAX_BULIDING; i++)
 	{
@@ -924,19 +931,7 @@ void GameScene::Draw()
 	m_pCloudManager->Draw();
 
 
-	// 2D描画
-	 // Zバッファ無効(Zチェック無&Z更新無)
-	SetZBuffer(false);
-
-	// ゴールUI
-	if (GetGoalFlgCrew())
-	{
-		DrawGoalUI();
-	}
 	
-	// 3D描画
-   // Zバッファ無効(Zチェック無&Z更新無)
-	SetZBuffer(true);
 
 	// 丸影描画
 	DrawShadow();
