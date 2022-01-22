@@ -457,7 +457,7 @@ void UpdateModel(void)
 				bWind = true;
 				g_bWindDelay = true;
 				g_stm += 0.5f;
-		    			
+				g_bOverHeart = false;
 		}
 		
 	}

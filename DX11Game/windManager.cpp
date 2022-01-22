@@ -70,6 +70,8 @@ WindManager::WindManager(EStage stage)
 		m_pWind[0].Create(XMFLOAT3(-1400.0f, 500.0f, -600.0f), XMFLOAT3(400.0f, 200.0f, 200.0f), XMFLOAT3(-1.0f, 0.0f, 1.0f));  // ç∂í«Ç¢ïó
 		m_pWind[1].Create(XMFLOAT3(-500.0f, 500.0f, -600.0f), XMFLOAT3(400.0f, 200.0f, 200.0f), XMFLOAT3(1.0f, 0.0f, 1.0f));  // âEí«Ç¢ïó
 		m_pWind[2].Create(XMFLOAT3(-1000.0f, 200.0f, 3000.0f), XMFLOAT3(200.0f, 500.0f, 200.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));    // è„è∏ãCó¨1
+		m_pWind[3].Create(XMFLOAT3(-1000.0f, 500.0f, 4800.0f), XMFLOAT3(200.0f, 1000.0f, 200.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));    // è„è∏ãCó¨1
+		 //m_pGoal = new Goal(XMFLOAT3(-1000.0f, 1200.0f, 5400.0f));
 
 
 		break;
