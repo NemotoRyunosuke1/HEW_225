@@ -131,7 +131,7 @@ void Tutorial::Update(EStage stage)
 
 		if (m_bPopupNum2[0])
 		{
-			if (m_nCnt > 3)
+			if (m_nCnt > 4)
 			{
 				
 				// ÉQÅ[ÉÄÇ…ñﬂÇÈ
@@ -143,7 +143,7 @@ void Tutorial::Update(EStage stage)
 					}
 
 				}
-				m_nCnt = 3;
+				m_nCnt = 4;
 			}
 
 				
@@ -161,10 +161,10 @@ void Tutorial::Update(EStage stage)
 				CreateTextureFromFile(pDevice, PATH_POPUP3_TEXTURE, &m_pTexture);
 				break;
 			case 3:
-				CreateTextureFromFile(pDevice, PATH_POPUP4_TEXTURE, &m_pTexture);
+				CreateTextureFromFile(pDevice, PATH_POPUP8_TEXTURE, &m_pTexture);
 				break;
 			case 4:
-				CreateTextureFromFile(pDevice, PATH_POPUP6_TEXTURE, &m_pTexture);
+				CreateTextureFromFile(pDevice, PATH_POPUP4_TEXTURE, &m_pTexture);
 				break;
 			case 5:
 				CreateTextureFromFile(pDevice, PATH_POPUP7_TEXTURE, &m_pTexture);

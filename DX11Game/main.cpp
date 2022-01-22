@@ -134,7 +134,7 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdL
 	// DirectXの初期化(ウィンドウを作成してから行う)
 	bool bWindow = false;
 #ifdef _DEBUG
-	bWindow = false;
+	bWindow = true;
 #endif
 	if (FAILED(Init(g_hWnd, bWindow))) {
 		return -1;
