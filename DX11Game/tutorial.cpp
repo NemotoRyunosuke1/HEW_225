@@ -17,8 +17,8 @@
 #define PATH_POPUP10_TEXTURE L"data/texture/tutorial/popup10.png"
 #define PATH_POPUP11_TEXTURE L"data/texture/tutorial/popup11.png"
 
-bool Tutorial::m_bPopupNum[] = {false,false, false, false, false, false, false, false, false, false, false, };
-bool Tutorial::m_bPopupNum2[] = { false,false, false, false, false, false, false, false, false, false, false, };
+bool Tutorial::m_bPopupNum[] ;
+bool Tutorial::m_bPopupNum2[] ;
 
 Tutorial::Tutorial()
 {
@@ -31,6 +31,11 @@ Tutorial::Tutorial()
 	m_bTrigger = false;
 	m_nCnt = 0;
 
+	for (int i = 0; i < 11; i++)
+	{
+		m_bPopupNum[i] = false;
+		m_bPopupNum2[i] = false;
+	}
 	
 	m_bPaperTrigger = false;
 	// テクスチャ読込

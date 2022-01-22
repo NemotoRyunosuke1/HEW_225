@@ -78,6 +78,8 @@ private:
 	ID3D11ShaderResourceView* m_pIconTexture8;
 	ID3D11ShaderResourceView* m_pTextureFinish;
 	float m_fAlpha;	// “§–¾“x
+	float m_fAlphaFinish;	// “§–¾“x
+	float m_fTime;	// ŽžŠÔ
 	int m_nScore;
 	bool m_bResult;
 	bool m_bResult2;

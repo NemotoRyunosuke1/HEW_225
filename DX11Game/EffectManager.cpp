@@ -191,6 +191,7 @@ int EffectManager::Play(EEffect Handle)
 			m_manager->SetSpeed(m_handle, 0.3f);
 
 		}
+		
 		break;
 	case MAX_EFFECT:
 		break;
@@ -232,9 +233,9 @@ int EffectManager::Play(EEffect Handle)
 
 			// 新_横風
 			time = 0;
-			m_handle = m_manager->Play(m_effect6, -80.0f, 500.0f, -1500.0f);      //表示＆座標
+			m_handle = m_manager->Play(m_effect6, -100.0f, 800.0f, 700.0f);      //表示＆座標
 			m_manager->SetScale(m_handle, 2.0f, 2.0f, 2.0f);   //大きさ
-			m_manager->SetRotation(m_handle, 0.0f, 0.0f, 0.0f);
+			m_manager->SetRotation(m_handle, 0.0f, -90.0f, 0.0f);
 			m_manager->SetSpeed(m_handle, 0.3f);
 
 		}
