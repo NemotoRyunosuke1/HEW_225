@@ -22,10 +22,10 @@
 #include "resultScene.h"
 
 #if _DEBUG
-#define MAX_BULIDING (300)
+#define MAX_BULIDING (600)
 
 #else
-#define MAX_BULIDING (400)
+#define MAX_BULIDING (600)
 
 #endif
 
@@ -296,19 +296,23 @@ GameScene::GameScene(EStage stage)
 			m_pBuliding[i + 39].Create(XMFLOAT3(-600 + i * 300, 10, 3600), XMFLOAT3(10.0f, 8.0f + rand() % 5, 10.0f));  // 後ろ
 		}
 
-		for (int i = 0; i < 18; i++)  // 端
+		for (int i = 0; i < 25; i++)  // 端
 		{
 			for (int j = 0; j < 2; j++)
 			{
-				m_pBuliding[i * 2 + 41 + j].Create(XMFLOAT3(-4200 + j * 4200, 10, 0 + i * 300), XMFLOAT3(10.0f, 8.0f + rand() % 5, 10.0f));
+				m_pBuliding[i * 2 + 41 + j].Create(XMFLOAT3(-4200 + j * 4200, 10, -2100 + i * 300), XMFLOAT3(10.0f, 8.0f + rand() % 5, 10.0f));
 			}
 		}
 
 		for (int i = 0; i < 13; i++)  // ゴールの後ろ
 		{
-			m_pBuliding[i + 77].Create(XMFLOAT3(-3900 + i * 300, 10, 5100), XMFLOAT3(10.0f, 8.0f + rand() % 5, 10.0f));
+			m_pBuliding[i + 91].Create(XMFLOAT3(-3900 + i * 300, 10, 5100), XMFLOAT3(10.0f, 8.0f + rand() % 5, 10.0f));
 		}
 
+		for (int i = 0; i < 13; i++) // プレイヤー初期値の後ろ
+		{
+			m_pBuliding[i + 104].Create(XMFLOAT3(-3900 + i * 300, 10, -2100), XMFLOAT3(10.0f, 8.0f + rand() % 5, 10.0f));
+		}
 		// 仲間の配置
 		CrewCreate(XMFLOAT3(-1000.0f, 500.0f, -300.0f));// 1
 		CrewCreate(XMFLOAT3(-1200.0f, 500.0f, -200.0f));// 2
@@ -341,7 +345,7 @@ GameScene::GameScene(EStage stage)
 				m_pBuliding[i * 2 + j].Create(XMFLOAT3(-2600 + i * 600, 10, 0 + j * 600), XMFLOAT3(10.0f, 8.0f + rand() % 5, 10.0f));
 			}
 		}
-		for (int i = 0; i < 26; i++) // 端
+		for (int i = 0; i < 26; i++) // 横
 		{
 			for (int j = 0; j < 2; j++)
 			{
@@ -379,7 +383,7 @@ GameScene::GameScene(EStage stage)
 		InitMeshField(20, 20, 2000.0f, 2000.0f);
 
 		// ビルの配置
-		for (int i = 0; i < 30; i++)  // 端
+		for (int i = 0; i < 30; i++)  // 横
 		{
 			for (int j = 0; j < 2; j++)
 			{
@@ -448,7 +452,6 @@ GameScene::GameScene(EStage stage)
 		CrewCreate(XMFLOAT3(-1600.0f, 500.0f, 3040.0f));// 5
 		CrewCreate(XMFLOAT3(-700.0f, 500.0f, 2970.0f));// 6
 		CrewCreate(XMFLOAT3(-400.0f, 500.0f, 3040.0f));// 7
-
 		CrewCreate(XMFLOAT3(-1000.0f, 500.0f, 6000.0f));// 8
 		CrewCreate(XMFLOAT3(-1000.0f, 500.0f, 7000.0f));// 9
 		CrewCreate(XMFLOAT3(-1000.0f, 500.0f, 8000.0f));// 10
@@ -460,21 +463,36 @@ GameScene::GameScene(EStage stage)
 
 
 		// ビルの配置
-		for (int k = 0; k < MAX_BULIDING / 16 / 5; k++)  // 障害物
+		for (int k = 0; k < 5; k++)  // 障害物
 		{
-			for (int l = 0; l < MAX_BULIDING / 16 / 5; l++)
+			for (int l = 0; l < 4; l++)
 			{
 				for (int j = 0; j < 4; j++)
 				{
 					for (int i = 0; i < 4; i++)
 					{
-						m_pBuliding[i + j * 4 + 80 * k + l * 16].Create(XMFLOAT3(-3900 - 330 * i + 2000 * l, 10, 2000 * k + j * 350), XMFLOAT3(10.0f, 8.0f + rand() % 5, 10.0f));
+						m_pBuliding[i + j * 4 + 64 * k + l * 16].Create(XMFLOAT3(-3900 - 330 * i + 2000 * l, 10, 2000 * k + j * 350), XMFLOAT3(10.0f, 8.0f + rand() % 5, 10.0f));
 
 					}
 				}
 			}
 		}
 
+		for (int i = 0; i < 45; i++)
+		{
+			for (int j = 0; j < 2; j++)
+			{
+				m_pBuliding[i * 2 + j + 320].Create(XMFLOAT3(-5900 + j * 9000, 10, -2100 + i * 300), XMFLOAT3(10.0f, 8.0f + rand() % 5, 10.0f));
+			}
+		}
+		for (int i = 0; i < 27; i++)
+		{
+			m_pBuliding[i + 410].Create(XMFLOAT3(-5600 + i * 320, 10, 11100), XMFLOAT3(10.0f, 8.0f + rand() % 5, 10.0f));
+		}
+		for (int i = 0; i < 27; i++)
+		{
+			m_pBuliding[i + 437].Create(XMFLOAT3(-5600 + i * 320, 10, -2100), XMFLOAT3(10.0f, 8.0f + rand() % 5, 10.0f));
+		}
 		// ゴールUI位置初期化
 		SetGoalUI(XMFLOAT3(-1000.0f, 1000.0f, 9000.0f), 1200, 600, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);
 		m_pGoal = new Goal(XMFLOAT3(-1000.0f, 1200.0f, 9000.0f));
@@ -498,7 +516,7 @@ GameScene::GameScene(EStage stage)
 				}
 			}
 		}
-		for (int i = 0; i < 30; i++)  // 端
+		for (int i = 0; i < 30; i++)  // 横
 		{
 			for (int j = 0; j < 2; j++)
 			{
