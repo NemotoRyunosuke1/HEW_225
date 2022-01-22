@@ -77,7 +77,7 @@ int EffectManager::Load(const char *Create)
 {
 	// fileNameに基づいてエフェクトの読み込み
 	// エフェクトのデータを読み込み
-	m_effect = Effekseer::Effect::Create(m_manager, u"Assets/wind_jousyou_Small.efk");				//風_上
+	m_effect = Effekseer::Effect::Create(m_manager, u"Assets/new_wind_jousyou.efk");				//風_上
 	m_effect1 = Effekseer::Effect::Create(m_manager, u"Assets/wind_yoko_Yellow.efk");				//風_横_黄色
 	m_effect2 = Effekseer::Effect::Create(m_manager, u"Assets/wind_yoko.efk");						//風_横
 	m_effect3 = Effekseer::Effect::Create(m_manager, u"Assets/Sutan.efk");							//スタン
@@ -200,31 +200,32 @@ int EffectManager::Play(EEffect Handle)
 			// 1個目上昇気流
 			time = 0;
 			m_handle = m_manager->Play(m_effect, -1700.0f, 100.0f, 0.0f);      //表示＆座標
-			m_manager->SetScale(m_handle, 3.0f, 3.0f, 3.0f);   //大きさ
+			m_manager->SetScale(m_handle, 7.0f, 7.0f, 7.0f);   //大きさ
 			m_manager->SetSpeed(m_handle, 0.5f);
 
 			// 2個目上昇気流
 			time = 0;
 			m_handle = m_manager->Play(m_effect, -1700.0f, 300.0f, 800.0f);      //表示＆座標
-			m_manager->SetScale(m_handle, 3.0f, 3.0f, 3.0f);   //大きさ
+			m_manager->SetScale(m_handle, 7.0f, 7.0f, 7.0f);   //大きさ
 
 		//======================
 		//風_横
 		//======================
 			// 追い風
-			time = 0;
-			m_handle = m_manager->Play(m_effect2, -100.0f, 800.0f, 700.0f);      //表示＆座標
-			m_manager->SetScale(m_handle, 9.0f, 9.0f, 26.0f);   //大きさ
+			//time = 0;
+			//m_handle = m_manager->Play(m_effect2, -100.0f, 800.0f, 700.0f);      //表示＆座標
+			//m_manager->SetScale(m_handle, 9.0f, 9.0f, 26.0f);   //大きさ
 
 			// 新_横風
 			time = 0;
-			m_handle = m_manager->Play(m_effect6, -80.0f, 500.0f, -1500.0f);      //表示＆座標
-			m_manager->SetScale(m_handle, 2.0f, 2.0f, 2.0f);   //大きさ
-			m_manager->SetRotation(m_handle, 0.0f, 0.0f, 0.0f);
-			m_manager->SetSpeed(m_handle, 0.3f);
+			m_handle = m_manager->Play(m_effect6, -100.0f, 700.0f, 1200.0f);      //表示＆座標
+			m_manager->SetScale(m_handle, 3.0f, 2.0f, 3.0f);   //大きさ
+			m_manager->SetRotation(m_handle, 0.0f, 80.0f, 0.0f);
+			m_manager->SetSpeed(m_handle, 0.5f);
 
 		}
-
+		//SetRotationのYの数値で向きが変わります
+		//80 = 左向き風    14.1 = 右向き風    59.7 = 向かい風　　 0 = 追い風
 	break;
 
 	case STAGE_2:
