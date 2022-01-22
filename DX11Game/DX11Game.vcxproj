@@ -205,6 +205,7 @@
     <ClCompile Include="ScoreUI.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="shadow.cpp" />
+    <ClCompile Include="skyDome.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="stageButton.cpp" />
     <ClCompile Include="stageSelectBG.cpp" />
@@ -263,6 +264,7 @@
     <ClInclude Include="ScoreUI.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="shadow.h" />
+    <ClInclude Include="skyDome.h" />
     <ClInclude Include="Sound.h" />
     <ClInclude Include="SoundData.h" />
     <ClInclude Include="SoundData.hpp" />

@@ -126,6 +126,9 @@ void CCamera::Update()
 	}
 	else	// マウス視点移動
 	{
+		m_vDestAngle.y = GetModelRot().y;
+		m_vDestAngle.x = GetModelRot().x;
+
 		/*if (mouseMoveX == 0 && mouseMoveY == 0)
 		{
 			m_vSrcPos.x = SinDeg(GetModelRot().y) * m_fLengthInterval + CAM_POS_P_X;
@@ -142,7 +145,7 @@ void CCamera::Update()
 			m_vSrcPos.z = CosDeg(m_vDestAngle.y) * m_fLengthInterval + CAM_POS_P_Z;
 
 		}
-*/
+		*/
 		m_vSrcPos.x = SinDeg(GetModelRot().y) * m_fLengthInterval + CAM_POS_P_X;
 		m_vSrcPos.y = -SinDeg(GetModelRot().x) * m_fLengthInterval + CAM_POS_P_Y;
 		m_vSrcPos.z = CosDeg(GetModelRot().y) * m_fLengthInterval + CAM_POS_P_Z;

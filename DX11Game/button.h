@@ -3,6 +3,7 @@
 #include "object.h"
 #include "Sound.h"
 
+// ƒ{ƒ^ƒ“‚ÌŽí—Þ
 enum EButtonTexture
 {
 	STAGE_SELECT_1_1_BTN = 0,
@@ -22,6 +23,7 @@ enum EButtonTexture
 	STAGE_4_BTN,
 	STAGE_5_BTN,
 
+
 	MAX_BTN_TEXTURE
 };
 
@@ -34,6 +36,7 @@ public:
 	HRESULT Init();
 	void Update();
 	void Update(eSE se);
+	void Update(EScene scene);
 	void Draw();
 	bool GetFlg();
 	void SetFlg(bool);
@@ -56,6 +59,7 @@ private:
 	int m_frameNum;
 	XMFLOAT3 m_sizeUpDown;
 	XMFLOAT3 m_color;
+	XMFLOAT3 m_initPos;
 	ID3D11ShaderResourceView* m_pTexture1;
 	ID3D11ShaderResourceView* m_pTexture2;
 	ID3D11ShaderResourceView* m_pTexture3;

@@ -127,14 +127,14 @@ void Tutorial::Update(EStage stage)
 			m_bTrigger = false;
 		}
 
-		if (GetKeyTrigger(VK_RIGHT))
+		if (GetKeyTrigger(VK_RIGHT) || GetKeyTrigger(VK_D))
 		{
 			m_nCnt++;
 			CSound::SetVolume(SE_PAPER, 1.0f);
 			CSound::Play(SE_PAPER);
 		 }
 
-		if (GetKeyTrigger(VK_LEFT))
+		if (GetKeyTrigger(VK_LEFT) || GetKeyTrigger(VK_A))
 		{
 			m_nCnt--;
 			CSound::SetVolume(SE_PAPER, 1.0f);
@@ -235,7 +235,7 @@ void Tutorial::Update(EStage stage)
 		
 	case STAGE_1:
 		// ポップアップ1～4
-		if (!m_bPopupNum[0] && CollisionAABB(GetModelPos(),XMFLOAT3(10,1000,10), XMFLOAT3(-1000, 600, -1500),XMFLOAT3(100, 1000, 100)))
+		if (!m_bPopupNum[0] && CollisionAABB(GetModelPos(),XMFLOAT3(10,1000,10), XMFLOAT3(-1000, 600, -1500),XMFLOAT3(300, 1000, 300)))
 		{
 			
 			//CreateTextureFromFile(pDevice, PATH_POPUP1_TEXTURE, &m_pTexture);
@@ -246,7 +246,7 @@ void Tutorial::Update(EStage stage)
 		}
 
 		// ポップアップ5～6
-		if (!m_bPopupNum[6] && CollisionAABB(GetModelPos(), XMFLOAT3(10, 1000, 10), XMFLOAT3(-1300, 600, 0), XMFLOAT3(100, 1000, 100)))
+		if (!m_bPopupNum[6] && CollisionAABB(GetModelPos(), XMFLOAT3(10, 1000, 10), XMFLOAT3(-1300, 600, 0), XMFLOAT3(300, 1000, 300)))
 		{
 
 			//CreateTextureFromFile(pDevice, PATH_POPUP7_TEXTURE, &m_pTexture);
@@ -276,12 +276,12 @@ void Tutorial::Update(EStage stage)
 		}*/
 
 		// スタン回復Tips
-		if (!m_bPopupNum[4] && (GetStanModel() || GetOverHeartModel()))
+		/*if (!m_bPopupNum[4] && (GetStanModel() || GetOverHeartModel()))
 		{
 			CreateTextureFromFile(pDevice, PATH_POPUP5_TEXTURE, &m_pTexture);
 			m_bPopupNum[4] = true;
 			m_bPopup = true;
-		}
+		}*/
 		break;
 	case STAGE_2:
 		break;

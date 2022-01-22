@@ -5,7 +5,7 @@
 
 Buliding::Buliding()
 {
-	m_pos = XMFLOAT3(300.0f, 50.0f,300.0f);	// 位置
+	m_pos = XMFLOAT3(99999.0f, 99999.0f, 99999.0f);	// 位置
 	m_size = XMFLOAT3(10.0f, 10.0f, 10.0f);	// サイズ
 	m_collisionSize = XMFLOAT3(10.0f, 10.0f, 10.0f);	// サイズ
 	m_rot = XMFLOAT3(0.0f, 0.0f, 0.0f);		// 現在の向き
@@ -17,6 +17,9 @@ Buliding::Buliding()
 	if (!m_model.Load(pDevice, pDeviceContext, MODEL_PLANE)) {
 		MessageBoxA(GetMainWnd(), "モデルデータ読み込みエラー", "InitModel", MB_OK);
 	}
+	//m_model.GetMaterial();// ->SetReflectLight(XMFLOAT4(0.5f, 0.5f, 0.5f, 1.0f), XMFLOAT4(0.5f, 0.5f, 0.5f, 1.0f), XMFLOAT4(0.5f, 0.5f, 0.5f, 1.0f), XMFLOAT4(0.0f, 0.0f, 0.0f, 0.0f));
+	//m_model.GetMaterial()->SetReflectLight(XMFLOAT4(0.5f, 0.5f, 0.5f, 1.0f), XMFLOAT4(0.5f, 0.5f, 0.5f, 1.0f), XMFLOAT4(0.5f, 0.5f, 0.5f, 1.0f), XMFLOAT4(0.0f, 0.0f, 0.0f, 0.0f));
+
 }
 
 Buliding::~Buliding()
