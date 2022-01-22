@@ -119,7 +119,7 @@ void Tutorial::Update(EStage stage)
 			m_bTrigger = false;
 		}
 
-		if (GetKeyTrigger(VK_RIGHT) || GetKeyTrigger(VK_D) || GetJoyRelease(0, JOYSTICKID1))
+		if (GetKeyTrigger(VK_RIGHT) || GetKeyTrigger(VK_D) || GetJoyRelease(0, JOYSTICKID1) || GetKeyTrigger(VK_RETURN) || GetKeyTrigger(VK_SPACE))
 		{
 			m_nCnt++;
 			CSound::SetVolume(SE_PAPER, 1.0f);
@@ -135,9 +135,9 @@ void Tutorial::Update(EStage stage)
 
 		if (m_bPopupNum2[0])
 		{
-			if (m_nCnt >= 3)
+			if (m_nCnt > 3)
 			{
-				m_nCnt = 3;
+				
 				// ゲームに戻る
 				if (GetJoyRelease(0, JOYSTICKID1) || GetKeyTrigger(VK_RETURN) || GetKeyTrigger(VK_SPACE))	// コントローラーAボタン
 				{
@@ -147,6 +147,7 @@ void Tutorial::Update(EStage stage)
 					}
 
 				}
+				m_nCnt = 3;
 			}
 
 				
@@ -184,9 +185,9 @@ void Tutorial::Update(EStage stage)
 		}
 		if (m_bPopupNum2[6])
 		{
-			if (m_nCnt >= 1)
+			if (m_nCnt > 1)
 			{
-				m_nCnt = 1;
+			
 				// ゲームに戻る
 				if (GetJoyRelease(0, JOYSTICKID1) || GetKeyTrigger(VK_RETURN) || GetKeyTrigger(VK_SPACE))	// コントローラーAボタン
 				{
@@ -194,8 +195,8 @@ void Tutorial::Update(EStage stage)
 					{
 						m_bPopup = false;
 					}
-
 				}
+				m_nCnt = 1;
 			}
 			if (m_nCnt < 0) m_nCnt = 0;
 			switch (m_nCnt)
@@ -211,11 +212,23 @@ void Tutorial::Update(EStage stage)
 				break;
 			}
 		}
+		if (m_bPopupNum2[7])
+		{
+			// ゲームに戻る
+			if (GetJoyRelease(0, JOYSTICKID1) || GetKeyTrigger(VK_RETURN) || GetKeyTrigger(VK_SPACE))	// コントローラーAボタン
+			{
+				if (m_bPopup)
+				{
+					m_bPopup = false;
+				}
+
+			}
+		}
 		if (m_bPopupNum2[10])
 		{
-			if (m_nCnt >= 1)
+			if (m_nCnt > 1)
 			{
-				m_nCnt = 1;
+				
 				// ゲームに戻る
 				if (GetJoyRelease(0, JOYSTICKID1) || GetKeyTrigger(VK_RETURN) || GetKeyTrigger(VK_SPACE))	// コントローラーAボタン
 				{
@@ -223,8 +236,8 @@ void Tutorial::Update(EStage stage)
 					{
 						m_bPopup = false;
 					}
-
 				}
+				m_nCnt = 1;
 			}
 			if (m_nCnt < 0) m_nCnt = 0;
 			switch (m_nCnt)
@@ -294,15 +307,7 @@ void Tutorial::Update(EStage stage)
 			CreateTextureFromFile(pDevice, PATH_POPUP7_TEXTURE, &m_pTexture);
 			m_bPopupNum[7] = true;
 			m_bPopupNum2[7] = true;
-			// ゲームに戻る
-			if (GetJoyRelease(0, JOYSTICKID1) || GetKeyTrigger(VK_RETURN) || GetKeyTrigger(VK_SPACE))	// コントローラーAボタン
-			{
-				if (m_bPopup)
-				{
-					m_bPopup = false;
-				}
-
-			}
+			
 			m_bPopup = true;
 		}
 
