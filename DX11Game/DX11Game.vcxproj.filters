@@ -192,6 +192,9 @@
     <ClCompile Include="skyDome.cpp">
       <Filter>ソースファイル\scene\gameScene\object</Filter>
     </ClCompile>
+    <ClCompile Include="option.cpp">
+      <Filter>ソースファイル\scene\titleScene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AssimpModel.h">
@@ -373,6 +376,9 @@
     </ClInclude>
     <ClInclude Include="skyDome.h">
       <Filter>ヘッダーファイル\scene\gameScene\object</Filter>
+    </ClInclude>
+    <ClInclude Include="option.h">
+      <Filter>ヘッダーファイル\scene\titleScene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

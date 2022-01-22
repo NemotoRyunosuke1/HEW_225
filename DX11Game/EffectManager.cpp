@@ -23,10 +23,12 @@ Effekseer::EffectRef EffectManager::m_effect2;		//風_横
 Effekseer::EffectRef EffectManager::m_effect3;		//スタン
 Effekseer::EffectRef EffectManager::m_effect4;		//砂埃
 Effekseer::EffectRef EffectManager::m_effect5;		//風_上_黄色
+Effekseer::EffectRef EffectManager::m_effect6;		//風_横_ver2
 Effekseer::Handle EffectManager::m_handle;
 
 
 EffectManager* EffectManager::m_pInstance = nullptr;
+
 
 EffectManager::EffectManager()
 {
@@ -81,11 +83,12 @@ int EffectManager::Load(const char *Create)
 	m_effect3 = Effekseer::Effect::Create(m_manager, u"Assets/Sutan.efk");							//スタン
 	m_effect4 = Effekseer::Effect::Create(m_manager, u"Assets/SandSmoke.efk");						//砂埃
 	m_effect5 = Effekseer::Effect::Create(m_manager, u"Assets/wind_jousyou_Small_Yellow.efk");		//風_上_黄色
+	m_effect6 = Effekseer::Effect::Create(m_manager, u"Assets/Wind_yoko_ver5.efk");					//風_横_ver2
 
 	return 0; // エフェクトハンドルを返す
 }
 
-int EffectManager::Play(int Handle)
+int EffectManager::Play(EEffect Handle)
 {
 	//// エフェクトのカメラ設定
 
@@ -110,29 +113,21 @@ int EffectManager::Play(int Handle)
 	// Effekseer
 	static int time = 0;
 
+	
+
 	switch (Handle)
 	{
-	case 0: 
-		////風_横_黄色
-		//if (time > 120)
-		//{
-		//	time = 0;
-		//	m_handle = m_manager->Play(m_effect1, -1800, 0, 0);
-		//	m_manager->SetScale(m_handle, 15.0f, 20.0f, 15.0f);
-		//}
-	 break;
-
-	case 1: 
+	case STN_EFFECT:
 		//スタン
-		if (time > 100.0f) 
+		if (time > 100.0f)
 		{
 			time = 0;
-			m_handle = m_manager->Play(m_effect3, GetModelPos().x, GetModelPos().y - 10 , GetModelPos().z);
+			m_handle = m_manager->Play(m_effect3, GetModelPos().x, GetModelPos().y - 10, GetModelPos().z);
 			m_manager->SetScale(m_handle, 1.0f, 1.0f, 1.0f);
 		}
-	 break;
+		break;
 
-	case 2:
+	case SAND_EFFECT:
 		//砂埃
 		if (time > 30.0f)
 		{
@@ -140,51 +135,66 @@ int EffectManager::Play(int Handle)
 			m_handle = m_manager->Play(m_effect4, GetModelPos().x, GetModelPos().y, GetModelPos().z);
 			m_manager->SetScale(m_handle, 1.0f, 1.0f, 1.0f);
 		}
-	break;
+		break;
 
-	case 3:	// ゴール風
-		
+	case GOAL_EFFECT:
 		switch (m_estage)
+			{
+			case STAGE_1:
+				//風_上_黄色
+				if (time > 129.9f)
+				{
+					// ゴール風
+					time = 0;
+					m_handle = m_manager->Play(m_effect5, -1000.0f, 600.0f, 4000.0f);
+					m_manager->SetScale(m_handle, 20.0f, 25.0f, 20.0f);
+				}
+				break;
+			case STAGE_2:
+				if (time > 129.9f)
+				{
+					time = 0;
+					m_handle = m_manager->Play(m_effect5, -950.0f, 0.0f, 3600.0f);
+					m_manager->SetScale(m_handle, 20.0f, 25.0f, 20.0f);
+				}
+				break;
+			case STAGE_3:
+				break;
+			case STAGE_4:
+				break;
+			case STAGE_5:
+				break;
+			case MAX_STAGE:
+				break;
+			default:
+				break;
+			}
+		
+		break;
+
+	case WIND_EFFECT:
+		if (time > 130.0f)
 		{
-		case STAGE_1:
-			//風_上_黄色
-			if (time > 129.9f)
-			{
-				time = 0;
-				m_handle = m_manager->Play(m_effect5, -1000.0f, 600.0f, 4000.0f);
-				m_manager->SetScale(m_handle, 20.0f, 25.0f, 20.0f);
-			}
-			break;
-		case STAGE_2:
-			if (time > 129.9f)
-			{
-				time = 0;
-				m_handle = m_manager->Play(m_effect5, -950.0f, 0.0f, 3600.0f);
-				m_manager->SetScale(m_handle, 20.0f, 25.0f, 20.0f);
-			}
-			break;
-		case STAGE_3:
-			break;
-		case STAGE_4:
-			break;
-		case STAGE_5:
-			break;
-		case MAX_STAGE:
-			break;
-		default:
-			break;
+			// 新_横風
+			time = 0;
+			m_handle = m_manager->Play(m_effect6, -80.0f, 500.0f, -1500.0f);      //表示＆座標
+			m_manager->SetScale(m_handle, 2.0f, 2.0f, 2.0f);   //大きさ
+			m_manager->SetRotation(m_handle, 0.0f, 0.0f, 0.0f);
+			m_manager->SetSpeed(m_handle, 0.3f);
+
 		}
-	break;
+		break;
+	case MAX_EFFECT:
+		break;
 	default:
-	
 		break;
 	}
-
 //====================================
 //
 //ステージ毎の風
 //
 //=====================================
+	if(Handle == NONE_EFFECT)	// ハンドルがないときに実行する
 	switch (m_estage)
 	{
 	case STAGE_1:
@@ -197,6 +207,7 @@ int EffectManager::Play(int Handle)
 			time = 0;
 			m_handle = m_manager->Play(m_effect, -1700.0f, 100.0f, 0.0f);      //表示＆座標
 			m_manager->SetScale(m_handle, 3.0f, 3.0f, 3.0f);   //大きさ
+			m_manager->SetSpeed(m_handle, 0.5f);
 
 			// 2個目上昇気流
 			time = 0;
@@ -211,11 +222,17 @@ int EffectManager::Play(int Handle)
 			m_handle = m_manager->Play(m_effect2, -100.0f, 800.0f, 700.0f);      //表示＆座標
 			m_manager->SetScale(m_handle, 9.0f, 9.0f, 26.0f);   //大きさ
 
+			// 新_横風
+			time = 0;
+			m_handle = m_manager->Play(m_effect6, -80.0f, 500.0f, -1500.0f);      //表示＆座標
+			m_manager->SetScale(m_handle, 2.0f, 2.0f, 2.0f);   //大きさ
+			m_manager->SetRotation(m_handle, 0.0f, 0.0f, 0.0f);
+			m_manager->SetSpeed(m_handle, 0.3f);
+
 		}
 
-		
 	break;
-	
+
 	case STAGE_2:
 		
 		if (time > 130.0f)
@@ -269,6 +286,8 @@ int EffectManager::Play(int Handle)
 			// 上昇気流1
 			m_handle = m_manager->Play(m_effect, -1000.0f, 200.0f, 2500.0f);      //表示＆座標
 			m_manager->SetScale(m_handle, 3.0f, 3.0f, 3.0f);   //大きさ
+
+			
 
 		}
 		break;

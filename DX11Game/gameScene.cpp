@@ -20,9 +20,10 @@
 #include "crewUI.h"
 #include "goalUI.h"
 #include "resultScene.h"
+#include "Sound.h"
 
 #if _DEBUG
-#define MAX_BULIDING (200)
+#define MAX_BULIDING (300)
 
 #else
 #define MAX_BULIDING (400)
@@ -32,6 +33,8 @@
 #define STOP_TIME (3)
 
 EStage GameScene::m_eStage = STAGE_1;
+
+bool g_GoalTrriger;
 
 //=============================================================================
 // 初期化処理　※多分使わん、念のため
@@ -87,7 +90,7 @@ GameScene::GameScene()
 	// 鳥残機カウント初期化
 	m_pCunt = new Cunt;
 
-	//エフェクトマネージャー終了
+	//エフェクトマネージャー初期化
 	EffectManager::Create();
 
 	// 風マネージャー初期化
@@ -125,6 +128,9 @@ GameScene::GameScene()
 
 	// チュートリアル初期化
 	m_pTutorial = new Tutorial;
+
+	//ゴールトリガー初期化	
+	g_GoalTrriger = false;
 
 
 	// ビルの生成
@@ -334,24 +340,29 @@ GameScene::GameScene(EStage stage)
 		InitMeshField(20, 20, 2000.0f, 2000.0f);
 
 		// ビルの配置
-		for (int i = 0; i < 5; i++)
+		for (int i = 0; i < 5; i++)  // プレイヤー初期値の前
 		{
 			for (int j = 0; j < 2; j++)
 			{
-				m_pBuliding[i * 2 + 5 + j].Create(XMFLOAT3(-2600 + i * 600, 10, 0 + j * 600), XMFLOAT3(10.0f, 8.0f + rand() % 5, 10.0f));
+				m_pBuliding[i * 2 + j].Create(XMFLOAT3(-2600 + i * 600, 10, 0 + j * 600), XMFLOAT3(10.0f, 8.0f + rand() % 5, 10.0f));
 			}
 		}
-		for (int i = 0; i < 13; i++)
+		for (int i = 0; i < 26; i++) // 端
 		{
 			for (int j = 0; j < 2; j++)
 			{
-				m_pBuliding[i + j * 13 + 23].Create(XMFLOAT3(-3200 + j * 3600, 10, 0 + i * 300), XMFLOAT3(10.0f, 8.0f + rand() % 5, 10.0f));
+				m_pBuliding[i + j * 26 + 10].Create(XMFLOAT3(-3200 + j * 3600, 10, -2700 + i * 300), XMFLOAT3(10.0f, 8.0f + rand() % 5, 10.0f));
 			}
 		}
 		
-		for (int i = 0; i < 11; i++)
+		for (int i = 0; i < 11; i++) // ゴール後ろ 
 		{
-			m_pBuliding[i + 49].Create(XMFLOAT3(-2900 + i * 300, 10, 4800), XMFLOAT3(10.0f, 8.0f + rand() % 5, 10.0f));
+			m_pBuliding[i + 62].Create(XMFLOAT3(-2900 + i * 300, 10, 4800), XMFLOAT3(10.0f, 8.0f + rand() % 5, 10.0f));
+		}
+		
+		for (int i = 0; i < 11; i++) // プレイヤー初期値の後ろ
+		{
+			m_pBuliding[i + 73].Create(XMFLOAT3(-2900 + i * 300, 10, -2700), XMFLOAT3(10.0f, 8.0f + rand() % 5, 10.0f));
 		}
 
 		// 仲間の配置
@@ -374,22 +385,22 @@ GameScene::GameScene(EStage stage)
 		InitMeshField(20, 20, 2000.0f, 2000.0f);
 
 		// ビルの配置
-		for (int i = 0; i < 30; i++)
+		for (int i = 0; i < 30; i++)  // 端
 		{
 			for (int j = 0; j < 2; j++)
 			{
 				m_pBuliding[i + j * 30].Create(XMFLOAT3(-3650 + j * 4500, 10, -2600 + i * 300), XMFLOAT3(10.0f, 8.0f + rand() % 5, 10.0f));
 			}
 		}
-		for (int i = 0; i < 15; i++)
+		for (int i = 0; i < 15; i++)  // ゴール後ろ
 		{
 			m_pBuliding[i + 60].Create(XMFLOAT3(-3350 + i * 300, 10, 5800), XMFLOAT3(10.0f, 8.0f + rand() % 5, 10.0f));
 		}
-		for (int i = 0; i < 15; i++)
+		for (int i = 0; i < 15; i++)  // プレイヤー初期値の後ろ
 		{
 			m_pBuliding[i + 75].Create(XMFLOAT3(-3350 + i * 300, 10, -2600), XMFLOAT3(10.0f, 8.0f + rand() % 5, 10.0f));
 		}
-		for (int i = 0; i < 4; i++)
+		for (int i = 0; i < 4; i++)  // 障害物
 		{
 			for (int j = 0; j < 2; j++)
 			{
@@ -397,7 +408,7 @@ GameScene::GameScene(EStage stage)
 				{
 					for (int l = 0; l < 2; l++)
 					{
-						m_pBuliding[l + k * 2 + j * 4 + i * 16 + 75].Create(XMFLOAT3(-2150 + k * 300 + j * 1200, 10, 0 + l * 300 + i * 1200), XMFLOAT3(10.0f, 8.0f + rand() % 5, 10.0f));
+						m_pBuliding[l + k * 2 + j * 4 + i * 16 + 90].Create(XMFLOAT3(-2150 + k * 300 + j * 1200, 10, 0 + l * 300 + i * 1200), XMFLOAT3(10.0f, 8.0f + rand() % 5, 10.0f));
 					}
 				}
 			}
@@ -455,7 +466,7 @@ GameScene::GameScene(EStage stage)
 
 
 		// ビルの配置
-		for (int k = 0; k < MAX_BULIDING / 16 / 5; k++)
+		for (int k = 0; k < MAX_BULIDING / 16 / 5; k++)  // 障害物
 		{
 			for (int l = 0; l < MAX_BULIDING / 16 / 5; l++)
 			{
@@ -480,7 +491,7 @@ GameScene::GameScene(EStage stage)
 		InitMeshField(20, 20, 2000.0f, 2000.0f);
 
 		// ビルの配置
-		for (int i = 0; i < 5; i++)
+		for (int i = 0; i < 5; i++)  // 障害物
 		{
 			for (int j = 0; j < 4; j++)
 			{
@@ -493,16 +504,21 @@ GameScene::GameScene(EStage stage)
 				}
 			}
 		}
-		for (int i = 0; i < 16; i++)
+		for (int i = 0; i < 30; i++)  // 端
 		{
 			for (int j = 0; j < 2; j++)
 			{
-				m_pBuliding[i + j * 16 + 80].Create(XMFLOAT3(-3500 + j * 4100, 10, 0 + i * 300), XMFLOAT3(10.0f, 8.0f + rand() % 5, 10.0f));
+				m_pBuliding[i + j * 30 + 80].Create(XMFLOAT3(-3500 + j * 4100, 10, -2100 + i * 300), XMFLOAT3(10.0f, 8.0f + rand() % 5, 10.0f));
 			}
 		}
-		for (int i = 0; i < 16; i++)
+		for (int i = 0; i < 13; i++) // ゴールの後ろ
 		{
-			m_pBuliding[i + 128].Create(XMFLOAT3(-3200 + i * 300, 10, 3600), XMFLOAT3(10.0f, 8.0f + rand() % 5, 10.0f));
+			m_pBuliding[i + 140].Create(XMFLOAT3(-3200 + i * 300, 10, 6600), XMFLOAT3(10.0f, 8.0f + rand() % 5, 10.0f));
+		}
+
+		for (int i = 0; i < 13; i++)
+		{
+			m_pBuliding[i + 153].Create(XMFLOAT3(-3200 + i * 300, 10, -2100), XMFLOAT3(10.0f, 8.0f + rand() % 5, 10.0f));
 		}
 		// 仲間の配置
 		CrewCreate(XMFLOAT3(-100.0f, 500.0f, -1000.0f));// 1
@@ -526,8 +542,9 @@ GameScene::GameScene(EStage stage)
 		CreateEnemy(XMFLOAT3(200.0f, 500.0f, 3000.0f));// 7
 		CreateEnemy(XMFLOAT3(-1000.0f, 500.0f, 2700.0f));// 8
 		CreateEnemy(XMFLOAT3(-1300.0f, 500.0f, 3000.0f));// 9
+
 		// ゴールUI位置初期化
-		SetGoalUI(XMFLOAT3(-1000.0f, 1000.0f, 9000.0f), 1200, 600, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);
+		SetGoalUI(XMFLOAT3(-1000.0f, 1000.0f, 5500.0f), 1200, 600, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);
 		m_pGoal = new Goal(XMFLOAT3(-1000.0f, 1200.0f, 9000.0f));
 
 		break;
@@ -685,6 +702,12 @@ void GameScene::Update()
 	// ゴールフラグが立った時
 	if (m_bGoal)
 	{
+		if (!g_GoalTrriger)
+		{
+			CSound::SetVolume(SE_GOAL,1.0f);
+			CSound::Play(SE_GOAL);
+			g_GoalTrriger = true;
+		}
 		// リザルトUI表示時間
 		if (!m_bTrigger_result)
 		{
@@ -882,13 +905,21 @@ void GameScene::Draw()
 
 	// メッシュフィールド描画
 	DrawMeshField();
+	
+	//エフェクト描画
+	//EFFECT->Play(1);
 
+	//EffectManager::Play(WIND_EFFECT);
+
+	
 	// ビル描画
 	for (int i = 0; i < MAX_BULIDING; i++)
 	{
 		m_pBuliding[i].Draw();
 	}
-
+	
+	EffectManager::Play(NONE_EFFECT);
+	
 	// 雲マネージャー描画
 	m_pCloudManager->Draw();
 
@@ -927,11 +958,7 @@ void GameScene::Draw()
 	// Zバッファ無効(Zチェック無&Z更新無)
 	SetZBuffer(false);
 
-	EFFECT->Play(0);
-
-	// タイマーUI更新
-	m_pTimerUI->Draw();
-
+	
 	
 	// スタミナバー
 	m_pStaminaBar->Draw();
@@ -939,14 +966,10 @@ void GameScene::Draw()
 	// スコアUI描画
 	m_pScoreUI->Draw();
 
-	
 	// 鳥残機カウント描画
 	m_pCunt->Draw();
 
 	
-
-	
-
 	if (GetOverHeartModel() || GetStanModel())
 	{
 		// レバガチャ描画
@@ -960,7 +983,9 @@ void GameScene::Draw()
     }
 	
 
-	
+	// タイマーUI更新
+	m_pTimerUI->Draw();
+
 	// チュートリアル描画
 	m_pTutorial->Draw();
 
