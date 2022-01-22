@@ -455,14 +455,14 @@ GameScene::GameScene(EStage stage)
 		CrewCreate(XMFLOAT3(-700.0f, 500.0f, 2970.0f));// 6
 		CrewCreate(XMFLOAT3(-400.0f, 500.0f, 3040.0f));// 7
 
-		CrewCreate(XMFLOAT3(-1000.0f, 1000.0f, 6000.0f));// 8
-		CrewCreate(XMFLOAT3(-1000.0f, 1000.0f, 7000.0f));// 9
-		CrewCreate(XMFLOAT3(-1000.0f, 1000.0f, 8000.0f));// 10
+		CrewCreate(XMFLOAT3(-1000.0f, 1200.0f, 6000.0f));// 8
+		CrewCreate(XMFLOAT3(-1000.0f, 1200.0f, 8000.0f));// 9
+		CrewCreate(XMFLOAT3(-1000.0f, 1200.0f, 9200.0f));// 10
 
 		// 敵の配置
-		CreateEnemy(XMFLOAT3(-1000.0f, 1000.0f, 6000.0f));// 1
-		CreateEnemy(XMFLOAT3(-1000.0f, 1000.0f, 8000.0f));// 2
-		CreateEnemy(XMFLOAT3(-1000.0f, 1000.0f, 9200.0f));// 3
+		CreateEnemy(XMFLOAT3(-1000.0f, 1200.0f, 6000.0f));// 1
+		CreateEnemy(XMFLOAT3(-1000.0f, 1200.0f, 8000.0f));// 2
+		CreateEnemy(XMFLOAT3(-1000.0f, 1200.0f, 9200.0f));// 3
 
 
 		// ビルの配置
