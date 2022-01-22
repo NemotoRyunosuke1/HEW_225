@@ -14,8 +14,8 @@ public:
 public:
 	bool m_bTrigger;
 	bool m_bPopup;
-	bool m_bPaperTrriger;
-	bool m_bPaperTrigger[1];
+	bool m_bPaperTrigger;
+	
 	static bool m_bPopupNum[11];
 	static bool m_bPopupNum2[11];
 	int m_nCnt;

@@ -22,7 +22,7 @@ LPCWSTR g_pszFileSE[MAX_SE] = {
 	L"hiyoko.mp3",						// ”íƒ_ƒ‰¹
 	L"warning.mp3",						// Œx‰¹
 	L"paper.mp3",						// †‰¹
-	L"goal.mp3",						// ƒS[ƒ‹‰¹
+	L"goal4.mp3",						// ƒS[ƒ‹‰¹
 
 
 };
