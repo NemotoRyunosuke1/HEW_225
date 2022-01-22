@@ -99,6 +99,7 @@ void TimerUI::Draw()
 	//SetPolygonUV(0.0f, 0.0f);
 	//SetPolygonFrameSize(1.0f, 1.0f);
 	//SetPolygonAlpha(0.0f);
+	SetPolygonTexture(m_pTexture);
 	SetPolygonFrameSize(1.0f / CUNT_X_NUMBER, 1.0f / CUNT_Y_NUMBER );
 	// 残りの数
 	for (int i = 0; i < MAX_DIGIT; i++)
@@ -114,6 +115,8 @@ void TimerUI::Draw()
 		m_timerVessel /= 10;
 	}
 
+	SetPolygonFrameSize(1.0f , 1.0f);
+	SetPolygonUV(0.0f,0.0f);
 
 	SetBlendState(BS_NONE);	// アルファブレンド無効
 }

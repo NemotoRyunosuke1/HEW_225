@@ -929,6 +929,9 @@ void GameScene::Draw()
 
 	EFFECT->Play(0);
 
+	// タイマーUI更新
+	m_pTimerUI->Draw();
+
 	
 	// スタミナバー
 	m_pStaminaBar->Draw();
@@ -936,11 +939,13 @@ void GameScene::Draw()
 	// スコアUI描画
 	m_pScoreUI->Draw();
 
+	
 	// 鳥残機カウント描画
 	m_pCunt->Draw();
 
-	// タイマーUI更新
-	m_pTimerUI->Draw();
+	
+
+	
 
 	if (GetOverHeartModel() || GetStanModel())
 	{
