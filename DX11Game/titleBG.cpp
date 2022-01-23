@@ -12,7 +12,7 @@
 //*****************************************************************************
 #define PATH_TITLE_BGTEXTURE	L"data/texture/titleScene/タイトル背景.png"
 #define PATH_TITLE_TEXT_TEXTURE	L"data/texture/titleScene/アセット 1.png"
-#define PATH_TITLE_OBJECT_TEXTURE	L"data/texture/titleScene/オブジェクトアニメーション1.png"
+#define PATH_TITLE_OBJECT_TEXTURE	L"data/texture/titleScene/ムクドリタイトルアニメ.png"
 
 //=============================================================================
 // コンストラクタ

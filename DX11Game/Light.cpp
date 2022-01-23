@@ -12,7 +12,7 @@ using namespace DirectX;
 namespace {
 	const XMFLOAT3 LIGHT0_DIRECTION = XMFLOAT3(0.0f, -1.0f, 1.0f);
 	const XMFLOAT4 LIGHT0_DIFFUSE = XMFLOAT4 (0.9f, 0.9f, 0.9f, 1.0f   );
-	const XMFLOAT4 LIGHT0_AMBIENT = XMFLOAT4 (0.05f, 0.05f, 0.05f, 1.0f);
+	const XMFLOAT4 LIGHT0_AMBIENT = XMFLOAT4 (0.2f, 0.2f, 0.2f, 1.0f);
 	const XMFLOAT4 LIGHT0_SPECULAR = XMFLOAT4(0.2f, 0.2f, 0.2f, 1.0f   );
 
 	CLight g_light;

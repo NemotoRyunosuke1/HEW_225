@@ -7,10 +7,10 @@
 TitleButton::TitleButton()
 {
 	m_pButton = new Button[MAX_TITLE_BUTTON];
-	m_pButton[0].CreateButton(XMFLOAT3(650,200,0), XMFLOAT3(360, -45, 0),STAGE_SELECT_BTN );
+	m_pButton[0].CreateButton(XMFLOAT3(650,200,0), XMFLOAT3(360, -45, 0),START_1_TBTN );
 	m_pButton[0].SetSelect(true);
-	m_pButton[1].CreateButton(XMFLOAT3(650, 200,0), XMFLOAT3(360, -150, 0),OPTION_BTN );
-	m_pButton[2].CreateButton(XMFLOAT3(650, 200,0), XMFLOAT3(360, -270, 0),ENDGAME_BTN );
+	m_pButton[1].CreateButton(XMFLOAT3(650, 200,0), XMFLOAT3(360, -150, 0),OPTION_1_TBTN );
+	m_pButton[2].CreateButton(XMFLOAT3(650, 200,0), XMFLOAT3(360, -270, 0),ENDGAME_1_TBTN );
 	m_cnt = 0;
 	m_Trigger = false;
 	m_NextScene = false;
@@ -82,6 +82,14 @@ void TitleButton::Update()
 		if (m_cnt > 2) m_cnt = 0;
 	}
 
+	/*for (int i = 0; i < 2; i++)
+	{
+		if (m_cnt == i)continue;
+		if(m_pButton[i].GetSelect()) m_cnt = i;
+		
+	}*/
+
+
 	switch (m_cnt)
 	{
 	case 0:
@@ -116,7 +124,7 @@ void TitleButton::Update()
 	for (int i = 0; i < MAX_TITLE_BUTTON; i++)
 	{
 		if (!m_pButton[i].GetUse())continue;
-		m_pButton[i].Update();
+		m_pButton[i].Update(SCENE_TITLE);
     }
 
 #if _DEBUG

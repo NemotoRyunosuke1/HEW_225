@@ -8,6 +8,7 @@
 #include "debugproc.h"
 #include "fade.h"
 #include "Sound.h"
+#include "input.h"
 
 //*****************************************************************************
 // ƒOƒ[ƒoƒ‹•Ï”
@@ -137,6 +138,7 @@ void Scene::Update()
 		CSound::SetVolume(GAME_BGM_001, 0.2f);
 		CSound::Play(GAME_BGM_001);
 		m_pGameScene->Update();
+	
 		break;
 
 	case SCENE_RESULT:

@@ -15,4 +15,6 @@ private:
 	ID3D11ShaderResourceView* m_pTextureBird1;
 	ID3D11ShaderResourceView* m_pTextureBird2;
 	double m_dAnimTime;
+	XMFLOAT3 m_posText;
+	XMFLOAT3 m_sizeText;
 };

@@ -20,12 +20,12 @@ StageButton::StageButton()
 {
 	// ボタンメモリ確保
 	m_pButton = new Button[MAX_BUTTON];
-	m_pButton[0].CreateButton(XMFLOAT3(280.0f, 300.0f, 0.0f), XMFLOAT3(SCREEN_WIDTH / 2 -100, -300.0f, 0.0f)   , BACK_BTN);	// 戻るボタン
-	m_pButton[1].CreateButton(XMFLOAT3(180.0f, 300.0f, 0.0f), XMFLOAT3(-SCREEN_WIDTH / 2 + 300.0f/2 * 1.5f    , 0.0f, 0.0f), STAGE_1_BTN);	// ステージ1ボタン												
-	m_pButton[2].CreateButton(XMFLOAT3(180.0f, 300.0f, 0.0f), XMFLOAT3(-SCREEN_WIDTH / 2 + 300.0f/2 * 1.5f * 2, 0.0f, 0.0f), STAGE_2_BTN);	// ステージ2ボタン	
-	m_pButton[3].CreateButton(XMFLOAT3(180.0f, 300.0f, 0.0f), XMFLOAT3(-SCREEN_WIDTH / 2 + 300.0f/2 * 1.5f * 3, 0.0f, 0.0f), STAGE_3_BTN);	// ステージ3ボタン	
-	m_pButton[4].CreateButton(XMFLOAT3(180.0f, 300.0f, 0.0f), XMFLOAT3(-SCREEN_WIDTH / 2 + 300.0f/2 * 1.5f * 4, 0.0f, 0.0f), STAGE_4_BTN);	// ステージ4ボタン	
-	m_pButton[5].CreateButton(XMFLOAT3(180.0f, 300.0f, 0.0f), XMFLOAT3(-SCREEN_WIDTH / 2 + 300.0f/2 * 1.5f * 5, 0.0f, 0.0f), STAGE_5_BTN);	// ステージ5ボタン	
+	//m_pButton[0].CreateButton(XMFLOAT3(280.0f, 300.0f, 0.0f), XMFLOAT3(SCREEN_WIDTH / 2 -100, -300.0f, 0.0f)   , BACK_BTN);	// 戻るボタン
+	m_pButton[1].CreateButton(XMFLOAT3(180.0f, 300.0f, 0.0f), XMFLOAT3(-400 , -100.0f, 0.0f), STAGE_1_BTN);	// ステージ1ボタン												
+	m_pButton[2].CreateButton(XMFLOAT3(180.0f, 300.0f, 0.0f), XMFLOAT3( -200, 100.0f, 0.0f), STAGE_2_BTN);	// ステージ2ボタン	
+	m_pButton[3].CreateButton(XMFLOAT3(180.0f, 300.0f, 0.0f), XMFLOAT3(0, -100.0f, 0.0f), STAGE_3_BTN);	// ステージ3ボタン	
+	m_pButton[4].CreateButton(XMFLOAT3(180.0f, 300.0f, 0.0f), XMFLOAT3(200, 100.0f, 0.0f), STAGE_4_BTN);	// ステージ4ボタン	
+	m_pButton[5].CreateButton(XMFLOAT3(180.0f, 300.0f, 0.0f), XMFLOAT3(400, -100.0f, 0.0f), STAGE_5_BTN);	// ステージ5ボタン	
 	
 	// ---変数初期化---
 
@@ -89,50 +89,50 @@ void StageButton::Update()
 		{
 			m_cnt--;
 			m_Trigger = true;
-			if (m_cnt < 0) m_cnt = 0;
+			if (m_cnt < 1) m_cnt = 1;
 		}
 	}
-	else if (stickLY > 20000 || stickRY > 20000)
-	{
-		if (!m_Trigger)
-		{
-			if (m_cnt == 0)
-			{
-				m_cnt = 1;
-			}
-			else
-			{
-				m_cnt = 0;
-			}
-			m_Trigger = true;
-		}
-	}	// スティックを上に傾けたとき
-	else if (stickLY < -20000 || stickRY < -20000)
-	{
-		if (!m_Trigger)
-		{
-			if (m_cnt == 0)
-			{
-				m_cnt = 1;
-			}
-			else
-			{
-				m_cnt = 0;
-			}
-			m_Trigger = true;
-		}
-	}
+	//else if (stickLY > 20000 || stickRY > 20000)
+	//{
+	//	if (!m_Trigger)
+	//	{
+	//		if (m_cnt == 0)
+	//		{
+	//			m_cnt = 1;
+	//		}
+	//		else
+	//		{
+	//			m_cnt = 0;
+	//		}
+	//		m_Trigger = true;
+	//	}
+	//}	// スティックを上に傾けたとき
+	//else if (stickLY < -20000 || stickRY < -20000)
+	//{
+	//	if (!m_Trigger)
+	//	{
+	//		if (m_cnt == 0)
+	//		{
+	//			m_cnt = 1;
+	//		}
+	//		else
+	//		{
+	//			m_cnt = 0;
+	//		}
+	//		m_Trigger = true;
+	//	}
+	//}
 
 	// キーボードによるボタン選択処理
 	if (GetKeyRelease(VK_A) || GetKeyRelease(VK_LEFT))
 	{
 		m_cnt--;
-		if (m_cnt < 0) m_cnt = 5;
+		if (m_cnt < 1) m_cnt = 5;
 	}
 	if (GetKeyRelease(VK_D) || GetKeyRelease(VK_RIGHT))
 	{
 		m_cnt++;
-		if (m_cnt > 5) m_cnt = 0;
+		if (m_cnt > 5) m_cnt = 1;
 		
 	}
 
@@ -209,7 +209,7 @@ void StageButton::Update()
 	{
 		// 使われていなかったら処理しない
 		if (!m_pButton[i].GetUse())continue;
-		m_pButton[i].Update(SE_WIND);
+		m_pButton[i].Update(SCENE_STAGE_SELECT);
 		
 	}
 #if _DEBUG

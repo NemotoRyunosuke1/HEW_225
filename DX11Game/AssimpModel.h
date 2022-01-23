@@ -46,10 +46,10 @@ struct TAssimpMaterial {
 	ID3D11ShaderResourceView*	pTexTransparent;// 透過テクスチャ
 	TAssimpMaterial()
 	{
-		Ka = DirectX::XMFLOAT4(0, 0, 0, 0);
+		Ka = DirectX::XMFLOAT4(0.5f, 0.5f, 0.5f, 1);
 		Kd = DirectX::XMFLOAT4(1, 1, 1, 1);
-		Ks = DirectX::XMFLOAT4(0, 0, 0, 0);
-		Ke = DirectX::XMFLOAT4(0, 0, 0, 0);
+		Ks = DirectX::XMFLOAT4(0.5f, 0.5f, 0.5f, 1);
+		Ke = DirectX::XMFLOAT4(0.5f, 0.5f, 0.5f, 1);
 		pTexture = nullptr;
 		pTexEmmisive = nullptr;
 		pTexSpecular = nullptr;
@@ -247,6 +247,11 @@ private:
 	static ID3D11PixelShader* m_pPixelShader;
 	static ID3D11SamplerState* m_pSampleLinear;
 
+	XMFLOAT4 m_La;
+	XMFLOAT4 m_Ld;
+	XMFLOAT4 m_Ls;
+	XMFLOAT4 m_Le;
+
 public:
 	CAssimpModel();
 	virtual ~CAssimpModel();
@@ -263,12 +268,15 @@ public:
 	void SetMaterial(TAssimpMaterial* pMaterial = nullptr) { m_pMaterial = pMaterial; }
 	TAssimpMaterial* GetMaterial() { return m_pMaterial; }
 	void SetAnimIndex(int nAnimIndex);
-	UINT GetAnimCount();
+	UINT GetAnimCount();						  
 	double GetAnimDuration(int nAnimIndex = -1/* -1:現在のアニメ */);
 	void SetAnimTime(double dTime);
 	void SetLight(CLight* pLight) { m_pLight = pLight; }
 	CLight* GetLight() { return m_pLight; }
-
+	void SetLight(XMFLOAT4 a, XMFLOAT4 d, XMFLOAT4 s) { m_La = a; m_Ld = d; m_Ls = s; };
+	XMFLOAT4 GetA() { return m_La; };
+	XMFLOAT4 GetD() { return m_Ld; };
+	XMFLOAT4 GetS() { return m_Ls; };
 	void Release();
 
 	DirectX::XMFLOAT3& GetBBox() { return m_vBBox; }
