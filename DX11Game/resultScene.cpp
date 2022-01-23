@@ -235,7 +235,7 @@ void ResultScene::Draw()
 		for (int i = 0; i < m_nScore; ++i)
 		{
 			//　星１ 
-			if (m_fTime > 5 + i )
+			if (m_fTime > 3.0f + i * 1.0f )
 			{
 				SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
 				SetPolygonSize(m_size1.x, m_size1.y);
@@ -264,38 +264,57 @@ void ResultScene::Draw()
 		SetPolygonUV(0.0f, 0.0f);
 		DrawPolygon(pBC);
 		*/
+		if (m_bResult)
+		{
+			// リザルトロゴ 
+			if (m_fTime > 0.5f)
+			{
+				SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
+				SetPolygonSize(m_size4.x, m_size4.y);
+				SetPolygonPos(m_pos4.x, m_pos4.y);
+				SetPolygonTexture(m_pIconTexture4);
+				SetPolygonUV(0.0f, 0.0f);
+				DrawPolygon(pBC);
+			}
+			
 
-		// リザルトロゴ 
-		SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
-		SetPolygonSize(m_size4.x, m_size4.y);
-		SetPolygonPos(m_pos4.x, m_pos4.y);
-		SetPolygonTexture(m_pIconTexture4);
-		SetPolygonUV(0.0f, 0.0f);
-		DrawPolygon(pBC);
+			// 条件1 [ステージのクリア] 
+			if (m_fTime > 1.0f)
+			{
+				SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
+				SetPolygonSize(m_size5.x, m_size5.y);
+				SetPolygonPos(m_pos5.x, m_pos5.y);
+				SetPolygonTexture(m_pIconTexture5);
+				SetPolygonUV(0.0f, 0.0f);
+				DrawPolygon(pBC);
+			}
+			
 
-		// 条件1 [ステージのクリア] 
-		SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
-		SetPolygonSize(m_size5.x, m_size5.y);
-		SetPolygonPos(m_pos5.x, m_pos5.y);
-		SetPolygonTexture(m_pIconTexture5);
-		SetPolygonUV(0.0f, 0.0f);
-		DrawPolygon(pBC);
+			// 条件2 [仲間の数] 
+			if (m_fTime > 1.5f)
+			{
+				SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
+				SetPolygonSize(m_size6.x, m_size6.y);
+				SetPolygonPos(m_pos6.x, m_pos6.y);
+				SetPolygonTexture(m_pIconTexture6);
+				SetPolygonUV(0.0f, 0.0f);
+				DrawPolygon(pBC);
+			}
+			
 
-		// 条件2 [仲間の数] 
-		SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
-		SetPolygonSize(m_size6.x, m_size6.y);
-		SetPolygonPos(m_pos6.x, m_pos6.y);
-		SetPolygonTexture(m_pIconTexture6);
-		SetPolygonUV(0.0f, 0.0f);
-		DrawPolygon(pBC);
-
-		// 条件3 [敵に被弾] 
-		SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
-		SetPolygonSize(m_size7.x, m_size7.y);
-		SetPolygonPos(m_pos7.x, m_pos7.y);
-		SetPolygonTexture(m_pIconTexture7);
-		SetPolygonUV(0.0f, 0.0f);
-		DrawPolygon(pBC);
+			// 条件3 [敵に被弾] 
+			if (m_fTime > 2.0f)
+			{
+				SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
+				SetPolygonSize(m_size7.x, m_size7.y);
+				SetPolygonPos(m_pos7.x, m_pos7.y);
+				SetPolygonTexture(m_pIconTexture7);
+				SetPolygonUV(0.0f, 0.0f);
+				DrawPolygon(pBC);
+			}
+			
+		  }
+		
 	
 			
 		if (!m_bResult)

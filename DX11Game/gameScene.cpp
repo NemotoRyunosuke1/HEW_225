@@ -717,7 +717,7 @@ void GameScene::Update()
 
 	// スカイドーム
 	m_pSkyDome->Update();
-	m_pSkyDome->SetPos(XMFLOAT3(GetModelPos().x,400, GetModelPos().z));
+	m_pSkyDome->SetPos(XMFLOAT3(GetModelPos().x,400, GetModelPos().z));	// スカイドーム位置
 
 	// ゴールフラグが立った時
 	if (m_bGoal)
@@ -751,6 +751,11 @@ void GameScene::Update()
 			return;
 		}
 
+	}
+	else
+	{
+		// タイマーUI更新
+		m_pTimerUI->Update();
 	}
 
 	// カメラ更新
@@ -808,9 +813,6 @@ void GameScene::Update()
 
 	// スコアUI更新
 	m_pScoreUI->Update();
-
-	// タイマーUI更新
-	m_pTimerUI->Update();
 
 	// 仲間用UI更新
 	UpdateCrewUI();
@@ -938,8 +940,7 @@ void GameScene::Draw()
 	//EFFECT->Play(1);
 
 	//EffectManager::Play(WIND_EFFECT);
-
-	 
+ 
 	// ビル描画
 	for (int i = 0; i < MAX_BULIDING; i++)
 	{
@@ -950,9 +951,6 @@ void GameScene::Draw()
 	
 	// 雲マネージャー描画
 	//m_pCloudManager->Draw();
-
-
-	
 
 	// 丸影描画
 	DrawShadow();
@@ -974,8 +972,6 @@ void GameScene::Draw()
 	// Zバッファ無効(Zチェック無&Z更新無)
 	SetZBuffer(false);
 
-	
-	
 	// スタミナバー
 	m_pStaminaBar->Draw();
 
@@ -1017,7 +1013,5 @@ void GameScene::Draw()
 		m_pPause->Draw();
 		
 	}
-	
-
 	
 }
