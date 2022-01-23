@@ -195,6 +195,9 @@
     <ClCompile Include="option.cpp">
       <Filter>ソースファイル\scene\titleScene</Filter>
     </ClCompile>
+    <ClCompile Include="crewUI2.cpp">
+      <Filter>ソースファイル\scene\gameScene\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AssimpModel.h">
@@ -379,6 +382,9 @@
     </ClInclude>
     <ClInclude Include="option.h">
       <Filter>ヘッダーファイル\scene\titleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="crewUI2.h">
+      <Filter>ヘッダーファイル\scene\gameScene\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

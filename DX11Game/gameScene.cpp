@@ -21,6 +21,7 @@
 #include "goalUI.h"
 #include "resultScene.h"
 #include "Sound.h"
+#include "crewUI2.h"
 
 #if _DEBUG
 #define MAX_BULIDING (600)
@@ -85,7 +86,7 @@ GameScene::GameScene()
 
 	// 仲間用UI初期化
 	InitCrewUI();
-
+	CrewUI2::Init();
 	InitGoalUI();
 
 	// 鳥残機カウント初期化
@@ -217,6 +218,7 @@ GameScene::GameScene(EStage stage)
 
 	// 仲間用UI初期化
 	InitCrewUI();
+	CrewUI2::Init();
 
 	// ゴールUI初期化
 	InitGoalUI();
@@ -599,6 +601,7 @@ GameScene::~GameScene()
 
 	// 仲間用UI終了
 	UninitCrewUI();
+	CrewUI2::Uninit();
 
 	UninitGoalUI();
 
@@ -826,6 +829,7 @@ void GameScene::Update()
 
 	// 仲間用UI更新
 	UpdateCrewUI();
+	CREW_UI2->Update();
 
 	// ビル更新
 	for (int i = 0; i < MAX_BULIDING; i++)
@@ -981,6 +985,9 @@ void GameScene::Draw()
 	// 2D描画
 	// Zバッファ無効(Zチェック無&Z更新無)
 	SetZBuffer(false);
+
+	// 仲間UI2
+	CREW_UI2->Draw();
 
 	// スタミナバー
 	m_pStaminaBar->Draw();

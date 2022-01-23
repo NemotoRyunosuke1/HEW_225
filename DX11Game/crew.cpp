@@ -15,6 +15,7 @@
 #include "Cunt.h"
 #include "crewUI.h"
 #include "EffectManager.h"
+#include "crewUI2.h"
 
 #if _DEBUG
 #include "input.h"
@@ -38,7 +39,7 @@
 #define	VALUE_ROTATE_CREW	(7.0f)		// 回転速度
 #define	RATE_ROTATE_CREW	(0.20f)		// 回転慣性係数
 
-#define MAX_CREW			(100)		// 味方最大数
+
 #define	CREW_RADIUS		    (20.0f)     // 境界球半径
 #define MAP_HIROSA          (20000)      // マップの広さ
 
@@ -184,12 +185,13 @@ void UpdateCrew(void)
 		if (!g_crew[i].m_catch)
 		{
 			SetCrewUI(XMFLOAT3(g_crew[i].m_pos.x, g_crew[i].m_pos.y + 50, g_crew[i].m_pos.z), 60, 60, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), i);	// 仲間用UIセット
-
+			
 		}
 		else
 		{
 			SetUseCrewUI(false, i);
 		}
+		CREW_UI2->SetCrew(g_crew[i].m_pos, i, g_crew[i].m_use,!g_crew[i].m_catch);
 		//SetCrewUI(XMFLOAT3(g_crew[i].m_pos.x, g_crew[i].m_pos.y + 50, g_crew[i].m_pos.z), 30, 30, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f));	// 仲間用UIセット
 
 		// アニメーション

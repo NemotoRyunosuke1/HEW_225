@@ -47,8 +47,7 @@ void StageSlectScene::Update()
 	{
 		if (!StageTrrger)
 		{
-			CSound::SetVolume(SE_SELECT, 1.0f);
-			CSound::Play(SE_SELECT);
+			
 			StageTrrger = true;
 		}
 		
@@ -63,8 +62,7 @@ void StageSlectScene::Update()
 	// コントローラースタートボタン
 	if (GetJoyRelease(0, JOYSTICKID8))
 	{
-		CSound::SetVolume(SE_SELECT, 1.0f);
-		CSound::Play(SE_SELECT);
+		
 #if _DEBUG
 		
 
@@ -78,8 +76,6 @@ void StageSlectScene::Update()
 	{
 		if (!StageTrrger)
 		{
-			CSound::SetVolume(SE_SELECT, 1.0f);
-			CSound::Play(SE_SELECT);
 			StageTrrger = true;
 		}
 		StartFadeOut(SCENE_GAME);  //

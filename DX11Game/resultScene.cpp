@@ -8,7 +8,7 @@
 #include "resultScene.h"
 #include "debugproc.h"
 
-#define Star1			L"data/texture/StarIcon.png"	    //星１
+#define Star1			L"data/texture/星メダル1.png"	    //星１
 #define Star2			L"data/texture/StarIcon.png"		//星２
 #define Star3			L"data/texture/StarIcon.png"		//星３
 
@@ -18,6 +18,7 @@
 #define Result3			L"data/texture/130second.png"		//条件3 [130秒残し]
 
 #define FINISH			L"data/texture/Finish.png"		//FINISH
+#define BACK			L"data/texture/back.png"		//FINISH
 //=============================================================================
 // コンストラクタ
 //=============================================================================
@@ -115,6 +116,9 @@ ResultScene::ResultScene()
 
 	// FINISH
 	CreateTextureFromFile(pDevice6, FINISH, &m_pTextureFinish);
+
+	// Aで戻るテクスチャ読み込み
+	CreateTextureFromFile(pDevice6, BACK, &m_pTextureBack);
 	// シーン遷移ロゴ 
 	//ID3D11Device* pDevice1 = GetDevice();
 	//CreateTextureFromFile(pDevice1, Result, &m_pIconTexture8);
@@ -126,6 +130,10 @@ ResultScene::ResultScene()
 	m_nScore = 3;	// 星の数
 	m_bResult = false;
 	m_bResult2 = false;
+	for (int i = 0; i < 3; i++)
+	{
+		m_fStarAngle[i] = 0.0f;
+	}
 }
 //=============================================================================
 // デストラクタ
@@ -159,6 +167,10 @@ ResultScene::~ResultScene()
 
 	// フィニッシュ
 	SAFE_RELEASE(m_pTextureFinish);
+
+	// Aで戻る
+
+	SAFE_RELEASE(m_pTextureBack);
 
 	// シーン遷移ロゴ 
 	//SAFE_RELEASE(m_pIconTexture8);
@@ -200,7 +212,19 @@ void ResultScene::Update()
 		m_fTime += 1.0f / 60.0f;
 	}
 	
+	for (int i = 0; i < m_nScore; ++i)
+	{
+		//　星１ 
+		if (m_fTime > 3.0f + i * 1.0f)
+		{
+			/*if (m_fStarAngle[i] < 30 && m_fStarAngle[i] > 0)
+			{
+				m_fStarAngle[i] += 5.0f;
+			}*/
+			
+		}
 
+	}
 #if _DEBUG
 	// デバック用文字列
 	PrintDebugProc("****** ResultScene ******\n");
@@ -241,11 +265,26 @@ void ResultScene::Draw()
 				SetPolygonSize(m_size1.x, m_size1.y);
 				SetPolygonPos(m_pos1.x, m_pos1.y - (i * m_size1.x));
 				SetPolygonTexture(m_pIconTexture1);
-				SetPolygonUV(0.0f, 0.0f);
+				SetPolygonUV(((2-i)%3)/3.0f , 0.0f);
+				SetPolygonFrameSize(1.0f/3,1.0f);
+				SetPolygonAngle(m_fStarAngle[i]);
 				DrawPolygon(pBC);
 			}
 			
 		}
+		
+		// リセット
+		SetPolygonUV(0.0f, 0.0f);
+		SetPolygonFrameSize(1.0f, 1.0f);
+		SetPolygonAngle(0.0f);
+
+		SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
+		SetPolygonSize(300, 100);
+		SetPolygonPos(SCREEN_WIDTH / 2.0f -150, -SCREEN_HEIGHT/2.0f + 50);
+		SetPolygonTexture(m_pTextureBack);
+		SetPolygonUV(0.0f, 0.0f);
+		SetPolygonFrameSize(1.0f, 1.0f);
+		DrawPolygon(pBC);
 
 		/*
 		//　星２

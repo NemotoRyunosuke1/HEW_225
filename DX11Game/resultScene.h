@@ -77,9 +77,11 @@ private:
 	ID3D11ShaderResourceView* m_pIconTexture7;
 	ID3D11ShaderResourceView* m_pIconTexture8;
 	ID3D11ShaderResourceView* m_pTextureFinish;
+	ID3D11ShaderResourceView* m_pTextureBack;
 	float m_fAlpha;	// “§–¾“x
 	float m_fAlphaFinish;	// “§–¾“x
 	float m_fTime;	// ŽžŠÔ
+	float m_fStarAngle[3];
 	int m_nScore;
 	bool m_bResult;
 	bool m_bResult2;
