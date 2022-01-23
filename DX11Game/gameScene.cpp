@@ -859,7 +859,7 @@ void GameScene::Draw()
 	//エフェクト描画
 	//EFFECT->Play(1);
 
-	//EffectManager::Play(WIND_EFFECT);
+	EffectManager::Play(WIND_EFFECT);
 
 	
 	// ビル描画
