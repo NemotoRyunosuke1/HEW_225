@@ -93,12 +93,13 @@ void Button::Update()
 	POINT point;
 	GetCursorPos(&point);
 	BOOL pointW = ScreenToClient(GetMainWnd(),&point);
-	
+	RECT LockR = { point.x, point.y, point.x + 1, point.y + 1 }; // カーソル位置のみをロック
+
 	// 使われている時
 	if (m_use)
 	{
 		//カーソルがあわされた時
-		if ((GetMousePosition()->x > (long)(m_pos.x - m_size.x / 2 + FULLSCREEN_WIDTH / 2)) && (GetMousePosition()->x < (long)(m_pos.x + m_size.x / 2 + FULLSCREEN_WIDTH / 2)) && (-GetMousePosition()->y < (long)(m_pos.y + m_size.y / 2 - FULLSCREEN_HEIGHT / 2)) && (-GetMousePosition()->y > (long)(m_pos.y - m_size.y / 2 - FULLSCREEN_HEIGHT / 2)))
+		if ((GetMousePosition()->x > (long)(m_pos.x - m_size.x / 2.0f + FULLSCREEN_WIDTH / 2.0f)) && (GetMousePosition()->x < (long)(m_pos.x + m_size.x / 2.0f + FULLSCREEN_WIDTH / 2.0f)) && (-GetMousePosition()->y < (long)(m_pos.y + m_size.y / 2.0f - FULLSCREEN_HEIGHT / 2.0f)) && (-GetMousePosition()->y > (long)(m_pos.y - m_size.y / 2.0f - FULLSCREEN_HEIGHT / 2.0f)))
 		{
 			if (GetMouseButton(MOUSEBUTTON_L))
 			{
@@ -159,8 +160,8 @@ void Button::Update()
 #if _DEBUG
 	// デバック用文字列
 	// デバック用文字列
-	PrintDebugProc("[ﾏｳｽ ｲﾁ : (%d : %d )]\n", point.x, point.y);
-	PrintDebugProc("[ﾏｳｽ ｲﾁ : (%d : %d )]\n", GetMousePosition()->x, GetMousePosition()->y);
+	PrintDebugProc("[ﾏｳｽ(point) ｲﾁ : (%d : %d )]\n", point.x, point.y);
+	//PrintDebugProc("[ﾏｳｽ ｲﾁ : (%d : %d )]\n", GetMousePosition()->x, GetMousePosition()->y);
 	
 
 #endif
