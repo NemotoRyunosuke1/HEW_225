@@ -88,7 +88,7 @@ WindManager::WindManager(EStage stage)
 		m_pWind[9].Create(XMFLOAT3(-1400.0f, 1250.0f, 8500.0f), XMFLOAT3(500.0f, 300.0f, 500.0f), XMFLOAT3(0.0f, 0.0f, 1.0f));    // ゴール前奥左追い風
 		m_pWind[10].Create(XMFLOAT3(-600.0f, 1250.0f, 8500.0f), XMFLOAT3(500.0f, 300.0f, 500.0f), XMFLOAT3(0.0f, 0.0f, 1.0f));    // ゴール前奥右追い風
 
-		m_pWind[11].Create(XMFLOAT3(-1000.0f, 1000.0f, 9500.0f), XMFLOAT3(600.0f, 1200.0f, 600.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));  // ゴール前
+		m_pWind[MAX_WIND - 1].Create(XMFLOAT3(-1000.0f, 1000.0f, 9500.0f), XMFLOAT3(600.0f, 1200.0f, 600.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));  // ゴール前
 
 		break;
 	case STAGE_5:
@@ -153,24 +153,41 @@ void WindManager::Update(EStage stage, bool goal)
 {
 	for (int i = 0; i < MAX_WIND; i++)
 	{
-		// 使用していなかったらスキップ
-		if (!m_pWind[i].GetUse())continue;
-
+		
 		// ゴールの上昇気流更新(ゴールフラグが立ってなかったら処理をしない)
 		if (goal)	// ゴールフラグが立った時
 		{
 			switch (stage)
 			{
 			case STAGE_1:
-
+				if (i == MAX_WIND - 1)
+				{
+					m_pWind[i].SetUse(true);
+				}
 				break;
 			case STAGE_2:
+				if (i == MAX_WIND - 1)
+				{
+					m_pWind[i].SetUse(true);
+				}
 				break;
 			case STAGE_3:
+				if (i == MAX_WIND - 1)
+				{
+					m_pWind[i].SetUse(true);
+				}
 				break;
 			case STAGE_4:
+				if (i == MAX_WIND - 1)
+				{
+					m_pWind[i].SetUse(true);
+				}
 				break;
 			case STAGE_5:
+				if (i == MAX_WIND - 1)
+				{
+					m_pWind[i].SetUse(true);
+				}
 				break;
 			case MAX_STAGE:
 				break;
@@ -183,15 +200,35 @@ void WindManager::Update(EStage stage, bool goal)
 			switch (stage)
 			{
 			case STAGE_1:
-				 
+				if (i == MAX_WIND - 1)
+				{
+					m_pWind[i].SetUse(false);
+				}
+
 				break;
 			case STAGE_2:
+				if (i == MAX_WIND - 1)
+				{
+					m_pWind[i].SetUse(false);
+				}
 				break;
 			case STAGE_3:
+				if (i == MAX_WIND - 1)
+				{
+					m_pWind[i].SetUse(false);
+				}
 				break;
 			case STAGE_4:
+				if (i == MAX_WIND - 1)
+				{
+					m_pWind[i].SetUse(false);
+				}
 				break;
 			case STAGE_5:
+				if (i == MAX_WIND - 1)
+				{
+					m_pWind[i].SetUse(false);
+				}
 				break;
 			case MAX_STAGE:
 				break;
@@ -199,7 +236,9 @@ void WindManager::Update(EStage stage, bool goal)
 				break;
 			}
 		}
-		
+		// 使用していなかったらスキップ
+		if (!m_pWind[i].GetUse())continue;
+
 		m_pWind[i].Update();
 
 #if _DEBUG

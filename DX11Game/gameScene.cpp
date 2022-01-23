@@ -816,7 +816,7 @@ void GameScene::Update()
 	m_pCunt->Update();
 
 	// 風マネージャー更新
-	m_pWindManager->Update();
+	m_pWindManager->Update(m_eStage, GetGoalFlgCrew());
 
 	// 雲マネージャー更新
 	//m_pCloudManager->Update();
