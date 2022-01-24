@@ -485,7 +485,6 @@ int StartChase(int i, XMFLOAT3 pos)
 
 			// ƒvƒŒƒCƒ„[‚ÌŒü‚¢‚Ä‚¢‚é•ûŒü‚ÖŒü‚­
 			g_crew[i].m_rot = modelRot;
-
 			
 
 			// ‘¼‚Ì’‡ŠÔ‚Ì’¹‚Æ‚Ì“–‚½‚è”»’è
