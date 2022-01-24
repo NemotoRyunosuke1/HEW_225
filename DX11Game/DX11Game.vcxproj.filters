@@ -198,6 +198,9 @@
     <ClCompile Include="crewUI2.cpp">
       <Filter>ソースファイル\scene\gameScene\UI</Filter>
     </ClCompile>
+    <ClCompile Include="enemyUI.cpp">
+      <Filter>ソースファイル\scene\gameScene\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AssimpModel.h">
@@ -384,6 +387,9 @@
       <Filter>ヘッダーファイル\scene\titleScene</Filter>
     </ClInclude>
     <ClInclude Include="crewUI2.h">
+      <Filter>ヘッダーファイル\scene\gameScene\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="enemyUI.h">
       <Filter>ヘッダーファイル\scene\gameScene\UI</Filter>
     </ClInclude>
   </ItemGroup>

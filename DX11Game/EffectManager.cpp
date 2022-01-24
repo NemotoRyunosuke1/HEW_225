@@ -303,14 +303,16 @@ int EffectManager::Play(EEffect Handle)
 		{
 			time = 0;
 			// 左追い風
-			m_handle = m_manager->Play(m_effect2, -1300.0f, 500.0f, -600.0f);      //表示＆座標
-			m_manager->SetScale(m_handle, 10.0f, 10.0f, 10.0f);   //大きさ
-			m_manager->SetRotation(m_handle, 0.0f, 80.0f, 0.0f);
+			m_handle = m_manager->Play(m_effect6, -1300.0f, 500.0f, -900.0f);      //表示＆座標
+			m_manager->SetScale(m_handle, 2.0f, 2.0f, 3.0f);   //大きさ
+			m_manager->SetRotation(m_handle, 0.0f, 14.1f, 0.0f);
+			m_manager->SetSpeed(m_handle, 0.5f);
 
 			// 右追い風
-			m_handle = m_manager->Play(m_effect2, -600.0f, 500.0f, -600.0f);      //表示＆座標
-			m_manager->SetScale(m_handle, 10.0f, 10.0f, 10.0f);   //大きさ
-			m_manager->SetRotation(m_handle, 0.0f, 14.1f, 0.0f);
+			m_handle = m_manager->Play(m_effect6, -600.0f, 500.0f, -900.0f);      //表示＆座標
+			m_manager->SetScale(m_handle, 2.0f, 2.0f, 3.0f);   //大きさ
+			m_manager->SetRotation(m_handle, 0.0f, 170.0f, 0.0f);
+			m_manager->SetSpeed(m_handle, 0.5f);
 
 			// 上昇気流1
 			m_handle = m_manager->Play(m_effect, -1000.0f, 200.0f, 3000.0f);      //表示＆座標

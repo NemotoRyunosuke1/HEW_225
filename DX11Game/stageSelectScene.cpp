@@ -41,6 +41,8 @@ void StageSlectScene::Update()
 	// ボタン更新
 	m_pStageButton->Update();
 
+	// BG更新
+	m_pStageSelectBG->Update();
 
 	//次のシーンへ移る条件
 	if (GetKeyTrigger(VK_RETURN))

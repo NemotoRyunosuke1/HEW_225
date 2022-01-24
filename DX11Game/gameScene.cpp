@@ -22,6 +22,7 @@
 #include "resultScene.h"
 #include "Sound.h"
 #include "crewUI2.h"
+#include "enemyUI.h"
 
 #if _DEBUG
 #define MAX_BULIDING (600)
@@ -83,6 +84,7 @@ GameScene::GameScene()
 
 	// 敵初期化
 	InitEnemy();
+	EnemyUI::Init();
 
 	// 仲間用UI初期化
 	InitCrewUI();
@@ -215,6 +217,7 @@ GameScene::GameScene(EStage stage)
 
 	// 敵初期化
 	InitEnemy();
+	EnemyUI::Init();
 
 	// 仲間用UI初期化
 	InitCrewUI();
@@ -584,6 +587,8 @@ GameScene::GameScene(EStage stage)
 //=============================================================================
 GameScene::~GameScene()
 {
+	// カーソウル描画
+	ShowCursor(true);
 	// メッシュフィールド終了処理
 	UninitMeshField();
 
@@ -598,6 +603,7 @@ GameScene::~GameScene()
 
 	// 敵終了処理
 	UninitEnemy();
+	EnemyUI::Uninit();
 
 	// 仲間用UI終了
 	UninitCrewUI();
@@ -706,12 +712,23 @@ void GameScene::Update()
 		{
 			StartFadeOut(SCENE_STAGE_SELECT);
 		}
+
+		// カーソウル描画
+		ShowCursor(true);
 		return;		// ポーズ中下の処理をしない
+	}
+	else if (m_bGoal)
+	{
+		// カーソウル描画
+		ShowCursor(true);
 	}
 	else
 	{
+		// カーソウル描画しない
+		ShowCursor(false);
 		m_pPause->SetBack(false);
 	}
+
 
 	// チュートリアル更新
 	m_pTutorial->Update(m_eStage);
@@ -811,6 +828,7 @@ void GameScene::Update()
 
 	// 敵更新
 	UpdateEnemy();
+	ENEMY_UI->Update();
 
 	// 鳥残機カウント更新
 	m_pCunt->Update();
@@ -985,6 +1003,9 @@ void GameScene::Draw()
 	// 2D描画
 	// Zバッファ無効(Zチェック無&Z更新無)
 	SetZBuffer(false);
+
+	//　敵UI
+	ENEMY_UI->Draw();
 
 	// 仲間UI2
 	CREW_UI2->Draw();

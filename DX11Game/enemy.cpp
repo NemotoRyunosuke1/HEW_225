@@ -14,6 +14,7 @@
 #include <stdlib.h>
 #include "crew.h"
 #include "Sound.h"
+#include "enemyUI.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -31,7 +32,6 @@
 #define ENEMY_WIDTH			64.0f
 #define ENEMY_HEIGHT		64.0f
 
-#define MAX_ENEMY			(50)        // 敵の最大数
 
 #define COLLISION_WIDH      30.0f
 #define COLLISION_HELIGHT   24.0f
@@ -154,7 +154,7 @@ void UpdateEnemy(void)
 	for (int i = 0; i < MAX_ENEMY; ++i)
 	{
 		if (!g_enemy[i].m_use)continue;
-
+		ENEMY_UI->SetCrew(g_enemy[i].m_pos,i, g_enemy[i].m_use, g_enemy[i].m_use);
 		// プレイヤーとの当たり判定
 		int a = EnemyStartChase(i,modelPos);
 
