@@ -7,6 +7,7 @@
 
 #include "resultScene.h"
 #include "debugproc.h"
+#include "Sound.h"
 
 #define Star1			L"data/texture/StarIcon.png"	    //星１
 #define Star2			L"data/texture/StarIcon.png"		//星２
@@ -126,6 +127,11 @@ ResultScene::ResultScene()
 	m_nScore = 3;	// 星の数
 	m_bResult = false;
 	m_bResult2 = false;
+	for (int i = 0; i < 3; i++)
+	{
+		m_bTrigger[i] = false;
+	}
+	
 }
 //=============================================================================
 // デストラクタ
@@ -232,7 +238,7 @@ void ResultScene::Draw()
 		// もとに戻す
 		SetPolygonAlpha(1.0f);
 
-		for (int i = 0; i < m_nScore; ++i)
+		for (int i = 0; i < m_nScore; i++)
 		{
 			//　星１ 
 			if (m_fTime > 3.0f + i * 1.0f )
@@ -243,6 +249,40 @@ void ResultScene::Draw()
 				SetPolygonTexture(m_pIconTexture1);
 				SetPolygonUV(0.0f, 0.0f);
 				DrawPolygon(pBC);
+
+				//se
+				switch (i)
+				{
+				case 0:	// 一個目
+					if (!m_bTrigger[i])
+					{
+						CSound::SetVolume(SE_STER, 1.0f);
+						CSound::Play(SE_STER);
+
+						m_bTrigger[i] = true;
+					}
+					break;
+				case 1:	// 二個目
+					if (!m_bTrigger[i])
+					{
+						CSound::SetVolume(SE_STER, 1.0f);
+						CSound::Play(SE_STER);
+
+						m_bTrigger[i] = true;
+					}
+					break;
+				case 2:	// 三個目
+					if (!m_bTrigger[i])
+					{
+						CSound::SetVolume(SE_STER, 1.0f);
+						CSound::Play(SE_STER);
+
+						m_bTrigger[i] = true;
+					}
+					break;
+				default:
+					break;
+				}
 			}
 			
 		}
