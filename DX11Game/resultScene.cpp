@@ -16,6 +16,8 @@
 #define Result1			L"data/texture/40second.png"		//条件1 [40秒残し]
 #define Result2			L"data/texture/80second.png"		//条件2 [80秒残し]
 #define Result3			L"data/texture/130second.png"		//条件3 [130秒残し]
+
+#define FINISH			L"data/texture/Finish.png"		//FINISH
 //=============================================================================
 // コンストラクタ
 //=============================================================================
@@ -69,6 +71,9 @@ ResultScene::ResultScene()
 	m_IconPos7 = XMFLOAT3(100, 100, 0);		// 位置
 	m_Iconsize7 = XMFLOAT3(100, 50, 0);	    // サイズ
 
+	// フィニッシュ
+	m_posFinish = XMFLOAT3(0, 00, 0);
+	m_sizeFinish = XMFLOAT3(10, 10, 0);
 	//// シーン遷移ロゴ
 	//m_pos8 = XMFLOAT3(0, 250, 0);
 	//m_size8 = XMFLOAT3(300, 100, 0);
@@ -107,13 +112,20 @@ ResultScene::ResultScene()
 	// 条件3 [130秒残し] 
 	ID3D11Device* pDevice6 = GetDevice();
 	CreateTextureFromFile(pDevice6, Result3, &m_pIconTexture7);
+
+	// FINISH
+	CreateTextureFromFile(pDevice6, FINISH, &m_pTextureFinish);
 	// シーン遷移ロゴ 
 	//ID3D11Device* pDevice1 = GetDevice();
 	//CreateTextureFromFile(pDevice1, Result, &m_pIconTexture8);
 
 	// 変数初期化
 	m_fAlpha = 0.0f;	// 透明度
+	m_fAlphaFinish = 1.0f;
+	m_fTime = 0.0f;	//時間
 	m_nScore = 3;	// 星の数
+	m_bResult = false;
+	m_bResult2 = false;
 }
 //=============================================================================
 // デストラクタ
@@ -145,6 +157,9 @@ ResultScene::~ResultScene()
 	// 条件3 [130秒残し] 
 	SAFE_RELEASE(m_pIconTexture7);
 
+	// フィニッシュ
+	SAFE_RELEASE(m_pTextureFinish);
+
 	// シーン遷移ロゴ 
 	//SAFE_RELEASE(m_pIconTexture8);
 }
@@ -159,12 +174,32 @@ void ResultScene::Update()
 
 		StartFadeOut(SCENE_STAGE_SELECT);
 	}
-
-	m_fAlpha += 0.008f;
-	if (m_fAlpha >= 0.5f)
+	
+	if (!m_bResult)
 	{
-		m_fAlpha = 0.5f;
+		m_sizeFinish.x += 5;
+		m_sizeFinish.y += 5;
+		if (m_sizeFinish.x > 300)m_bResult2 = true;
+		if (m_bResult2)
+		{
+			m_fAlphaFinish -= 0.04f;
+			if (m_fAlphaFinish <= 0)
+			{
+				m_fAlphaFinish = 0;
+				m_bResult = true;
+			}
+		}
 	}
+	else
+	{
+		m_fAlpha += 0.008f;
+		if (m_fAlpha >= 0.5f)
+		{
+			m_fAlpha = 0.5f;
+		}
+		m_fTime += 1.0f / 60.0f;
+	}
+	
 
 #if _DEBUG
 	// デバック用文字列
@@ -184,78 +219,119 @@ void ResultScene::Draw()
 	// 枠
 	//----------------
 
-	// フェード描画
-	SetPolygonColor(0.0f, 0.0f, 0.0f);	//ポリゴンカラー
-	SetPolygonSize(SCREEN_WIDTH, SCREEN_HEIGHT);	// ポリゴンサイズ
-	SetPolygonPos(0.0f, 0.0f);	// ポリゴン位置
-	SetPolygonTexture(nullptr);	// ポリゴンテクスチャ
-	SetPolygonAlpha(m_fAlpha);	// ポリゴン透明度
-	SetPolygonUV(0.0f, 0.0f);	// ポリゴンテクスチャ位置
-	DrawPolygon(pBC);			// ポリゴン描画
 	
-	// もとに戻す
-	SetPolygonAlpha(1.0f);	
+		// フェード描画
+		SetPolygonColor(0.0f, 0.0f, 0.0f);	//ポリゴンカラー
+		SetPolygonSize(SCREEN_WIDTH, SCREEN_HEIGHT);	// ポリゴンサイズ
+		SetPolygonPos(0.0f, 0.0f);	// ポリゴン位置
+		SetPolygonTexture(nullptr);	// ポリゴンテクスチャ
+		SetPolygonAlpha(m_fAlpha);	// ポリゴン透明度
+		SetPolygonUV(0.0f, 0.0f);	// ポリゴンテクスチャ位置
+		DrawPolygon(pBC);			// ポリゴン描画
 
-	for (int i = 0; i < m_nScore; ++i)
-	{
-		//　星１ 
+		// もとに戻す
+		SetPolygonAlpha(1.0f);
+
+		for (int i = 0; i < m_nScore; ++i)
+		{
+			//　星１ 
+			if (m_fTime > 3.0f + i * 1.0f )
+			{
+				SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
+				SetPolygonSize(m_size1.x, m_size1.y);
+				SetPolygonPos(m_pos1.x, m_pos1.y - (i * m_size1.x));
+				SetPolygonTexture(m_pIconTexture1);
+				SetPolygonUV(0.0f, 0.0f);
+				DrawPolygon(pBC);
+			}
+			
+		}
+
+		/*
+		//　星２
 		SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
-		SetPolygonSize(m_size1.x, m_size1.y);
-		SetPolygonPos(m_pos1.x, m_pos1.y - (i * m_size1.x));
-		SetPolygonTexture(m_pIconTexture1);
+		SetPolygonSize(m_size2.x, m_size2.y);
+		SetPolygonPos(m_pos2.x, m_pos2.y);
+		SetPolygonTexture(m_pIconTexture2);
 		SetPolygonUV(0.0f, 0.0f);
 		DrawPolygon(pBC);
-	 }
+
+		//　星３
+		SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
+		SetPolygonSize(m_size3.x, m_size3.y);
+		SetPolygonPos(m_pos3.x, m_pos3.y);
+		SetPolygonTexture(m_pIconTexture3);
+		SetPolygonUV(0.0f, 0.0f);
+		DrawPolygon(pBC);
+		*/
+		if (m_bResult)
+		{
+			// リザルトロゴ 
+			if (m_fTime > 0.5f)
+			{
+				SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
+				SetPolygonSize(m_size4.x, m_size4.y);
+				SetPolygonPos(m_pos4.x, m_pos4.y);
+				SetPolygonTexture(m_pIconTexture4);
+				SetPolygonUV(0.0f, 0.0f);
+				DrawPolygon(pBC);
+			}
+			
+
+			// 条件1 [ステージのクリア] 
+			if (m_fTime > 1.0f)
+			{
+				SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
+				SetPolygonSize(m_size5.x, m_size5.y);
+				SetPolygonPos(m_pos5.x, m_pos5.y);
+				SetPolygonTexture(m_pIconTexture5);
+				SetPolygonUV(0.0f, 0.0f);
+				DrawPolygon(pBC);
+			}
+			
+
+			// 条件2 [仲間の数] 
+			if (m_fTime > 1.5f)
+			{
+				SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
+				SetPolygonSize(m_size6.x, m_size6.y);
+				SetPolygonPos(m_pos6.x, m_pos6.y);
+				SetPolygonTexture(m_pIconTexture6);
+				SetPolygonUV(0.0f, 0.0f);
+				DrawPolygon(pBC);
+			}
+			
+
+			// 条件3 [敵に被弾] 
+			if (m_fTime > 2.0f)
+			{
+				SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
+				SetPolygonSize(m_size7.x, m_size7.y);
+				SetPolygonPos(m_pos7.x, m_pos7.y);
+				SetPolygonTexture(m_pIconTexture7);
+				SetPolygonUV(0.0f, 0.0f);
+				DrawPolygon(pBC);
+			}
+			
+		  }
+		
 	
-	/*
-	//　星２
-	SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
-	SetPolygonSize(m_size2.x, m_size2.y);
-	SetPolygonPos(m_pos2.x, m_pos2.y);
-	SetPolygonTexture(m_pIconTexture2);
-	SetPolygonUV(0.0f, 0.0f);
-	DrawPolygon(pBC);
+			
+		if (!m_bResult)
+		{
+			// フィニッシュ
+			SetPolygonAlpha(m_fAlphaFinish);
+			SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
+			SetPolygonSize(m_sizeFinish.x, m_sizeFinish.y);
+			SetPolygonPos(m_posFinish.x, m_posFinish.y);
+			SetPolygonTexture(m_pTextureFinish);
+			SetPolygonUV(0.0f, 0.0f);
+			DrawPolygon(pBC);
+		}
+		
+	
 
-	//　星３
-	SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
-	SetPolygonSize(m_size3.x, m_size3.y);
-	SetPolygonPos(m_pos3.x, m_pos3.y);
-	SetPolygonTexture(m_pIconTexture3);
-	SetPolygonUV(0.0f, 0.0f);
-	DrawPolygon(pBC);
-	*/
-
-	// リザルトロゴ 
-	SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
-	SetPolygonSize(m_size4.x, m_size4.y);
-	SetPolygonPos(m_pos4.x, m_pos4.y);
-	SetPolygonTexture(m_pIconTexture4);
-	SetPolygonUV(0.0f, 0.0f);
-	DrawPolygon(pBC);
-
-	// 条件1 [ステージのクリア] 
-	SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
-	SetPolygonSize(m_size5.x, m_size5.y);
-	SetPolygonPos(m_pos5.x, m_pos5.y);
-	SetPolygonTexture(m_pIconTexture5);
-	SetPolygonUV(0.0f, 0.0f);
-	DrawPolygon(pBC);
-
-	// 条件2 [仲間の数] 
-	SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
-	SetPolygonSize(m_size6.x, m_size6.y);
-	SetPolygonPos(m_pos6.x, m_pos6.y);
-	SetPolygonTexture(m_pIconTexture6);
-	SetPolygonUV(0.0f, 0.0f);
-	DrawPolygon(pBC);
-
-	// 条件3 [敵に被弾] 
-	SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
-	SetPolygonSize(m_size7.x, m_size7.y);
-	SetPolygonPos(m_pos7.x, m_pos7.y);
-	SetPolygonTexture(m_pIconTexture7);
-	SetPolygonUV(0.0f, 0.0f);
-	DrawPolygon(pBC);
+	SetPolygonAlpha(1.0f);
 
 	//// シーン遷移ロゴ 
 	//SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
@@ -264,6 +340,8 @@ void ResultScene::Draw()
 	//SetPolygonTexture(m_pIconTexture8);
 	//SetPolygonUV(0.0f, 0.0f);
 	//DrawPolygon(pBC);
+
+	
 
 	 //2D描画
 	 //Zバッファ無効(Zチェック無&Z更新無)

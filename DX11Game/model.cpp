@@ -195,7 +195,7 @@ void UpdateModel(void)
 	// 死亡条件
 	if (g_posModel.y <= 0.0f)	// 地面 
 	{
-		EffectManager::Play(2);
+		EffectManager::Play(SAND_EFFECT);
 #if  _DEBUG
 		StartFadeOut(SCENE_GAMEOVER);
 #else
@@ -225,25 +225,27 @@ void UpdateModel(void)
 		}
 
 		//スタンエフェクト表示
-		EffectManager::Play(1);
+		EffectManager::Play(STN_EFFECT);
 
 		g_posModel.y -= 1.1f;
 
 		// レバガチャ判定
-		if (stickY > 20000 || stickX > 20000 || stickY < -20000 || stickX < -20000 || GetKeyTrigger(VK_A) ||  GetKeyTrigger(VK_D) || GetKeyTrigger(VK_W) || GetKeyTrigger(VK_S))
+		if ((stickY > 20000 || stickX > 20000 || stickY < -20000 || stickX < -20000)&& GetJoyCount() > 0)
 		{
 			if (!g_bStickTrigger)
 			{
-				g_fStanRecoverySpeed = 0.1f;
+				g_fStanRecoverySpeed = 0.3f;
 				g_bStickTrigger = true;
 			}
-			else
-			{
-				g_fStanRecoverySpeed = 0.0f;
-			}
+			
+		}
+		else if (GetKeyTrigger(VK_A) || GetKeyTrigger(VK_D) || GetKeyTrigger(VK_W) || GetKeyTrigger(VK_S))
+		{
+			g_fStanRecoverySpeed = 0.3f;
 		}
 		else
 		{
+			g_fStanRecoverySpeed = 0.0f;
 			g_bStickTrigger = false;
 		}
 
@@ -459,7 +461,7 @@ void UpdateModel(void)
 				bWind = true;
 				g_bWindDelay = true;
 				g_stm += 0.5f;
-		    			
+				g_bOverHeart = false;
 		}
 		
 	}
@@ -869,7 +871,19 @@ void UpdateModel(void)
 	if (g_bOverHeart)
 	{
 		// レバガチャ判定
-		if (stickY > 20000 || stickX > 20000 || stickY < -20000 || stickX < -20000 || GetKeyTrigger(VK_A) || GetKeyTrigger(VK_W) || GetKeyTrigger(VK_S) || GetKeyTrigger(VK_D))
+		if ((stickY > 20000 || stickX > 20000 || stickY < -20000 || stickX < -20000 )&& GetJoyCount() > 0)
+		{
+			if (!g_bStickTrigger)
+			{
+				g_fOverHeartRecoverySpeed = 1.5f;
+				g_bStickTrigger = true;
+			}
+			else
+			{
+				g_fOverHeartRecoverySpeed = 0;
+			}
+		}
+		else if (GetKeyTrigger(VK_A) || GetKeyTrigger(VK_W) || GetKeyTrigger(VK_S) || GetKeyTrigger(VK_D))
 		{
 			if (!g_bStickTrigger)
 			{
@@ -883,16 +897,10 @@ void UpdateModel(void)
 		}
 		else
 		{
+			g_fOverHeartRecoverySpeed = 0;
 			g_bStickTrigger = false;
 		}
-		/*if (GetKeyTrigger(VK_A)|| GetKeyTrigger(VK_W) || GetKeyTrigger(VK_S) || GetKeyTrigger(VK_D))
-		{
-			g_fOverHeartRecoverySpeed = 1.5f;
-		}
-		else
-		{
-			g_fOverHeartRecoverySpeed = 0;
-		}*/
+		
 	}
 	else
 	{

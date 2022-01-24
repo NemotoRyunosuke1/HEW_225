@@ -17,8 +17,8 @@
 #define PATH_POPUP10_TEXTURE L"data/texture/tutorial/popup10.png"
 #define PATH_POPUP11_TEXTURE L"data/texture/tutorial/popup11.png"
 
-bool Tutorial::m_bPopupNum[] = {false,false, false, false, false, false, false, false, false, false, false, };
-bool Tutorial::m_bPopupNum2[] = { false,false, false, false, false, false, false, false, false, false, false, };
+bool Tutorial::m_bPopupNum[] ;
+bool Tutorial::m_bPopupNum2[] ;
 
 Tutorial::Tutorial()
 {
@@ -31,6 +31,11 @@ Tutorial::Tutorial()
 	m_bTrigger = false;
 	m_nCnt = 0;
 
+	for (int i = 0; i < 11; i++)
+	{
+		m_bPopupNum[i] = false;
+		m_bPopupNum2[i] = false;
+	}
 	
 	m_bPaperTrigger = false;
 	// テクスチャ読込
@@ -44,15 +49,7 @@ Tutorial::~Tutorial()
 void Tutorial::Update(EStage stage)
 {
 	ID3D11Device* pDevice = GetDevice();
-	// ゲームに戻る
-	if (GetJoyRelease(0, JOYSTICKID1) || GetKeyTrigger(VK_RETURN) || GetKeyTrigger(VK_SPACE))	// コントローラーAボタン
-	{
-		if (m_bPopup)
-		{
-			m_bPopup = false;
-		}
-
-	}
+	
 
 	// ポップアップ表示されたとき
 	if (m_bPopup)
@@ -107,7 +104,7 @@ void Tutorial::Update(EStage stage)
 			}
 		}
 		// スティックを上に傾けたとき
-		else if (stickLX < -20000 || stickRX < -20000)
+		else if (stickLX < -20000 || stickRX < -20000 )
 		{
 			if (!m_bTrigger)
 			{
@@ -123,14 +120,14 @@ void Tutorial::Update(EStage stage)
 			m_bTrigger = false;
 		}
 
-		if (GetKeyTrigger(VK_RIGHT) || GetKeyTrigger(VK_D))
+		if (GetKeyTrigger(VK_RIGHT) || GetKeyTrigger(VK_D) || GetJoyRelease(0, JOYSTICKID1) || GetKeyTrigger(VK_RETURN) || GetKeyTrigger(VK_SPACE))
 		{
 			m_nCnt++;
 			CSound::SetVolume(SE_PAPER, 1.5f);
 			CSound::Play(SE_PAPER);
 		 }
 
-		if (GetKeyTrigger(VK_LEFT) || GetKeyTrigger(VK_A))
+		if (GetKeyTrigger(VK_LEFT) || GetKeyTrigger(VK_A) || GetJoyRelease(0, JOYSTICKID2))
 		{
 			m_nCnt--;
 			CSound::SetVolume(SE_PAPER, 1.5f);
@@ -139,8 +136,24 @@ void Tutorial::Update(EStage stage)
 
 		if (m_bPopupNum2[0])
 		{
-			if (m_nCnt > 3) m_nCnt = 3;
+			if (m_nCnt > 4)
+			{
+				
+				// ゲームに戻る
+				if (GetJoyRelease(0, JOYSTICKID1) || GetKeyTrigger(VK_RETURN) || GetKeyTrigger(VK_SPACE))	// コントローラーAボタン
+				{
+					if (m_bPopup)
+					{
+						m_bPopup = false;
+					}
+
+				}
+				m_nCnt = 4;
+			}
+
+				
 			if (m_nCnt < 0) m_nCnt = 0;
+			
 			switch (m_nCnt)
 			{
 			case 0:
@@ -153,10 +166,10 @@ void Tutorial::Update(EStage stage)
 				CreateTextureFromFile(pDevice, PATH_POPUP3_TEXTURE, &m_pTexture);
 				break;
 			case 3:
-				CreateTextureFromFile(pDevice, PATH_POPUP4_TEXTURE, &m_pTexture);
+				CreateTextureFromFile(pDevice, PATH_POPUP8_TEXTURE, &m_pTexture);
 				break;
 			case 4:
-				CreateTextureFromFile(pDevice, PATH_POPUP6_TEXTURE, &m_pTexture);
+				CreateTextureFromFile(pDevice, PATH_POPUP4_TEXTURE, &m_pTexture);
 				break;
 			case 5:
 				CreateTextureFromFile(pDevice, PATH_POPUP7_TEXTURE, &m_pTexture);
@@ -173,7 +186,19 @@ void Tutorial::Update(EStage stage)
 		}
 		if (m_bPopupNum2[6])
 		{
-			if (m_nCnt > 1) m_nCnt = 1;
+			if (m_nCnt > 1)
+			{
+			
+				// ゲームに戻る
+				if (GetJoyRelease(0, JOYSTICKID1) || GetKeyTrigger(VK_RETURN) || GetKeyTrigger(VK_SPACE))	// コントローラーAボタン
+				{
+					if (m_bPopup)
+					{
+						m_bPopup = false;
+					}
+				}
+				m_nCnt = 1;
+			}
 			if (m_nCnt < 0) m_nCnt = 0;
 			switch (m_nCnt)
 			{
@@ -188,24 +213,48 @@ void Tutorial::Update(EStage stage)
 				break;
 			}
 		}
+		if (m_bPopupNum2[7])
+		{
+			// ゲームに戻る
+			if (GetJoyRelease(0, JOYSTICKID1) || GetKeyTrigger(VK_RETURN) || GetKeyTrigger(VK_SPACE))	// コントローラーAボタン
+			{
+				if (m_bPopup)
+				{
+					m_bPopup = false;
+				}
+
+			}
+		}
 		if (m_bPopupNum2[10])
 		{
-			if (m_nCnt > 1) m_nCnt = 1;
+			if (m_nCnt > 1)
+			{
+				
+				// ゲームに戻る
+				if (GetJoyRelease(0, JOYSTICKID1) || GetKeyTrigger(VK_RETURN) || GetKeyTrigger(VK_SPACE))	// コントローラーAボタン
+				{
+					if (m_bPopup)
+					{
+						m_bPopup = false;
+					}
+				}
+				m_nCnt = 1;
+			}
 			if (m_nCnt < 0) m_nCnt = 0;
 			switch (m_nCnt)
 			{
 			case 0:
-				CreateTextureFromFile(pDevice, PATH_POPUP10_TEXTURE, &m_pTexture);
+				CreateTextureFromFile(pDevice, PATH_POPUP9_TEXTURE, &m_pTexture);
 				break;
 			case 1:
-				CreateTextureFromFile(pDevice, PATH_POPUP11_TEXTURE, &m_pTexture);
+				CreateTextureFromFile(pDevice, PATH_POPUP10_TEXTURE, &m_pTexture);
 				break;
 			
 			default:
 				break;
 			}
 		}
-	}
+	}							  
 	else
 	{
 		m_size.y -= 100.0f;
@@ -259,7 +308,7 @@ void Tutorial::Update(EStage stage)
 			CreateTextureFromFile(pDevice, PATH_POPUP7_TEXTURE, &m_pTexture);
 			m_bPopupNum[7] = true;
 			m_bPopupNum2[7] = true;
-
+			
 			m_bPopup = true;
 		}
 
