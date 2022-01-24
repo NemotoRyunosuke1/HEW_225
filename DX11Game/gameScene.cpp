@@ -491,23 +491,23 @@ GameScene::GameScene(EStage stage)
 			}
 		}
 
-		for (int i = 0; i < 45; i++)
+		for (int i = 0; i < 45; i++)  // 横
 		{
 			for (int j = 0; j < 2; j++)
 			{
 				m_pBuliding[i * 2 + j + 320].Create(XMFLOAT3(-5900 + j * 9000, 10, -2100 + i * 300), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
 			}
 		}
-		for (int i = 0; i < 27; i++)
+		for (int i = 0; i < 27; i++)  // ゴールの後ろ
 		{
 			m_pBuliding[i + 410].Create(XMFLOAT3(-5600 + i * 320, 10, 11100), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
 		}
-		for (int i = 0; i < 27; i++)
+		for (int i = 0; i < 27; i++)  // プレイヤー初期値の後ろ
 		{
 			m_pBuliding[i + 437].Create(XMFLOAT3(-5600 + i * 320, 10, -2100), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
 		}
 		// ゴールUI位置初期化
-		SetGoalUI(XMFLOAT3(-1000.0f, 1000.0f, 9000.0f), 500, 200, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);
+		SetGoalUI(XMFLOAT3(-1000.0f, 1000.0f, 9500.0f), 500, 200, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);
 		m_pGoal = new Goal(XMFLOAT3(-1000.0f, 1200.0f, 9000.0f));
 
 		break;
