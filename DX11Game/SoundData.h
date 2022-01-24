@@ -25,6 +25,7 @@ enum eSE {
 	SE_WARNING,     // 警告音
 	SE_PAPER,       // 紙音
 	SE_GOAL,        // ゴール音
+	SE_STER,        // スター音
 
 	MAX_SE
 };
