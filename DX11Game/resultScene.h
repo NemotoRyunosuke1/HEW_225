@@ -82,6 +82,8 @@ private:
 	float m_fAlphaFinish;	// “§–¾“x
 	float m_fTime;	// ŽžŠÔ
 	float m_fStarAngle[3];
+	XMFLOAT3 m_posAReturn;
+	XMFLOAT3 m_sizeAReturn;
 	int m_nScore;
 	bool m_bResult;
 	bool m_bResult2;

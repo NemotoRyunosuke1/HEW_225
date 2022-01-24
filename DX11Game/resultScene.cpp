@@ -81,7 +81,9 @@ ResultScene::ResultScene()
 	//m_IconPos8 = XMFLOAT3(200, 200, 0);		// 位置
 	//m_Iconsize8 = XMFLOAT3(100, 50, 0);	    // サイズ
 	
-
+	// Aで戻る
+	m_posAReturn = XMFLOAT3(SCREEN_WIDTH / 2.0f - 150, -SCREEN_HEIGHT / 2.0f + 50, 0);
+	m_sizeAReturn = XMFLOAT3(300,100,0);
 	//--------------------
 	//テクスチャ読み込み
 	//--------------------
@@ -225,6 +227,14 @@ void ResultScene::Update()
 		}
 
 	}
+	// Aで戻るテキスト上下移動
+	if (m_fTime > 6.3f)
+	{
+		 float time = timeGetTime();
+		m_posAReturn.y += SinDeg(time / 5.0f) * 0.5f;
+		m_sizeAReturn.x += SinDeg(time / 5.0f) * 0.5f;
+		m_sizeAReturn.y += SinDeg(time / 5.0f) * 0.5f;
+	}
 #if _DEBUG
 	// デバック用文字列
 	PrintDebugProc("****** ResultScene ******\n");
@@ -278,13 +288,18 @@ void ResultScene::Draw()
 		SetPolygonFrameSize(1.0f, 1.0f);
 		SetPolygonAngle(0.0f);
 
-		SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
-		SetPolygonSize(300, 100);
-		SetPolygonPos(SCREEN_WIDTH / 2.0f -150, -SCREEN_HEIGHT/2.0f + 50);
-		SetPolygonTexture(m_pTextureBack);
-		SetPolygonUV(0.0f, 0.0f);
-		SetPolygonFrameSize(1.0f, 1.0f);
-		DrawPolygon(pBC);
+		if (m_fTime > 6.3f)
+		{
+			// Aで戻るテキスト
+			SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
+			SetPolygonSize(m_sizeAReturn.x, m_sizeAReturn.y);
+			SetPolygonPos(m_posAReturn.x, m_posAReturn.y);
+			SetPolygonTexture(m_pTextureBack);
+			SetPolygonUV(0.0f, 0.0f);
+			SetPolygonFrameSize(1.0f, 1.0f);
+			DrawPolygon(pBC);
+		}
+		
 
 		/*
 		//　星２
