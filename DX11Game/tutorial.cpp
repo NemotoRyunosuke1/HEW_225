@@ -17,8 +17,8 @@
 #define PATH_POPUP10_TEXTURE L"data/texture/tutorial/popup10.png"
 #define PATH_POPUP11_TEXTURE L"data/texture/tutorial/popup11.png"
 
-bool Tutorial::m_bPopupNum[] = {false,false, false, false, false, false, false, false, false, false, false, };
-bool Tutorial::m_bPopupNum2[] = { false,false, false, false, false, false, false, false, false, false, false, };
+bool Tutorial::m_bPopupNum[] ;
+bool Tutorial::m_bPopupNum2[] ;
 
 Tutorial::Tutorial()
 {
@@ -31,12 +31,13 @@ Tutorial::Tutorial()
 	m_bTrigger = false;
 	m_nCnt = 0;
 
-	for ( int i = 0; i < 1; i++)
+	for (int i = 0; i < 11; i++)
 	{
-		m_bPaperTrigger[i] = false;
-
+		m_bPopupNum[i] = false;
+		m_bPopupNum2[i] = false;
 	}
-	m_bPaperTrriger = false;
+	
+	m_bPaperTrigger = false;
 	// テクスチャ読込
 	CreateTextureFromFile(pDevice, PATH_POPUP1_TEXTURE, &m_pTexture);
 }
@@ -53,11 +54,11 @@ void Tutorial::Update(EStage stage)
 	// ポップアップ表示されたとき
 	if (m_bPopup)
 	{
-		if (!m_bPaperTrriger)
+		if (!m_bPaperTrigger)
 		{
-			CSound::SetVolume(SE_PAPER, 1.0f);
+			CSound::SetVolume(SE_PAPER, 1.5f);
 			CSound::Play(SE_PAPER);
-			m_bPaperTrriger = true;
+			m_bPaperTrigger = true;
 		}
 		m_size.x += 100.0f;
 		if (m_size.x > SCREEN_WIDTH-300)
@@ -97,7 +98,7 @@ void Tutorial::Update(EStage stage)
 			{
 				m_nCnt++;
 				m_bTrigger = true;
-				CSound::SetVolume(SE_PAPER, 1.0f);
+				CSound::SetVolume(SE_PAPER, 1.5f);
 				CSound::Play(SE_PAPER);
 				//if (m_nCnt > 5) m_nCnt = 0;
 			}
@@ -109,7 +110,7 @@ void Tutorial::Update(EStage stage)
 			{
 				m_nCnt--;
 				m_bTrigger = true;
-				CSound::SetVolume(SE_PAPER, 1.0f);
+				CSound::SetVolume(SE_PAPER, 1.5f);
 				CSound::Play(SE_PAPER);
 				//if (m_nCnt < 0) m_nCnt = 5;
 			}
@@ -122,20 +123,20 @@ void Tutorial::Update(EStage stage)
 		if (GetKeyTrigger(VK_RIGHT) || GetKeyTrigger(VK_D) || GetJoyRelease(0, JOYSTICKID1) || GetKeyTrigger(VK_RETURN) || GetKeyTrigger(VK_SPACE))
 		{
 			m_nCnt++;
-			CSound::SetVolume(SE_PAPER, 1.0f);
+			CSound::SetVolume(SE_PAPER, 1.5f);
 			CSound::Play(SE_PAPER);
 		 }
 
 		if (GetKeyTrigger(VK_LEFT) || GetKeyTrigger(VK_A) || GetJoyRelease(0, JOYSTICKID2))
 		{
 			m_nCnt--;
-			CSound::SetVolume(SE_PAPER, 1.0f);
+			CSound::SetVolume(SE_PAPER, 1.5f);
 			CSound::Play(SE_PAPER);
 		}
 
 		if (m_bPopupNum2[0])
 		{
-			if (m_nCnt > 3)
+			if (m_nCnt > 4)
 			{
 				
 				// ゲームに戻る
@@ -147,7 +148,7 @@ void Tutorial::Update(EStage stage)
 					}
 
 				}
-				m_nCnt = 3;
+				m_nCnt = 4;
 			}
 
 				
@@ -165,10 +166,10 @@ void Tutorial::Update(EStage stage)
 				CreateTextureFromFile(pDevice, PATH_POPUP3_TEXTURE, &m_pTexture);
 				break;
 			case 3:
-				CreateTextureFromFile(pDevice, PATH_POPUP4_TEXTURE, &m_pTexture);
+				CreateTextureFromFile(pDevice, PATH_POPUP8_TEXTURE, &m_pTexture);
 				break;
 			case 4:
-				CreateTextureFromFile(pDevice, PATH_POPUP6_TEXTURE, &m_pTexture);
+				CreateTextureFromFile(pDevice, PATH_POPUP4_TEXTURE, &m_pTexture);
 				break;
 			case 5:
 				CreateTextureFromFile(pDevice, PATH_POPUP7_TEXTURE, &m_pTexture);
@@ -243,17 +244,17 @@ void Tutorial::Update(EStage stage)
 			switch (m_nCnt)
 			{
 			case 0:
-				CreateTextureFromFile(pDevice, PATH_POPUP10_TEXTURE, &m_pTexture);
+				CreateTextureFromFile(pDevice, PATH_POPUP9_TEXTURE, &m_pTexture);
 				break;
 			case 1:
-				CreateTextureFromFile(pDevice, PATH_POPUP11_TEXTURE, &m_pTexture);
+				CreateTextureFromFile(pDevice, PATH_POPUP10_TEXTURE, &m_pTexture);
 				break;
 			
 			default:
 				break;
 			}
 		}
-	}
+	}							  
 	else
 	{
 		m_size.y -= 100.0f;
@@ -270,7 +271,7 @@ void Tutorial::Update(EStage stage)
 		m_bPopupNum2[0] = false;
 		m_bPopupNum2[6] = false;
 		m_bPopupNum2[10] = false;
-		m_bPaperTrriger = false;
+		m_bPaperTrigger = false;
 	}
 
 	//

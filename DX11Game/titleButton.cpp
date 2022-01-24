@@ -82,6 +82,14 @@ void TitleButton::Update()
 		if (m_cnt > 2) m_cnt = 0;
 	}
 
+	/*for (int i = 0; i < 2; i++)
+	{
+		if (m_cnt == i)continue;
+		if(m_pButton[i].GetSelect()) m_cnt = i;
+		
+	}*/
+
+
 	switch (m_cnt)
 	{
 	case 0:
