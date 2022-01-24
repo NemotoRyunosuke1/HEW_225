@@ -230,14 +230,18 @@ void UpdateModel(void)
 		g_posModel.y -= 1.1f;
 
 		// ƒŒƒoƒKƒ`ƒƒ”»’è
-		if (stickY > 20000 || stickX > 20000 || stickY < -20000 || stickX < -20000 || GetKeyTrigger(VK_A) || GetKeyTrigger(VK_D) || GetKeyTrigger(VK_W) || GetKeyTrigger(VK_S))
+		if ((stickY > 20000 || stickX > 20000 || stickY < -20000 || stickX < -20000)&& GetJoyCount() > 0)
 		{
 			if (!g_bStickTrigger)
 			{
-				g_fStanRecoverySpeed = 0.1f;
+				g_fStanRecoverySpeed = 0.3f;
 				g_bStickTrigger = true;
 			}
 			
+		}
+		else if (GetKeyTrigger(VK_A) || GetKeyTrigger(VK_D) || GetKeyTrigger(VK_W) || GetKeyTrigger(VK_S))
+		{
+			g_fStanRecoverySpeed = 0.3f;
 		}
 		else
 		{

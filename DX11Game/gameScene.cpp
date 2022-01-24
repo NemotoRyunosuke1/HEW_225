@@ -34,7 +34,7 @@
 
 EStage GameScene::m_eStage = STAGE_1;
 
-bool g_GoalTrriger;
+bool g_GoalTrigger;
 
 //=============================================================================
 // 初期化処理　※多分使わん、念のため
@@ -130,7 +130,7 @@ GameScene::GameScene()
 	m_pTutorial = new Tutorial;
 
 	//ゴールトリガー初期化	
-	g_GoalTrriger = false;
+	g_GoalTrigger = false;
 
 
 	// ビルの生成
@@ -717,16 +717,17 @@ void GameScene::Update()
 
 	// スカイドーム
 	m_pSkyDome->Update();
-	m_pSkyDome->SetPos(XMFLOAT3(GetModelPos().x,400, GetModelPos().z));
+	m_pSkyDome->SetPos(XMFLOAT3(GetModelPos().x,400, GetModelPos().z));	// スカイドーム位置
 
 	// ゴールフラグが立った時
 	if (m_bGoal)
 	{
-		if (!g_GoalTrriger)
+		if (!g_GoalTrigger)
 		{
+			CSound::Stop(GAME_BGM_001);
 			CSound::SetVolume(SE_GOAL,1.0f);
 			CSound::Play(SE_GOAL);
-			g_GoalTrriger = true;
+			g_GoalTrigger = true;
 		}
 		// リザルトUI表示時間
 		if (!m_bTrigger_result)
@@ -750,6 +751,11 @@ void GameScene::Update()
 			return;
 		}
 
+	}
+	else
+	{
+		// タイマーUI更新
+		m_pTimerUI->Update();
 	}
 
 	// カメラ更新
@@ -807,9 +813,6 @@ void GameScene::Update()
 
 	// スコアUI更新
 	m_pScoreUI->Update();
-
-	// タイマーUI更新
-	m_pTimerUI->Update();
 
 	// 仲間用UI更新
 	UpdateCrewUI();
@@ -937,8 +940,7 @@ void GameScene::Draw()
 	//EFFECT->Play(1);
 
 	//EffectManager::Play(WIND_EFFECT);
-
-	 
+ 
 	// ビル描画
 	for (int i = 0; i < MAX_BULIDING; i++)
 	{
@@ -949,9 +951,6 @@ void GameScene::Draw()
 	
 	// 雲マネージャー描画
 	//m_pCloudManager->Draw();
-
-
-	
 
 	// 丸影描画
 	DrawShadow();
@@ -973,8 +972,6 @@ void GameScene::Draw()
 	// Zバッファ無効(Zチェック無&Z更新無)
 	SetZBuffer(false);
 
-	
-	
 	// スタミナバー
 	m_pStaminaBar->Draw();
 
@@ -1016,7 +1013,5 @@ void GameScene::Draw()
 		m_pPause->Draw();
 		
 	}
-	
-
 	
 }

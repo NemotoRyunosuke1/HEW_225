@@ -18,7 +18,8 @@ GameOverSceneBG::GameOverSceneBG()
 	m_pos = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	m_size = XMFLOAT3(SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f);
 	m_dAnimTime = 0;
-
+	m_posText = XMFLOAT3(0.0f, SCREEN_HEIGHT/2.0f + 90, 0.0f);
+	m_sizeText = XMFLOAT3(800, 180, 0.0f);
 	// テクスチャ読込
 	CreateTextureFromFile(pDevice, PATH_BGTEXT_TEXTURE, &m_pTexture);
 	CreateTextureFromFile(pDevice, PATH_BGBIRD1_TEXTURE, &m_pTextureBird1);
@@ -51,6 +52,11 @@ void GameOverSceneBG::Update()
 	{
 		m_dAnimTime = 0;
 	}
+	
+	if (m_posText.y > 250)
+	{
+		m_posText.y -= 1.0f;
+	}
 }
 void GameOverSceneBG::Draw()
 {
@@ -72,7 +78,7 @@ void GameOverSceneBG::Draw()
    // ゲームオーバーテキスト
 	SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
 	SetPolygonSize(800, 180);	// ポリゴンサイズ
-	SetPolygonPos(0, 250);	// ポリゴン位置
+	SetPolygonPos(0, m_posText.y);	// ポリゴン位置
 	SetPolygonTexture(m_pTexture);		// ポリゴンテクスチャ
 	SetPolygonUV(0.0f, 0.0f);		// ポリゴンUV座標開始位置
 	SetPolygonAlpha(1.0f);			// ポリゴン透明度

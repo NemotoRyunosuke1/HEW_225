@@ -2,7 +2,7 @@
 #include "fade.h"
 
 #define GAMEOVER_TIME (180)
-#define BIRD_CUNT_TEXTURE L"data/texture/万能文字.png"
+#define BIRD_CUNT_TEXTURE L"data/texture/a.png"
 
 #define MAX_DIGIT (3)
 #define CUNT_X_NUMBER 5
@@ -100,12 +100,12 @@ void TimerUI::Draw()
 	//SetPolygonFrameSize(1.0f, 1.0f);
 	//SetPolygonAlpha(0.0f);
 	SetPolygonTexture(m_pTexture);
-	SetPolygonFrameSize(1.0f / CUNT_X_NUMBER, 1.0f / CUNT_Y_NUMBER );
+	SetPolygonFrameSize(1.0f / CUNT_X_NUMBER - 0.05f, 1.0f / CUNT_Y_NUMBER );
 	// 残りの数
 	for (int i = 0; i < MAX_DIGIT; i++)
 	{
 		unsigned n = (int)(m_timerVessel) % 10 + 5;
-		SetPolygonPos(m_pos.x - i * m_size.x + 30, m_pos.y);
+		SetPolygonPos(m_pos.x - i * (m_size.x + 10) + 30, m_pos.y);
 		SetPolygonColor(1, 1, 1);	//ポリゴンカラー
 		SetPolygonSize(m_size.x, m_size.y);
 		SetPolygonUV((n % CUNT_X_NUMBER) / (float)CUNT_X_NUMBER,
