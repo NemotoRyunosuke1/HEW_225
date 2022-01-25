@@ -13,9 +13,7 @@
 #include "bg.h"
 #include "scene.h"
 
-#define _CRTBG_MAP_ALLOC
-#include <stdlib.h>
-#include <crtdbg.h>
+
 
 //-------- ライブラリのリンク
 #pragma comment(lib, "winmm")
@@ -64,9 +62,6 @@ Scene* m_pScene;	// シーンポインタ
 //=============================================================================
 int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow)
 {
-	//プログラム終了時にメモリリークを通知する機能を設定
-	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-
 	UNREFERENCED_PARAMETER(hPrevInstance);	// 未使用宣言
 	UNREFERENCED_PARAMETER(lpCmdLine);		// 未使用宣言
 

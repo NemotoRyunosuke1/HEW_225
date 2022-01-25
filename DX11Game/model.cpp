@@ -77,7 +77,6 @@ static bool g_bStickTrigger;	// スティック用トリガー
 static float g_fOverHeartRecoverySpeed;	// オーバーヒート回復スピード
 static bool g_bSharpTurn;	// 急旋回フラグ
 static float g_fStanRecoverySpeed;	// スタン回復スピード
-static bool g_trigger;
 //=============================================================================
 // 初期化処理
 //=============================================================================
@@ -133,7 +132,6 @@ HRESULT InitModel(void)
 	g_fOverHeartRecoverySpeed = 0;
 	g_bSharpTurn = false;
 	g_fStanRecoverySpeed = 0;
-	g_trigger = false;
 	return hr;
 }
 
@@ -218,15 +216,6 @@ void UpdateModel(void)
 	// スタン時
 	if (g_bStan)
 	{
-		if (!g_trigger)
-		{
-			CSound::SetVolume(SE_DAMAGE, 1.0f);
-			CSound::Play(SE_DAMAGE);
-			g_trigger = true;
-		}
-		
-
-
 		g_fStanTime -= 0.04f + g_fStanRecoverySpeed;
 		if (g_fStanTime < 0)
 		{
@@ -241,14 +230,18 @@ void UpdateModel(void)
 		g_posModel.y -= 1.1f;
 
 		// レバガチャ判定
-		if (((stickY > 20000 || stickX > 20000 || stickY < -20000 || stickX < -20000)&& GetJoyCount() > 0) || GetKeyTrigger(VK_A) || GetKeyTrigger(VK_D) || GetKeyTrigger(VK_W) || GetKeyTrigger(VK_S))
+		if ((stickY > 20000 || stickX > 20000 || stickY < -20000 || stickX < -20000)&& GetJoyCount() > 0)
 		{
 			if (!g_bStickTrigger)
 			{
-				g_fStanRecoverySpeed = 0.1f;
+				g_fStanRecoverySpeed = 0.3f;
 				g_bStickTrigger = true;
 			}
 			
+		}
+		else if (GetKeyTrigger(VK_A) || GetKeyTrigger(VK_D) || GetKeyTrigger(VK_W) || GetKeyTrigger(VK_S))
+		{
+			g_fStanRecoverySpeed = 0.3f;
 		}
 		else
 		{
@@ -259,11 +252,6 @@ void UpdateModel(void)
 		// スタンしてる時は処理をしない
 		return;
 	}
-	else
-	{
-		g_trigger = false;
-	}
-
 	if (g_bInvincible)
 	{
 		g_fInvincible -= 0.05f;
@@ -294,13 +282,12 @@ void UpdateModel(void)
 	}
 	else
 	{
-	
+
 		d += 0.04f;
 		if (d > 0.1f)
 		{
 			d = 0.1f;
 		}
-
 	}
 	
 	// カメラの向き取得
@@ -467,7 +454,6 @@ void UpdateModel(void)
 				g_accModel.y = 5.0f * (unsigned)WindVec[i].y + 1.1f;
 				g_accModel.z = 5.0f * (unsigned)WindVec[i].z + 1.1f;
 				g_rotDestModel.x = 130 * WindVec[i].y;
-				if(WindVec[i].y == 0 )
 				g_rotDestModel.y = 90 * WindVec[i].x + 180 * ((1 + WindVec[i].z) / 2) + ((2 - (int)fabsf(WindVec[i].z)) / 2) *  ((2 - (int)fabsf(WindVec[i].z)) / 2) * 90;// +(int)((2 - (unsigned)WindVec[i].z) / 2)*(int)((2 - (unsigned)WindVec[i].x) / 2)* g_rotModel.y;
 				//g_rotDestModel.y = 90 * WindVec[i].z ;
 				
@@ -930,7 +916,7 @@ void UpdateModel(void)
 	
 	// デバック用文字列
 	PrintDebugProc("[ﾋｺｳｷ ｲﾁ : (%f : %f : %f)]\n", g_posModel.x, g_posModel.y, g_posModel.z);
-	PrintDebugProc("[ﾓﾃﾞﾙﾑｷ : (%f : %f : %f)]\n", g_rotDestModel.x, g_posModel.y, g_posModel.z);
+	PrintDebugProc("[ﾓﾃﾞﾙﾑｷ : (%f : %f : %f)]\n", g_rotDestModel.x, g_rotModel.y , g_posModel.z);
 	PrintDebugProc("[ﾓﾃﾞﾙｶｿｸ : (%f : %f : %f)]\n",g_accModel.x, g_accModel.y, g_accModel.z);
 	PrintDebugProc("[ｶｾﾞﾙｶｿｸ : (%f : %f : %f)]\n", WindVec[1].x, WindVec[1].y, WindVec[1].z);
 	PrintDebugProc("[ｶｾﾞｱﾀﾘﾊﾝﾃｲ : (%d: %d )]\n", bFlg, bWind);
