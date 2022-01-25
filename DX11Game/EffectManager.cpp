@@ -146,13 +146,25 @@ int EffectManager::Play(EEffect Handle)
 				{
 					// ゴール風
 					time = 0;
-					m_handle = m_manager->Play(m_effect5, -1000.0f, 600.0f, 4000.0f);
+					m_handle = m_manager->Play(m_effect5, -1000.0f, 0.0f, 4000.0f);
 					m_manager->SetScale(m_handle, 20.0f, 25.0f, 20.0f);
 				}
 				break;
 			case STAGE_2:
+				if (time > 129.9f)
+				{
+					time = 0;
+					m_handle = m_manager->Play(m_effect5, -950.0f, 0.0f, 3600.0f);
+					m_manager->SetScale(m_handle, 20.0f, 25.0f, 20.0f);
+				}
 				break;
 			case STAGE_3:
+				if (time > 129.9f)
+				{
+					time = 0;
+					m_handle = m_manager->Play(m_effect5, -1000.0f, 0.0f, 4800.0f);
+					m_manager->SetScale(m_handle, 20.0f, 25.0f, 20.0f);
+				}
 				break;
 			case STAGE_4:
 				break;
@@ -291,14 +303,16 @@ int EffectManager::Play(EEffect Handle)
 		{
 			time = 0;
 			// 左追い風
-			m_handle = m_manager->Play(m_effect2, -1300.0f, 500.0f, -600.0f);      //表示＆座標
-			m_manager->SetScale(m_handle, 10.0f, 10.0f, 10.0f);   //大きさ
-			m_manager->SetRotation(m_handle, 0.0f, 80.0f, 0.0f);
+			m_handle = m_manager->Play(m_effect6, -1300.0f, 500.0f, -900.0f);      //表示＆座標
+			m_manager->SetScale(m_handle, 2.0f, 2.0f, 3.0f);   //大きさ
+			m_manager->SetRotation(m_handle, 0.0f, 14.1f, 0.0f);
+			m_manager->SetSpeed(m_handle, 0.5f);
 
 			// 右追い風
-			m_handle = m_manager->Play(m_effect2, -600.0f, 500.0f, -600.0f);      //表示＆座標
-			m_manager->SetScale(m_handle, 10.0f, 10.0f, 10.0f);   //大きさ
-			m_manager->SetRotation(m_handle, 0.0f, 14.1f, 0.0f);
+			m_handle = m_manager->Play(m_effect6, -600.0f, 500.0f, -900.0f);      //表示＆座標
+			m_manager->SetScale(m_handle, 2.0f, 2.0f, 3.0f);   //大きさ
+			m_manager->SetRotation(m_handle, 0.0f, 170.0f, 0.0f);
+			m_manager->SetSpeed(m_handle, 0.5f);
 
 			// 上昇気流1
 			m_handle = m_manager->Play(m_effect, -1000.0f, 200.0f, 3000.0f);      //表示＆座標

@@ -17,4 +17,5 @@ private:
 	double m_dAnimTime;
 	XMFLOAT3 m_posText;
 	XMFLOAT3 m_sizeText;
+	float m_fAnimTime;
 };

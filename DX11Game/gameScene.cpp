@@ -21,6 +21,8 @@
 #include "goalUI.h"
 #include "resultScene.h"
 #include "Sound.h"
+#include "crewUI2.h"
+#include "enemyUI.h"
 
 #if _DEBUG
 #define MAX_BULIDING (600)
@@ -35,6 +37,7 @@
 EStage GameScene::m_eStage = STAGE_1;
 
 bool g_GoalTrigger;
+float g_BGMSound;
 
 //=============================================================================
 // 初期化処理　※多分使わん、念のため
@@ -81,10 +84,11 @@ GameScene::GameScene()
 
 	// 敵初期化
 	InitEnemy();
+	//EnemyUI::Init();
 
 	// 仲間用UI初期化
 	InitCrewUI();
-
+	CrewUI2::Init();
 	InitGoalUI();
 
 	// 鳥残機カウント初期化
@@ -129,9 +133,7 @@ GameScene::GameScene()
 	// チュートリアル初期化
 	m_pTutorial = new Tutorial;
 
-	//ゴールトリガー初期化	
-	g_GoalTrigger = false;
-
+	
 
 	// ビルの生成
 	for (int k = 0; k < MAX_BULIDING / 16 / 5; k++)
@@ -215,9 +217,11 @@ GameScene::GameScene(EStage stage)
 
 	// 敵初期化
 	InitEnemy();
+	//EnemyUI::Init();
 
 	// 仲間用UI初期化
 	InitCrewUI();
+	CrewUI2::Init();
 
 	// ゴールUI初期化
 	InitGoalUI();
@@ -266,6 +270,10 @@ GameScene::GameScene(EStage stage)
 
 	// チュートリアル初期化
 	m_pTutorial = new Tutorial;
+
+	//ゴールトリガー初期化	
+	g_GoalTrigger = false;
+
 
 	// ステージごとの初期化  (モデル位置 x軸:-1000 y軸:600 z軸:-2000)
 	switch (stage)
@@ -321,9 +329,9 @@ GameScene::GameScene(EStage stage)
 		}
 
 		// 仲間の配置
-		CrewCreate(XMFLOAT3(-1000.0f, 500.0f, -300.0f));// 1
-		CrewCreate(XMFLOAT3(-1200.0f, 500.0f, -200.0f));// 2
-		CrewCreate(XMFLOAT3(-1500.0f, 500.0f, -100.0f));// 3
+		//CrewCreate(XMFLOAT3(-1000.0f, 500.0f, -300.0f));// 1
+		//CrewCreate(XMFLOAT3(-1200.0f, 500.0f, -200.0f));// 2
+		//CrewCreate(XMFLOAT3(-1500.0f, 500.0f, -100.0f));// 3
 		CrewCreate(XMFLOAT3(-3000.0f, 850.0f, -100.0f));// 4
 		CrewCreate(XMFLOAT3(-3200.0f, 675.0f, 300.0f));// 5
 		CrewCreate(XMFLOAT3(-3000.0f, 500.0f, 700.0f));// 6
@@ -452,22 +460,22 @@ GameScene::GameScene(EStage stage)
 		InitMeshField(20, 20, 2000.0f, 2000.0f);
 
 		// 仲間の配置
-		CrewCreate(XMFLOAT3(-1000.0f, 500.0f, 2900.0f));// 1
-		CrewCreate(XMFLOAT3(-1900.0f, 500.0f, 3100.0f));// 2
-		CrewCreate(XMFLOAT3(-100.0f, 500.0f, 3100.0f));// 3
-		CrewCreate(XMFLOAT3(-1300.0f, 500.0f, 2970.0f));// 4
-		CrewCreate(XMFLOAT3(-1600.0f, 500.0f, 3040.0f));// 5
-		CrewCreate(XMFLOAT3(-700.0f, 500.0f, 2970.0f));// 6
-		CrewCreate(XMFLOAT3(-400.0f, 500.0f, 3040.0f));// 7
+		CrewCreate(XMFLOAT3(-1000.0f, 500.0f, 900.0f));// 1
+		CrewCreate(XMFLOAT3(-1900.0f, 500.0f, 1100.0f));// 2
+		CrewCreate(XMFLOAT3(-100.0f, 500.0f, 1100.0f));// 3
+		CrewCreate(XMFLOAT3(-1300.0f, 500.0f, 970.0f));// 4
+		CrewCreate(XMFLOAT3(-1600.0f, 500.0f, 1040.0f));// 5
+		CrewCreate(XMFLOAT3(-700.0f, 500.0f, 970.0f));// 6
+		CrewCreate(XMFLOAT3(-400.0f, 500.0f, 1040.0f));// 7
 
-		CrewCreate(XMFLOAT3(-1000.0f, 1000.0f, 6000.0f));// 8
-		CrewCreate(XMFLOAT3(-1000.0f, 1000.0f, 7000.0f));// 9
-		CrewCreate(XMFLOAT3(-1000.0f, 1000.0f, 8000.0f));// 10
+		CrewCreate(XMFLOAT3(-1000.0f, 1200.0f, 6000.0f));// 8
+		CrewCreate(XMFLOAT3(-1000.0f, 1200.0f, 8000.0f));// 9
+		CrewCreate(XMFLOAT3(-1000.0f, 1200.0f, 9200.0f));// 10
 
 		// 敵の配置
-		CreateEnemy(XMFLOAT3(-1000.0f, 1000.0f, 6000.0f));// 1
-		CreateEnemy(XMFLOAT3(-1000.0f, 1000.0f, 8000.0f));// 2
-		CreateEnemy(XMFLOAT3(-1000.0f, 1000.0f, 9200.0f));// 3
+		CreateEnemy(XMFLOAT3(-1000.0f, 500.0f, 1500.0f));// 1
+		CreateEnemy(XMFLOAT3(-1000.0f, 1200.0f, 7000.0f));// 2
+		CreateEnemy(XMFLOAT3(-1000.0f, 1200.0f, 8600.0f));// 3
 
 
 		// ビルの配置
@@ -541,16 +549,16 @@ GameScene::GameScene(EStage stage)
 			m_pBuliding[i + 153].Create(XMFLOAT3(-3200 + i * 300, 10, -2100), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
 		}
 		// 仲間の配置
-		CrewCreate(XMFLOAT3(-100.0f, 500.0f, -1000.0f));// 1
-		CrewCreate(XMFLOAT3(750.0f, 500.0f, 0.0f));// 2
-		CrewCreate(XMFLOAT3(-100.0f, 500.0f, 500.0f));// 3
-		CrewCreate(XMFLOAT3(-1500.0f, 500.0f, 0.0f));// 4
+		CrewCreate(XMFLOAT3(-100.0f, 500.0f, -900.0f));// 1
+		CrewCreate(XMFLOAT3(750.0f, 500.0f, 300.0f));// 2
+		CrewCreate(XMFLOAT3(-100.0f, 500.0f, 700.0f));// 3
+		CrewCreate(XMFLOAT3(-1500.0f, 500.0f, 300.0f));// 4
 		CrewCreate(XMFLOAT3(-1900.0f, 200.0f, -500.0f));// 5
-		CrewCreate(XMFLOAT3(-2800.0f, 200.0f, 500.0f));// 6
-		CrewCreate(XMFLOAT3(-1900.0f, 800.0f, 1500.0f));// 7
-		CrewCreate(XMFLOAT3(-1500.0f, 200.0f, 1900.0f));// 8
-		CrewCreate(XMFLOAT3(-500.0f, 800.0f, 1900.0f));// 9
-		CrewCreate(XMFLOAT3(-100.0f, 200.0f, 2500.0f));// 10
+		CrewCreate(XMFLOAT3(-2800.0f, 200.0f, 1000.0f));// 6
+		CrewCreate(XMFLOAT3(-1900.0f, 800.0f, 2000.0f));// 7
+		CrewCreate(XMFLOAT3(-1500.0f, 200.0f, 2600.0f));// 8
+		CrewCreate(XMFLOAT3(-500.0f, 800.0f, 2600.0f));// 9
+		CrewCreate(XMFLOAT3(-100.0f, 200.0f, 3100.0f));// 10
 
 		// 敵の配置
 		CreateEnemy(XMFLOAT3(700.0f, 500.0f, -1200.0f));// 1
@@ -579,6 +587,8 @@ GameScene::GameScene(EStage stage)
 //=============================================================================
 GameScene::~GameScene()
 {
+	// カーソウル描画
+	ShowCursor(true);
 	// メッシュフィールド終了処理
 	UninitMeshField();
 
@@ -593,9 +603,11 @@ GameScene::~GameScene()
 
 	// 敵終了処理
 	UninitEnemy();
+	//EnemyUI::Uninit();
 
 	// 仲間用UI終了
 	UninitCrewUI();
+	CrewUI2::Uninit();
 
 	UninitGoalUI();
 
@@ -657,12 +669,13 @@ void GameScene::Update()
 	PrintDebugProc("ｽﾃｰｼﾞ:%d\n", m_eStage + 1);
 	PrintDebugProc("\n");
 #endif
-
+	CSound::SetVolume(GAME_BGM_001, 0.2f);
+	CSound::Play(GAME_BGM_001);
 	//スタートタイマー
 	m_fCurrentTime = (float)timeGetTime();
 	m_timer = (m_fCurrentTime - m_fRemainTime) / 1000;
 
-
+	
 	// ポーズ
 	if (GetJoyRelease(0, JOYSTICKID8) || GetKeyRelease(VK_ESCAPE))	// コントローラーSTARTボタン
 	{
@@ -699,12 +712,23 @@ void GameScene::Update()
 		{
 			StartFadeOut(SCENE_STAGE_SELECT);
 		}
+
+		// カーソウル描画
+		ShowCursor(true);
 		return;		// ポーズ中下の処理をしない
+	}
+	else if (m_bGoal)
+	{
+		// カーソウル描画
+		ShowCursor(true);
 	}
 	else
 	{
+		// カーソウル描画しない
+		ShowCursor(false);
 		m_pPause->SetBack(false);
 	}
+
 
 	// チュートリアル更新
 	m_pTutorial->Update(m_eStage);
@@ -722,9 +746,15 @@ void GameScene::Update()
 	// ゴールフラグが立った時
 	if (m_bGoal)
 	{
-		if (!g_GoalTrigger)
+		CSound::SetVolume(GAME_BGM_001, g_BGMSound);
+		g_BGMSound -= 0.03f;
+		if (g_BGMSound < 0)
 		{
 			CSound::Stop(GAME_BGM_001);
+		}
+		if (!g_GoalTrigger)
+		{
+			
 			CSound::SetVolume(SE_GOAL,1.0f);
 			CSound::Play(SE_GOAL);
 			g_GoalTrigger = true;
@@ -798,12 +828,13 @@ void GameScene::Update()
 
 	// 敵更新
 	UpdateEnemy();
+	//ENEMY_UI->Update();
 
 	// 鳥残機カウント更新
 	m_pCunt->Update();
 
 	// 風マネージャー更新
-	m_pWindManager->Update();
+	m_pWindManager->Update(m_eStage, GetGoalFlgCrew());
 
 	// 雲マネージャー更新
 	//m_pCloudManager->Update();
@@ -816,6 +847,7 @@ void GameScene::Update()
 
 	// 仲間用UI更新
 	UpdateCrewUI();
+	CREW_UI2->Update();
 
 	// ビル更新
 	for (int i = 0; i < MAX_BULIDING; i++)
@@ -971,6 +1003,12 @@ void GameScene::Draw()
 	// 2D描画
 	// Zバッファ無効(Zチェック無&Z更新無)
 	SetZBuffer(false);
+
+	//　敵UI
+	//ENEMY_UI->Draw();
+
+	// 仲間UI2
+	CREW_UI2->Draw();
 
 	// スタミナバー
 	m_pStaminaBar->Draw();

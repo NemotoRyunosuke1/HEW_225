@@ -7,6 +7,7 @@
 //#define FILENAME L"data/movie/ゲームオーバー（ムクドリGB素材）.mp4"
 //#define PATH_BGTEXTURE	L"data/texture/sky0.jpg"
 #define PATH_BGTEXT_TEXTURE	L"data/texture/ゲームオーバー（透過ロゴ） (1).png"
+#define PATH_BGBIRD_TEXTURE	L"data/texture/GAME OVER_2.png"
 #define PATH_BGBIRD1_TEXTURE	L"data/texture/ゲームオーバー(ムクドリ)2 (1).png"
 #define PATH_BGBIRD2_TEXTURE	L"data/texture/ゲームオーバー(ムクドリ)2 (2).png"
 //
@@ -18,11 +19,12 @@ GameOverSceneBG::GameOverSceneBG()
 	m_pos = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	m_size = XMFLOAT3(SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f);
 	m_dAnimTime = 0;
+	m_fAnimTime = 0.0f;
 	m_posText = XMFLOAT3(0.0f, SCREEN_HEIGHT/2.0f + 90, 0.0f);
 	m_sizeText = XMFLOAT3(800, 180, 0.0f);
 	// テクスチャ読込
 	CreateTextureFromFile(pDevice, PATH_BGTEXT_TEXTURE, &m_pTexture);
-	CreateTextureFromFile(pDevice, PATH_BGBIRD1_TEXTURE, &m_pTextureBird1);
+	CreateTextureFromFile(pDevice, PATH_BGBIRD_TEXTURE, &m_pTextureBird1);
 	CreateTextureFromFile(pDevice, PATH_BGBIRD2_TEXTURE, &m_pTextureBird2);
 	//
 
@@ -57,6 +59,11 @@ void GameOverSceneBG::Update()
 	{
 		m_posText.y -= 1.0f;
 	}
+	m_fAnimTime += 1.0f / 60.0f * 24;
+	if (m_fAnimTime > 77)
+	{
+		m_fAnimTime = 0;
+	}
 }
 void GameOverSceneBG::Draw()
 {
@@ -89,20 +96,16 @@ void GameOverSceneBG::Draw()
 	SetPolygonColor(2.0f, 2.0f, 2.0f);	//ポリゴンカラー
 	SetPolygonSize(400, 400);	// ポリゴンサイズ
 	SetPolygonPos(0, -100);	// ポリゴン位置
-	if (m_dAnimTime > 5 && m_dAnimTime < 6)
-	{
-		SetPolygonTexture(m_pTextureBird1);		// ポリゴンテクスチャ
-	}
-	else
-	{
-		SetPolygonTexture(m_pTextureBird2);		// ポリゴンテクスチャ
-	}
+	SetPolygonTexture(m_pTextureBird1);		// ポリゴンテクスチャ
 	
-	SetPolygonUV(0.0f, 0.0f);		// ポリゴンUV座標開始位置
+	SetPolygonFrameSize(1.0f / 5.0f, 1.0f / 16.0f);
+	SetPolygonUV((float)((int)m_fAnimTime % 5)/(float)5.0f, ((int)m_fAnimTime / 5) / (float) 16.0f);		// ポリゴンUV座標開始位置
 	SetPolygonAlpha(1.0f);			// ポリゴン透明度
 
 	DrawPolygon(pDC);				// ポリゴン描画
 
+	SetPolygonFrameSize(1.0f, 1.0f);
+	SetPolygonUV(0.0f, 0.0f);		// ポリゴンUV座標開始位置
 	SetBlendState(BS_NONE);	// アルファブレンド無効		
 
 }

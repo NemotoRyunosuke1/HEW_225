@@ -23,6 +23,7 @@ LPCWSTR g_pszFileSE[MAX_SE] = {
 	L"warning.mp3",						// 警告音
 	L"paper.mp3",						// 紙音
 	L"goal4.mp3",						// ゴール音
+	L"ster.mp3",						// スター音
 
 
 };
