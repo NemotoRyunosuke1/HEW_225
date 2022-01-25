@@ -7,6 +7,8 @@
 
 #include "resultScene.h"
 #include "debugproc.h"
+#include "Sound.h"
+
 
 #define Star1			L"data/texture/êØÉÅÉ_Éã1.png"	    //êØÇP
 #define Star2			L"data/texture/StarIcon.png"		//êØÇQ
@@ -135,6 +137,10 @@ ResultScene::ResultScene()
 	for (int i = 0; i < 3; i++)
 	{
 		m_fStarAngle[i] = 0.0f;
+	}
+	for (int i = 0; i < 2; i++)
+	{
+		m_bTrigger[i] = false;
 	}
 }
 //=============================================================================
@@ -266,7 +272,7 @@ void ResultScene::Draw()
 		// Ç‡Ç∆Ç…ñﬂÇ∑
 		SetPolygonAlpha(1.0f);
 
-		for (int i = 0; i < m_nScore; ++i)
+		for (int i = 0; i < m_nScore; i++)
 		{
 			//Å@êØÇP 
 			if (m_fTime > 3.0f + i * 1.0f )
@@ -279,6 +285,15 @@ void ResultScene::Draw()
 				SetPolygonFrameSize(1.0f/3,1.0f);
 				SetPolygonAngle(m_fStarAngle[i]);
 				DrawPolygon(pBC);
+				//se
+				if (!m_bTrigger[i])
+				{
+					CSound::SetVolume(SE_STER, 1.0f);
+					CSound::Play(SE_STER);
+
+					m_bTrigger[i] = true;
+				}
+				
 			}
 			
 		}
