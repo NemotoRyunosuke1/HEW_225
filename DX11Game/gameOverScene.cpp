@@ -40,10 +40,11 @@ void GameOverScene::Update()
 		StartFadeOut(SCENE_STAGE_SELECT);
 	}
 
-	// ゲーム終了
+	// タイトルに戻る
 	if (m_pGameOverSceneButton->GetEndGame())
 	{
-		PostQuitMessage(0);	
+		StartFadeOut(SCENE_TITLE);
+		//PostQuitMessage(0);	
 	}
 
 	// ボタン更新

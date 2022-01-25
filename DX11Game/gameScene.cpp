@@ -21,6 +21,8 @@
 #include "goalUI.h"
 #include "resultScene.h"
 #include "Sound.h"
+#include "crewUI2.h"
+#include "enemyUI.h"
 
 #if _DEBUG
 #define MAX_BULIDING (600)
@@ -82,10 +84,11 @@ GameScene::GameScene()
 
 	// 敵初期化
 	InitEnemy();
+	//EnemyUI::Init();
 
 	// 仲間用UI初期化
 	InitCrewUI();
-
+	CrewUI2::Init();
 	InitGoalUI();
 
 	// 鳥残機カウント初期化
@@ -214,9 +217,11 @@ GameScene::GameScene(EStage stage)
 
 	// 敵初期化
 	InitEnemy();
+	//EnemyUI::Init();
 
 	// 仲間用UI初期化
 	InitCrewUI();
+	CrewUI2::Init();
 
 	// ゴールUI初期化
 	InitGoalUI();
@@ -324,9 +329,9 @@ GameScene::GameScene(EStage stage)
 		}
 
 		// 仲間の配置
-		CrewCreate(XMFLOAT3(-1000.0f, 500.0f, -300.0f));// 1
-		CrewCreate(XMFLOAT3(-1200.0f, 500.0f, -200.0f));// 2
-		CrewCreate(XMFLOAT3(-1500.0f, 500.0f, -100.0f));// 3
+		//CrewCreate(XMFLOAT3(-1000.0f, 500.0f, -300.0f));// 1
+		//CrewCreate(XMFLOAT3(-1200.0f, 500.0f, -200.0f));// 2
+		//CrewCreate(XMFLOAT3(-1500.0f, 500.0f, -100.0f));// 3
 		CrewCreate(XMFLOAT3(-3000.0f, 850.0f, -100.0f));// 4
 		CrewCreate(XMFLOAT3(-3200.0f, 675.0f, 300.0f));// 5
 		CrewCreate(XMFLOAT3(-3000.0f, 500.0f, 700.0f));// 6
@@ -455,22 +460,22 @@ GameScene::GameScene(EStage stage)
 		InitMeshField(20, 20, 2000.0f, 2000.0f);
 
 		// 仲間の配置
-		CrewCreate(XMFLOAT3(-1000.0f, 500.0f, 2900.0f));// 1
-		CrewCreate(XMFLOAT3(-1900.0f, 500.0f, 3100.0f));// 2
-		CrewCreate(XMFLOAT3(-100.0f, 500.0f, 3100.0f));// 3
-		CrewCreate(XMFLOAT3(-1300.0f, 500.0f, 2970.0f));// 4
-		CrewCreate(XMFLOAT3(-1600.0f, 500.0f, 3040.0f));// 5
-		CrewCreate(XMFLOAT3(-700.0f, 500.0f, 2970.0f));// 6
-		CrewCreate(XMFLOAT3(-400.0f, 500.0f, 3040.0f));// 7
+		CrewCreate(XMFLOAT3(-1000.0f, 500.0f, 900.0f));// 1
+		CrewCreate(XMFLOAT3(-1900.0f, 500.0f, 1100.0f));// 2
+		CrewCreate(XMFLOAT3(-100.0f, 500.0f, 1100.0f));// 3
+		CrewCreate(XMFLOAT3(-1300.0f, 500.0f, 970.0f));// 4
+		CrewCreate(XMFLOAT3(-1600.0f, 500.0f, 1040.0f));// 5
+		CrewCreate(XMFLOAT3(-700.0f, 500.0f, 970.0f));// 6
+		CrewCreate(XMFLOAT3(-400.0f, 500.0f, 1040.0f));// 7
 
-		CrewCreate(XMFLOAT3(-1000.0f, 1000.0f, 6000.0f));// 8
-		CrewCreate(XMFLOAT3(-1000.0f, 1000.0f, 7000.0f));// 9
-		CrewCreate(XMFLOAT3(-1000.0f, 1000.0f, 8000.0f));// 10
+		CrewCreate(XMFLOAT3(-1000.0f, 1200.0f, 6000.0f));// 8
+		CrewCreate(XMFLOAT3(-1000.0f, 1200.0f, 8000.0f));// 9
+		CrewCreate(XMFLOAT3(-1000.0f, 1200.0f, 9200.0f));// 10
 
 		// 敵の配置
-		CreateEnemy(XMFLOAT3(-1000.0f, 1000.0f, 6000.0f));// 1
-		CreateEnemy(XMFLOAT3(-1000.0f, 1000.0f, 8000.0f));// 2
-		CreateEnemy(XMFLOAT3(-1000.0f, 1000.0f, 9200.0f));// 3
+		CreateEnemy(XMFLOAT3(-1000.0f, 500.0f, 1500.0f));// 1
+		CreateEnemy(XMFLOAT3(-1000.0f, 1200.0f, 7000.0f));// 2
+		CreateEnemy(XMFLOAT3(-1000.0f, 1200.0f, 8600.0f));// 3
 
 
 		// ビルの配置
@@ -489,23 +494,23 @@ GameScene::GameScene(EStage stage)
 			}
 		}
 
-		for (int i = 0; i < 45; i++)
+		for (int i = 0; i < 45; i++)  // 横
 		{
 			for (int j = 0; j < 2; j++)
 			{
 				m_pBuliding[i * 2 + j + 320].Create(XMFLOAT3(-5900 + j * 9000, 10, -2100 + i * 300), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
 			}
 		}
-		for (int i = 0; i < 27; i++)
+		for (int i = 0; i < 27; i++)  // ゴールの後ろ
 		{
 			m_pBuliding[i + 410].Create(XMFLOAT3(-5600 + i * 320, 10, 11100), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
 		}
-		for (int i = 0; i < 27; i++)
+		for (int i = 0; i < 27; i++)  // プレイヤー初期値の後ろ
 		{
 			m_pBuliding[i + 437].Create(XMFLOAT3(-5600 + i * 320, 10, -2100), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
 		}
 		// ゴールUI位置初期化
-		SetGoalUI(XMFLOAT3(-1000.0f, 1000.0f, 9000.0f), 500, 200, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);
+		SetGoalUI(XMFLOAT3(-1000.0f, 1000.0f, 9500.0f), 500, 200, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);
 		m_pGoal = new Goal(XMFLOAT3(-1000.0f, 1200.0f, 9000.0f));
 
 		break;
@@ -544,16 +549,16 @@ GameScene::GameScene(EStage stage)
 			m_pBuliding[i + 153].Create(XMFLOAT3(-3200 + i * 300, 10, -2100), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
 		}
 		// 仲間の配置
-		CrewCreate(XMFLOAT3(-100.0f, 500.0f, -1000.0f));// 1
-		CrewCreate(XMFLOAT3(750.0f, 500.0f, 0.0f));// 2
-		CrewCreate(XMFLOAT3(-100.0f, 500.0f, 500.0f));// 3
-		CrewCreate(XMFLOAT3(-1500.0f, 500.0f, 0.0f));// 4
+		CrewCreate(XMFLOAT3(-100.0f, 500.0f, -900.0f));// 1
+		CrewCreate(XMFLOAT3(750.0f, 500.0f, 300.0f));// 2
+		CrewCreate(XMFLOAT3(-100.0f, 500.0f, 700.0f));// 3
+		CrewCreate(XMFLOAT3(-1500.0f, 500.0f, 300.0f));// 4
 		CrewCreate(XMFLOAT3(-1900.0f, 200.0f, -500.0f));// 5
-		CrewCreate(XMFLOAT3(-2800.0f, 200.0f, 500.0f));// 6
-		CrewCreate(XMFLOAT3(-1900.0f, 800.0f, 1500.0f));// 7
-		CrewCreate(XMFLOAT3(-1500.0f, 200.0f, 1900.0f));// 8
-		CrewCreate(XMFLOAT3(-500.0f, 800.0f, 1900.0f));// 9
-		CrewCreate(XMFLOAT3(-100.0f, 200.0f, 2500.0f));// 10
+		CrewCreate(XMFLOAT3(-2800.0f, 200.0f, 1000.0f));// 6
+		CrewCreate(XMFLOAT3(-1900.0f, 800.0f, 2000.0f));// 7
+		CrewCreate(XMFLOAT3(-1500.0f, 200.0f, 2600.0f));// 8
+		CrewCreate(XMFLOAT3(-500.0f, 800.0f, 2600.0f));// 9
+		CrewCreate(XMFLOAT3(-100.0f, 200.0f, 3100.0f));// 10
 
 		// 敵の配置
 		CreateEnemy(XMFLOAT3(700.0f, 500.0f, -1200.0f));// 1
@@ -582,6 +587,8 @@ GameScene::GameScene(EStage stage)
 //=============================================================================
 GameScene::~GameScene()
 {
+	// カーソウル描画
+	ShowCursor(true);
 	// メッシュフィールド終了処理
 	UninitMeshField();
 
@@ -596,9 +603,11 @@ GameScene::~GameScene()
 
 	// 敵終了処理
 	UninitEnemy();
+	//EnemyUI::Uninit();
 
 	// 仲間用UI終了
 	UninitCrewUI();
+	CrewUI2::Uninit();
 
 	UninitGoalUI();
 
@@ -703,12 +712,23 @@ void GameScene::Update()
 		{
 			StartFadeOut(SCENE_STAGE_SELECT);
 		}
+
+		// カーソウル描画
+		ShowCursor(true);
 		return;		// ポーズ中下の処理をしない
+	}
+	else if (m_bGoal)
+	{
+		// カーソウル描画
+		ShowCursor(true);
 	}
 	else
 	{
+		// カーソウル描画しない
+		ShowCursor(false);
 		m_pPause->SetBack(false);
 	}
+
 
 	// チュートリアル更新
 	m_pTutorial->Update(m_eStage);
@@ -808,12 +828,13 @@ void GameScene::Update()
 
 	// 敵更新
 	UpdateEnemy();
+	//ENEMY_UI->Update();
 
 	// 鳥残機カウント更新
 	m_pCunt->Update();
 
 	// 風マネージャー更新
-	m_pWindManager->Update();
+	m_pWindManager->Update(m_eStage, GetGoalFlgCrew());
 
 	// 雲マネージャー更新
 	//m_pCloudManager->Update();
@@ -826,6 +847,7 @@ void GameScene::Update()
 
 	// 仲間用UI更新
 	UpdateCrewUI();
+	CREW_UI2->Update();
 
 	// ビル更新
 	for (int i = 0; i < MAX_BULIDING; i++)
@@ -981,6 +1003,12 @@ void GameScene::Draw()
 	// 2D描画
 	// Zバッファ無効(Zチェック無&Z更新無)
 	SetZBuffer(false);
+
+	//　敵UI
+	//ENEMY_UI->Draw();
+
+	// 仲間UI2
+	CREW_UI2->Draw();
 
 	// スタミナバー
 	m_pStaminaBar->Draw();

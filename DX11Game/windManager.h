@@ -18,6 +18,7 @@ public:
 	~WindManager();
 
 	void Update();
+	void Update(EStage ,bool);
 	void Draw();
 
 	XMFLOAT3 GetPos(int num);	// ˆÊ’uŽæ“¾

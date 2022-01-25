@@ -241,18 +241,14 @@ void UpdateModel(void)
 		g_posModel.y -= 1.1f;
 
 		// レバガチャ判定
-		if ((stickY > 20000 || stickX > 20000 || stickY < -20000 || stickX < -20000)&& GetJoyCount() > 0)
+		if (((stickY > 20000 || stickX > 20000 || stickY < -20000 || stickX < -20000)&& GetJoyCount() > 0) || GetKeyTrigger(VK_A) || GetKeyTrigger(VK_D) || GetKeyTrigger(VK_W) || GetKeyTrigger(VK_S))
 		{
 			if (!g_bStickTrigger)
 			{
-				g_fStanRecoverySpeed = 0.3f;
+				g_fStanRecoverySpeed = 0.1f;
 				g_bStickTrigger = true;
 			}
 			
-		}
-		else if (GetKeyTrigger(VK_A) || GetKeyTrigger(VK_D) || GetKeyTrigger(VK_W) || GetKeyTrigger(VK_S))
-		{
-			g_fStanRecoverySpeed = 0.3f;
 		}
 		else
 		{
@@ -263,6 +259,11 @@ void UpdateModel(void)
 		// スタンしてる時は処理をしない
 		return;
 	}
+	else
+	{
+		g_trigger = false;
+	}
+
 	if (g_bInvincible)
 	{
 		g_fInvincible -= 0.05f;
@@ -293,7 +294,7 @@ void UpdateModel(void)
 	}
 	else
 	{
-		g_trigger = false;
+	
 		d += 0.04f;
 		if (d > 0.1f)
 		{
@@ -466,6 +467,7 @@ void UpdateModel(void)
 				g_accModel.y = 5.0f * (unsigned)WindVec[i].y + 1.1f;
 				g_accModel.z = 5.0f * (unsigned)WindVec[i].z + 1.1f;
 				g_rotDestModel.x = 130 * WindVec[i].y;
+				if(WindVec[i].y == 0 )
 				g_rotDestModel.y = 90 * WindVec[i].x + 180 * ((1 + WindVec[i].z) / 2) + ((2 - (int)fabsf(WindVec[i].z)) / 2) *  ((2 - (int)fabsf(WindVec[i].z)) / 2) * 90;// +(int)((2 - (unsigned)WindVec[i].z) / 2)*(int)((2 - (unsigned)WindVec[i].x) / 2)* g_rotModel.y;
 				//g_rotDestModel.y = 90 * WindVec[i].z ;
 				

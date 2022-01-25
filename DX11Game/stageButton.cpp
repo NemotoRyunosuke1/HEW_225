@@ -136,7 +136,13 @@ void StageButton::Update()
 		
 	}
 
+	for (int i = 0; i < 6; i++)
+	{
+		if (!m_pButton[i].GetUse())continue;
+		if (!m_pButton[i].GetMouseSelect())continue;
+		if (m_pButton[i].GetMouseSelect()) m_cnt = i;
 
+	}
 	switch (m_cnt)
 	{
 	case 0:
