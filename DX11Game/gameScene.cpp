@@ -997,6 +997,7 @@ void GameScene::Draw()
 #if _DEBUG
 	m_pWindManager->Draw();
 #endif
+	
 	// ƒ‚ƒfƒ‹•`‰æ
 	DrawModel();
 	
