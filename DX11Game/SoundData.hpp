@@ -20,7 +20,7 @@ LPCWSTR g_pszFileSE[MAX_SE] = {
 	L"Wind.mp3",						// 風
 	L"habataki.mp3",						// はばたき音
 	L"hiyoko.mp3",						// 被ダメ音
-	L"warning.mp3",						// 警告音
+	L"enemy.mp3",						// 警告音
 	L"paper.mp3",						// 紙音
 	L"goal4.mp3",						// ゴール音
 	L"ster.mp3",						// スター音
