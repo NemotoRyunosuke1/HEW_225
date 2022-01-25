@@ -27,6 +27,7 @@ public:
 	XMFLOAT3 GetRot();	// 向き取得
 	XMFLOAT3 GetVec();	// 風向き向き取得
 	bool GetUse();		// 使用フラグ取得
+	void SetUse(bool use) { m_use = use; };		// 使用フラグ取得
 private:
 	CAssimpModel m_model;	// モデル
 	XMFLOAT3 m_pos;		// 位置

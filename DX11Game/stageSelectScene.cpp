@@ -41,14 +41,15 @@ void StageSlectScene::Update()
 	// ボタン更新
 	m_pStageButton->Update();
 
+	// BG更新
+	m_pStageSelectBG->Update();
 
 	//次のシーンへ移る条件
 	if (GetKeyTrigger(VK_RETURN))
 	{
 		if (!StageTrrger)
 		{
-			CSound::SetVolume(SE_SELECT, 1.0f);
-			CSound::Play(SE_SELECT);
+			
 			StageTrrger = true;
 		}
 		
@@ -63,8 +64,7 @@ void StageSlectScene::Update()
 	// コントローラースタートボタン
 	if (GetJoyRelease(0, JOYSTICKID8))
 	{
-		CSound::SetVolume(SE_SELECT, 1.0f);
-		CSound::Play(SE_SELECT);
+		
 #if _DEBUG
 		
 
@@ -78,8 +78,6 @@ void StageSlectScene::Update()
 	{
 		if (!StageTrrger)
 		{
-			CSound::SetVolume(SE_SELECT, 1.0f);
-			CSound::Play(SE_SELECT);
 			StageTrrger = true;
 		}
 		StartFadeOut(SCENE_GAME);  //

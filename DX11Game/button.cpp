@@ -33,6 +33,12 @@
 #define PATH_BUTTON_ENDGAME2_TEXTURE L"data/texture/titleScene/ゲームをやめる選択時1.png"
 #define PATH_BUTTON_ENDGAME3_TEXTURE L"data/texture/titleScene/ゲームをやめる選択時2.png"
 #define PATH_BUTTON_PUSH_TEXTURE L"data/texture/titleScene/全体選択時3.png"
+#define PATH_BUTTON_CNOTINUE1_TEXTURE L"data/texture/ムレキドリUIまとめ3/コンティニュー1.png"
+#define PATH_BUTTON_CNOTINUE2_TEXTURE L"data/texture/ムレキドリUIまとめ3/コンティニュー2.png"
+#define PATH_BUTTON_STAGESELECT1_TEXTURE L"data/texture/ムレキドリUIまとめ3/ステージを選ぶ1.png"
+#define PATH_BUTTON_STAGESELECT2_TEXTURE L"data/texture/ムレキドリUIまとめ3/ステージを選ぶ2.png"
+#define PATH_BUTTON_BACKTITLE1_TEXTURE L"data/texture/ムレキドリUIまとめ3/タイトルに戻る1.png"
+#define PATH_BUTTON_BACKTITLE2_TEXTURE L"data/texture/ムレキドリUIまとめ3/タイトルに戻る2.png"
 
 
 
@@ -54,6 +60,7 @@ Button::Button()
 	m_frameNum = 0;
 	m_textureNum = 0;
 	m_select = false;
+	m_bMouseSelect = false;
 	m_bSoudTrigger = true;
 	m_bSoudTriggerDecision = false;
 	ID3D11Device* pDevice = GetDevice();
@@ -93,12 +100,13 @@ void Button::Update()
 	POINT point;
 	GetCursorPos(&point);
 	BOOL pointW = ScreenToClient(GetMainWnd(),&point);
-	
+	RECT LockR = { point.x, point.y, point.x + 1, point.y + 1 }; // カーソル位置のみをロック
+
 	// 使われている時
 	if (m_use)
 	{
 		//カーソルがあわされた時
-		if ((GetMousePosition()->x > (long)(m_pos.x - m_size.x / 2 + FULLSCREEN_WIDTH / 2)) && (GetMousePosition()->x < (long)(m_pos.x + m_size.x / 2 + FULLSCREEN_WIDTH / 2)) && (-GetMousePosition()->y < (long)(m_pos.y + m_size.y / 2 - FULLSCREEN_HEIGHT / 2)) && (-GetMousePosition()->y > (long)(m_pos.y - m_size.y / 2 - FULLSCREEN_HEIGHT / 2)))
+		if ((GetMousePosition()->x > (long)(m_pos.x - m_size.x / 2.0f + FULLSCREEN_WIDTH / 2.0f)) && (GetMousePosition()->x < (long)(m_pos.x + m_size.x / 2.0f + FULLSCREEN_WIDTH / 2.0f)) && (-GetMousePosition()->y < (long)(m_pos.y + m_size.y / 2.0f - FULLSCREEN_HEIGHT / 2.0f)) && (-GetMousePosition()->y > (long)(m_pos.y - m_size.y / 2.0f - FULLSCREEN_HEIGHT / 2.0f)))
 		{
 			if (GetMouseButton(MOUSEBUTTON_L))
 			{
@@ -113,6 +121,16 @@ void Button::Update()
 			{
 				m_flg = false;
 				g_bButton = false;
+			}
+		}
+
+		if (m_flg)
+		{
+			if (!m_bSoudTriggerDecision)
+			{
+				CSound::SetVolume(SE_SELECT, 1.0f);
+				CSound::Play(SE_SELECT);
+				m_bSoudTriggerDecision = true;
 			}
 		}
 
@@ -131,12 +149,7 @@ void Button::Update()
 			//　決定
 			if (GetJoyRelease(0, JOYSTICKID1) || GetKeyRelease(VK_RETURN) || GetKeyTrigger(VK_SPACE))
 			{
-				if (!m_bSoudTriggerDecision)
-				{
-				CSound::SetVolume(SE_SELECT, 1.0f);
-					CSound::Play(SE_SELECT);
-					m_bSoudTriggerDecision = true;
-				}
+				
 				m_flg = true;	
 			}
 	
@@ -159,8 +172,8 @@ void Button::Update()
 #if _DEBUG
 	// デバック用文字列
 	// デバック用文字列
-	PrintDebugProc("[ﾏｳｽ ｲﾁ : (%d : %d )]\n", point.x, point.y);
-	PrintDebugProc("[ﾏｳｽ ｲﾁ : (%d : %d )]\n", GetMousePosition()->x, GetMousePosition()->y);
+	PrintDebugProc("[ﾏｳｽ(point) ｲﾁ : (%d : %d )]\n", point.x, point.y);
+	//PrintDebugProc("[ﾏｳｽ ｲﾁ : (%d : %d )]\n", GetMousePosition()->x, GetMousePosition()->y);
 	
 
 #endif
@@ -252,28 +265,27 @@ void Button::Update(EScene scene)
 	{
 		
 		//カーソルがあわされた時
-		if ((GetMousePosition()->x > (long)(m_pos.x - m_size.x / 2 + FULLSCREEN_WIDTH / 2)) && (GetMousePosition()->x < (long)(m_pos.x + m_size.x / 2 + FULLSCREEN_WIDTH / 2)) && (-GetMousePosition()->y < (long)(m_pos.y + m_size.y / 2 - FULLSCREEN_HEIGHT / 2)) && (-GetMousePosition()->y > (long)(m_pos.y - m_size.y / 2 - FULLSCREEN_HEIGHT / 2)))
+		if ((GetMousePosition()->x > (long)(m_pos.x - m_size.x / 2.0f + FULLSCREEN_WIDTH / 2.0f)) && (GetMousePosition()->x < (long)(m_pos.x + m_size.x / 2.0f + FULLSCREEN_WIDTH / 2.0f)) && (-GetMousePosition()->y < (long)(m_pos.y + m_size.y / 2.0f - FULLSCREEN_HEIGHT / 2.0f)) && (-GetMousePosition()->y > (long)(m_pos.y - m_size.y / 2.0f - FULLSCREEN_HEIGHT / 2.0f)))
 		{
-			m_select = true;
-			if (GetMouseButton(MOUSEBUTTON_L))
-			{
-				if (!g_bButton)
-				{
-
-					g_bButton = true;
-				}
-				m_flg = true;
-			}
-			else
-			{
-				m_flg = false;
-				g_bButton = false;
-			}
+		
+			m_bMouseSelect = true;
+			
 		}
+		else
+		{
+			m_bMouseSelect = false;
+		}
+
 		static bool trigger = false;
 		// 選択されてる時
 		if (m_select)
 		{
+			// 決定(マウス左クリック)
+			if (GetMouseButton(MOUSEBUTTON_L))
+			{
+				m_flg = true;
+			}
+			
 			static float size = 0;
 			size += 2.0f;
 			if (size > 1000000)size = 0;
@@ -354,8 +366,7 @@ void Button::Update(EScene scene)
 				break;
 			}
 
-			//　決定
-			if (GetJoyRelease(0, JOYSTICKID1) || GetKeyRelease(VK_RETURN) || GetKeyTrigger(VK_SPACE))
+			if (m_flg)
 			{
 				if (!m_bSoudTriggerDecision)
 				{
@@ -363,11 +374,13 @@ void Button::Update(EScene scene)
 					switch (scene)
 					{
 					case SCENE_TITLE:
+						CSound::SetVolume(SE_SELECT, 1.0f);
+						CSound::Play(SE_SELECT);
 						break;
 					case SCENE_STAGE_SELECT:
 
-						CSound::SetVolume(SE_SELECT, 1.0f);
-						CSound::Play(SE_SELECT);
+						CSound::SetVolume(SE_WIND, 1.0f);
+						CSound::Play(SE_WIND);
 
 						break;
 					case SCENE_GAME:
@@ -383,9 +396,14 @@ void Button::Update(EScene scene)
 					default:
 						break;
 					}
-					
+
 					m_bSoudTriggerDecision = true;
 				}
+			}
+			//　決定
+			if (GetJoyRelease(0, JOYSTICKID1) || GetKeyRelease(VK_RETURN) || GetKeyTrigger(VK_SPACE))
+			{
+				
 				m_flg = true;
 			}
 
@@ -447,6 +465,7 @@ void Button::Update(EScene scene)
 		}
 		
 	}
+	
 #if _DEBUG
 	// デバック用文字列
 	// デバック用文字列
@@ -464,15 +483,15 @@ void Button::Draw()
 	SetBlendState(BS_ALPHABLEND);	// アルファブレンド有効		
 	if (m_use)
 	{
-		if (((GetMousePosition()->x > (long)(m_pos.x - m_size.x / 2 + FULLSCREEN_WIDTH / 2)) && (GetMousePosition()->x < (long)(m_pos.x + m_size.x / 2 + FULLSCREEN_WIDTH / 2)) && (GetMousePosition()->y < (long)(m_pos.y + m_size.y / 2 + FULLSCREEN_HEIGHT / 2)) && (GetMousePosition()->y > (long)(m_pos.y - m_size.y / 2 + FULLSCREEN_HEIGHT / 2))) || (m_select))
-		{
-			SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
-		}
-		else
-		{
-			SetPolygonColor(0.8f, 0.8f, 0.8f);	//ポリゴンカラー
-		}
-		
+		//if (((GetMousePosition()->x > (long)(m_pos.x - m_size.x / 2 + FULLSCREEN_WIDTH / 2)) && (GetMousePosition()->x < (long)(m_pos.x + m_size.x / 2 + FULLSCREEN_WIDTH / 2)) && (GetMousePosition()->y < (long)(m_pos.y + m_size.y / 2 + FULLSCREEN_HEIGHT / 2)) && (GetMousePosition()->y > (long)(m_pos.y - m_size.y / 2 + FULLSCREEN_HEIGHT / 2))) || (m_select))
+		//{
+		//	SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
+		//}
+		//else
+		//{
+		//	SetPolygonColor(0.8f, 0.8f, 0.8f);	//ポリゴンカラー
+		//}
+		//
 		SetPolygonSize(m_size.x, m_size.y);
 		SetPolygonPos(m_pos.x, m_pos.y);
 		SetPolygonColor(m_color.x, m_color.y, m_color.z);	//ポリゴンカラー
@@ -571,6 +590,25 @@ void Button::CreateButton(XMFLOAT3 size, XMFLOAT3 pos, int textureNum)
 		break;
 	case PUSH_BTN	   :
 		CreateTextureFromFile(pDevice, PATH_BUTTON_PUSH_TEXTURE, &m_pTexture);	// 選択時
+		break;
+
+	case CONTINUE1_BTN	   :
+		CreateTextureFromFile(pDevice, PATH_BUTTON_CNOTINUE1_TEXTURE, &m_pTexture);	// コンティニュー1
+		break;
+	case CONTINUE2_BTN	   :
+		CreateTextureFromFile(pDevice, PATH_BUTTON_CNOTINUE2_TEXTURE, &m_pTexture);	// コンティニュー2
+		break;
+	case STAGE_SELECT1_BTN :
+		CreateTextureFromFile(pDevice, PATH_BUTTON_STAGESELECT1_TEXTURE, &m_pTexture);	// ステージセレクト1
+		break;
+	case STAGE_SELECT2_BTN :
+		CreateTextureFromFile(pDevice, PATH_BUTTON_STAGESELECT2_TEXTURE, &m_pTexture);	// ステージセレクト2
+		break;
+	case TITLEBACK1_BTN	   :
+		CreateTextureFromFile(pDevice, PATH_BUTTON_BACKTITLE1_TEXTURE, &m_pTexture);	// ステージセレクト2
+		break;
+	case TITLEBACK2_BTN	   :
+		CreateTextureFromFile(pDevice, PATH_BUTTON_BACKTITLE2_TEXTURE, &m_pTexture);	// ステージセレクト2
 		break;
 	default:
 		break;
