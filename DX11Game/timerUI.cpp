@@ -106,7 +106,13 @@ void TimerUI::Draw()
 	{
 		unsigned n = (int)(m_timerVessel) % 10 + 5;
 		SetPolygonPos(m_pos.x - i * (m_size.x + 10) + 30, m_pos.y);
-		SetPolygonColor(1, 1, 1);	//ポリゴンカラー
+		switch (m_nScoreNum)
+	    {
+	    case 3:	SetPolygonColor(1.0f, 1.0f, 1.0f);	break;
+	    case 2: SetPolygonColor(2.0f, 1.0f, 0.0f);	break;
+	    case 1: SetPolygonColor(2.0f, 0.0f, 0.0f);	break;
+	    default:break;
+	    }	//ポリゴンカラー
 		SetPolygonSize(m_size.x, m_size.y);
 		SetPolygonUV((n % CUNT_X_NUMBER) / (float)CUNT_X_NUMBER,
 			(n / CUNT_X_NUMBER) / (float)CUNT_Y_NUMBER + ((n / CUNT_X_NUMBER) / 2));

@@ -16,10 +16,10 @@ GameOverSceneButton::GameOverSceneButton()
 
 	// ÉÅÉÇÉäämï€
 	m_pButton = new Button[MAX_BUTTON];
-	m_pButton[0].CreateButton(XMFLOAT3(450, 180, 0), XMFLOAT3(SCREEN_WIDTH / 2 - 120, 50, 0), RESTART_BTN);
+	m_pButton[0].CreateButton(XMFLOAT3(450, 180, 0), XMFLOAT3(SCREEN_WIDTH / 2 - 120, 50, 0), CONTINUE1_BTN);
 	m_pButton[0].SetSelect(true);
-	m_pButton[1].CreateButton(XMFLOAT3(450, 180, 0), XMFLOAT3(SCREEN_WIDTH / 2 - 120, -100, 0), BACK_STAGE_SELECT_BTN);
-	m_pButton[2].CreateButton(XMFLOAT3(450, 180, 0), XMFLOAT3(SCREEN_WIDTH / 2 - 120, -250, 0), ENDGAME_BTN);
+	m_pButton[1].CreateButton(XMFLOAT3(450, 180, 0), XMFLOAT3(SCREEN_WIDTH / 2 - 120, -100, 0), STAGE_SELECT1_BTN);
+	m_pButton[2].CreateButton(XMFLOAT3(450, 180, 0), XMFLOAT3(SCREEN_WIDTH / 2 - 120, -250, 0), TITLEBACK1_BTN);
 
 }
 GameOverSceneButton::~GameOverSceneButton()
