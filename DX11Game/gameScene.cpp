@@ -84,7 +84,7 @@ GameScene::GameScene()
 
 	// 敵初期化
 	InitEnemy();
-	//EnemyUI::Init();
+	EnemyUI::Init();
 
 	// 仲間用UI初期化
 	InitCrewUI();
@@ -217,7 +217,7 @@ GameScene::GameScene(EStage stage)
 
 	// 敵初期化
 	InitEnemy();
-	//EnemyUI::Init();
+	EnemyUI::Init();
 
 	// 仲間用UI初期化
 	InitCrewUI();
@@ -603,7 +603,7 @@ GameScene::~GameScene()
 
 	// 敵終了処理
 	UninitEnemy();
-	//EnemyUI::Uninit();
+	EnemyUI::Uninit();
 
 	// 仲間用UI終了
 	UninitCrewUI();
@@ -828,7 +828,7 @@ void GameScene::Update()
 
 	// 敵更新
 	UpdateEnemy();
-	//ENEMY_UI->Update();
+	ENEMY_UI->Update();
 
 	// 鳥残機カウント更新
 	m_pCunt->Update();
@@ -1005,7 +1005,7 @@ void GameScene::Draw()
 	SetZBuffer(false);
 
 	//　敵UI
-	//ENEMY_UI->Draw();
+	ENEMY_UI->Draw();
 
 	// 仲間UI2
 	CREW_UI2->Draw();

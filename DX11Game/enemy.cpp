@@ -154,7 +154,7 @@ void UpdateEnemy(void)
 	for (int i = 0; i < MAX_ENEMY; ++i)
 	{
 		if (!g_enemy[i].m_use)continue;
-		//ENEMY_UI->SetCrew(g_enemy[i].m_pos,i, g_enemy[i].m_use, g_enemy[i].m_use);
+		ENEMY_UI->SetCrew(g_enemy[i].m_pos,i, g_enemy[i].m_use, g_enemy[i].m_use);
 		// ƒvƒŒƒCƒ„[‚Æ‚Ì“–‚½‚è”»’è
 		int a = EnemyStartChase(i,modelPos);
 

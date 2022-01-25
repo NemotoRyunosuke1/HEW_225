@@ -87,6 +87,5 @@ private:
 	int m_nScore;
 	bool m_bResult;
 	bool m_bResult2;
-	bool m_bTrigger[2];
 
 };

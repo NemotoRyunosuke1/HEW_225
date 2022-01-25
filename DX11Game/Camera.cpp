@@ -121,6 +121,16 @@ void CCamera::Update()
 			m_vSrcPos.y = -SinDeg(m_vDestAngle.x) * m_fLengthInterval + CAM_POS_P_Y;
 			m_vSrcPos.z = CosDeg(m_vDestAngle.y) * m_fLengthInterval + CAM_POS_P_Z;
 			m_vDestAngle.y += stickX/32727 * 5.0f;
+			
+			if (m_vDestAngle.y > 90.0f + GetModelRot().y)
+			{
+				m_vDestAngle.y = 90.0f + GetModelRot().y;
+			}
+
+			if (m_vDestAngle.y < -90.0f + GetModelRot().y)
+			{
+				m_vDestAngle.y = -90.0f + GetModelRot().y;
+			}
 		}
 
 	}
@@ -203,6 +213,12 @@ void CCamera::Update()
 	}
 
 	
+	/*if (m_vDestAngle.y < -90.0f)
+	{
+		m_vDestAngle.y = -90.0f;
+	}*/
+
+	
 
 	//m_vSrcPos.x = SinDeg(m_vDestAngle.y) * m_fLengthInterval + CAM_POS_P_X;
 	//m_vSrcPos.y = -SinDeg(m_vDestAngle.x) * m_fLengthInterval + CAM_POS_P_Y;
@@ -233,6 +249,7 @@ void CCamera::Update()
 	//PrintDebugProc("[¶Ò× ²Á : (%f, %f, %f)]\n", m_vAngle.x, m_vAngle.y, m_vAngle.z);
 	//PrintDebugProc("[¶Ò× ²Á : (%f, %f, %f)]\n", stickX, stickY, m_vPos.z);
 	//PrintDebugProc("[Á­³¼ÃÝ : (%f, %f, %f)]\n", m_vTarget.x, m_vTarget.y, m_vTarget.z);
+	PrintDebugProc("[¶Ò×Ñ· : (%f, %f, %f)]\n", m_vDestAngle.x, m_vDestAngle.y, m_vTarget.z);
 	//PrintDebugProc("\n");
 
 #endif // _DEBUG
