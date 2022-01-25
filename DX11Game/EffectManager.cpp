@@ -9,6 +9,7 @@
 #include "input.h"
 #include "Camera.h"
 #include "model.h"
+#include "model.h"
 
 
 Effekseer::EffectRef m_effcet;
@@ -24,6 +25,7 @@ Effekseer::EffectRef EffectManager::m_effect3;		//スタン
 Effekseer::EffectRef EffectManager::m_effect4;		//砂埃
 Effekseer::EffectRef EffectManager::m_effect5;		//風_上_黄色
 Effekseer::EffectRef EffectManager::m_effect6;		//風_横_ver2
+Effekseer::EffectRef EffectManager::m_effect7;		//加速エフェクト
 Effekseer::Handle EffectManager::m_handle;
 
 
@@ -84,6 +86,7 @@ int EffectManager::Load(const char *Create)
 	m_effect4 = Effekseer::Effect::Create(m_manager, u"Assets/SandSmoke.efk");						//砂埃
 	m_effect5 = Effekseer::Effect::Create(m_manager, u"Assets/new_wind_jousyou_Yellow.efk");		//風_上_黄色
 	m_effect6 = Effekseer::Effect::Create(m_manager, u"Assets/Wind_yoko_ver5.efk");					//風_横_ver2
+	m_effect7 = Effekseer::Effect::Create(m_manager, u"Assets/Acceleration_ver2.efk");					//加速エフェクト
 
 	return 0; // エフェクトハンドルを返す
 }
@@ -179,6 +182,22 @@ int EffectManager::Play(EEffect Handle)
 
 		}
 		break;
+
+	case ACCELERATION_EFFECT:
+		if (time > 130.0f)
+		{
+			//加速
+			time = 0;
+			m_handle = m_manager->Play(m_effect7, GetModelPos().x, GetModelPos().y, GetModelPos().z);      //表示＆座標
+			m_manager->SetScale(m_handle, 6.0f, 6.0f, 6.0f);   //大きさ
+			m_manager->SetRotation(m_handle, 0.0f, GetModelAcc().y, 0.0f);
+			m_manager->SetSpeed(m_handle, 0.5f);
+			
+			//GetModelAcc().x, GetModelAcc().y, GetModelAcc().z
+		}
+		break;
+
+		
 	case MAX_EFFECT:
 		break;
 	default:
@@ -213,10 +232,7 @@ int EffectManager::Play(EEffect Handle)
 		//======================
 		//風_横
 		//======================
-			// 追い風
-			//time = 0;
-			//m_handle = m_manager->Play(m_effect2, -100.0f, 800.0f, 700.0f);      //表示＆座標
-			//m_manager->SetScale(m_handle, 9.0f, 9.0f, 26.0f);   //大きさ
+			 
 
 			// 新_横風
 			time = 0;

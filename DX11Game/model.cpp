@@ -600,6 +600,9 @@ void UpdateModel(void)
 		CSound::Play(SE_SWING);
 		g_bWing = true;
 		g_stm -= WING_STN_DICREASE;	// スタミナ減少
+
+		//加速エフェクト
+		EffectManager::Play(ACCELERATION_EFFECT);
 	}
 
 	// スペースキー羽ばた
@@ -611,6 +614,10 @@ void UpdateModel(void)
 		CSound::Play(SE_SWING);
 		g_bWing = true;		
 		g_stm -= WING_STN_DICREASE;	// スタミナ減少
+
+		//加速エフェクト
+		EffectManager::Play(ACCELERATION_EFFECT);
+		
 		/*CSound::SetVolume(SE_SWING, 5.0f);
 		CSound::Play(SE_SWING);*/
 		//g_rotDestModel.y += 1.0f;// *g_rotDestModel.y / 10;
