@@ -121,14 +121,7 @@ void CCamera::Update()
 			m_vSrcPos.y = -SinDeg(m_vDestAngle.x) * m_fLengthInterval + CAM_POS_P_Y;
 			m_vSrcPos.z = CosDeg(m_vDestAngle.y) * m_fLengthInterval + CAM_POS_P_Z;
 			m_vDestAngle.y += stickX/32727 * 5.0f;
-			//if (m_vDestAngle.y < -180.0f)
-			//{
-			//	m_vDestAngle.y = 180.0f;
-			//}
-			//if (m_vDestAngle.y > 180.0f)
-			//{
-			//	m_vDestAngle.y = -180.0f;
-			//}
+			
 			if (m_vDestAngle.y > 90.0f + GetModelRot().y)
 			{
 				m_vDestAngle.y = 90.0f + GetModelRot().y;
