@@ -916,7 +916,7 @@ void UpdateModel(void)
 	
 	// デバック用文字列
 	PrintDebugProc("[ﾋｺｳｷ ｲﾁ : (%f : %f : %f)]\n", g_posModel.x, g_posModel.y, g_posModel.z);
-	PrintDebugProc("[ﾓﾃﾞﾙﾑｷ : (%f : %f : %f)]\n", g_rotDestModel.x, g_posModel.y, g_posModel.z);
+	PrintDebugProc("[ﾓﾃﾞﾙﾑｷ : (%f : %f : %f)]\n", g_rotDestModel.x, g_rotModel.y , g_posModel.z);
 	PrintDebugProc("[ﾓﾃﾞﾙｶｿｸ : (%f : %f : %f)]\n",g_accModel.x, g_accModel.y, g_accModel.z);
 	PrintDebugProc("[ｶｾﾞﾙｶｿｸ : (%f : %f : %f)]\n", WindVec[1].x, WindVec[1].y, WindVec[1].z);
 	PrintDebugProc("[ｶｾﾞｱﾀﾘﾊﾝﾃｲ : (%d: %d )]\n", bFlg, bWind);
