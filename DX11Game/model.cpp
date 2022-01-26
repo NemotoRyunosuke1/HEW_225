@@ -36,6 +36,8 @@
 
 #define WING_STN_DICREASE (20)	// スタミナ消費量
 
+#define OVERHEART_RECOVERY_SPEED (3.0f)		// スタミナ回復速度
+
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
@@ -64,6 +66,9 @@ static double d = 0;
 static bool g_bDebugMode;
 static bool g_bOverHeart;
 static bool g_bWing;
+static bool g_bWingTrigger;
+static bool g_bWingSETrigger;
+
 static bool g_bWindDelay;
 static float g_WindSound;
 static bool g_bSoundTrriger;
@@ -120,6 +125,9 @@ HRESULT InitModel(void)
 	g_bOverHeart = false;
 	d = 0.1;
 	g_bWing = false;
+	g_bWingTrigger = false;
+	g_bWingSETrigger = false;
+
 	g_bWindDelay = false;
 	g_WindSound = 2.0f;
 	g_bSoundTrriger = false;
@@ -241,21 +249,64 @@ void UpdateModel(void)
 		g_posModel.y -= 1.1f;
 
 		// レバガチャ判定
-		if (((stickY > 20000 || stickX > 20000 || stickY < -20000 || stickX < -20000)&& GetJoyCount() > 0) || GetKeyTrigger(VK_A) || GetKeyTrigger(VK_D) || GetKeyTrigger(VK_W) || GetKeyTrigger(VK_S))
+		if ((stickY > 20000) && GetJoyCount() > 0)
 		{
 			if (!g_bStickTrigger)
 			{
-				g_fStanRecoverySpeed = 0.1f;
+				g_fStanRecoverySpeed = 0.3f;
 				g_bStickTrigger = true;
 			}
-			
+			else
+			{
+				g_fStanRecoverySpeed = 0.0f;
+			}
+		}
+		else if ((stickX > 20000) && GetJoyCount() > 0)
+		{
+			if (!g_bStickTrigger)
+			{
+				g_fStanRecoverySpeed = 0.3f;
+				g_bStickTrigger = true;
+			}
+			else
+			{
+				g_fStanRecoverySpeed = 0.0f;
+			}
+
+		}
+		else if ((stickY < -20000) && GetJoyCount() > 0)
+		{
+			if (!g_bStickTrigger)
+			{
+				g_fStanRecoverySpeed = 0.3f;
+				g_bStickTrigger = true;
+			}
+			else
+			{
+				g_fStanRecoverySpeed = 0.0f;
+			}
+		}
+		else if ((stickX < -20000) && GetJoyCount() > 0)
+		{
+			if (!g_bStickTrigger)
+			{
+				g_fStanRecoverySpeed = 0.3f;
+				g_bStickTrigger = true;
+			}
+			else
+			{
+				g_fStanRecoverySpeed = 0.0f;
+			}
+		}
+		else if (GetKeyTrigger(VK_A) || GetKeyTrigger(VK_D) || GetKeyTrigger(VK_W) || GetKeyTrigger(VK_S))
+		{
+			g_fStanRecoverySpeed = 0.3f;
 		}
 		else
 		{
 			g_fStanRecoverySpeed = 0.0f;
 			g_bStickTrigger = false;
 		}
-
 		// スタンしてる時は処理をしない
 		return;
 	}
@@ -284,25 +335,35 @@ void UpdateModel(void)
 	
 	if (g_bWing)
 	{
-		if (d >= 0.8f && d <= 0.84f)
+		if (!g_bWingTrigger)
 		{
-		
-			CSound::Play(SE_SWING);
+			d = 0.0f;
+			g_bWingTrigger = true;
 		}
 		
 		d += 0.04f;
 	}
 	else
 	{
-	
-		d += 0.04f;
-		if (d > 0.1f)
-		{
-			d = 0.1f;
-		}
+		g_bWingTrigger = false;
+		d += 0.01f;
+
 
 	}
-	
+	// 羽ばたき音
+	if (d >= 0.8f && d <= 0.84f)
+	{
+
+		if (!g_bWingSETrigger)
+		{
+			g_bWingSETrigger = true;
+			CSound::Play(SE_SWING);
+		}
+	}
+	else
+	{
+		g_bWingSETrigger = false;
+	}
 	// カメラの向き取得
 	XMFLOAT3 rotCamera = CCamera::Get()->GetAngle();
 
@@ -885,11 +946,47 @@ void UpdateModel(void)
 	if (g_bOverHeart)
 	{
 		// レバガチャ判定
-		if ((stickY > 20000 || stickX > 20000 || stickY < -20000 || stickX < -20000 )&& GetJoyCount() > 0)
+		if ((stickY > 32000) && GetJoyCount() > 0)
 		{
 			if (!g_bStickTrigger)
 			{
-				g_fOverHeartRecoverySpeed = 1.5f;
+				g_fOverHeartRecoverySpeed = OVERHEART_RECOVERY_SPEED;
+				g_bStickTrigger = true;
+			}
+			else
+			{
+				g_fOverHeartRecoverySpeed = 0;
+			}
+		}
+		else if ((stickX > 32000) && GetJoyCount() > 0)
+		{
+			if (!g_bStickTrigger)
+			{
+				g_fOverHeartRecoverySpeed = OVERHEART_RECOVERY_SPEED;
+				g_bStickTrigger = true;
+			}
+			else
+			{
+				g_fOverHeartRecoverySpeed = 0;
+			}
+		}
+		else if ((stickY < -32000) && GetJoyCount() > 0)
+		{
+			if (!g_bStickTrigger)
+			{
+				g_fOverHeartRecoverySpeed = OVERHEART_RECOVERY_SPEED;
+				g_bStickTrigger = true;
+			}
+			else
+			{
+				g_fOverHeartRecoverySpeed = 0;
+			}
+		}
+		else if ((stickX < -32000) && GetJoyCount() > 0)
+		{
+			if (!g_bStickTrigger)
+			{
+				g_fOverHeartRecoverySpeed = OVERHEART_RECOVERY_SPEED;
 				g_bStickTrigger = true;
 			}
 			else
@@ -901,7 +998,7 @@ void UpdateModel(void)
 		{
 			if (!g_bStickTrigger)
 			{
-				g_fOverHeartRecoverySpeed = 1.5f;
+				g_fOverHeartRecoverySpeed = OVERHEART_RECOVERY_SPEED;
 				g_bStickTrigger = true;
 			}
 			else

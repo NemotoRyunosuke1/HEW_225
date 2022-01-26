@@ -9,6 +9,7 @@
 #include "debugproc.h"
 #include "Sound.h"
 
+
 #define Star1			L"data/texture/星メダル1.png"	    //星１
 #define Star2			L"data/texture/StarIcon.png"		//星２
 #define Star3			L"data/texture/StarIcon.png"		//星３
@@ -20,7 +21,6 @@
 
 #define FINISH			L"data/texture/Finish.png"		//FINISH
 #define BACK			L"data/texture/back.png"		//FINISH
-
 //=============================================================================
 // コンストラクタ
 //=============================================================================
@@ -83,10 +83,9 @@ ResultScene::ResultScene()
 	//m_IconPos8 = XMFLOAT3(200, 200, 0);		// 位置
 	//m_Iconsize8 = XMFLOAT3(100, 50, 0);	    // サイズ
 	
-	 // Aで戻る
+	// Aで戻る
 	m_posAReturn = XMFLOAT3(SCREEN_WIDTH / 2.0f - 150, -SCREEN_HEIGHT / 2.0f + 50, 0);
-	m_sizeAReturn = XMFLOAT3(300, 100, 0);
-
+	m_sizeAReturn = XMFLOAT3(300,100,0);
 	//--------------------
 	//テクスチャ読み込み
 	//--------------------
@@ -121,7 +120,6 @@ ResultScene::ResultScene()
 
 	// FINISH
 	CreateTextureFromFile(pDevice6, FINISH, &m_pTextureFinish);
-	
 
 	// Aで戻るテクスチャ読み込み
 	CreateTextureFromFile(pDevice6, BACK, &m_pTextureBack);
@@ -138,13 +136,12 @@ ResultScene::ResultScene()
 	m_bResult2 = false;
 	for (int i = 0; i < 3; i++)
 	{
-		m_bTrigger[i] = false;
-	}
-	for (int i = 0; i < 3; i++)
-	{
 		m_fStarAngle[i] = 0.0f;
 	}
-	
+	for (int i = 0; i < 2; i++)
+	{
+		m_bTrigger[i] = false;
+	}
 }
 //=============================================================================
 // デストラクタ
@@ -232,19 +229,18 @@ void ResultScene::Update()
 			{
 				m_fStarAngle[i] += 5.0f;
 			}*/
-
+			
 		}
 
 	}
 	// Aで戻るテキスト上下移動
 	if (m_fTime > 6.3f)
 	{
-		float time = timeGetTime();
+		 float time = timeGetTime();
 		m_posAReturn.y += SinDeg(time / 5.0f) * 0.5f;
 		m_sizeAReturn.x += SinDeg(time / 5.0f) * 0.5f;
 		m_sizeAReturn.y += SinDeg(time / 5.0f) * 0.5f;
 	}
-
 #if _DEBUG
 	// デバック用文字列
 	PrintDebugProc("****** ResultScene ******\n");
@@ -285,48 +281,23 @@ void ResultScene::Draw()
 				SetPolygonSize(m_size1.x, m_size1.y);
 				SetPolygonPos(m_pos1.x, m_pos1.y - (i * m_size1.x));
 				SetPolygonTexture(m_pIconTexture1);
-				SetPolygonUV(((2 - i) % 3) / 3.0f, 0.0f);
-				SetPolygonFrameSize(1.0f / 3, 1.0f);
+				SetPolygonUV(((2-i)%3)/3.0f , 0.0f);
+				SetPolygonFrameSize(1.0f/3,1.0f);
 				SetPolygonAngle(m_fStarAngle[i]);
-
 				DrawPolygon(pBC);
-
 				//se
-				switch (i)
+				if (!m_bTrigger[i])
 				{
-				case 0:	// 一個目
-					if (!m_bTrigger[i])
-					{
-						CSound::SetVolume(SE_STER, 1.0f);
-						CSound::Play(SE_STER);
+					CSound::SetVolume(SE_STER, 1.0f);
+					CSound::Play(SE_STER);
 
-						m_bTrigger[i] = true;
-					}
-					break;
-				case 1:	// 二個目
-					if (!m_bTrigger[i])
-					{
-						CSound::SetVolume(SE_STER, 1.0f);
-						CSound::Play(SE_STER);
-
-						m_bTrigger[i] = true;
-					}
-					break;
-				case 2:	// 三個目
-					if (!m_bTrigger[i])
-					{
-						CSound::SetVolume(SE_STER, 1.0f);
-						CSound::Play(SE_STER);
-
-						m_bTrigger[i] = true;
-					}
-					break;
-				default:
-					break;
+					m_bTrigger[i] = true;
 				}
+				
 			}
 			
 		}
+		
 		// リセット
 		SetPolygonUV(0.0f, 0.0f);
 		SetPolygonFrameSize(1.0f, 1.0f);
@@ -343,6 +314,8 @@ void ResultScene::Draw()
 			SetPolygonFrameSize(1.0f, 1.0f);
 			DrawPolygon(pBC);
 		}
+		
+
 		/*
 		//　星２
 		SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
