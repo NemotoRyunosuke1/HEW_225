@@ -38,7 +38,7 @@
 #define	VALUE_ROTATE_CREW	(7.0f)		// ‰ñ“]‘¬“x
 #define	RATE_ROTATE_CREW	(0.20f)		// ‰ñ“]Šµ«ŒW”
 
-#define MAX_CREW			(100)		// –¡•ûÅ‘å”
+#define MAX_CREW			(20)		// –¡•ûÅ‘å”
 #define	CREW_RADIUS		    (20.0f)     // ‹«ŠE‹…”¼Œa
 #define MAP_HIROSA          (20000)      // ƒ}ƒbƒv‚ÌL‚³
 
@@ -495,11 +495,56 @@ int StartChase(int i, XMFLOAT3 pos)
 				if (i == j)continue;
 
 				// ‹…”»’è
-				if (CollisionSphere(g_crew[i].m_pos, 20, g_crew[j].m_pos, 20))
+				if (CollisionAABB(g_crew[i].m_pos, XMFLOAT3(10,10,10), g_crew[j].m_pos, XMFLOAT3(10, 10, 10)))
 				{	// ‘¼‚Ì’‡ŠÔ‚Ì’¹‚Æ“–‚½‚ç‚È‚¢‚Æ‚±‚ÉˆÚ“®
-					g_crew[i].m_pos.x += rand()% 140 - 70;
-					g_crew[i].m_pos.z += rand()% 140 - 70;
-					
+					if (g_crew[i].m_pos.x > g_crew[j].m_pos.x && g_crew[i].m_pos.z > g_crew[j].m_pos.z)
+					{
+						g_crew[i].m_pos.x += 1;
+						g_crew[j].m_pos.x -= 1;
+						g_crew[i].m_pos.z += 1;
+						g_crew[j].m_pos.z -= 1;
+					}
+					else if (g_crew[i].m_pos.x > g_crew[j].m_pos.x && g_crew[i].m_pos.z < g_crew[j].m_pos.z)
+					{
+						g_crew[i].m_pos.x += 1;
+						g_crew[j].m_pos.x -= 1;
+						g_crew[i].m_pos.z -= 1;
+						g_crew[j].m_pos.z += 1;
+					}
+					else if (g_crew[i].m_pos.x < g_crew[j].m_pos.x && g_crew[i].m_pos.z > g_crew[j].m_pos.z)
+					{
+						g_crew[i].m_pos.x -= 1;
+						g_crew[j].m_pos.x += 1;
+						g_crew[i].m_pos.z += 1;
+						g_crew[j].m_pos.z -= 1;
+					}
+					else if (g_crew[i].m_pos.x < g_crew[j].m_pos.x && g_crew[i].m_pos.z < g_crew[j].m_pos.z)
+					{
+						g_crew[i].m_pos.x -= 1;
+						g_crew[j].m_pos.x += 1;
+						g_crew[i].m_pos.z -= 1;
+						g_crew[j].m_pos.z += 1;
+					}
+					else if (g_crew[i].m_pos.x > g_crew[j].m_pos.x)
+					{
+						g_crew[i].m_pos.x += 1;
+						g_crew[j].m_pos.x -= 1;
+					}
+					else if (g_crew[i].m_pos.x < g_crew[j].m_pos.x)
+					{
+						g_crew[i].m_pos.x -= 1;
+						g_crew[j].m_pos.x += 1;
+					}
+					else if (g_crew[i].m_pos.z > g_crew[j].m_pos.z)
+					{
+						g_crew[i].m_pos.z += 1;
+						g_crew[j].m_pos.z -= 1;
+					}
+					else if (g_crew[i].m_pos.z < g_crew[j].m_pos.z)
+					{
+						g_crew[i].m_pos.z -= 1;
+						g_crew[j].m_pos.z += 1;
+					}
 				}
 			}
 		}
