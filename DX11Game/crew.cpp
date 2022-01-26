@@ -15,6 +15,7 @@
 #include "Cunt.h"
 #include "crewUI.h"
 #include "EffectManager.h"
+#include "crewUI2.h"
 
 #if _DEBUG
 #include "input.h"
