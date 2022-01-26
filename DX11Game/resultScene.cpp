@@ -15,7 +15,8 @@
 #define Result			L"data/texture/ムレキドリUIまとめ2/リザルト.png"		//リザルトロゴ
 #define Result1			L"data/texture/40second.png"		//条件1 [40秒残し]
 #define Result2			L"data/texture/80second.png"		//条件2 [80秒残し]
-#define Result3			L"data/texture/130second.png"		//条件3 [130秒残し]
+#define Result3			L"data/texture/130second.png"		//条件3 [130秒残し]y
+
 
 #define FINISH			L"data/texture/Finish.png"		//FINISH
 //=============================================================================
