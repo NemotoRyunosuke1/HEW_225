@@ -285,7 +285,7 @@ GameScene::GameScene(EStage stage)
 		// ビルの配置
 		for (int i = 0; i < 8; i++)  // 左横
 		{
-			m_pBuliding[i].Create(XMFLOAT3(-3900 + i * 300, 10, 0), XMFLOAT3(10.0f, 10.0f + rand() % 3, 10.0f));
+			m_pBuliding[i].Create(XMFLOAT3(-3900 + i * 300, 10, 0), XMFLOAT3(10.05f, 10.0f + rand() % 3, 10.0f));
 		}
 
 		for (int i = 0; i < 3; i++)  // 右側
