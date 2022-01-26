@@ -3,6 +3,7 @@
 #include "object.h"
 #include "Sound.h"
 
+// ボタンの種類
 enum EButtonTexture
 {
 	STAGE_SELECT_1_1_BTN = 0,
@@ -21,6 +22,16 @@ enum EButtonTexture
 	STAGE_3_BTN,
 	STAGE_4_BTN,
 	STAGE_5_BTN,
+	START_1_TBTN,
+	START_2_TBTN,
+	START_3_TBTN,
+	OPTION_1_TBTN,
+	OPTION_2_TBTN,
+	OPTION_3_TBTN,
+	ENDGAME_1_TBTN,
+	ENDGAME_2_TBTN,
+	ENDGAME_3_TBTN,
+	PUSH_BTN,
 
 	MAX_BTN_TEXTURE
 };
@@ -34,6 +45,7 @@ public:
 	HRESULT Init();
 	void Update();
 	void Update(eSE se);
+	void Update(EScene scene);
 	void Draw();
 	bool GetFlg();
 	void SetFlg(bool);
@@ -54,8 +66,10 @@ private:
 	bool m_bSoudTrigger;	// 選択時
 	bool m_bSoudTriggerDecision;	// 決定時
 	int m_frameNum;
+	int m_textureNum;		// ボタンテクスチャ番号(上の列挙対の番号格納用)
 	XMFLOAT3 m_sizeUpDown;
 	XMFLOAT3 m_color;
+	XMFLOAT3 m_initPos;
 	ID3D11ShaderResourceView* m_pTexture1;
 	ID3D11ShaderResourceView* m_pTexture2;
 	ID3D11ShaderResourceView* m_pTexture3;

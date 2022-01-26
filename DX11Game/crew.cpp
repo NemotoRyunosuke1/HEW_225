@@ -496,10 +496,11 @@ int StartChase(int i, XMFLOAT3 pos)
 				if (i == j)continue;
 
 				// 球判定
-				if (CollisionSphere(g_crew[i].m_pos, 10, g_crew[j].m_pos, 10))
+				if (CollisionSphere(g_crew[i].m_pos, 20, g_crew[j].m_pos, 20))
 				{	// 他の仲間の鳥と当たらないとこに移動
 					g_crew[i].m_pos.x += rand()% 140 - 70;
 					g_crew[i].m_pos.z += rand()% 140 - 70;
+					
 				}
 			}
 		}
@@ -566,36 +567,36 @@ int& GetRemainCrew()
 }
 void StartEscapeCrew()
 {
-	bool trigger = false;
-	
-	do
-	{
-		for (int i = 0; i < MAX_CREW; ++i)
-		{
-			if (!g_crew[i].m_use)
-			{
-				continue;
-			}
-			if (!g_crew[i].m_catch)
-			{
-				continue;
-			}
-			//int randam = rand() % 10;	// 逃走フラグ抽選
-			//if (randam == 0)
-			//{
-			//	g_crew[i].m_bEscape = true;	// 逃走開始フラグON
-			//	g_crew[i].m_catch = false;	// 取得状況解除
-			//}
-			g_crew[i].m_bEscape = true;	// 逃走開始フラグON
-			g_crew[i].m_catch = false;	// 取得状況解除
-			g_bEscapeFlg = true;	// 逃走フラグオン
-			break;
-		}
-		
-	} while (trigger);
+	//bool trigger = false;
+	//
+	//do
+	//{
+	//	for (int i = 0; i < MAX_CREW; ++i)
+	//	{
+	//		if (!g_crew[i].m_use)
+	//		{
+	//			continue;
+	//		}
+	//		if (!g_crew[i].m_catch)
+	//		{
+	//			continue;
+	//		}
+	//		//int randam = rand() % 10;	// 逃走フラグ抽選
+	//		//if (randam == 0)
+	//		//{
+	//		//	g_crew[i].m_bEscape = true;	// 逃走開始フラグON
+	//		//	g_crew[i].m_catch = false;	// 取得状況解除
+	//		//}
+	//		g_crew[i].m_bEscape = true;	// 逃走開始フラグON
+	//		g_crew[i].m_catch = false;	// 取得状況解除
+	//		g_bEscapeFlg = true;	// 逃走フラグオン
+	//		break;
+	//	}
+	//	
+	//} while (trigger);
 
-	
-	
+	//
+	//
 	
 }
 bool GetEscapeCrew()

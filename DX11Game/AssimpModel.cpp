@@ -375,7 +375,7 @@ CAssimpMesh::CAssimpMesh(ID3D11Device *pDevice, CAssimpModel* pModel, vector<TAs
 	m_material = material;
 	SetupMesh(pDevice);
 	m_Ld = XMFLOAT4 (0.9f, 0.9f, 0.9f, 1.0f);
-	m_La = XMFLOAT4(0.05f, 0.05f, 0.05f, 1.0f);
+	m_La = XMFLOAT4(0.2f, 0.2f, 0.2f, 1.0f);
 	m_Ls = XMFLOAT4(0.2f, 0.2f, 0.2f, 1.0f);
 	m_Le =	 XMFLOAT4(0.0f,0.0f,0.0f,0.0f);
 }					
@@ -533,9 +533,9 @@ void CAssimpMesh::Draw(ID3D11DeviceContext* pDC, XMFLOAT4X4& m44World, EByOpacit
 		CLight* pLight = CLight::Get();
 		//sg.vLightDir = XMLoadFloat3(&pLight->GetDir());
 		sg.vLightDir = XMLoadFloat3(&CCamera::Get()->GetLightAngle());
-		sg.vLd = XMLoadFloat4(&pLight->GetDiffuse());
-		sg.vLa = XMLoadFloat4(&pLight->GetAmbient());
-		sg.vLs = XMLoadFloat4(&pLight->GetSpecular());
+		sg.vLd = XMLoadFloat4(&m_pModel->GetD());
+		sg.vLa = XMLoadFloat4(&m_pModel->GetA());
+		sg.vLs = XMLoadFloat4(&m_pModel->GetS());
 		memcpy_s(pData.pData, pData.RowPitch, (void*)&sg, sizeof(sg));
 		pDC->Unmap(m_pConstantBuffer0, 0);
 	}
@@ -592,6 +592,9 @@ CAssimpModel::CAssimpModel() : m_pMaterial(nullptr), m_pScene(nullptr), m_pAnima
 	XMStoreFloat4x4(&m_mtxTexture, XMMatrixIdentity());
 	XMStoreFloat4x4(&m_mtxWorld, XMMatrixIdentity());
 	m_dCurrent = m_dLastPlaying = 0.0;
+	m_Ld = XMFLOAT4(0.9f, 0.9f, 0.9f, 1.0f);
+	m_La = XMFLOAT4(0.2f, 0.2f, 0.2f, 1.0f);
+	m_Ls = XMFLOAT4(0.2f, 0.2f, 0.2f, 1.0f);
 }
 
 // デストラクタ

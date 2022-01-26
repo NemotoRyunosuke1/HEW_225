@@ -195,7 +195,7 @@ void UpdateModel(void)
 	// 死亡条件
 	if (g_posModel.y <= 0.0f)	// 地面 
 	{
-		EffectManager::Play(2);
+		EffectManager::Play(SAND_EFFECT);
 #if  _DEBUG
 		StartFadeOut(SCENE_GAMEOVER);
 #else
@@ -225,24 +225,23 @@ void UpdateModel(void)
 		}
 
 		//スタンエフェクト表示
-		EffectManager::Play(1);
+		EffectManager::Play(STN_EFFECT);
 
 		g_posModel.y -= 1.1f;
+
 		// レバガチャ判定
-		if (stickY > 20000 || stickX > 20000 || stickY < -20000 || stickX < -20000 || GetKeyTrigger(VK_A) ||  GetKeyTrigger(VK_D) || GetKeyTrigger(VK_W) || GetKeyTrigger(VK_S))
+		if (stickY > 20000 || stickX > 20000 || stickY < -20000 || stickX < -20000 || GetKeyTrigger(VK_A) || GetKeyTrigger(VK_D) || GetKeyTrigger(VK_W) || GetKeyTrigger(VK_S))
 		{
 			if (!g_bStickTrigger)
 			{
 				g_fStanRecoverySpeed = 0.1f;
 				g_bStickTrigger = true;
 			}
-			else
-			{
-				g_fStanRecoverySpeed = 0.0f;
-			}
+			
 		}
 		else
 		{
+			g_fStanRecoverySpeed = 0.0f;
 			g_bStickTrigger = false;
 		}
 
@@ -458,7 +457,7 @@ void UpdateModel(void)
 				bWind = true;
 				g_bWindDelay = true;
 				g_stm += 0.5f;
-		    			
+				g_bOverHeart = false;
 		}
 		
 	}
@@ -737,7 +736,7 @@ void UpdateModel(void)
 		{
 			g_rotDestModel.x = -90;
 		}
-		g_bWindDelay = false;
+		
 	}
 	
 	if (g_rotDestModel.y >= 360)
@@ -823,9 +822,15 @@ void UpdateModel(void)
 	if (g_posModel.y > 80.0f) {
 		g_posModel.y = 80.0f;
 	}*/
+	// オーバーヒート
+	if (g_stm <= 0.0f)
+	{
+		g_bOverHeart = true;
+		g_stm = 0.0f;
+	}
 
 	// スタミナ処理
-	if (g_rotModel.x > 3 && !g_bWindDelay)
+	if (g_rotModel.x > 3 && !g_bWindDelay &&!bFlg)
 	{
 		// スタミナ減少
 		if (!bWind)	// 風に乗ってないとき
@@ -834,13 +839,7 @@ void UpdateModel(void)
 			g_stm += g_fStaminaDecrease;
 		}
 	
-		// オーバーヒート
-		if (g_stm <= 0.0f)
-		{
-			g_bOverHeart = true;
-			g_stm = 0.0f;
-		}
-
+		
 	}
 	else 
 	{
@@ -868,7 +867,19 @@ void UpdateModel(void)
 	if (g_bOverHeart)
 	{
 		// レバガチャ判定
-		if (stickY > 20000 || stickX > 20000 || stickY < -20000 || stickX < -20000 || GetKeyTrigger(VK_A) || GetKeyTrigger(VK_W) || GetKeyTrigger(VK_S) || GetKeyTrigger(VK_D))
+		if ((stickY > 20000 || stickX > 20000 || stickY < -20000 || stickX < -20000 )&& GetJoyCount() > 0)
+		{
+			if (!g_bStickTrigger)
+			{
+				g_fOverHeartRecoverySpeed = 1.5f;
+				g_bStickTrigger = true;
+			}
+			else
+			{
+				g_fOverHeartRecoverySpeed = 0;
+			}
+		}
+		else if (GetKeyTrigger(VK_A) || GetKeyTrigger(VK_W) || GetKeyTrigger(VK_S) || GetKeyTrigger(VK_D))
 		{
 			if (!g_bStickTrigger)
 			{
@@ -882,16 +893,10 @@ void UpdateModel(void)
 		}
 		else
 		{
+			g_fOverHeartRecoverySpeed = 0;
 			g_bStickTrigger = false;
 		}
-		/*if (GetKeyTrigger(VK_A)|| GetKeyTrigger(VK_W) || GetKeyTrigger(VK_S) || GetKeyTrigger(VK_D))
-		{
-			g_fOverHeartRecoverySpeed = 1.5f;
-		}
-		else
-		{
-			g_fOverHeartRecoverySpeed = 0;
-		}*/
+		
 	}
 	else
 	{
@@ -910,7 +915,7 @@ void UpdateModel(void)
 	PrintDebugProc("[ﾓﾃﾞﾙﾑｷ : (%f : %f : %f)]\n", g_rotDestModel.x, g_posModel.y, g_posModel.z);
 	PrintDebugProc("[ﾓﾃﾞﾙｶｿｸ : (%f : %f : %f)]\n",g_accModel.x, g_accModel.y, g_accModel.z);
 	PrintDebugProc("[ｶｾﾞﾙｶｿｸ : (%f : %f : %f)]\n", WindVec[1].x, WindVec[1].y, WindVec[1].z);
-	PrintDebugProc("[ｶｾﾞｱﾀﾘﾊﾝﾃｲ : (%d: %d )]\n", bFlg, bWind1[1]);
+	PrintDebugProc("[ｶｾﾞｱﾀﾘﾊﾝﾃｲ : (%d: %d )]\n", bFlg, bWind);
 	//PrintDebugProc("\n");
 	PrintDebugProc("*** ﾋｺｳｷ ｿｳｻ ***\n");
 	PrintDebugProc("ﾏｴ   ｲﾄﾞｳ : \x1e\n");//↑

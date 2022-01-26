@@ -3,6 +3,7 @@
 #include "collision.h"
 #include "input.h"
 #include "debugproc.h"
+#include "Sound.h"
 
 #define PATH_POPUP1_TEXTURE	L"data/texture/tutorial/popup1.png"
 #define PATH_POPUP2_TEXTURE	L"data/texture/tutorial/popup2.png"
@@ -29,7 +30,13 @@ Tutorial::Tutorial()
 	m_bPopup = false;
 	m_bTrigger = false;
 	m_nCnt = 0;
-	
+
+	for ( int i = 0; i < 1; i++)
+	{
+		m_bPaperTrigger[i] = false;
+
+	}
+	m_bPaperTrriger = false;
 	// テクスチャ読込
 	CreateTextureFromFile(pDevice, PATH_POPUP1_TEXTURE, &m_pTexture);
 }
@@ -41,19 +48,17 @@ Tutorial::~Tutorial()
 void Tutorial::Update(EStage stage)
 {
 	ID3D11Device* pDevice = GetDevice();
-	// ゲームに戻る
-	if (GetJoyRelease(0, JOYSTICKID1) || GetKeyTrigger(VK_RETURN) || GetKeyTrigger(VK_SPACE))	// コントローラーAボタン
-	{
-		if (m_bPopup)
-		{
-			m_bPopup = false;
-		}
-
-	}
+	
 
 	// ポップアップ表示されたとき
 	if (m_bPopup)
 	{
+		if (!m_bPaperTrriger)
+		{
+			CSound::SetVolume(SE_PAPER, 1.0f);
+			CSound::Play(SE_PAPER);
+			m_bPaperTrriger = true;
+		}
 		m_size.x += 100.0f;
 		if (m_size.x > SCREEN_WIDTH-300)
 		{
@@ -86,22 +91,26 @@ void Tutorial::Update(EStage stage)
 			stickRY = 0;
 			m_bTrigger = false;
 		}	// スティックを下に傾けたとき
-		else if (stickLX > 21000 || stickRX > 21000 )
+		else if (stickLX > 20000 || stickRX > 20000 )
 		{
 			if (!m_bTrigger)
 			{
 				m_nCnt++;
 				m_bTrigger = true;
+				CSound::SetVolume(SE_PAPER, 1.0f);
+				CSound::Play(SE_PAPER);
 				//if (m_nCnt > 5) m_nCnt = 0;
 			}
 		}
 		// スティックを上に傾けたとき
-		else if (stickLX < -21000 || stickRX < -21000)
+		else if (stickLX < -20000 || stickRX < -20000 )
 		{
 			if (!m_bTrigger)
 			{
 				m_nCnt--;
 				m_bTrigger = true;
+				CSound::SetVolume(SE_PAPER, 1.0f);
+				CSound::Play(SE_PAPER);
 				//if (m_nCnt < 0) m_nCnt = 5;
 			}
 		}
@@ -110,22 +119,40 @@ void Tutorial::Update(EStage stage)
 			m_bTrigger = false;
 		}
 
-		if (GetKeyTrigger(VK_RIGHT))
+		if (GetKeyTrigger(VK_RIGHT) || GetKeyTrigger(VK_D) || GetJoyRelease(0, JOYSTICKID1) || GetKeyTrigger(VK_RETURN) || GetKeyTrigger(VK_SPACE))
 		{
 			m_nCnt++;
-			
+			CSound::SetVolume(SE_PAPER, 1.0f);
+			CSound::Play(SE_PAPER);
 		 }
 
-		if (GetKeyTrigger(VK_LEFT))
+		if (GetKeyTrigger(VK_LEFT) || GetKeyTrigger(VK_A) || GetJoyRelease(0, JOYSTICKID2))
 		{
 			m_nCnt--;
-			
+			CSound::SetVolume(SE_PAPER, 1.0f);
+			CSound::Play(SE_PAPER);
 		}
 
 		if (m_bPopupNum2[0])
 		{
-			if (m_nCnt > 3) m_nCnt = 3;
+			if (m_nCnt > 3)
+			{
+				
+				// ゲームに戻る
+				if (GetJoyRelease(0, JOYSTICKID1) || GetKeyTrigger(VK_RETURN) || GetKeyTrigger(VK_SPACE))	// コントローラーAボタン
+				{
+					if (m_bPopup)
+					{
+						m_bPopup = false;
+					}
+
+				}
+				m_nCnt = 3;
+			}
+
+				
 			if (m_nCnt < 0) m_nCnt = 0;
+			
 			switch (m_nCnt)
 			{
 			case 0:
@@ -158,7 +185,19 @@ void Tutorial::Update(EStage stage)
 		}
 		if (m_bPopupNum2[6])
 		{
-			if (m_nCnt > 1) m_nCnt = 1;
+			if (m_nCnt > 1)
+			{
+			
+				// ゲームに戻る
+				if (GetJoyRelease(0, JOYSTICKID1) || GetKeyTrigger(VK_RETURN) || GetKeyTrigger(VK_SPACE))	// コントローラーAボタン
+				{
+					if (m_bPopup)
+					{
+						m_bPopup = false;
+					}
+				}
+				m_nCnt = 1;
+			}
 			if (m_nCnt < 0) m_nCnt = 0;
 			switch (m_nCnt)
 			{
@@ -173,9 +212,33 @@ void Tutorial::Update(EStage stage)
 				break;
 			}
 		}
+		if (m_bPopupNum2[7])
+		{
+			// ゲームに戻る
+			if (GetJoyRelease(0, JOYSTICKID1) || GetKeyTrigger(VK_RETURN) || GetKeyTrigger(VK_SPACE))	// コントローラーAボタン
+			{
+				if (m_bPopup)
+				{
+					m_bPopup = false;
+				}
+
+			}
+		}
 		if (m_bPopupNum2[10])
 		{
-			if (m_nCnt > 1) m_nCnt = 1;
+			if (m_nCnt > 1)
+			{
+				
+				// ゲームに戻る
+				if (GetJoyRelease(0, JOYSTICKID1) || GetKeyTrigger(VK_RETURN) || GetKeyTrigger(VK_SPACE))	// コントローラーAボタン
+				{
+					if (m_bPopup)
+					{
+						m_bPopup = false;
+					}
+				}
+				m_nCnt = 1;
+			}
 			if (m_nCnt < 0) m_nCnt = 0;
 			switch (m_nCnt)
 			{
@@ -207,7 +270,7 @@ void Tutorial::Update(EStage stage)
 		m_bPopupNum2[0] = false;
 		m_bPopupNum2[6] = false;
 		m_bPopupNum2[10] = false;
-
+		m_bPaperTrriger = false;
 	}
 
 	//
@@ -216,7 +279,7 @@ void Tutorial::Update(EStage stage)
 		
 	case STAGE_1:
 		// ポップアップ1～4
-		if (!m_bPopupNum[0] && CollisionAABB(GetModelPos(),XMFLOAT3(10,1000,10), XMFLOAT3(-1300, 400, -1500),XMFLOAT3(100, 1000, 100)))
+		if (!m_bPopupNum[0] && CollisionAABB(GetModelPos(),XMFLOAT3(10,1000,10), XMFLOAT3(-1000, 600, -1500),XMFLOAT3(300, 1000, 300)))
 		{
 			
 			//CreateTextureFromFile(pDevice, PATH_POPUP1_TEXTURE, &m_pTexture);
@@ -226,9 +289,8 @@ void Tutorial::Update(EStage stage)
 			m_bPopup = true;
 		}
 
-
 		// ポップアップ5～6
-		if (!m_bPopupNum[6] && CollisionAABB(GetModelPos(), XMFLOAT3(10, 1000, 10), XMFLOAT3(-1300, 600, 0), XMFLOAT3(100, 1000, 100)))
+		if (!m_bPopupNum[6] && CollisionAABB(GetModelPos(), XMFLOAT3(10, 1000, 10), XMFLOAT3(-1300, 600, 0), XMFLOAT3(300, 1000, 300)))
 		{
 
 			//CreateTextureFromFile(pDevice, PATH_POPUP7_TEXTURE, &m_pTexture);
@@ -237,15 +299,15 @@ void Tutorial::Update(EStage stage)
 
 			m_bPopup = true;
 		}
-		
+
 		// ポップアップ7
-		if (!m_bPopupNum[7] && CollisionAABB(GetModelPos(), XMFLOAT3(10, 1000, 10), XMFLOAT3(-600, 900, 800), XMFLOAT3(100, 1000, 100)))
+		if (!m_bPopupNum[7] && CollisionAABB(GetModelPos(), XMFLOAT3(10, 1000, 10), XMFLOAT3(-600, 800, 900), XMFLOAT3(100, 1000, 100)))
 		{
 
 			CreateTextureFromFile(pDevice, PATH_POPUP7_TEXTURE, &m_pTexture);
 			m_bPopupNum[7] = true;
 			m_bPopupNum2[7] = true;
-
+			
 			m_bPopup = true;
 		}
 
@@ -258,12 +320,12 @@ void Tutorial::Update(EStage stage)
 		}*/
 
 		// スタン回復Tips
-		if (!m_bPopupNum[4] && (GetStanModel() || GetOverHeartModel()))
+		/*if (!m_bPopupNum[4] && (GetStanModel() || GetOverHeartModel()))
 		{
 			CreateTextureFromFile(pDevice, PATH_POPUP5_TEXTURE, &m_pTexture);
 			m_bPopupNum[4] = true;
 			m_bPopup = true;
-		}
+		}*/
 		break;
 	case STAGE_2:
 		break;
