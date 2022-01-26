@@ -499,8 +499,8 @@ int StartChase(int i, XMFLOAT3 pos)
 				// ‹…”»’è
 				if (CollisionSphere(g_crew[i].m_pos, 20, g_crew[j].m_pos, 20))
 				{	// ‘¼‚Ì’‡ŠÔ‚Ì’¹‚Æ“–‚½‚ç‚È‚¢‚Æ‚±‚ÉˆÚ“®
-					g_crew[i].m_pos.x += rand()% 140 - 70;
-					g_crew[i].m_pos.z += rand()% 140 - 70;
+					g_crew[i].m_pos.x += 20;
+					g_crew[i].m_pos.z += 20;
 					
 				}
 			}

@@ -111,7 +111,7 @@ void GameOverSceneButton::Update()
 	for (int i = 0; i < MAX_BUTTON; i++)
 	{
 		if (!m_pButton[i].GetUse())continue;
-		m_pButton[i].Update();
+		m_pButton[i].Update(SCENE_GAMEOVER);
 	}
 
 #if _DEBUG

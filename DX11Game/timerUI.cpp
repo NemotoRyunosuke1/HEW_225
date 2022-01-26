@@ -24,6 +24,8 @@ TimerUI::TimerUI()
 	// 変数初期化
 	m_pos = XMFLOAT3(0, 330, 0);
 	m_size = XMFLOAT3(60, 100, 0);
+	m_barSize = XMFLOAT3(1000, 40, 0);
+	m_barPos = XMFLOAT3(-100, 320, 0);
 	
 	m_fRemainTimer = GAMEOVER_TIME;
 	m_nScoreNum = 3;	// 星野数
@@ -69,43 +71,45 @@ void TimerUI::Draw()
 	m_timerVessel = m_fRemainTimer;
 
 	// 枠 
-	//SetPolygonColor(0.3f, 0.3f, 0.3f);	//ポリゴンカラー
-	//SetPolygonSize(m_size.x, m_size.y);
-	//SetPolygonPos(m_pos.x, m_pos.y);
-	//SetPolygonUV(0.0f, 0.0f);
-	//SetPolygonFrameSize(1.0f, 1.0f);
-	//SetPolygonTexture(nullptr);
-	//SetPolygonAlpha(1.0f);
-	//DrawPolygon(pBC);
-	//SetPolygonUV(0.0f, 0.0f);
-	//SetPolygonFrameSize(1.0f, 1.0f);
-	//SetPolygonAlpha(0.0f);
+	SetPolygonColor(0.3f, 0.3f, 0.3f);	//ポリゴンカラー
+	SetPolygonSize(m_barSize.x, m_barSize.y);
+	SetPolygonPos(m_barPos.x, m_barPos.y);
+	SetPolygonUV(0.0f, 0.0f);
+	SetPolygonFrameSize(1.0f, 1.0f);
+	SetPolygonTexture(nullptr);
+	SetPolygonAlpha(1.0f);
+	DrawPolygon(pBC);
+	SetPolygonUV(0.0f, 0.0f);
+	SetPolygonFrameSize(1.0f, 1.0f);
+	SetPolygonAlpha(0.0f);
 
 	// ゲージ
-	//switch (m_nScoreNum)
-	//{
-	//case 3:	SetPolygonColor(1.0f, 1.0f, 1.0f);	break;
-	//case 2: SetPolygonColor(1.0f, 1.0f, 0.0f);	break;
-	//case 1: SetPolygonColor(1.0f, 0.0f, 0.0f);	break;
-	//default:break;
-	//}
-	//SetPolygonSize(m_size.x * m_fRemainTimer / GAMEOVER_TIME, m_size.y);
-	//SetPolygonPos(m_pos.x -(m_size.x-m_size.x * m_fRemainTimer / GAMEOVER_TIME)/2, m_pos.y);
-	//SetPolygonUV(0.0f, 0.0f);
-	//SetPolygonFrameSize(1.0f, 1.0f);
-	//SetPolygonTexture(nullptr);
-	//SetPolygonAlpha(1.0f);
-	//DrawPolygon(pBC);
-	//SetPolygonUV(0.0f, 0.0f);
-	//SetPolygonFrameSize(1.0f, 1.0f);
-	//SetPolygonAlpha(0.0f);
+	switch (m_nScoreNum)
+	{
+	case 3:	SetPolygonColor(1.0f, 1.0f, 1.0f);	break;
+	case 2: SetPolygonColor(1.0f, 1.0f, 0.0f);	break;
+	case 1: SetPolygonColor(1.0f, 0.0f, 0.0f);	break;
+	default:break;
+	}
+	SetPolygonSize(m_barSize.x * m_fRemainTimer / GAMEOVER_TIME, m_barSize.y);
+	SetPolygonPos(m_barPos.x -(m_barSize.x- m_barSize.x * m_fRemainTimer / GAMEOVER_TIME)/2, m_barPos.y);
+	SetPolygonUV(0.0f, 0.0f);
+	SetPolygonFrameSize(1.0f, 1.0f);
+	SetPolygonTexture(nullptr);
+	SetPolygonAlpha(1.0f);
+	DrawPolygon(pBC);
+
+
+	SetPolygonUV(0.0f, 0.0f);
+	SetPolygonFrameSize(1.0f, 1.0f);
+	
 	SetPolygonTexture(m_pTexture);
 	SetPolygonFrameSize(1.0f / CUNT_X_NUMBER - 0.05f, 1.0f / CUNT_Y_NUMBER );
 	// 残りの数
 	for (int i = 0; i < MAX_DIGIT; i++)
 	{
 		unsigned n = (int)(m_timerVessel) % 10 + 5;
-		SetPolygonPos(m_pos.x - i * (m_size.x + 10) + 30, m_pos.y);
+		SetPolygonPos(m_pos.x + 580 - i * (m_size.x + 10) + 30, m_pos.y);
 		switch (m_nScoreNum)
 	    {
 	    case 3:	SetPolygonColor(1.0f, 1.0f, 1.0f);	break;

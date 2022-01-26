@@ -22,5 +22,9 @@ private:
 	float m_fRemainTimer;
 	float m_timerVessel;
 
+	XMFLOAT3 m_barSize;
+	XMFLOAT3 m_barPos;
+
+
 	int m_nScoreNum;	// ¯–ì”
 };
