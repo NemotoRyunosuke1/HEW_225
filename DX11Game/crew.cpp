@@ -39,7 +39,7 @@
 #define	VALUE_ROTATE_CREW	(7.0f)		// 回転速度
 #define	RATE_ROTATE_CREW	(0.20f)		// 回転慣性係数
 
-#define MAX_CREW			(20)		// 味方最大数
+
 #define	CREW_RADIUS		    (20.0f)     // 境界球半径
 #define MAP_HIROSA          (20000)      // マップの広さ
 
