@@ -30,7 +30,7 @@ Scene::Scene()
 	// ゲームの開始するときのシーン
 	m_eScene = SCENE_GAME;
 	// ステージ初期化
-	m_eStage = STAGE_1;
+	m_eStage = STAGE_3;
 #else
 	// ゲームの開始するときのシーン
 	m_eScene = SCENE_TITLE;
@@ -124,19 +124,23 @@ void Scene::Update()
 	switch (m_eScene)
 	{
 	case SCENE_TITLE:
+		// カーソウル描画
+		ShowCursor(true);
 		CSound::Play(BGM_000); //タイトルBGM
 		m_pTitleScene->Update();
 		break;
 
 	case SCENE_STAGE_SELECT:
+		// カーソウル描画
+		ShowCursor(true);
 		CSound::Play(BGM_000); //タイトルBGM
 		//CSound::Play(BGM_004);//セレクトBGM
 		m_pStageSelectScene->Update();
 		break;
 
 	case SCENE_GAME:
-		CSound::SetVolume(GAME_BGM_001, 0.2f);
-		CSound::Play(GAME_BGM_001);
+		/*CSound::SetVolume(GAME_BGM_001, 0.2f);
+		CSound::Play(GAME_BGM_001);*/
 		m_pGameScene->Update();
 	
 		break;
@@ -147,6 +151,8 @@ void Scene::Update()
 		break;
 
 	case SCENE_GAMEOVER:
+		// カーソウル描画
+		ShowCursor(true);
 		CSound::Play(BGM_003);
 		m_pGameOverScene->Update();
 		break;
@@ -232,7 +238,7 @@ void Scene::Draw()
 
 void Scene::SetScene(EScene eScene)
 {	
-	
+	SetCursorPos(0.0f,0.0f);
 	//終了処理
 	switch (m_eScene)
 	{
@@ -243,7 +249,7 @@ void Scene::SetScene(EScene eScene)
 
 	case SCENE_STAGE_SELECT://メニューシーン
 		CSound::Stop(BGM_000); //タイトルBGMストップ
-		//CSound::Stop(BGM_004);//セレクトBGMストップ
+	//	CSound::Stop(BGM_004);//セレクトBGMストップ
 		m_pGameScene->SetStage(m_pStageSelectScene->GetStage());
 
 		delete m_pStageSelectScene;

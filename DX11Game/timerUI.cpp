@@ -109,8 +109,8 @@ void TimerUI::Draw()
 		switch (m_nScoreNum)
 	    {
 	    case 3:	SetPolygonColor(1.0f, 1.0f, 1.0f);	break;
-	    case 2: SetPolygonColor(1.0f, 1.0f, 0.0f);	break;
-	    case 1: SetPolygonColor(1.0f, 0.0f, 0.0f);	break;
+	    case 2: SetPolygonColor(2.0f, 1.0f, 0.0f);	break;
+	    case 1: SetPolygonColor(2.0f, 0.0f, 0.0f);	break;
 	    default:break;
 	    }	//É|ÉäÉSÉìÉJÉâÅ[
 		SetPolygonSize(m_size.x, m_size.y);

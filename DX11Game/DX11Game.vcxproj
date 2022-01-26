@@ -175,11 +175,13 @@
     <ClCompile Include="collision.cpp" />
     <ClCompile Include="crew.cpp" />
     <ClCompile Include="crewUI.cpp" />
+    <ClCompile Include="crewUI2.cpp" />
     <ClCompile Include="Cunt.cpp" />
     <ClCompile Include="debugproc.cpp" />
     <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="EffectTest.cpp" />
     <ClCompile Include="enemy.cpp" />
+    <ClCompile Include="enemyUI.cpp" />
     <ClCompile Include="escapeText.cpp" />
     <ClCompile Include="fade.cpp" />
     <ClCompile Include="gameOverScene.cpp" />
@@ -234,11 +236,13 @@
     <ClInclude Include="collision.h" />
     <ClInclude Include="crew.h" />
     <ClInclude Include="crewUI.h" />
+    <ClInclude Include="crewUI2.h" />
     <ClInclude Include="Cunt.h" />
     <ClInclude Include="debugproc.h" />
     <ClInclude Include="EffectManager.h" />
     <ClInclude Include="EffectTest.h" />
     <ClInclude Include="enemy.h" />
+    <ClInclude Include="enemyUI.h" />
     <ClInclude Include="escapeText.h" />
     <ClInclude Include="fade.h" />
     <ClInclude Include="gameOverScene.h" />

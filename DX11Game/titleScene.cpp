@@ -64,8 +64,6 @@ void TitleScene::Update()
 	{
 		if (!SelectTrriger)
 		{
-			CSound::SetVolume(SE_SELECT, 1.0f);
-			CSound::Play(SE_SELECT);
 			SelectTrriger = true;
 		}
 		
@@ -80,8 +78,7 @@ void TitleScene::Update()
 	// コントローラースタートボタン
 	if (GetJoyRelease(0, JOYSTICKID8) )
 	{
-		CSound::SetVolume(SE_SELECT, 1.0f);
-		CSound::Play(SE_SELECT);
+		
 #if _DEBUG
 		StartFadeOut(SCENE_STAGE_SELECT);
 
@@ -96,8 +93,7 @@ void TitleScene::Update()
 	{
 		if (!SelectTrriger)
 		{
-			CSound::SetVolume(SE_SELECT, 1.0f);
-			CSound::Play(SE_SELECT);
+			
 			SelectTrriger = true;
 	}
 	#if _DEBUG

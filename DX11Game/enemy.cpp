@@ -14,6 +14,7 @@
 #include <stdlib.h>
 #include "crew.h"
 #include "Sound.h"
+#include "enemyUI.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -31,7 +32,6 @@
 #define ENEMY_WIDTH			64.0f
 #define ENEMY_HEIGHT		64.0f
 
-#define MAX_ENEMY			(50)        // 敵の最大数
 
 #define COLLISION_WIDH      30.0f
 #define COLLISION_HELIGHT   24.0f
@@ -80,7 +80,7 @@ static CAssimpModel	g_model;			      // モデル
 static TEnemy		g_enemy[MAX_ENEMY];	      // 敵の情報
 static ID3D11ShaderResourceView* g_pTexture;
 static int		g_nEnemy;			          // 敵現在数
-static bool g_bTrigger;	// トリガーフラグ
+//static bool g_bTrigger;	// トリガーフラグ
 //static bool g_SoundTrigger;
 //=============================================================================
 // 初期化処理
@@ -122,7 +122,7 @@ HRESULT InitEnemy(void)
 			}
 
 	//CreateEnemy(XMFLOAT3(0.0f, 500.0f, 0.0f));
-	g_bTrigger = false;
+	//g_bTrigger = false;
 	//g_SoundTrigger = false;
 	return hr;
 }
@@ -154,7 +154,7 @@ void UpdateEnemy(void)
 	for (int i = 0; i < MAX_ENEMY; ++i)
 	{
 		if (!g_enemy[i].m_use)continue;
-
+		ENEMY_UI->SetCrew(g_enemy[i].m_pos,i, g_enemy[i].m_use, g_enemy[i].m_use);
 		// プレイヤーとの当たり判定
 		int a = EnemyStartChase(i,modelPos);
 
@@ -356,20 +356,20 @@ void UpdateEnemy(void)
 				if (hit2)
 				{
 					StartStanModel();	// プレイヤ―のスタンの開始
-					if (!g_bTrigger)
-					{
-						StartEscapeCrew();	// 味方の逃走
-						CSound::SetVolume(SE_DAMAGE, 1.0f);
-						CSound::Play(SE_DAMAGE);
-						
-						g_bTrigger = true;
-					}		
+					//if (!g_bTrigger)
+					//{
+					//	StartEscapeCrew();	// 味方の逃走
+					//	CSound::SetVolume(SE_DAMAGE, 1.0f);
+					//	CSound::Play(SE_DAMAGE);
+					//	
+					//	g_bTrigger = true;
+					//}		
 				}
 			}
-			else
+			/*else
 			{
 				g_bTrigger = false;
-			}
+			}*/
 
 			// アニメーションリセット
 			if (g_enemy[i].dAnimTime > 2.2f)

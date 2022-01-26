@@ -32,6 +32,12 @@ enum EButtonTexture
 	ENDGAME_2_TBTN,
 	ENDGAME_3_TBTN,
 	PUSH_BTN,
+	CONTINUE1_BTN,
+	CONTINUE2_BTN,
+	STAGE_SELECT1_BTN,
+	STAGE_SELECT2_BTN,
+	TITLEBACK1_BTN,
+	TITLEBACK2_BTN,
 
 	MAX_BTN_TEXTURE
 };
@@ -57,14 +63,16 @@ public:
 	void SetFrameNum(int);
 	void SetSelect(bool);
 	bool GetSelect();
+	bool GetMouseSelect() { return m_bMouseSelect; };
 	void SetSize(XMFLOAT3);
 	XMFLOAT3 GetOriginSize();
 private:
-	bool m_flg;
-	bool m_use;
-	bool m_select;
-	bool m_bSoudTrigger;	// 選択時
-	bool m_bSoudTriggerDecision;	// 決定時
+	bool m_flg;	// 決定フラグ
+	bool m_use;	// 使用フラグ
+	bool m_select;	// 選択時フラグ
+	bool m_bMouseSelect;	// マウス選択フラグ
+	bool m_bSoudTrigger;	// 選択時SE用
+	bool m_bSoudTriggerDecision;	// 決定時SE用
 	int m_frameNum;
 	int m_textureNum;		// ボタンテクスチャ番号(上の列挙対の番号格納用)
 	XMFLOAT3 m_sizeUpDown;
