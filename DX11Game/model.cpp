@@ -82,6 +82,8 @@ static bool g_bStickTrigger;	// スティック用トリガー
 static float g_fOverHeartRecoverySpeed;	// オーバーヒート回復スピード
 static bool g_bSharpTurn;	// 急旋回フラグ
 static float g_fStanRecoverySpeed;	// スタン回復スピード
+
+static bool g_trigger;
 //=============================================================================
 // 初期化処理
 //=============================================================================
@@ -139,6 +141,8 @@ HRESULT InitModel(void)
 	g_fOverHeartRecoverySpeed = 0;
 	g_bSharpTurn = false;
 	g_fStanRecoverySpeed = 0;
+	g_trigger = false;
+
 	return hr;
 }
 
@@ -223,6 +227,13 @@ void UpdateModel(void)
 	// スタン時
 	if (g_bStan)
 	{
+		if (!g_trigger)
+		{
+			CSound::SetVolume(SE_DAMAGE, 1.0f);
+			CSound::Play(SE_DAMAGE);
+			g_trigger = true;
+		}
+
 		g_fStanTime -= 0.04f + g_fStanRecoverySpeed;
 		if (g_fStanTime < 0)
 		{
@@ -237,7 +248,7 @@ void UpdateModel(void)
 		g_posModel.y -= 1.1f;
 
 		// レバガチャ判定
-		if ((stickY > 20000 )&& GetJoyCount() > 0)
+		if ((stickY > 20000) && GetJoyCount() > 0)
 		{
 			if (!g_bStickTrigger)
 			{
@@ -301,6 +312,11 @@ void UpdateModel(void)
 		// スタンしてる時は処理をしない
 		return;
 	}
+	else
+	{
+		g_trigger = false;
+	}
+
 	if (g_bInvincible)
 	{
 		g_fInvincible -= 0.05f;
