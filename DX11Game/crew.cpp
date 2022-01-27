@@ -461,7 +461,7 @@ int StartChase(int i, XMFLOAT3 pos)
 				Cunt::Gatherbird();
 
 				//Cunt::BirdIcon2();
-				TimerUI::AddTime(15);
+				TimerUI::AddTime(180 / g_nMaxCrew);
 				g_crew[i].m_CollectTrriger = true;
 			}
 			else

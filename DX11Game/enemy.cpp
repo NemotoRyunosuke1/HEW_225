@@ -56,7 +56,7 @@ struct TEnemy {
 	XMFLOAT4X4	m_mtxWorld;	// ワールドマトリックス
 
 	int			m_nShadow;	// 丸影番号
-
+	float m_fTime;
 	bool m_catch;
 	bool m_use;
 	bool m_bAtack;
@@ -123,6 +123,7 @@ HRESULT InitEnemy(void)
 		g_enemy[i].dAnimTime = 71 / 24;
 		g_enemy[i].m_SoundTrriger = false;
 		g_enemy[i].m_bAnimTriiger = false;
+		g_enemy[i].m_fTime = 0.0f;
 			}
 
 	//CreateEnemy(XMFLOAT3(0.0f, 500.0f, 0.0f));
@@ -365,7 +366,7 @@ void UpdateEnemy(void)
 				// プレイヤースタン
 				if (hit2)
 				{
-					StartStanModel();	// プレイヤ―のスタンの開始
+					
 					if (!GetModelStn())
 					{
 						TimerUI::AddTime(-15);
@@ -374,7 +375,7 @@ void UpdateEnemy(void)
 					{
 						TimerUI::AddTime(0);
 					}
-					
+					StartStanModel();	// プレイヤ―のスタンの開始
 					//if (!g_bTrigger)
 					//{
 					//	StartEscapeCrew();	// 味方の逃走
