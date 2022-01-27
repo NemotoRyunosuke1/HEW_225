@@ -976,8 +976,7 @@ void GameScene::Draw()
 	//エフェクト描画
 	//EFFECT->Play(1);
 
-	//EffectManager::Play(WIND_EFFECT);
- 
+	
 	// ビル描画
 	for (int i = 0; i < MAX_BULIDING; i++)
 	{
@@ -985,7 +984,8 @@ void GameScene::Draw()
 	}
 	
 	EffectManager::Play(NONE_EFFECT);
-	
+	//EffectManager::Play(ACCELERATION_EFFECT);
+
 	// 雲マネージャー描画
 	//m_pCloudManager->Draw();
 
@@ -1002,6 +1002,7 @@ void GameScene::Draw()
 #if _DEBUG
 	m_pWindManager->Draw();
 #endif
+	
 	// モデル描画
 	DrawModel();
 	
