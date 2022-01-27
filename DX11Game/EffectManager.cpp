@@ -77,7 +77,7 @@ int EffectManager::Load(const char *Create)
 {
 	// fileNameに基づいてエフェクトの読み込み
 	// エフェクトのデータを読み込み
-	m_effect = Effekseer::Effect::Create(m_manager, u"Assets/new_wind_jousyou.efk");				//風_上
+	m_effect = Effekseer::Effect::Create(m_manager, u"Assets/new_wind_jousyou_ver2.efk");				//風_上
 	m_effect1 = Effekseer::Effect::Create(m_manager, u"Assets/wind_yoko_Yellow.efk");				//風_横_黄色
 	m_effect2 = Effekseer::Effect::Create(m_manager, u"Assets/wind_yoko.efk");						//風_横
 	m_effect3 = Effekseer::Effect::Create(m_manager, u"Assets/Sutan.efk");							//スタン
@@ -146,9 +146,9 @@ int EffectManager::Play(EEffect Handle)
 				{
 					// ゴール風
 					time = 0;
-					m_handle = m_manager->Play(m_effect5, -1000.0f, 0.0f, 4000.0f);
+					m_handle = m_manager->Play(m_effect5, -1000.0f, 100.0f, 4000.0f);
 					m_manager->SetScale(m_handle, 7.0f, 10.0f, 7.0f);
-					m_manager->SetSpeed(m_handle, 0.5f);
+					m_manager->SetSpeed(m_handle, 0.3f);
 				}
 				break;
 			case STAGE_2:
@@ -214,15 +214,15 @@ int EffectManager::Play(EEffect Handle)
 		{
 			// 1個目上昇気流
 			time = 0;
-			m_handle = m_manager->Play(m_effect, -1700.0f, 100.0f, 0.0f);      //表示＆座標
+			m_handle = m_manager->Play(m_effect, -1650.0f, 100.0f, 50.0f);      //表示＆座標
 			m_manager->SetScale(m_handle, 7.0f, 7.0f, 7.0f);   //大きさ
-			m_manager->SetSpeed(m_handle, 0.5f);
+			m_manager->SetSpeed(m_handle, 0.3f);
 
 			// 2個目上昇気流
 			time = 0;
-			m_handle = m_manager->Play(m_effect, -1700.0f, 300.0f, 800.0f);      //表示＆座標
+			m_handle = m_manager->Play(m_effect, -1650.0f, 200.0f, 800.0f);      //表示＆座標
 			m_manager->SetScale(m_handle, 7.0f, 7.0f, 7.0f);   //大きさ
-			m_manager->SetSpeed(m_handle, 0.5f);
+			m_manager->SetSpeed(m_handle, 0.3f);
 
 		//======================
 		//風_横
