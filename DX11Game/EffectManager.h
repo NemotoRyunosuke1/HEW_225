@@ -50,7 +50,7 @@ public:
 
 	int Load(const char *fileName);
 	static int Play(EEffect Handle);
-	
+
 	static void SetStage(EStage);
 
 private:
