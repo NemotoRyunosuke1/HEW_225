@@ -24,6 +24,7 @@ Effekseer::EffectRef EffectManager::m_effect3;		//スタン
 Effekseer::EffectRef EffectManager::m_effect4;		//砂埃
 Effekseer::EffectRef EffectManager::m_effect5;		//風_上_黄色
 Effekseer::EffectRef EffectManager::m_effect6;		//風_横_ver2
+Effekseer::EffectRef EffectManager::m_effect7;		//加速エフェクト
 Effekseer::Handle EffectManager::m_handle;
 
 
@@ -84,6 +85,7 @@ int EffectManager::Load(const char *Create)
 	m_effect4 = Effekseer::Effect::Create(m_manager, u"Assets/SandSmoke.efk");						//砂埃
 	m_effect5 = Effekseer::Effect::Create(m_manager, u"Assets/new_wind_jousyou_Yellow.efk");		//風_上_黄色
 	m_effect6 = Effekseer::Effect::Create(m_manager, u"Assets/Wind_yoko_ver5.efk");					//風_横_ver2
+	m_effect7 = Effekseer::Effect::Create(m_manager, u"Assets/Acceleration_ver2.efk");					//加速エフェクト
 
 	return 0; // エフェクトハンドルを返す
 }
@@ -146,7 +148,7 @@ int EffectManager::Play(EEffect Handle)
 				{
 					// ゴール風
 					time = 0;
-					m_handle = m_manager->Play(m_effect5, -1000.0f, 0.0f, 4000.0f);
+					m_handle = m_manager->Play(m_effect5, -1000.0f, 100.0f, 4000.0f);
 					m_manager->SetScale(m_handle, 7.0f, 10.0f, 7.0f);
 					m_manager->SetSpeed(m_handle, 0.5f);
 				}
@@ -155,7 +157,7 @@ int EffectManager::Play(EEffect Handle)
 				if (time > 129.9f)
 				{
 					time = 0;
-					m_handle = m_manager->Play(m_effect5, -950.0f, 0.0f, 3600.0f);
+					m_handle = m_manager->Play(m_effect5, -950.0f, 100.0f, 3600.0f);
 					m_manager->SetScale(m_handle, 7.0f, 10.0f, 7.0f);
 					m_manager->SetSpeed(m_handle, 0.3f);
 				}
@@ -191,6 +193,20 @@ int EffectManager::Play(EEffect Handle)
 			m_manager->SetRotation(m_handle, 0.0f, 0.0f, 0.0f);
 			m_manager->SetSpeed(m_handle, 0.3f);
 
+		}
+		break;
+
+	case ACCELERATION_EFFECT:
+		if (time > 130.0f)
+		{
+			//加速
+			time = 0;
+			m_handle = m_manager->Play(m_effect7, GetModelPos().x, GetModelPos().y, GetModelPos().z);      //表示＆座標
+			m_manager->SetScale(m_handle, 6.0f, 6.0f, 6.0f);   //大きさ
+			m_manager->SetRotation(m_handle, 0.0f, GetModelAcc().y, 0.0f);
+			m_manager->SetSpeed(m_handle, 0.5f);
+
+			//GetModelAcc().x, GetModelAcc().y, GetModelAcc().z
 		}
 		break;
 	case MAX_EFFECT:
