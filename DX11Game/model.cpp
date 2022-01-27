@@ -1218,3 +1218,7 @@ void CollisionObjectModel(XMFLOAT3 pos, XMFLOAT3 size1, XMFLOAT3 size2, bool bAo
 	
 
 }
+bool GetModelStn()
+{
+	return g_bStan;
+}

@@ -1,7 +1,8 @@
 #include "timerUI.h"
 #include "fade.h"
 
-#define GAMEOVER_TIME (180)
+#define GAMEOVER_TIME (20)
+#define MAX_GAMEOVER_TIME (180)
 #define BIRD_CUNT_TEXTURE L"data/texture/a.png"
 #define BIRD_STAR_TEXTURE L"data/texture/星メダル1.png"
 
@@ -9,7 +10,7 @@
 #define CUNT_X_NUMBER 5
 #define CUNT_Y_NUMBER 3
 
-
+float TimerUI::m_fAddTime;
 
 
 TimerUI::TimerUI()
@@ -29,14 +30,38 @@ TimerUI::TimerUI()
 	m_barSize = XMFLOAT3(1000, 40, 0);
 	m_barPos = XMFLOAT3(-100, 320, 0);
 	
-	m_fStar1Time = GAMEOVER_TIME - 140;
-	m_fStar2Time = GAMEOVER_TIME - 100;
-	m_fStar3Time = GAMEOVER_TIME - 50;
+	m_fGameOverTime = MAX_GAMEOVER_TIME;
+	m_fStarTime[0] = m_fGameOverTime - 140;
+	m_fStarTime[1] = m_fGameOverTime - 100;
+	m_fStarTime[2] = m_fGameOverTime - 50;
+	m_fAddTime = 0;
 
-	m_fStarTime[0] = GAMEOVER_TIME - 140;
-	m_fStarTime[1] = GAMEOVER_TIME - 100;
-	m_fStarTime[2] = GAMEOVER_TIME - 50;
+	m_fRemainTimer = GAMEOVER_TIME;
+	m_nScoreNum = 3;	// 星野数
+	m_timer = 0;
+}
+TimerUI::TimerUI(float gameOverTime, float m_fStar1Time, float m_fStar2Time, float m_fStar3Time)
+{
+	// テクスチャ読み込み
+	ID3D11Device* pDevice = GetDevice();
+	CreateTextureFromFile(pDevice, BIRD_CUNT_TEXTURE, &m_pTexture);
+	CreateTextureFromFile(pDevice, BIRD_STAR_TEXTURE, &m_pTextureStar);
 
+
+	//時間取得	
+	m_fCurrentTime = m_fRemainTime = (float)timeGetTime();
+
+	// 変数初期化
+	m_pos = XMFLOAT3(0, 330, 0);
+	m_size = XMFLOAT3(60, 100, 0);
+	m_barSize = XMFLOAT3(1000, 40, 0);
+	m_barPos = XMFLOAT3(-100, 320, 0);
+
+	m_fGameOverTime = gameOverTime;
+	m_fStarTime[0] = m_fStar1Time;
+	m_fStarTime[1] = m_fStar2Time;
+	m_fStarTime[2] = m_fStar3Time;
+	m_fAddTime = 0;
 
 	m_fRemainTimer = GAMEOVER_TIME;
 	m_nScoreNum = 3;	// 星野数
@@ -54,8 +79,11 @@ void TimerUI::Update()
 	//スタートタイマー
 	m_fCurrentTime = (float)timeGetTime();
 	m_timer += 1.0f/60.0f;
-	m_fRemainTimer = GAMEOVER_TIME - m_timer;
-	
+	m_fRemainTimer = GAMEOVER_TIME - m_timer + m_fAddTime;
+	if (m_fRemainTimer > m_fGameOverTime)
+	{
+		m_fRemainTimer = m_fGameOverTime;
+	}
 	// 星野獲得数変化
 	if (m_fRemainTimer > m_fStarTime[2])
 	{
@@ -103,8 +131,8 @@ void TimerUI::Draw()
 	case 1: SetPolygonColor(1.0f, 0.0f, 0.0f);	break;
 	default:break;
 	}
-	SetPolygonSize(m_barSize.x * m_fRemainTimer / GAMEOVER_TIME, m_barSize.y);
-	SetPolygonPos(m_barPos.x -(m_barSize.x- m_barSize.x * m_fRemainTimer / GAMEOVER_TIME)/2, m_barPos.y);
+	SetPolygonSize(m_barSize.x * m_fRemainTimer / MAX_GAMEOVER_TIME, m_barSize.y);
+	SetPolygonPos(m_barPos.x -(m_barSize.x- m_barSize.x * m_fRemainTimer / MAX_GAMEOVER_TIME)/2, m_barPos.y);
 	SetPolygonUV(0.0f, 0.0f);
 	SetPolygonFrameSize(1.0f, 1.0f);
 	SetPolygonTexture(nullptr);
@@ -120,7 +148,7 @@ void TimerUI::Draw()
 	{
 		SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
 		SetPolygonSize(30, 30);
-		SetPolygonPos(m_barPos.x - m_barSize.x/2 + m_barSize.x * m_fStarTime[i] / GAMEOVER_TIME, m_barPos.y-20);
+		SetPolygonPos(m_barPos.x - m_barSize.x/2 + m_barSize.x * m_fStarTime[i] / MAX_GAMEOVER_TIME, m_barPos.y-20);
 		SetPolygonUV((float)(((2-i) % 3)/3.0f), 0.0f);
 		SetPolygonFrameSize(1.0f /3, 1.0f);
 		SetPolygonTexture(m_pTextureStar);
@@ -161,4 +189,8 @@ void TimerUI::Draw()
 int TimerUI::GetScore()
 {
 	return m_nScoreNum;
+}
+void TimerUI::AddTime(float addTime)
+{
+	m_fAddTime += addTime;
 }

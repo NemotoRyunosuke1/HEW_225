@@ -16,6 +16,7 @@
 #include "crewUI.h"
 #include "EffectManager.h"
 #include "crewUI2.h"
+#include "timerUI.h"
 
 #if _DEBUG
 #include "input.h"
@@ -460,9 +461,14 @@ int StartChase(int i, XMFLOAT3 pos)
 				Cunt::Gatherbird();
 
 				//Cunt::BirdIcon2();
-
+				TimerUI::AddTime(15);
 				g_crew[i].m_CollectTrriger = true;
 			}
+			else
+			{
+				TimerUI::AddTime(0);
+			}
+			
 			//ƒvƒŒƒCƒ„[‚©‚çˆê’è”ÍˆÍ“à‚É‚¢‚³‚¹‚éˆ—
 			if (g_modelPos.x + CREW_LENGHT < g_crew[i].m_pos.x)
 			{
