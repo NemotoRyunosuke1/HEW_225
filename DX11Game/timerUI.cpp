@@ -3,6 +3,7 @@
 
 #define GAMEOVER_TIME (180)
 #define BIRD_CUNT_TEXTURE L"data/texture/a.png"
+#define BIRD_STAR_TEXTURE L"data/texture/星メダル1.png"
 
 #define MAX_DIGIT (3)
 #define CUNT_X_NUMBER 5
@@ -16,6 +17,7 @@ TimerUI::TimerUI()
 	// テクスチャ読み込み
 	ID3D11Device* pDevice = GetDevice();
 	CreateTextureFromFile(pDevice, BIRD_CUNT_TEXTURE, &m_pTexture);
+	CreateTextureFromFile(pDevice, BIRD_STAR_TEXTURE, &m_pTextureStar);
 
 
 	//時間取得	
@@ -27,6 +29,15 @@ TimerUI::TimerUI()
 	m_barSize = XMFLOAT3(1000, 40, 0);
 	m_barPos = XMFLOAT3(-100, 320, 0);
 	
+	m_fStar1Time = GAMEOVER_TIME - 140;
+	m_fStar2Time = GAMEOVER_TIME - 100;
+	m_fStar3Time = GAMEOVER_TIME - 50;
+
+	m_fStarTime[0] = GAMEOVER_TIME - 140;
+	m_fStarTime[1] = GAMEOVER_TIME - 100;
+	m_fStarTime[2] = GAMEOVER_TIME - 50;
+
+
 	m_fRemainTimer = GAMEOVER_TIME;
 	m_nScoreNum = 3;	// 星野数
 	m_timer = 0;
@@ -35,6 +46,7 @@ TimerUI::~TimerUI()
 {
 	//テクスチャ解放
 	SAFE_RELEASE(m_pTexture);
+	SAFE_RELEASE(m_pTextureStar);
 }
 
 void TimerUI::Update()
@@ -45,15 +57,15 @@ void TimerUI::Update()
 	m_fRemainTimer = GAMEOVER_TIME - m_timer;
 	
 	// 星野獲得数変化
-	if (m_fRemainTimer > GAMEOVER_TIME - 50)
+	if (m_fRemainTimer > m_fStarTime[2])
 	{
 		m_nScoreNum = 3;
 	}
-	else if (m_fRemainTimer > GAMEOVER_TIME - 100)
+	else if (m_fRemainTimer > m_fStarTime[1])
 	{
 		m_nScoreNum = 2;
 	}
-	else if (m_fRemainTimer > GAMEOVER_TIME - 140)
+	else if (m_fRemainTimer > m_fStarTime[0])
 	{
 		m_nScoreNum = 1;
 	}
@@ -103,6 +115,22 @@ void TimerUI::Draw()
 	SetPolygonUV(0.0f, 0.0f);
 	SetPolygonFrameSize(1.0f, 1.0f);
 	
+	// 星
+	for (int i = 0; i < 3; i++)
+	{
+		SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
+		SetPolygonSize(30, 30);
+		SetPolygonPos(m_barPos.x - m_barSize.x/2 + m_barSize.x * m_fStarTime[i] / GAMEOVER_TIME, m_barPos.y-20);
+		SetPolygonUV((float)(((2-i) % 3)/3.0f), 0.0f);
+		SetPolygonFrameSize(1.0f /3, 1.0f);
+		SetPolygonTexture(m_pTextureStar);
+		SetPolygonAlpha(1.0f);
+		DrawPolygon(pBC);
+	}
+
+	SetPolygonUV(0.0f, 0.0f);
+	SetPolygonFrameSize(1.0f, 1.0f);
+
 	SetPolygonTexture(m_pTexture);
 	SetPolygonFrameSize(1.0f / CUNT_X_NUMBER - 0.05f, 1.0f / CUNT_Y_NUMBER );
 	// 残りの数
