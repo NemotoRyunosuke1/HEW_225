@@ -83,7 +83,6 @@ static bool g_CollectTrriger;
 static Cunt g_Cunt;
 static bool g_bEscapeFlg; 
 static bool g_bAllCatch;	// 全て集めたかフラグ
-static float g_fTime;
 //=============================================================================
 // 初期化処理
 //=============================================================================
@@ -123,7 +122,6 @@ HRESULT InitCrew(void)
 
 
 		}
-	g_fTime = 0;
 	CrewCnt = 0;
 	g_nMaxCrew = 0;
 	g_nRemainCrew = 0;
@@ -174,7 +172,7 @@ void UpdateCrew(void)
 	{
 		g_bAllCatch = false;
 	}
-	g_fTime += 5.1f;
+
 	// 仲間更新
 	for (int i = 0; i < MAX_CREW; ++i) {
 
@@ -186,14 +184,13 @@ void UpdateCrew(void)
 		// UI移動
 		if (!g_crew[i].m_catch)
 		{
-			SetCrewUI(XMFLOAT3(g_crew[i].m_pos.x, g_crew[i].m_pos.y + 50 + CosDeg(g_fTime)*30, g_crew[i].m_pos.z), 60, 60, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), i);	// 仲間用UIセット
-			
+			SetCrewUI(XMFLOAT3(g_crew[i].m_pos.x, g_crew[i].m_pos.y + 50, g_crew[i].m_pos.z), 60, 60, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), i);	// 仲間用UIセット
+
 		}
 		else
 		{
 			SetUseCrewUI(false, i);
 		}
-		CREW_UI2->SetCrew(g_crew[i].m_pos, i, g_crew[i].m_use,!g_crew[i].m_catch);
 		//SetCrewUI(XMFLOAT3(g_crew[i].m_pos.x, g_crew[i].m_pos.y + 50, g_crew[i].m_pos.z), 30, 30, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f));	// 仲間用UIセット
 
 		// アニメーション
@@ -499,11 +496,56 @@ int StartChase(int i, XMFLOAT3 pos)
 				if (i == j)continue;
 
 				// 球判定
-				if (CollisionSphere(g_crew[i].m_pos, 20, g_crew[j].m_pos, 20))
+				if (CollisionAABB(g_crew[i].m_pos, XMFLOAT3(10,10,10), g_crew[j].m_pos, XMFLOAT3(10, 10, 10)))
 				{	// 他の仲間の鳥と当たらないとこに移動
-					g_crew[i].m_pos.x += 20;
-					g_crew[i].m_pos.z += 20;
-					
+					if (g_crew[i].m_pos.x > g_crew[j].m_pos.x && g_crew[i].m_pos.z > g_crew[j].m_pos.z)
+					{
+						g_crew[i].m_pos.x += 1;
+						g_crew[j].m_pos.x -= 1;
+						g_crew[i].m_pos.z += 1;
+						g_crew[j].m_pos.z -= 1;
+					}
+					else if (g_crew[i].m_pos.x > g_crew[j].m_pos.x && g_crew[i].m_pos.z < g_crew[j].m_pos.z)
+					{
+						g_crew[i].m_pos.x += 1;
+						g_crew[j].m_pos.x -= 1;
+						g_crew[i].m_pos.z -= 1;
+						g_crew[j].m_pos.z += 1;
+					}
+					else if (g_crew[i].m_pos.x < g_crew[j].m_pos.x && g_crew[i].m_pos.z > g_crew[j].m_pos.z)
+					{
+						g_crew[i].m_pos.x -= 1;
+						g_crew[j].m_pos.x += 1;
+						g_crew[i].m_pos.z += 1;
+						g_crew[j].m_pos.z -= 1;
+					}
+					else if (g_crew[i].m_pos.x < g_crew[j].m_pos.x && g_crew[i].m_pos.z < g_crew[j].m_pos.z)
+					{
+						g_crew[i].m_pos.x -= 1;
+						g_crew[j].m_pos.x += 1;
+						g_crew[i].m_pos.z -= 1;
+						g_crew[j].m_pos.z += 1;
+					}
+					else if (g_crew[i].m_pos.x > g_crew[j].m_pos.x)
+					{
+						g_crew[i].m_pos.x += 1;
+						g_crew[j].m_pos.x -= 1;
+					}
+					else if (g_crew[i].m_pos.x < g_crew[j].m_pos.x)
+					{
+						g_crew[i].m_pos.x -= 1;
+						g_crew[j].m_pos.x += 1;
+					}
+					else if (g_crew[i].m_pos.z > g_crew[j].m_pos.z)
+					{
+						g_crew[i].m_pos.z += 1;
+						g_crew[j].m_pos.z -= 1;
+					}
+					else if (g_crew[i].m_pos.z < g_crew[j].m_pos.z)
+					{
+						g_crew[i].m_pos.z -= 1;
+						g_crew[j].m_pos.z += 1;
+					}
 				}
 			}
 		}
