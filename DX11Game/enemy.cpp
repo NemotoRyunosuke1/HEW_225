@@ -124,7 +124,7 @@ HRESULT InitEnemy(void)
 		g_enemy[i].m_use = false;
 		g_enemy[i].m_sacchi = false;
 		g_enemy[i].m_bAtack = false;
-		g_enemy[i].collisionSize = 500;
+		g_enemy[i].m_searchenemyrange = 500;
 		g_enemy[i].dAnimTime = 71 / 24;
 		g_enemy[i].m_SoundTrriger = false;
 		g_enemy[i].m_bAnimTriiger = false;
