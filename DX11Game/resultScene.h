@@ -78,15 +78,20 @@ private:
 	ID3D11ShaderResourceView* m_pIconTexture8;
 	ID3D11ShaderResourceView* m_pTextureFinish;
 	ID3D11ShaderResourceView* m_pTextureBack;
+	ID3D11ShaderResourceView* m_pTextureBackBG;
 	float m_fAlpha;	// “§–¾“x
 	float m_fAlphaFinish;	// “§–¾“x
 	float m_fTime;	// ŽžŠÔ
 	float m_fStarAngle[3];
 	XMFLOAT3 m_posAReturn;
 	XMFLOAT3 m_sizeAReturn;
+	XMFLOAT3 m_posBackBG;
+	XMFLOAT3 m_sizeBackBG;
+
 	int m_nScore;
+	float m_fAnimTime;
 	bool m_bResult;
 	bool m_bResult2;
-	bool m_bTrigger[2];
+	bool m_bTrigger[3];
 
 };

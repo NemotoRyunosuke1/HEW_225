@@ -16,6 +16,7 @@
 #include "crewUI.h"
 #include "EffectManager.h"
 #include "crewUI2.h"
+#include "timerUI.h"
 
 #if _DEBUG
 #include "input.h"
@@ -83,6 +84,8 @@ static bool g_CollectTrriger;
 static Cunt g_Cunt;
 static bool g_bEscapeFlg; 
 static bool g_bAllCatch;	// 全て集めたかフラグ
+
+static float g_fTime;
 //=============================================================================
 // 初期化処理
 //=============================================================================
@@ -122,6 +125,8 @@ HRESULT InitCrew(void)
 
 
 		}
+	g_fTime = 0;
+
 	CrewCnt = 0;
 	g_nMaxCrew = 0;
 	g_nRemainCrew = 0;
@@ -172,6 +177,7 @@ void UpdateCrew(void)
 	{
 		g_bAllCatch = false;
 	}
+	g_fTime += 5.1f;
 
 	// 仲間更新
 	for (int i = 0; i < MAX_CREW; ++i) {
@@ -184,13 +190,15 @@ void UpdateCrew(void)
 		// UI移動
 		if (!g_crew[i].m_catch)
 		{
-			SetCrewUI(XMFLOAT3(g_crew[i].m_pos.x, g_crew[i].m_pos.y + 50, g_crew[i].m_pos.z), 60, 60, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), i);	// 仲間用UIセット
+			SetCrewUI(XMFLOAT3(g_crew[i].m_pos.x, g_crew[i].m_pos.y + 50 + CosDeg(g_fTime) * 30, g_crew[i].m_pos.z), 60, 60, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), i);	// 仲間用UIセット
 
 		}
 		else
 		{
 			SetUseCrewUI(false, i);
 		}
+		CREW_UI2->SetCrew(g_crew[i].m_pos, i, g_crew[i].m_use, !g_crew[i].m_catch);
+
 		//SetCrewUI(XMFLOAT3(g_crew[i].m_pos.x, g_crew[i].m_pos.y + 50, g_crew[i].m_pos.z), 30, 30, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f));	// 仲間用UIセット
 
 		// アニメーション
@@ -453,9 +461,14 @@ int StartChase(int i, XMFLOAT3 pos)
 				Cunt::Gatherbird();
 
 				//Cunt::BirdIcon2();
-
+				TimerUI::AddTime(15);
 				g_crew[i].m_CollectTrriger = true;
 			}
+			else
+			{
+				TimerUI::AddTime(0);
+			}
+			
 			//プレイヤーから一定範囲内にいさせる処理
 			if (g_modelPos.x + CREW_LENGHT < g_crew[i].m_pos.x)
 			{

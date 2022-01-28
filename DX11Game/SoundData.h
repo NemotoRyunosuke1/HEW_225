@@ -27,5 +27,6 @@ enum eSE {
 	SE_GOAL,        // ゴール音
 	SE_STER,        // スター音
 
+
 	MAX_SE
 };

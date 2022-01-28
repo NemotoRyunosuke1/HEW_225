@@ -17,6 +17,7 @@
 #include <stdlib.h>
 #include <crtdbg.h>
 
+
 //-------- ƒ‰ƒCƒuƒ‰ƒŠ‚ÌƒŠƒ“ƒN
 #pragma comment(lib, "winmm")
 #pragma comment(lib, "imm32")

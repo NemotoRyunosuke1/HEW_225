@@ -18,6 +18,7 @@ void DrawCrew(void);
 
 int StartChase(int i, XMFLOAT3 pos);
 void CrewCreate(XMFLOAT3 pos1);
+int AddTimeCrew();
 
 int& GetCrewCnt();
 int& GetMaxCrew();
