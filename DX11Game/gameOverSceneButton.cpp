@@ -16,10 +16,10 @@ GameOverSceneButton::GameOverSceneButton()
 
 	// ƒƒ‚ƒŠŠm•Û
 	m_pButton = new Button[MAX_BUTTON];
-	m_pButton[0].CreateButton(XMFLOAT3(450, 180, 0), XMFLOAT3(SCREEN_WIDTH / 2 - 120, 50, 0), RESTART_BTN);
+	m_pButton[0].CreateButton(XMFLOAT3(300, 150, 0), XMFLOAT3(-400, -SCREEN_HEIGHT/2 + 90, 0), CONTINUE1_BTN);
 	m_pButton[0].SetSelect(true);
-	m_pButton[1].CreateButton(XMFLOAT3(450, 180, 0), XMFLOAT3(SCREEN_WIDTH / 2 - 120, -100, 0), BACK_STAGE_SELECT_BTN);
-	m_pButton[2].CreateButton(XMFLOAT3(450, 180, 0), XMFLOAT3(SCREEN_WIDTH / 2 - 120, -250, 0), ENDGAME_BTN);
+	m_pButton[1].CreateButton(XMFLOAT3(300, 150, 0), XMFLOAT3(00, -SCREEN_HEIGHT / 2 + 90, 0), STAGE_SELECT1_BTN);
+	m_pButton[2].CreateButton(XMFLOAT3(300, 150, 0), XMFLOAT3(400, -SCREEN_HEIGHT / 2 + 90, 0), TITLEBACK1_BTN);
 
 }
 GameOverSceneButton::~GameOverSceneButton()
@@ -48,7 +48,7 @@ void GameOverSceneButton::Update()
 		stickRY = 0;
 		m_Trigger = false;
 	}
-	else if (stickLY > 20000 || stickRY > 20000)
+	else if (stickLX > 20000 || stickRX > 20000)
 	{
 		if (!m_Trigger)
 		{
@@ -57,7 +57,7 @@ void GameOverSceneButton::Update()
 			if (m_cnt > (MAX_BUTTON - 1)) m_cnt = 0;
 		}
 	}
-	else if (stickLY < -20000 || stickRY < -20000)
+	else if (stickLX < -20000 || stickRX < -20000)
 	{
 		if (!m_Trigger)
 		{
@@ -67,12 +67,12 @@ void GameOverSceneButton::Update()
 		}
 	}
 	
-	if (GetKeyRelease(VK_W) || GetKeyRelease(VK_UP))
+	if (GetKeyRelease(VK_A) || GetKeyRelease(VK_LEFT))
 	{
 		m_cnt--;
 		if (m_cnt < 0) m_cnt = MAX_BUTTON - 1;
 	}
-	if (GetKeyRelease(VK_S) || GetKeyRelease(VK_DOWN))
+	if (GetKeyRelease(VK_D) || GetKeyRelease(VK_RIGHT))
 	{
 		m_cnt++;
 		if (m_cnt > MAX_BUTTON - 1) m_cnt = 0;
@@ -111,7 +111,7 @@ void GameOverSceneButton::Update()
 	for (int i = 0; i < MAX_BUTTON; i++)
 	{
 		if (!m_pButton[i].GetUse())continue;
-		m_pButton[i].Update();
+		m_pButton[i].Update(SCENE_GAMEOVER);
 	}
 
 #if _DEBUG

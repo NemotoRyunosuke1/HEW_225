@@ -16,7 +16,7 @@
 
 #define BIRD_CUNT_TEXTURE L"data/texture/万能文字.png"
 #define BIRD_ICON_TEXTURE L"data/texture/残り数.png"
-#define GO_GOAL_TEXTURE L"data/texture/ato0.png"
+#define GO_GOAL_TEXTURE L"data/texture/ムレキドリUIまとめ4/ゴールへむかえ！.png"
 
 #define MAX_DIGIT (2)
 

@@ -36,6 +36,8 @@
 
 #define WING_STN_DICREASE (20)	// スタミナ消費量
 
+#define OVERHEART_RECOVERY_SPEED (3.0f)		// スタミナ回復速度
+
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
@@ -64,6 +66,9 @@ static double d = 0;
 static bool g_bDebugMode;
 static bool g_bOverHeart;
 static bool g_bWing;
+static bool g_bWingTrigger;
+static bool g_bWingSETrigger;
+
 static bool g_bWindDelay;
 static float g_WindSound;
 static bool g_bSoundTrriger;
@@ -77,7 +82,8 @@ static bool g_bStickTrigger;	// スティック用トリガー
 static float g_fOverHeartRecoverySpeed;	// オーバーヒート回復スピード
 static bool g_bSharpTurn;	// 急旋回フラグ
 static float g_fStanRecoverySpeed;	// スタン回復スピード
-static bool g_bTrigger;
+
+static bool g_trigger;
 //=============================================================================
 // 初期化処理
 //=============================================================================
@@ -120,6 +126,8 @@ HRESULT InitModel(void)
 	g_bOverHeart = false;
 	d = 0.1;
 	g_bWing = false;
+	g_bWingTrigger = false;
+	g_bWingSETrigger = false;
 	g_bWindDelay = false;
 	g_WindSound = 2.0f;
 	g_bSoundTrriger = false;
@@ -133,7 +141,8 @@ HRESULT InitModel(void)
 	g_fOverHeartRecoverySpeed = 0;
 	g_bSharpTurn = false;
 	g_fStanRecoverySpeed = 0;
-	g_bTrigger = false;
+	g_trigger = false;
+
 	return hr;
 }
 
@@ -218,11 +227,11 @@ void UpdateModel(void)
 	// スタン時
 	if (g_bStan)
 	{
-		if (!g_bTrigger)
+		if (!g_trigger)
 		{
 			CSound::SetVolume(SE_DAMAGE, 1.0f);
 			CSound::Play(SE_DAMAGE);
-			g_bTrigger = true;
+			g_trigger = true;
 		}
 
 		g_fStanTime -= 0.04f + g_fStanRecoverySpeed;
@@ -239,14 +248,56 @@ void UpdateModel(void)
 		g_posModel.y -= 1.1f;
 
 		// レバガチャ判定
-		if ((stickY > 20000 || stickX > 20000 || stickY < -20000 || stickX < -20000)&& GetJoyCount() > 0)
+		if ((stickY > 20000) && GetJoyCount() > 0)
 		{
 			if (!g_bStickTrigger)
 			{
 				g_fStanRecoverySpeed = 0.3f;
 				g_bStickTrigger = true;
 			}
-			
+			else
+			{
+				g_fStanRecoverySpeed = 0.0f;
+			}
+		}
+		else if (( stickX > 20000 ) && GetJoyCount() > 0)
+		{
+			if (!g_bStickTrigger)
+			{
+				g_fStanRecoverySpeed = 0.3f;
+				g_bStickTrigger = true;
+			}
+			else
+			{
+				g_fStanRecoverySpeed = 0.0f;
+			}
+
+		}
+		else if ((stickY < -20000 ) && GetJoyCount() > 0)
+		{
+			if (!g_bStickTrigger)
+			{
+				g_fStanRecoverySpeed = 0.3f;
+				g_bStickTrigger = true;
+			}
+			else
+			{
+				g_fStanRecoverySpeed = 0.0f;
+			}
+
+		}
+		else if (( stickX < -20000) && GetJoyCount() > 0)
+		{
+			if (!g_bStickTrigger)
+			{
+				g_fStanRecoverySpeed = 0.3f;
+				g_bStickTrigger = true;
+			}
+			else
+			{
+				g_fStanRecoverySpeed = 0.0f;
+			}
+
 		}
 		else if (GetKeyTrigger(VK_A) || GetKeyTrigger(VK_D) || GetKeyTrigger(VK_W) || GetKeyTrigger(VK_S))
 		{
@@ -261,6 +312,11 @@ void UpdateModel(void)
 		// スタンしてる時は処理をしない
 		return;
 	}
+	else
+	{
+		g_trigger = false;
+	}
+
 	if (g_bInvincible)
 	{
 		g_fInvincible -= 0.05f;
@@ -271,7 +327,6 @@ void UpdateModel(void)
 		}
 	}
 	// アニメーション更新
-	//d+= 0.02f;
 	g_model.SetAnimTime(d);
 	if (d > 1.4f)  // 羽ばたきは1周期0.7f
 	{
@@ -281,25 +336,40 @@ void UpdateModel(void)
 	
 	if (g_bWing)
 	{
-		if (d >= 0.8f && d <= 0.84f)
+		if (!g_bWingTrigger)
 		{
-		
-			CSound::Play(SE_SWING);
+			d = 0.0f;
+			g_bWingTrigger = true;
 		}
+		
 		
 		d += 0.04f;
 	}
 	else
 	{
-		g_bTrigger = false;
-
-		d += 0.04f;
-		if (d > 0.1f)
+		g_bWingTrigger = false;
+		d += 0.01f;
+		
+		/*if (d > 0.1f)
 		{
 			d = 0.1f;
-		}
+		}*/
 	}
-	
+	// 羽ばたき音
+	if (d >= 0.8f && d <= 0.84f)
+	{
+
+		if (!g_bWingSETrigger)
+		{
+			g_bWingSETrigger = true;
+			CSound::Play(SE_SWING);
+		}	
+	}
+	else
+	{
+		g_bWingSETrigger = false;
+	}
+
 	// カメラの向き取得
 	XMFLOAT3 rotCamera = CCamera::Get()->GetAngle();
 
@@ -464,6 +534,7 @@ void UpdateModel(void)
 				g_accModel.y = 5.0f * (unsigned)WindVec[i].y + 1.1f;
 				g_accModel.z = 5.0f * (unsigned)WindVec[i].z + 1.1f;
 				g_rotDestModel.x = 130 * WindVec[i].y;
+				if(WindVec[i].y == 0)
 				g_rotDestModel.y = 90 * WindVec[i].x + 180 * ((1 + WindVec[i].z) / 2) + ((2 - (int)fabsf(WindVec[i].z)) / 2) *  ((2 - (int)fabsf(WindVec[i].z)) / 2) * 90;// +(int)((2 - (unsigned)WindVec[i].z) / 2)*(int)((2 - (unsigned)WindVec[i].x) / 2)* g_rotModel.y;
 				//g_rotDestModel.y = 90 * WindVec[i].z ;
 				
@@ -610,6 +681,9 @@ void UpdateModel(void)
 		CSound::Play(SE_SWING);
 		g_bWing = true;
 		g_stm -= WING_STN_DICREASE;	// スタミナ減少
+
+		//加速エフェクト
+		EffectManager::Play(ACCELERATION_EFFECT);
 	}
 
 	// スペースキー羽ばた
@@ -621,6 +695,10 @@ void UpdateModel(void)
 		CSound::Play(SE_SWING);
 		g_bWing = true;		
 		g_stm -= WING_STN_DICREASE;	// スタミナ減少
+
+		//加速エフェクト
+		EffectManager::Play(ACCELERATION_EFFECT);
+		
 		/*CSound::SetVolume(SE_SWING, 5.0f);
 		CSound::Play(SE_SWING);*/
 		//g_rotDestModel.y += 1.0f;// *g_rotDestModel.y / 10;
@@ -881,11 +959,47 @@ void UpdateModel(void)
 	if (g_bOverHeart)
 	{
 		// レバガチャ判定
-		if ((stickY > 20000 || stickX > 20000 || stickY < -20000 || stickX < -20000 )&& GetJoyCount() > 0)
+		if ((stickY > 32000  )&& GetJoyCount() > 0)
 		{
 			if (!g_bStickTrigger)
 			{
-				g_fOverHeartRecoverySpeed = 1.5f;
+				g_fOverHeartRecoverySpeed = OVERHEART_RECOVERY_SPEED;
+				g_bStickTrigger = true;
+			}
+			else
+			{
+				g_fOverHeartRecoverySpeed = 0;
+			}
+		}
+		else if (( stickX > 32000) && GetJoyCount() > 0)
+		{
+			if (!g_bStickTrigger)
+			{
+				g_fOverHeartRecoverySpeed = OVERHEART_RECOVERY_SPEED;
+				g_bStickTrigger = true;
+			}
+			else
+			{
+				g_fOverHeartRecoverySpeed = 0;
+			}
+		}
+		else if ((stickY < -32000) && GetJoyCount() > 0)
+		{
+			if (!g_bStickTrigger)
+			{
+				g_fOverHeartRecoverySpeed = OVERHEART_RECOVERY_SPEED;
+				g_bStickTrigger = true;
+			}
+			else
+			{
+				g_fOverHeartRecoverySpeed = 0;
+			}
+		}
+		else if (( stickX < -32000) && GetJoyCount() > 0)
+		{
+			if (!g_bStickTrigger)
+			{
+				g_fOverHeartRecoverySpeed = OVERHEART_RECOVERY_SPEED;
 				g_bStickTrigger = true;
 			}
 			else
@@ -897,7 +1011,7 @@ void UpdateModel(void)
 		{
 			if (!g_bStickTrigger)
 			{
-				g_fOverHeartRecoverySpeed = 1.5f;
+				g_fOverHeartRecoverySpeed = OVERHEART_RECOVERY_SPEED;
 				g_bStickTrigger = true;
 			}
 			else
@@ -1116,4 +1230,8 @@ void CollisionObjectModel(XMFLOAT3 pos, XMFLOAT3 size1, XMFLOAT3 size2, bool bAo
 	}
 	
 
+}
+bool GetModelStn()
+{
+	return g_bStan;
 }
