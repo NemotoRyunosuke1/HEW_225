@@ -257,6 +257,7 @@ void Scene::SetScene(EScene eScene)
 
 	case SCENE_GAME://ゲームシーン
 		CSound::Stop(GAME_BGM_001);//ゲームBGMストップ
+		m_pGameScene->SetStage(m_pGameScene->GetStage());
 		delete m_pGameScene;
 		break;
 
@@ -266,7 +267,7 @@ void Scene::SetScene(EScene eScene)
 		break;
 
 	case SCENE_GAMEOVER:
-		m_pGameScene->SetStage(m_pGameScene->GetStage());
+		
 		CSound::Stop(BGM_003);
 		delete m_pGameOverScene;
 		break;

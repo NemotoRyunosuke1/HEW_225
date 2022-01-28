@@ -15,9 +15,9 @@
 #define Star3			L"data/texture/StarIcon.png"		//星３
 
 #define Result			L"data/texture/ムレキドリUIまとめ2/リザルト.png"		//リザルトロゴ
-#define Result1			L"data/texture/40second.png"		//条件1 [40秒残し]
-#define Result2			L"data/texture/80second.png"		//条件2 [80秒残し]
-#define Result3			L"data/texture/130second.png"		//条件3 [130秒残し]
+#define Result1			L"data/texture/resulttime/40second.png"		//条件1 [40秒残し]
+#define Result2			L"data/texture/resulttime/80second.png"		//条件2 [80秒残し]
+#define Result3			L"data/texture/resulttime/130second.png"		//条件3 [130秒残し]
 
 #define FINISH			L"data/texture/ムレキドリUIまとめ4/GOAL!_00000(2).png"		//FINISH
 #define BACK			L"data/texture/back.png"		//FINISH

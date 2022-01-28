@@ -175,7 +175,7 @@ GameScene::GameScene()
 	//時間取得	
 	m_fCurrentTime = m_fRemainTime = (float)timeGetTime();
 	
-	m_timer;
+
 	m_bGoal = false;
 
 	// スカイドーム初期化

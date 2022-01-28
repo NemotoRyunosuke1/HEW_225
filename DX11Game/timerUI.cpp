@@ -1,10 +1,17 @@
 #include "timerUI.h"
 #include "fade.h"
 
+#if _DEBUG
+#include "input.h"
+
+#endif // _DEBUG
+
+
 #define GAMEOVER_TIME (20)
 #define MAX_GAMEOVER_TIME (180)
 #define BIRD_CUNT_TEXTURE L"data/texture/a.png"
 #define BIRD_STAR_TEXTURE L"data/texture/星メダル1.png"
+#define BIRD_TIMEUP_TEXTURE L"data/texture/Time's up.png"
 
 #define MAX_DIGIT (3)
 #define CUNT_X_NUMBER 5
@@ -19,6 +26,7 @@ TimerUI::TimerUI()
 	ID3D11Device* pDevice = GetDevice();
 	CreateTextureFromFile(pDevice, BIRD_CUNT_TEXTURE, &m_pTexture);
 	CreateTextureFromFile(pDevice, BIRD_STAR_TEXTURE, &m_pTextureStar);
+	CreateTextureFromFile(pDevice, BIRD_TIMEUP_TEXTURE, &m_pTextureTimeUp);
 
 
 	//時間取得	
@@ -29,12 +37,16 @@ TimerUI::TimerUI()
 	m_size = XMFLOAT3(60, 100, 0);
 	m_barSize = XMFLOAT3(1000, 40, 0);
 	m_barPos = XMFLOAT3(-100, 320, 0);
-	
+	m_timeUpSize = XMFLOAT3(10, 10, 0);
+	m_timeUpPos = XMFLOAT3(0, 0, 0);
+	m_fTimeUpAlpha = 1.0f;
 	m_fGameOverTime = MAX_GAMEOVER_TIME;
 	m_fStarTime[0] = m_fGameOverTime - 140;
 	m_fStarTime[1] = m_fGameOverTime - 100;
 	m_fStarTime[2] = m_fGameOverTime - 50;
 	m_fAddTime = 0;
+
+	m_bTimeUp = false;
 
 	m_fRemainTimer = GAMEOVER_TIME;
 	m_nScoreNum = 3;	// 星野数
@@ -56,6 +68,10 @@ TimerUI::TimerUI(float gameOverTime, float m_fStar1Time, float m_fStar2Time, flo
 	m_size = XMFLOAT3(60, 100, 0);
 	m_barSize = XMFLOAT3(1000, 40, 0);
 	m_barPos = XMFLOAT3(-100, 320, 0);
+	m_timeUpSize = XMFLOAT3(10, 10, 0);
+	m_timeUpPos = XMFLOAT3(0, 0, 0);
+	m_fTimeUpAlpha = 1.0f;
+	m_bTimeUp = false;
 
 	m_fGameOverTime = gameOverTime;
 	m_fStarTime[0] = m_fStar1Time;
@@ -72,6 +88,7 @@ TimerUI::~TimerUI()
 	//テクスチャ解放
 	SAFE_RELEASE(m_pTexture);
 	SAFE_RELEASE(m_pTextureStar);
+	SAFE_RELEASE(m_pTextureTimeUp);
 }
 
 void TimerUI::Update()
@@ -97,11 +114,33 @@ void TimerUI::Update()
 	{
 		m_nScoreNum = 1;
 	}
+#if _DEBUG
+	if (GetKeyTrigger(VK_8))
+	{
+		m_fRemainTimer = -1;
+	}
+
+#endif // _DEBUG
 
 	// タイムオーバー
 	if (m_fRemainTimer < 0)
 	{
-		StartFadeOut(SCENE_GAMEOVER);
+		m_bTimeUp = true;
+		
+	}
+	if (m_bTimeUp)
+	{
+		m_timeUpSize.x += 10;
+		if (m_timeUpSize.x > 600)m_timeUpSize.x = 600;
+		m_timeUpSize.y += 5;
+		if (m_timeUpSize.y > 300)m_timeUpSize.y = 300;
+
+		if (m_timeUpSize.x >= 500 && m_timeUpSize.y >= 300)
+		{
+			m_fTimeUpAlpha -= 0.05f;
+			if(m_fTimeUpAlpha < 0)
+			StartFadeOut(SCENE_GAMEOVER);
+		}
 	}
 }
 void TimerUI::Draw()
@@ -109,6 +148,20 @@ void TimerUI::Draw()
 	ID3D11DeviceContext* pBC = GetDeviceContext();
 	SetBlendState(BS_ALPHABLEND);	// アルファブレンド有効
 	m_timerVessel = m_fRemainTimer;
+
+	// タイムアップ
+	if (m_bTimeUp)
+	{
+		SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
+		SetPolygonSize(m_timeUpSize.x, m_timeUpSize.y);
+		SetPolygonPos(m_timeUpPos.x, m_timeUpPos.y);
+		SetPolygonUV(0.0f, 0.0f);
+		SetPolygonFrameSize(1.0f, 1.0f);
+		SetPolygonTexture(m_pTextureTimeUp);
+		SetPolygonAlpha(m_fTimeUpAlpha);
+		DrawPolygon(pBC);
+	}
+	
 
 	// 枠 
 	SetPolygonColor(0.3f, 0.3f, 0.3f);	//ポリゴンカラー
@@ -121,7 +174,7 @@ void TimerUI::Draw()
 	DrawPolygon(pBC);
 	SetPolygonUV(0.0f, 0.0f);
 	SetPolygonFrameSize(1.0f, 1.0f);
-	SetPolygonAlpha(0.0f);
+	SetPolygonAlpha(1.0f);
 
 	// ゲージ
 	switch (m_nScoreNum)
