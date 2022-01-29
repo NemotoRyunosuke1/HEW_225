@@ -215,6 +215,10 @@ void UpdateModel(void)
 #endif
 
 	}
+#if  _DEBUG
+	g_stm = 100;
+
+#endif
 
 	// ˆÚ“®”ÍˆÍ§ŒÀ
 	if (g_posModel.y < 0.0f)	// ’n–Ê 
