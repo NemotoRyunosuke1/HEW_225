@@ -78,7 +78,7 @@ int EffectManager::Load(const char *Create)
 {
 	// fileNameに基づいてエフェクトの読み込み
 	// エフェクトのデータを読み込み
-	m_effect = Effekseer::Effect::Create(m_manager, u"Assets/new_wind_jousyou.efk");				//風_上
+	m_effect = Effekseer::Effect::Create(m_manager, u"Assets/new_wind_jousyou_ver2.efk");				//風_上
 	m_effect1 = Effekseer::Effect::Create(m_manager, u"Assets/wind_yoko_Yellow.efk");				//風_横_黄色
 	m_effect2 = Effekseer::Effect::Create(m_manager, u"Assets/wind_yoko.efk");						//風_横
 	m_effect3 = Effekseer::Effect::Create(m_manager, u"Assets/Sutan.efk");							//スタン
@@ -197,14 +197,14 @@ int EffectManager::Play(EEffect Handle)
 		break;
 
 	case ACCELERATION_EFFECT:
-		if (time > 130.0f)
+		if (time > 20.0f)
 		{
 			//加速
 			time = 0;
 			m_handle = m_manager->Play(m_effect7, GetModelPos().x, GetModelPos().y, GetModelPos().z);      //表示＆座標
-			m_manager->SetScale(m_handle, 6.0f, 6.0f, 6.0f);   //大きさ
-			m_manager->SetRotation(m_handle, 0.0f, GetModelAcc().y, 0.0f);
-			m_manager->SetSpeed(m_handle, 0.5f);
+			m_manager->SetScale(m_handle, 4.0f, 4.0f, 4.0f);   //大きさ
+			m_manager->SetRotation(m_handle, GetModelAcc().x + 90.0f, GetModelAcc().y + 180.0f, GetModelAcc().z + 30.0f);
+			m_manager->SetSpeed(m_handle, 1.0f);
 
 			//GetModelAcc().x, GetModelAcc().y, GetModelAcc().z
 		}
@@ -230,7 +230,7 @@ int EffectManager::Play(EEffect Handle)
 		{
 			// 1個目上昇気流
 			time = 0;
-			m_handle = m_manager->Play(m_effect, -1700.0f, 100.0f, 0.0f);      //表示＆座標
+			m_handle = m_manager->Play(m_effect, -1700.0f, 100.0f, -100.0f);      //表示＆座標
 			m_manager->SetScale(m_handle, 7.0f, 7.0f, 7.0f);   //大きさ
 			m_manager->SetSpeed(m_handle, 0.5f);
 
@@ -357,8 +357,8 @@ int EffectManager::Play(EEffect Handle)
 			// 左側上昇気流
 			//m_pWind[4].Create(XMFLOAT3(-3500.0f, 550.0f, 1000.0f), XMFLOAT3(500.0f, 1000.0f, 500.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));    // 左側上昇気流
 			time = 0;
-			m_handle = m_manager->Play(m_effect, -3500.0f, 550.0f, 1000.0f);      //表示＆座標
-			m_manager->SetScale(m_handle, 5.0f, 6.0f, 5.0f);   //大きさ
+			m_handle = m_manager->Play(m_effect, -3500.0f, 200.0f, 1000.0f);      //表示＆座標
+			m_manager->SetScale(m_handle, 5.0f, 7.0f, 5.0f);   //大きさ
 			m_manager->SetSpeed(m_handle, 0.5f);
 
 			//// 左側建物後ろ上昇気流
@@ -371,14 +371,14 @@ int EffectManager::Play(EEffect Handle)
 
 			// 右側上昇気流
 			//m_pWind[5].Create(XMFLOAT3(1500.0f, 550.0f, 1000.0f), XMFLOAT3(500.0f, 1000.0f, 500.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));    // 右側上昇気
-			m_handle = m_manager->Play(m_effect, 1500.0f, 550.0f, 1000.0f);      //表示＆座標
-			m_manager->SetScale(m_handle, 5.0f, 6.0f, 5.0f);   //大きさ
+			m_handle = m_manager->Play(m_effect, 1500.0f, 200.0f, 1000.0f);      //表示＆座標
+			m_manager->SetScale(m_handle, 5.0f, 7.0f, 5.0f);   //大きさ
 			m_manager->SetSpeed(m_handle, 0.5f);
 
 			// 真ん中上昇気流
 			//m_pWind[3].Create(XMFLOAT3(-1000.0f, 650.0f, 3000.0f), XMFLOAT3(500.0f, 1000.0f, 500.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));	  // 真ん中上昇気流
-			m_handle = m_manager->Play(m_effect, -1000.0f, 650.0f, 3000.0f);      //表示＆座標
-			m_manager->SetScale(m_handle, 5.0f, 6.0f, 5.0f);   //大きさ
+			m_handle = m_manager->Play(m_effect, -1000.0f, 200.0f, 3000.0f);      //表示＆座標
+			m_manager->SetScale(m_handle, 5.5f, 7.0f, 5.5f);   //大きさ
 			m_manager->SetSpeed(m_handle, 0.5f);
 
 		//======================
@@ -386,54 +386,55 @@ int EffectManager::Play(EEffect Handle)
 		//======================
 			// 左側追い風   
 			//m_pWind[0].Create(XMFLOAT3(-3000.0f, 500.0f, -150.0f), XMFLOAT3(500.0f, 400.0f, 1100.0f), XMFLOAT3(0.0f, 0.0f, 1.0f));    // 左側追い風
-			m_handle = m_manager->Play(m_effect6, -3000.0f, 500.0f, -150.0f);     //表示＆座標
-			m_manager->SetScale(m_handle, 2.0f, 2.0f, 2.0f);   //大きさ
-			m_manager->SetRotation(m_handle, 0.0f, 59.7f, 0.0f);
+			m_handle = m_manager->Play(m_effect6, -3000.0f, 500.0f, 0.0f);     //表示＆座標
+			m_manager->SetScale(m_handle, 4.0f, 4.0f, 4.0f);   //大きさ
+			m_manager->SetRotation(m_handle, 0.0f, 80.0f, 0.0f);
 			m_manager->SetSpeed(m_handle, 0.5f);
 
 			// 右側追い風
 			//m_pWind[2].Create(XMFLOAT3(1000.0f, 500.0f, -150.0f), XMFLOAT3(500.0f, 400.0f, 1100.0f), XMFLOAT3(0.0f, 0.0f, 1.0f));    // 右側追い風
-			m_handle = m_manager->Play(m_effect6, 1000.0f, 500.0f, -150.0f);      //表示＆座標
-			m_manager->SetScale(m_handle, 2.0f, 2.0f, 2.0f);   //大きさ
-			m_manager->SetRotation(m_handle, 0.0f, 59.7f, 0.0f);
+			m_handle = m_manager->Play(m_effect6, 1000.0f, 500.0f, 0.0f);      //表示＆座標
+			m_manager->SetScale(m_handle, 4.0f, 4.0f, 4.0f);   //大きさ
+			m_manager->SetRotation(m_handle, 0.0f, 80.0f, 0.0f);
 			m_manager->SetSpeed(m_handle, 0.5f);
 
 			// 真ん中向かい風
 			//m_pWind[1].Create(XMFLOAT3(-1000.0f, 600.0f, -100.0f), XMFLOAT3(500.0f, 1000.0f, 1100.0f), XMFLOAT3(0.0f, 0.0f, -1.0f));    // 真ん中向かい風
 			m_handle = m_manager->Play(m_effect6, -1000.0f, 600.0f, -100.0f);      //表示＆座標
-			m_manager->SetScale(m_handle, 2.0f, 2.0f, 2.0f);   //大きさ
+			m_manager->SetScale(m_handle, 4.0f, 3.0f, 4.0f);   //大きさ
 			m_manager->SetRotation(m_handle, 0.0f, 14.1f, 0.0f);
 			m_manager->SetSpeed(m_handle, 0.5f);
 
 			// ゴール前手前左追い風
 			//m_pWind[6].Create(XMFLOAT3(-1400.0f, 1400.0f, 7000.0f), XMFLOAT3(500.0f, 300.0f, 300.0f), XMFLOAT3(0.0f, 0.0f, 1.0f));	  // ゴール前手前左追い風
 			m_handle = m_manager->Play(m_effect6, -1400.0f, 1400.0f, 7000.0f);		//表示＆座標
-			m_manager->SetScale(m_handle, 2.0f, 2.0f, 2.0f);
-			m_manager->SetRotation(m_handle, 0.0f, 59.7f, 0.0f);
+			m_manager->SetScale(m_handle, 3.0f, 3.0f, 3.0f);
+			m_manager->SetRotation(m_handle, 0.0f, 80.0f, 0.0f);
 			m_manager->SetSpeed(m_handle, 0.5f);
 
 			// ゴール前手前右追い風
 			//m_pWind[7].Create(XMFLOAT3(-600.0f, 1400.0f, 7000.0f), XMFLOAT3(500.0f, 300.0f, 300.0f), XMFLOAT3(0.0f, 0.0f, 1.0f));    // ゴール前手前右追い風
 			m_handle = m_manager->Play(m_effect6, -600.0f, 1400.0f, 7000.0f);		//表示＆座標
-			m_manager->SetScale(m_handle, 2.0f, 2.0f, 2.0f);
-			m_manager->SetRotation(m_handle, 0.0f, 59.7f, 0.0f);
+			m_manager->SetScale(m_handle, 3.0f, 3.0f, 3.0f);
+			m_manager->SetRotation(m_handle, 0.0f, 80.0f, 0.0f);
 			m_manager->SetSpeed(m_handle, 0.5f);
 
 			// ゴール前奥左追い風
 			//m_pWind[8].Create(XMFLOAT3(-1400.0f, 1400.0f, 8500.0f), XMFLOAT3(500.0f, 300.0f, 500.0f), XMFLOAT3(0.0f, 0.0f, 1.0f));    // ゴール前奥左追い風
 			m_handle = m_manager->Play(m_effect6, -1400.0f, 1400.0f, 8500.0f);		//表示＆座標
-			m_manager->SetScale(m_handle, 2.0f, 2.0f, 2.0f);
-			m_manager->SetRotation(m_handle, 0.0f, 59.7f, 0.0f);
+			m_manager->SetScale(m_handle, 3.0f, 3.0f, 3.0f);
+			m_manager->SetRotation(m_handle, 0.0f, 80.0f, 0.0f);
 			m_manager->SetSpeed(m_handle, 0.5f);
 
 			// ゴール前奥右追い風
 			//m_pWind[9].Create(XMFLOAT3(-600.0f, 1400.0f, 8500.0f), XMFLOAT3(500.0f, 300.0f, 500.0f), XMFLOAT3(0.0f, 0.0f, 1.0f));    // ゴール前奥右追い風
 			m_handle = m_manager->Play(m_effect6, -600.0f, 1400.0f, 8500.0f);		//表示＆座標
-			m_manager->SetScale(m_handle, 2.0f, 2.0f, 2.0f);
-			m_manager->SetRotation(m_handle, 0.0f, 59.7f, 0.0f);
+			m_manager->SetScale(m_handle, 3.0f, 3.0f, 3.0f);
+			m_manager->SetRotation(m_handle, 0.0f, 80.0f, 0.0f);
 			m_manager->SetSpeed(m_handle, 0.5f);
 
-
+			//新しい風の方向数値
+			//14.1 = 向かい風　　59.7 = 左風  80.0 = 追い風　0.0 = 右風
 			//SetRotationのYの数値で向きが変わります
 			//80 = 左向き風    14.1 = 右向き風    59.7 = 向かい風　　 0 = 追い風
 			//m_pWind[0].Create(XMFLOAT3(-3000.0f, 500.0f, -150.0f), XMFLOAT3(500.0f, 400.0f, 1100.0f), XMFLOAT3(0.0f, 0.0f, 1.0f));    // 左側追い風
