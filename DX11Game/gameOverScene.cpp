@@ -29,6 +29,7 @@ void GameOverScene::Update()
 	// ボタン更新
 	m_pGameOverSceneButton->Update();
 
+	// 背景更新
 	m_pGameOverSceneBG->Update();
 
 	// シーン遷移
@@ -51,7 +52,7 @@ void GameOverScene::Update()
 	{
 		StartFadeOut(SCENE_TITLE);
 		m_bTrigger = true;
-		//PostQuitMessage(0);	
+		//PostQuitMessage(0);	// ゲーム終了	
 	}
 
 	

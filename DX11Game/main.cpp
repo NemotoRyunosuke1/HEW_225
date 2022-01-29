@@ -10,7 +10,6 @@
 #include "polygon.h"
 #include "debugproc.h"
 #include "mesh.h"
-#include "bg.h"
 #include "scene.h"
 
 #define _CRTBG_MAP_ALLOC
@@ -417,14 +416,9 @@ HRESULT Init(HWND hWnd, BOOL bWindow)
 	if (FAILED(hr))
 		return hr;
 
-	InitBG();
-
 	// シーン初期化
 	m_pScene = new Scene;
 	
-	
-	
-
 	return hr;
 }
 
@@ -448,9 +442,7 @@ void Uninit(void)
 {
 	
 
-	// 背景終了処理
-	UninitBG();
-
+	
 	
 	// シーン処理終了
 	delete m_pScene;
@@ -541,9 +533,7 @@ void Draw(void)
 	// Zバッファ無効(Zチェック無&Z更新無)
 	SetZBuffer(false);
 
-	// 背景描画
-	DrawBG();
-
+	
 	// 3D描画
 	// Zバッファ有効(Zチェック有&Z更新有)
 	SetZBuffer(true);

@@ -28,7 +28,7 @@ Scene::Scene()
 {
 #if _DEBUG
 	// ゲームの開始するときのシーン
-	m_eScene = SCENE_GAME;
+	m_eScene = SCENE_GAMEOVER;
 	// ステージ初期化
 	m_eStage = STAGE_1;
 #else
