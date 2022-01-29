@@ -57,6 +57,7 @@ struct TEnemy {
 
 	int m_hitrange; 		// “–‚½‚è”»’è”ÍˆÍ
 	int m_canserange;		// ’ÇÕ”ÍˆÍ
+	int m_movespeed;		// ˆÚ“®‘¬“x(”{—¦)
 
 	int			m_nShadow;	// ŠÛ‰e”Ô†
 	float m_fTime;
@@ -354,9 +355,9 @@ void UpdateEnemy(void)
 		else if(!g_enemy[i].m_bAtack)
 		{
 			// ˆÚ“®—Ê‘ã“ü
-			g_enemy[i].m_move.x = -SinDeg(g_enemy[i].m_rot.y) * VALUE_MOVE_ENEMY * 6.0f;
-			g_enemy[i].m_move.y = SinDeg(g_enemy[i].m_rot.x) * VALUE_MOVE_ENEMY * 6.0f;
-			g_enemy[i].m_move.z = -CosDeg(g_enemy[i].m_rot.y) * VALUE_MOVE_ENEMY * 6.0f;
+			g_enemy[i].m_move.x = -SinDeg(g_enemy[i].m_rot.y) * VALUE_MOVE_ENEMY * 6.0f * g_enemy[i].m_movespeed;
+			g_enemy[i].m_move.y = SinDeg(g_enemy[i].m_rot.x) * VALUE_MOVE_ENEMY * 6.0f * g_enemy[i].m_movespeed;
+			g_enemy[i].m_move.z = -CosDeg(g_enemy[i].m_rot.y) * VALUE_MOVE_ENEMY * 6.0f * g_enemy[i].m_movespeed;
 
 			// ‘OˆÚ“®
 			g_enemy[i].m_pos.x += g_enemy[i].m_move.x;
@@ -502,7 +503,7 @@ void UpdateEnemy(void)
 		}	
 	}
 
-	void CreateEnemy(XMFLOAT3 pos,int hitrange,float searchenemyrange,int canserange)
+	void CreateEnemy(XMFLOAT3 pos,int hitrange,float searchenemyrange,int canserange,int movespeed)
 	{
 		ID3D11Device* pDevice = GetDevice();
 		ID3D11DeviceContext* pDeviceContext = GetDeviceContext();
@@ -519,6 +520,7 @@ void UpdateEnemy(void)
 			g_enemy[i].m_hitrange = hitrange;
 			g_enemy[i].m_searchenemyrange = searchenemyrange;
 			g_enemy[i].m_canserange = canserange;
+			g_enemy[i].m_movespeed = movespeed;
 			break;
 		}
 		

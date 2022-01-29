@@ -428,17 +428,17 @@ GameScene::GameScene(EStage stage)
 			CrewCreate(XMFLOAT3(-1000.0f, 500.0f, 3800.0f));// 5
 
 			// 敵の配置
-			CreateEnemy(XMFLOAT3(-1000.0f, 500.0f, -300.0f),100,500,2000);// 1
-			CreateEnemy(XMFLOAT3(-1000.0f, 500.0f, 400.0f), 100, 500, 2000);// 2
+			CreateEnemy(XMFLOAT3(-1000.0f, 500.0f, -300.0f),100,500,2000,1);// 1
+			CreateEnemy(XMFLOAT3(-1000.0f, 500.0f, 400.0f), 100, 500, 2000,1);// 2
 
-			CreateEnemy(XMFLOAT3(-2100.0f, 500.0f, 2500.0f), 100, 500, 2000);// 3
-			CreateEnemy(XMFLOAT3(100.0f, 500.0f, 2500.0f), 100, 500, 2000);// 4
+			CreateEnemy(XMFLOAT3(-2100.0f, 500.0f, 2500.0f), 100, 500, 2000,1);// 3
+			CreateEnemy(XMFLOAT3(100.0f, 500.0f, 2500.0f), 100, 500, 2000,1);// 4
 
-			CreateEnemy(XMFLOAT3(-2100.0f, 500.0f, 3500.0f), 100, 500, 2000);// 5
-			CreateEnemy(XMFLOAT3(100.0f, 500.0f, 3500.0f), 100, 500, 2000);// 6
-			CreateEnemy(XMFLOAT3(-1600.0f, 500.0f, 4200.0f), 100, 500, 2000);// 7
-			CreateEnemy(XMFLOAT3(-400.0f, 500.0f, 4200.0f), 100, 500, 2000);// 8
-			CreateEnemy(XMFLOAT3(-1000.0f, 500.0f, 4700.0f), 100, 500, 2000);// 7
+			CreateEnemy(XMFLOAT3(-2100.0f, 500.0f, 3500.0f), 100, 500, 2000,1);// 5
+			CreateEnemy(XMFLOAT3(100.0f, 500.0f, 3500.0f), 100, 500, 2000,1);// 6
+			CreateEnemy(XMFLOAT3(-1600.0f, 500.0f, 4200.0f), 100, 500, 2000,1);// 7
+			CreateEnemy(XMFLOAT3(-400.0f, 500.0f, 4200.0f), 100, 500, 2000,1);// 8
+			CreateEnemy(XMFLOAT3(-1000.0f, 500.0f, 4700.0f), 100, 500, 2000,1);// 7
 			//CreateEnemy(XMFLOAT3(-800.0f, 500.0f, 3700.0f));// 9
 			//CreateEnemy(XMFLOAT3(-200.0f, 500.0f, 3300.0f));// 10
 			//CreateEnemy(XMFLOAT3(-800.0f, 500.0f, 2300.0f));// 11
@@ -463,9 +463,9 @@ GameScene::GameScene(EStage stage)
 		CrewCreate(XMFLOAT3(-1000.0f, 1200.0f, 9200.0f));// 10
 
 		// 敵の配置
-		CreateEnemy(XMFLOAT3(-1000.0f, 500.0f, 1500.0f), 100, 500, 2000);// 1
-		CreateEnemy(XMFLOAT3(-1000.0f, 1200.0f, 7000.0f), 100, 500, 2000);// 2
-		CreateEnemy(XMFLOAT3(-1000.0f, 1200.0f, 8600.0f), 100, 500, 2000);// 3
+		CreateEnemy(XMFLOAT3(-1000.0f, 500.0f, 1500.0f), 100, 500, 2000,1);// 1
+		CreateEnemy(XMFLOAT3(-1000.0f, 1200.0f, 7000.0f), 100, 500, 2000,1);// 2
+		CreateEnemy(XMFLOAT3(-1000.0f, 1200.0f, 8600.0f), 100, 500, 2000,1);// 3
 
 
 		// ビルの配置
@@ -696,27 +696,27 @@ GameScene::GameScene(EStage stage)
 		}
 
 		// 仲間の配置
-		CrewCreate(XMFLOAT3(-100.0f, 500.0f, -900.0f));// 1
-		CrewCreate(XMFLOAT3(750.0f, 500.0f, 300.0f));// 2
-		CrewCreate(XMFLOAT3(-100.0f, 500.0f, 700.0f));// 3
-		CrewCreate(XMFLOAT3(-1500.0f, 500.0f, 300.0f));// 4
-		CrewCreate(XMFLOAT3(-1900.0f, 200.0f, -500.0f));// 5
-		CrewCreate(XMFLOAT3(-2800.0f, 200.0f, 1000.0f));// 6
-		CrewCreate(XMFLOAT3(-1900.0f, 800.0f, 2000.0f));// 7
-		CrewCreate(XMFLOAT3(-1500.0f, 200.0f, 2600.0f));// 8
-		CrewCreate(XMFLOAT3(-500.0f, 800.0f, 2600.0f));// 9
-		CrewCreate(XMFLOAT3(-100.0f, 200.0f, 3100.0f));// 10
+		CrewCreate(XMFLOAT3(2900.0f, 500.0f, 5400.0f));// 1
+		//CrewCreate(XMFLOAT3(750.0f, 500.0f, 300.0f));// 2
+		//CrewCreate(XMFLOAT3(-100.0f, 500.0f, 700.0f));// 3
+		//CrewCreate(XMFLOAT3(-1500.0f, 500.0f, 300.0f));// 4
+		//CrewCreate(XMFLOAT3(-1900.0f, 200.0f, -500.0f));// 5
+		//CrewCreate(XMFLOAT3(-2800.0f, 200.0f, 1000.0f));// 6
+		//CrewCreate(XMFLOAT3(-1900.0f, 800.0f, 2000.0f));// 7
+		//CrewCreate(XMFLOAT3(-1500.0f, 200.0f, 2600.0f));// 8
+		//CrewCreate(XMFLOAT3(-500.0f, 800.0f, 2600.0f));// 9
+		//CrewCreate(XMFLOAT3(-100.0f, 200.0f, 3100.0f));// 10
 
 		// 敵の配置
-		CreateEnemy(XMFLOAT3(700.0f, 500.0f, -1200.0f), 100, 500, 2000);// 1
-		CreateEnemy(XMFLOAT3(-100.0f, 500.0f, 0.0f), 100, 500, 2000);// 2
-		CreateEnemy(XMFLOAT3(-1200.0f, 500.0f, 1000.0f), 100, 500, 2000);// 3
-		CreateEnemy(XMFLOAT3(-2200.0f, 500.0f, 2000.0f), 100, 500, 2000);// 4
-		CreateEnemy(XMFLOAT3(-2000.0f, 500.0f, 2200.0f), 100, 500, 2000);// 5
-		CreateEnemy(XMFLOAT3(-100.0f, 500.0f, 2800.0f), 100, 500, 2000);// 6
-		CreateEnemy(XMFLOAT3(200.0f, 500.0f, 3000.0f), 100, 500, 2000);// 7
-		CreateEnemy(XMFLOAT3(-1000.0f, 500.0f, 2700.0f), 100, 500, 2000);// 8
-		CreateEnemy(XMFLOAT3(-1300.0f, 500.0f, 3000.0f), 100, 500, 2000);// 9
+		CreateEnemy(XMFLOAT3(-1000.0f, 500.0f, -2200.0f), 100, 500, 10000,10);// 1
+		CreateEnemy(XMFLOAT3(2900.0f, 500.0f, 5400.0f), 100, 500, 10000,10);// 2
+		CreateEnemy(XMFLOAT3(-4800.0f, 500.0f, 8800.0f), 100, 1000, 10000,10);// 3
+		//CreateEnemy(XMFLOAT3(-2200.0f, 500.0f, 2000.0f), 100, 500, 2000);// 4
+		//CreateEnemy(XMFLOAT3(-2000.0f, 500.0f, 2200.0f), 100, 500, 2000);// 5
+		//CreateEnemy(XMFLOAT3(-100.0f, 500.0f, 2800.0f), 100, 500, 2000);// 6
+		//CreateEnemy(XMFLOAT3(200.0f, 500.0f, 3000.0f), 100, 500, 2000);// 7
+		//CreateEnemy(XMFLOAT3(-1000.0f, 500.0f, 2700.0f), 100, 500, 2000);// 8
+		//CreateEnemy(XMFLOAT3(-1300.0f, 500.0f, 3000.0f), 100, 500, 2000);// 9
 
 		// ゴールUI位置初期化
 		SetGoalUI(XMFLOAT3(-1000.0f, 1000.0f, 5500.0f), 500, 200, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);
