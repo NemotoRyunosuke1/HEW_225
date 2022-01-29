@@ -313,8 +313,8 @@ void ResultScene::Draw()
 		{
 			// Aで戻るテキスト	BG
 			SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
-			SetPolygonSize(m_sizeBackBG.x, m_sizeBackBG.y);
-			SetPolygonPos(m_posBackBG.x, m_posBackBG.y);
+			SetPolygonSize(m_sizeAReturn.x, m_sizeAReturn.y);
+			SetPolygonPos(m_posAReturn.x, m_posAReturn.y+10);
 			SetPolygonTexture(m_pTextureBackBG);
 			SetPolygonUV(0.0f, 0.0f);
 			SetPolygonFrameSize(1.0f, 1.0f);

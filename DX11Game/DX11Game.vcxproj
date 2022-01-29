@@ -215,6 +215,7 @@
     <ClCompile Include="stageSelectScene.cpp" />
     <ClCompile Include="staminaBar.cpp" />
     <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="themeUI.cpp" />
     <ClCompile Include="timerUI.cpp" />
     <ClCompile Include="titleBG.cpp" />
     <ClCompile Include="titleButton.cpp" />
@@ -279,6 +280,7 @@
     <ClInclude Include="stageSelectScene.h" />
     <ClInclude Include="staminaBar.h" />
     <ClInclude Include="Texture.h" />
+    <ClInclude Include="themeUI.h" />
     <ClInclude Include="timerUI.h" />
     <ClInclude Include="titleBG.h" />
     <ClInclude Include="titleButton.h" />

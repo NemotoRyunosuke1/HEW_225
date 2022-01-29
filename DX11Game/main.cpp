@@ -145,7 +145,7 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdL
 	if (FAILED(Init(g_hWnd, bWindow))) {
 		return -1;
 	}
-
+	ShowCursor(false);
 	// メッセージループ
 	for (;;) {
 		if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) {
@@ -168,10 +168,11 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdL
 				dwExecLastTime = dwCurrentTime;
 				// 更新処理
 				Update();
+				
+				dwFrameCount++;
 			}
 			// 描画処理
 			Draw();
-			dwFrameCount++;
 		}
 	}
 	

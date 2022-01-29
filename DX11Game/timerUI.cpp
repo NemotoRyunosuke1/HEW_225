@@ -184,6 +184,7 @@ void TimerUI::Draw()
 	case 1: SetPolygonColor(1.0f, 0.0f, 0.0f);	break;
 	default:break;
 	}
+	SetPolygonColor(1.0f, 1.0f, 1.0f);
 	SetPolygonSize(m_barSize.x * m_fRemainTimer / MAX_GAMEOVER_TIME, m_barSize.y);
 	SetPolygonPos(m_barPos.x -(m_barSize.x- m_barSize.x * m_fRemainTimer / MAX_GAMEOVER_TIME)/2, m_barPos.y);
 	SetPolygonUV(0.0f, 0.0f);
@@ -226,6 +227,7 @@ void TimerUI::Draw()
 	    case 1: SetPolygonColor(2.0f, 0.0f, 0.0f);	break;
 	    default:break;
 	    }	//É|ÉäÉSÉìÉJÉâÅ[
+		SetPolygonColor(1.0f, 1.0f, 1.0f);
 		SetPolygonSize(m_size.x, m_size.y);
 		SetPolygonUV((n % CUNT_X_NUMBER) / (float)CUNT_X_NUMBER,
 			(n / CUNT_X_NUMBER) / (float)CUNT_Y_NUMBER + ((n / CUNT_X_NUMBER) / 2));

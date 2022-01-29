@@ -9,7 +9,7 @@ GameOverSceneButton::GameOverSceneButton()
 {
 	// •Ï”‰Šú‰»
 	m_cnt = 0;
-	m_Trigger	= false;
+	m_Trigger	= true;
 	m_bRestart	= false;
 	m_bEndGame	= false;
 	m_bStageSelect = false;

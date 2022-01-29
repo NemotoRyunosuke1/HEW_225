@@ -76,6 +76,7 @@ EffectManager* EffectManager::Instance()
 
 int EffectManager::Load(const char *Create)
 {
+
 	// fileNameに基づいてエフェクトの読み込み
 	// エフェクトのデータを読み込み
 	m_effect = Effekseer::Effect::Create(m_manager, u"Assets/new_wind_jousyou.efk");				//風_上
@@ -92,6 +93,14 @@ int EffectManager::Load(const char *Create)
 
 int EffectManager::Play(EEffect Handle)
 {
+#if _DEBUG
+	// デバックの時は表示しない
+	return 0;
+#else
+
+
+#endif // _DEBUG
+
 	//// エフェクトのカメラ設定
 
 	CCamera* pCamera = CCamera::Get();

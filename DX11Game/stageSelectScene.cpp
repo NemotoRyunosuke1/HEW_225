@@ -23,6 +23,14 @@ StageSlectScene::StageSlectScene()
 	
 	m_pStageSelectBG = new StageSelectBG;
 }
+StageSlectScene::StageSlectScene(EStage stage)
+{
+	// ボタン初期化
+	m_pStageButton = new StageButton(stage);
+	StageTrrger = false;
+
+	m_pStageSelectBG = new StageSelectBG;
+}
 //=============================================================================
 // デストラクト
 //=============================================================================
