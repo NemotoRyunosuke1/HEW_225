@@ -19,8 +19,9 @@
 #define Result2			L"data/texture/80second.png"		//条件2 [80秒残し]
 #define Result3			L"data/texture/130second.png"		//条件3 [130秒残し]
 
-#define FINISH			L"data/texture/Finish.png"		//FINISH
+#define FINISH			L"data/texture/ムレキドリUIまとめ4/GOAL!_00000(2).png"		//FINISH
 #define BACK			L"data/texture/back.png"		//FINISH
+#define BACK_BG			L"data/texture/titleScene/全体選択時3.png"		//FINISH
 //=============================================================================
 // コンストラクタ
 //=============================================================================
@@ -76,7 +77,7 @@ ResultScene::ResultScene()
 
 	// フィニッシュ
 	m_posFinish = XMFLOAT3(0, 00, 0);
-	m_sizeFinish = XMFLOAT3(10, 10, 0);
+	m_sizeFinish = XMFLOAT3(400, 400, 0);
 	//// シーン遷移ロゴ
 	//m_pos8 = XMFLOAT3(0, 250, 0);
 	//m_size8 = XMFLOAT3(300, 100, 0);
@@ -86,6 +87,8 @@ ResultScene::ResultScene()
 	// Aで戻る
 	m_posAReturn = XMFLOAT3(SCREEN_WIDTH / 2.0f - 150, -SCREEN_HEIGHT / 2.0f + 50, 0);
 	m_sizeAReturn = XMFLOAT3(300,100,0);
+	m_posBackBG = XMFLOAT3(SCREEN_WIDTH / 2.0f - 150, -SCREEN_HEIGHT / 2.0f + 50, 0);
+	m_sizeBackBG = XMFLOAT3(300, 100, 0);
 	//--------------------
 	//テクスチャ読み込み
 	//--------------------
@@ -123,6 +126,7 @@ ResultScene::ResultScene()
 
 	// Aで戻るテクスチャ読み込み
 	CreateTextureFromFile(pDevice6, BACK, &m_pTextureBack);
+	CreateTextureFromFile(pDevice6, BACK_BG, &m_pTextureBackBG);
 	// シーン遷移ロゴ 
 	//ID3D11Device* pDevice1 = GetDevice();
 	//CreateTextureFromFile(pDevice1, Result, &m_pIconTexture8);
@@ -131,6 +135,7 @@ ResultScene::ResultScene()
 	m_fAlpha = 0.0f;	// 透明度
 	m_fAlphaFinish = 1.0f;
 	m_fTime = 0.0f;	//時間
+	m_fAnimTime = 0.0f;
 	m_nScore = 3;	// 星の数
 	m_bResult = false;
 	m_bResult2 = false;
@@ -138,7 +143,7 @@ ResultScene::ResultScene()
 	{
 		m_fStarAngle[i] = 0.0f;
 	}
-	for (int i = 0; i < 2; i++)
+	for (int i = 0; i < 3; i++)
 	{
 		m_bTrigger[i] = false;
 	}
@@ -179,6 +184,7 @@ ResultScene::~ResultScene()
 	// Aで戻る
 
 	SAFE_RELEASE(m_pTextureBack);
+	SAFE_RELEASE(m_pTextureBackBG);
 
 	// シーン遷移ロゴ 
 	//SAFE_RELEASE(m_pIconTexture8);
@@ -197,9 +203,9 @@ void ResultScene::Update()
 	
 	if (!m_bResult)
 	{
-		m_sizeFinish.x += 5;
-		m_sizeFinish.y += 5;
-		if (m_sizeFinish.x > 300)m_bResult2 = true;
+		m_fAnimTime += 0.4f;
+		
+		if (m_fAnimTime > 40)m_bResult = true;
 		if (m_bResult2)
 		{
 			m_fAlphaFinish -= 0.04f;
@@ -305,6 +311,14 @@ void ResultScene::Draw()
 
 		if (m_fTime > 6.3f)
 		{
+			// Aで戻るテキスト	BG
+			SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
+			SetPolygonSize(m_sizeBackBG.x, m_sizeBackBG.y);
+			SetPolygonPos(m_posBackBG.x, m_posBackBG.y);
+			SetPolygonTexture(m_pTextureBackBG);
+			SetPolygonUV(0.0f, 0.0f);
+			SetPolygonFrameSize(1.0f, 1.0f);
+			DrawPolygon(pBC);
 			// Aで戻るテキスト
 			SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
 			SetPolygonSize(m_sizeAReturn.x, m_sizeAReturn.y);
@@ -315,7 +329,7 @@ void ResultScene::Draw()
 			DrawPolygon(pBC);
 		}
 		
-
+		
 		/*
 		//　星２
 		SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
@@ -394,11 +408,13 @@ void ResultScene::Draw()
 			SetPolygonSize(m_sizeFinish.x, m_sizeFinish.y);
 			SetPolygonPos(m_posFinish.x, m_posFinish.y);
 			SetPolygonTexture(m_pTextureFinish);
-			SetPolygonUV(0.0f, 0.0f);
+			SetPolygonFrameSize(1.0f/5.0f,1.0f/9.0f);
+			SetPolygonUV((float)((int)m_fAnimTime%5)/5.0f, (float)((int)m_fAnimTime / 5) / 9.0f);
 			DrawPolygon(pBC);
 		}
 		
-	
+		SetPolygonFrameSize(1.0f, 1.0f );
+		SetPolygonUV(0.0f, 0.0f);
 
 	SetPolygonAlpha(1.0f);
 

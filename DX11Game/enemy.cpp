@@ -15,11 +15,13 @@
 #include "crew.h"
 #include "Sound.h"
 #include "enemyUI.h"
+#include "fade.h"
 
+#include "timerUI.h"
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-#define MODEL_ENEMY			"data/model/mukudorianime7.fbx"
+#define MODEL_ENEMY			"data/model/mukudorianimematome2.fbx"
 
 #define	VALUE_MOVE_ENEMY	(0.40f)		// 移動速度
 #define	RATE_MOVE_ENEMY		(0.20f)		// 移動慣性係数
@@ -60,6 +62,7 @@ struct TEnemy {
 	bool m_bAtack;
 	double dAnimTime;
 	bool m_SoundTrriger;
+	bool m_bAnimTriiger;
 };
 
 typedef struct D3DXVECTOR3 {
@@ -117,8 +120,9 @@ HRESULT InitEnemy(void)
 		g_enemy[i].m_use = false;
 		g_enemy[i].m_bAtack = false;
 		g_enemy[i].collisionSize = 500;
-		g_enemy[i].dAnimTime = 0.0f;
+		g_enemy[i].dAnimTime = 71 / 24;
 		g_enemy[i].m_SoundTrriger = false;
+		g_enemy[i].m_bAnimTriiger = false;
 			}
 
 	//CreateEnemy(XMFLOAT3(0.0f, 500.0f, 0.0f));
@@ -338,24 +342,39 @@ void UpdateEnemy(void)
 			g_enemy[i].m_pos.y += g_enemy[i].m_move.y;
 			g_enemy[i].m_pos.z += g_enemy[i].m_move.z;
 
-			g_enemy[i].dAnimTime = 0.0f;
+			g_enemy[i].dAnimTime += 0.02f;
+			if (g_enemy[i].dAnimTime > 106 / 24)g_enemy[i].dAnimTime = 71 / 24;
+
 		}
 
 		// 攻撃中
 		if (g_enemy[i].m_bAtack)
 		{
-			
+			if (!g_enemy[i].m_bAnimTriiger)
+			{
+				if (!(g_enemy[i].dAnimTime > 106 / 24 && g_enemy[i].dAnimTime < 160 / 24)) g_enemy[i].dAnimTime = 106 / 24;
+				g_enemy[i].m_bAnimTriiger = true;
+			 }
 			// アニメーション更新
 			g_enemy[i].dAnimTime += 0.02f;
 
 			// 攻撃判定時間
-			if (g_enemy[i].dAnimTime > 0.8f && g_enemy[i].dAnimTime < 1.0f)
+			if (g_enemy[i].dAnimTime > 119.0f/24 && g_enemy[i].dAnimTime < 124.0f / 24)
 			{
 			
 				// プレイヤースタン
 				if (hit2)
 				{
 					StartStanModel();	// プレイヤ―のスタンの開始
+					if (!GetModelStn())
+					{
+						TimerUI::AddTime(-15);
+					}
+					else
+					{
+						TimerUI::AddTime(0);
+					}
+					
 					//if (!g_bTrigger)
 					//{
 					//	StartEscapeCrew();	// 味方の逃走
@@ -372,10 +391,10 @@ void UpdateEnemy(void)
 			}*/
 
 			// アニメーションリセット
-			if (g_enemy[i].dAnimTime > 2.2f)
+			if (g_enemy[i].dAnimTime > 160.0f / 24)
 			{
 				g_enemy[i].m_bAtack = false;
-				g_enemy[i].dAnimTime = 0.0f;
+				g_enemy[i].dAnimTime = 106 / 24;
 			}
 		}
 
@@ -402,6 +421,10 @@ void UpdateEnemy(void)
 		else	//　プレイヤーが探索範囲に入っていないとき
 		{
 			g_enemy[i].m_SoundTrriger = false;
+
+			g_enemy[i].dAnimTime += 0.02f;
+			if (g_enemy[i].dAnimTime > 106 / 24)g_enemy[i].dAnimTime = 71 / 24;
+
 			// 初期位置にいる時
 			if (CollisionSphere(g_enemy[i].m_initPos, 200, g_enemy[i].m_pos, 200))
 			{

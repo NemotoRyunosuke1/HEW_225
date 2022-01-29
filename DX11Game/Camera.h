@@ -72,4 +72,5 @@ public:
 
 	static CCamera* Get() { return m_pCamera; }
 	static void Set(CCamera* pCamera) { m_pCamera = pCamera; }
+
 };

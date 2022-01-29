@@ -7,7 +7,7 @@
 #pragma once
 
 #include "main.h"
-#define MAX_CREW			(100)		// 味方最大数
+#define MAX_CREW			(20)		// 味方最大数
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
@@ -18,6 +18,7 @@ void DrawCrew(void);
 
 int StartChase(int i, XMFLOAT3 pos);
 void CrewCreate(XMFLOAT3 pos1);
+int AddTimeCrew();
 
 int& GetCrewCnt();
 int& GetMaxCrew();

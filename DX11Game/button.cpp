@@ -359,6 +359,52 @@ void Button::Update(EScene scene)
 
 				break;
 			case SCENE_GAMEOVER:
+				if (m_textureNum == CONTINUE1_BTN)
+				{
+					if (!m_bSoudTrigger)CreateTextureFromFile(pDevice, PATH_BUTTON_CNOTINUE2_TEXTURE, &m_pTexture);	// コンティニュー1
+
+					if (cosD > 0.8f)
+					{
+
+						CreateTextureFromFile(pDevice, PATH_BUTTON_CNOTINUE1_TEXTURE, &m_pTexture);
+
+					}
+					if (cosD < -0.8f)
+					{
+						CreateTextureFromFile(pDevice, PATH_BUTTON_CNOTINUE2_TEXTURE, &m_pTexture);	
+
+					}
+				}
+				if (m_textureNum == STAGE_SELECT1_BTN)
+				{
+					if (!m_bSoudTrigger)CreateTextureFromFile(pDevice, PATH_BUTTON_STAGESELECT2_TEXTURE, &m_pTexture);	// ステージセレクトに戻る1
+
+					if (cosD > 0.8f)
+					{
+						CreateTextureFromFile(pDevice, PATH_BUTTON_STAGESELECT1_TEXTURE, &m_pTexture);	// ステージセレクトに戻る1
+
+					}
+					if (cosD < -0.8f)
+					{
+						CreateTextureFromFile(pDevice, PATH_BUTTON_STAGESELECT2_TEXTURE, &m_pTexture);	// ステージセレクトに戻る2
+
+					}
+				}
+				if (m_textureNum == TITLEBACK1_BTN)
+				{
+					if (!m_bSoudTrigger)  CreateTextureFromFile(pDevice, PATH_BUTTON_BACKTITLE2_TEXTURE, &m_pTexture);	// ゲームをやめる選択時1
+
+					if (cosD > 0.8f)
+					{
+						CreateTextureFromFile(pDevice, PATH_BUTTON_BACKTITLE1_TEXTURE, &m_pTexture);	// ゲームをやめる選択時1
+
+					}
+					if (cosD < -0.8f)
+					{
+						CreateTextureFromFile(pDevice, PATH_BUTTON_BACKTITLE2_TEXTURE, &m_pTexture);	// ゲームをやめる選択時2
+
+					}
+				}
 				break;
 			case MAX_SCENE:
 				break;
@@ -455,6 +501,27 @@ void Button::Update(EScene scene)
 
 				break;
 			case SCENE_GAMEOVER:
+				
+				if (m_textureNum == CONTINUE1_BTN)
+				{
+					ID3D11Device* pDevice = GetDevice();
+					CreateTextureFromFile(pDevice, PATH_BUTTON_CNOTINUE1_TEXTURE, &m_pTexture);	// コンティニュー1
+
+					
+				}
+				if (m_textureNum == STAGE_SELECT1_BTN)
+				{
+					ID3D11Device* pDevice = GetDevice();
+					CreateTextureFromFile(pDevice, PATH_BUTTON_STAGESELECT1_TEXTURE, &m_pTexture);	// ステージセレクトに戻る1
+
+					
+				}
+				if (m_textureNum == TITLEBACK1_BTN)
+				{
+					ID3D11Device* pDevice = GetDevice();
+					CreateTextureFromFile(pDevice, PATH_BUTTON_BACKTITLE1_TEXTURE, &m_pTexture);	// ゲームをやめる選択時1
+
+				}
 				break;
 			case MAX_SCENE:
 				break;
