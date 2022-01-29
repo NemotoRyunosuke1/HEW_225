@@ -77,7 +77,7 @@ static TCrew		g_crew[MAX_CREW];	// 味方情報
 static int CrewCnt;
 static int g_nMaxCrew;
 static int g_nRemainCrew;
-static bool hit2[MAX_CREW];
+//static bool hit2[MAX_CREW];
 
 static bool g_CollectTrriger;
 
@@ -103,9 +103,9 @@ HRESULT InitCrew(void)
 
 	for (int i = 0; i < MAX_CREW; ++i) {
 		// 位置・回転・スケールの初期設定
-		g_crew[i].m_pos = XMFLOAT3(rand() % MAP_HIROSA - MAP_HIROSA/2,
+		/*g_crew[i].m_pos = XMFLOAT3(rand() % MAP_HIROSA - MAP_HIROSA/2,
 			rand() % 1000 + 100.0f,
-			rand() % MAP_HIROSA - MAP_HIROSA / 2);
+			rand() % MAP_HIROSA - MAP_HIROSA / 2);*/
 		g_crew[i].m_rot = XMFLOAT3(0.0f, rand() % 360 - 180.0f, 0.0f);
 		g_crew[i].m_rotDest = g_crew[i].m_rot;
 		g_crew[i].m_move = XMFLOAT3(
@@ -116,7 +116,7 @@ HRESULT InitCrew(void)
 		g_crew[i].m_use = false;
 		// 丸影の生成
 		g_crew[i].m_nShadow = CreateShadow(g_crew[i].m_pos, 12.0f);
-		hit2[i] = false;
+		//hit2[i] = false;
 
 		g_crew[i].m_animTime = 0;	// アニメーションタイム
 
