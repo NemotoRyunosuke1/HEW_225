@@ -697,6 +697,7 @@ void UpdateModel(void)
 		g_accModel.x += 3;
 		g_accModel.y += 3;
 		g_accModel.z += 3;
+		g_rotDestModel.z += 30;
 		CSound::Play(SE_SWING);
 		g_bWing = true;		
 		g_stm -= WING_STN_DICREASE;	// スタミナ減少
