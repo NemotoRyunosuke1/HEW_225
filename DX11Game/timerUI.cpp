@@ -7,7 +7,7 @@
 #endif // _DEBUG
 
 
-#define GAMEOVER_TIME (20)
+#define GAMEOVER_TIME (60)
 #define MAX_GAMEOVER_TIME (180)
 #define BIRD_CUNT_TEXTURE L"data/texture/a.png"
 #define BIRD_STAR_TEXTURE L"data/texture/êØÉÅÉ_Éã1.png"
