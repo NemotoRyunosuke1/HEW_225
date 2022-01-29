@@ -40,6 +40,30 @@ StageButton::StageButton()
 	m_cnt = 1;	// ボタンカウント(この変数の値によってボタンの選択状況が変わる) 
 
 }
+StageButton::StageButton(EStage stage)
+{
+	// ボタンメモリ確保
+	m_pButton = new Button[MAX_BUTTON];
+	//m_pButton[0].CreateButton(XMFLOAT3(280.0f, 300.0f, 0.0f), XMFLOAT3(SCREEN_WIDTH / 2 -100, -300.0f, 0.0f)   , BACK_BTN);	// 戻るボタン
+	m_pButton[1].CreateButton(XMFLOAT3(180.0f, 300.0f, 0.0f), XMFLOAT3(-400, -100.0f, 0.0f), STAGE_1_BTN);	// ステージ1ボタン												
+	m_pButton[2].CreateButton(XMFLOAT3(180.0f, 300.0f, 0.0f), XMFLOAT3(-200, 100.0f, 0.0f), STAGE_2_BTN);	// ステージ2ボタン	
+	m_pButton[3].CreateButton(XMFLOAT3(180.0f, 300.0f, 0.0f), XMFLOAT3(0, -100.0f, 0.0f), STAGE_3_BTN);	// ステージ3ボタン	
+	m_pButton[4].CreateButton(XMFLOAT3(180.0f, 300.0f, 0.0f), XMFLOAT3(200, 100.0f, 0.0f), STAGE_4_BTN);	// ステージ4ボタン	
+	m_pButton[5].CreateButton(XMFLOAT3(180.0f, 300.0f, 0.0f), XMFLOAT3(400, -100.0f, 0.0f), STAGE_5_BTN);	// ステージ5ボタン	
+
+	// ---変数初期化---
+
+	// 次のシーンのフラグ(いずれかのフラグが立つとそのフラグに基づいて次のシーンに進む)※例）ステージ1がtrueの時ゲームシーンではステージ1になっている
+	m_bBack = false;	// 戻るフラグ
+	m_bStage1 = false;	// ステージ1フラグ
+	m_bStage2 = false;	// ステージ2フラグ
+	m_bStage3 = false;	// ステージ3フラグ
+	m_bStage4 = false;	// ステージ4フラグ
+	m_bStage5 = false;	// ステージ5フラグ
+
+	m_cnt = stage+1;	// ボタンカウント(この変数の値によってボタンの選択状況が変わる) 
+
+}
 //=============================================================================
 // デストラクタ
 //=============================================================================

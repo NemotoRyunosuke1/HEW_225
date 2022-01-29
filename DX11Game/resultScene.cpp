@@ -15,9 +15,9 @@
 #define Star3			L"data/texture/StarIcon.png"		//星３
 
 #define Result			L"data/texture/ムレキドリUIまとめ2/リザルト.png"		//リザルトロゴ
-#define Result1			L"data/texture/40second.png"		//条件1 [40秒残し]
-#define Result2			L"data/texture/80second.png"		//条件2 [80秒残し]
-#define Result3			L"data/texture/130second.png"		//条件3 [130秒残し]
+#define Result1			L"data/texture/resulttime/40second.png"		//条件1 [40秒残し]
+#define Result2			L"data/texture/resulttime/80second.png"		//条件2 [80秒残し]
+#define Result3			L"data/texture/resulttime/130second.png"		//条件3 [130秒残し]
 
 #define FINISH			L"data/texture/ムレキドリUIまとめ4/GOAL!_00000(2).png"		//FINISH
 #define BACK			L"data/texture/back.png"		//FINISH
@@ -313,8 +313,8 @@ void ResultScene::Draw()
 		{
 			// Aで戻るテキスト	BG
 			SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
-			SetPolygonSize(m_sizeBackBG.x, m_sizeBackBG.y);
-			SetPolygonPos(m_posBackBG.x, m_posBackBG.y);
+			SetPolygonSize(m_sizeAReturn.x, m_sizeAReturn.y);
+			SetPolygonPos(m_posAReturn.x, m_posAReturn.y+10);
 			SetPolygonTexture(m_pTextureBackBG);
 			SetPolygonUV(0.0f, 0.0f);
 			SetPolygonFrameSize(1.0f, 1.0f);

@@ -1,7 +1,6 @@
 #include "gameOverScene.h"
 #include "debugproc.h"
-#include "Sound.h"
-#include "input.h"
+
 
  
 
@@ -9,6 +8,7 @@ GameOverScene::GameOverScene()
 {
 	m_pGameOverSceneButton = new GameOverSceneButton;
 	m_pGameOverSceneBG = new GameOverSceneBG;
+	m_bTrigger = false;
 }
 GameOverScene::~GameOverScene()
 {
@@ -26,31 +26,36 @@ void GameOverScene::Update()
 	PrintDebugProc("\n");
 
 #endif
-	  
-	// シーン遷移
-	// リスタート
-	if (m_pGameOverSceneButton->GetRestart())
-	{
-		StartFadeOut(SCENE_GAME);
-	}
-
-	// ステージセレクト
-	if (m_pGameOverSceneButton->GetStageSelect())
-	{
-		StartFadeOut(SCENE_STAGE_SELECT);
-	}
-
-	// タイトルに戻る
-	if (m_pGameOverSceneButton->GetEndGame())
-	{
-		StartFadeOut(SCENE_TITLE);
-		//PostQuitMessage(0);	
-	}
-
 	// ボタン更新
 	m_pGameOverSceneButton->Update();
 
+	// 背景更新
 	m_pGameOverSceneBG->Update();
+
+	// シーン遷移
+	// リスタート
+	if (m_pGameOverSceneButton->GetRestart() &&!m_bTrigger)
+	{
+		StartFadeOut(SCENE_GAME);
+		m_bTrigger = true;
+	}
+
+	// ステージセレクト
+	if (m_pGameOverSceneButton->GetStageSelect() && !m_bTrigger)
+	{
+		StartFadeOut(SCENE_STAGE_SELECT);
+		m_bTrigger = true;
+	}
+
+	// タイトルに戻る
+	if (m_pGameOverSceneButton->GetEndGame() && !m_bTrigger)
+	{
+		StartFadeOut(SCENE_TITLE);
+		m_bTrigger = true;
+		//PostQuitMessage(0);	// ゲーム終了	
+	}
+
+	
 }
 void GameOverScene::Draw()
 {

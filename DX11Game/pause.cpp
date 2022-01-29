@@ -4,6 +4,9 @@
 #define PATH_PAUSE_BG	L"data/texture/ムレキドリUIまとめ2/ポーズ中スライド.png"
 #define PATH_PAUSE_TEXT	L"data/texture/ムレキドリUIまとめ2/ポーズ中.png"
 #define MAX_BUTTON (3)
+#define Result1			L"data/texture/resulttime/40second.png"		//条件1 [40秒残し]
+#define Result2			L"data/texture/resulttime/80second.png"		//条件2 [80秒残し]
+#define Result3			L"data/texture/resulttime/130second.png"		//条件3 [130秒残し]
 
 Pause::Pause()
 {
@@ -20,6 +23,9 @@ Pause::Pause()
 	CreateTextureFromFile(pDevice, PATH_PAUSE_TEXT, &m_pTextureText);
 	m_posBG = XMFLOAT3(0.0f,0.0f,0.0f);
 	m_sizeBG = XMFLOAT3(1280, 760, 0.0f);
+	CreateTextureFromFile(pDevice, Result1, &m_pThemeTex1);
+	CreateTextureFromFile(pDevice, Result2, &m_pThemeTex2);
+	CreateTextureFromFile(pDevice, Result3, &m_pThemeTex3);
 
 	// ボタンメモリ確保
 	m_pButton = new Button[MAX_BUTTON];
@@ -28,7 +34,8 @@ Pause::Pause()
 	m_pButton[1].CreateButton(XMFLOAT3(600.0f, 350.0f, 0.0f), XMFLOAT3(FULLSCREEN_WIDTH / 4 - 30, 0.0f, 0.0f), RESTART_BTN);  // やり直す
 	m_pButton[2].CreateButton(XMFLOAT3(600.0f, 350.0f, 0.0f), XMFLOAT3(FULLSCREEN_WIDTH / 4 - 30, -210.0f, 0.0f), BACK_STAGE_SELECT_BTN);  // あきらめる
 
-
+	m_pos = XMFLOAT3(-SCREEN_WIDTH / 2 + 280, -100.0f, 200.0f);
+	m_size = XMFLOAT3(500, 180, 0);
 }
 Pause::~Pause()
 {
@@ -37,6 +44,9 @@ Pause::~Pause()
 	
 	SAFE_RELEASE(m_pTextureBG);
 	SAFE_RELEASE(m_pTextureText);
+	SAFE_RELEASE(m_pThemeTex1);
+	SAFE_RELEASE(m_pThemeTex2);
+	SAFE_RELEASE(m_pThemeTex3);
 }
 
 void Pause::Update()
@@ -169,11 +179,37 @@ void Pause::Draw()
 	//テキスト
 	SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
 	SetPolygonSize(500, 300);
-	SetPolygonPos(-300, 0);
+	SetPolygonPos(-300, 100);
 	SetPolygonTexture(m_pTextureText);
 	SetPolygonUV(0.0f, 0.0f);
 	SetPolygonAlpha(1.0f);
 	DrawPolygon(pBC);
+
+	// お題1
+	SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
+	SetPolygonSize(m_size.x, m_size.y);	// ポリゴンサイズ
+	SetPolygonPos(m_pos.x, m_pos.y);	// ポリゴン位置
+	SetPolygonTexture(m_pThemeTex1);	// ポリゴンテクスチャ
+	SetPolygonAlpha(1.0f);	// ポリゴン透明度
+	SetPolygonUV(0.0f, 0.0f);	// ポリゴンテクスチャ位置
+	DrawPolygon(pBC);			// ポリゴン描画
+	// お題1
+	SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
+	SetPolygonSize(m_size.x, m_size.y);	// ポリゴンサイズ
+	SetPolygonPos(m_pos.x, m_pos.y - m_size.y/2);	// ポリゴン位置
+	SetPolygonTexture(m_pThemeTex2);	// ポリゴンテクスチャ
+	SetPolygonAlpha(1.0f);	// ポリゴン透明度
+	SetPolygonUV(0.0f, 0.0f);	// ポリゴンテクスチャ位置
+	DrawPolygon(pBC);			// ポリゴン描画
+// お題1
+	SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
+	SetPolygonSize(m_size.x, m_size.y);	// ポリゴンサイズ
+	SetPolygonPos(m_pos.x, m_pos.y - m_size.y/2 * 2);	// ポリゴン位置
+	SetPolygonTexture(m_pThemeTex3);	// ポリゴンテクスチャ
+	SetPolygonAlpha(1.0f);	// ポリゴン透明度
+	SetPolygonUV(0.0f, 0.0f);	// ポリゴンテクスチャ位置
+	DrawPolygon(pBC);			// ポリゴン描画
+
 
 	// ボタン描画
 	for (int i = 0; i < MAX_BUTTON; i++)
