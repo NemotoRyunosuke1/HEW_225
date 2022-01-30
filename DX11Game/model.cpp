@@ -598,6 +598,7 @@ void UpdateModel(void)
 		{
 			g_bWindDelay = false;
 			g_rotDestModel.x = AUTO_FALL_ROT;
+
 		}
 	}
 	// ÉLÅ[ê˘âÒ
