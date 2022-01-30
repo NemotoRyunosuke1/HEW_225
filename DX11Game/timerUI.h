@@ -6,7 +6,7 @@ class TimerUI :public Object
 {
 public:
 	TimerUI();
-	TimerUI(float gameOverTime,float m_fStar1Time,float m_fStar2Time,float m_fStar3Time);
+	TimerUI(float initTime,float gameOverTime,float m_fStar1Time,float m_fStar2Time,float m_fStar3Time);
 	~TimerUI();
 
 	void Update();
@@ -23,7 +23,7 @@ private:
 	float m_timer;
 	float m_fRemainTimer;
 	float m_timerVessel;
-
+	float m_initTime;
 	
 	float m_fGameOverTime;
 	float m_fStarTime[3];
