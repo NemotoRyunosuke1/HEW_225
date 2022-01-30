@@ -1113,10 +1113,9 @@ void GameScene::Draw()
 	m_pWindManager->Draw();
 #endif
 	//m_pWindManager->Draw();
+
 	// モデル描画
 	DrawModel();
-
-	
 	
 	// 2D描画
 	// Zバッファ無効(Zチェック無&Z更新無)
