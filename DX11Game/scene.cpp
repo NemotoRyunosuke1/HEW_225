@@ -28,9 +28,9 @@ Scene::Scene()
 {
 #if _DEBUG
 	// ゲームの開始するときのシーン
-	m_eScene = SCENE_GAME;
+	m_eScene = SCENE_GAMEOVER;
 	// ステージ初期化
-	m_eStage = STAGE_1;
+	m_eStage = STAGE_5;
 #else
 	// ゲームの開始するときのシーン
 	m_eScene = SCENE_TITLE;
@@ -71,6 +71,9 @@ Scene::Scene()
 
 	// フェード初期化
 	InitFade();
+
+	// カーソル固定
+	SetCursorPos(0.0f, 0.0f);
 }
 
 //=============================================================================
@@ -119,20 +122,20 @@ void Scene::Update()
 	// サウンド更新
 	CSound::Update();
 	
-
+	
 
 	switch (m_eScene)
 	{
 	case SCENE_TITLE:
 		// カーソウル描画
-		ShowCursor(true);
+		//ShowCursor(true);
 		CSound::Play(BGM_000); //タイトルBGM
 		m_pTitleScene->Update();
 		break;
 
 	case SCENE_STAGE_SELECT:
 		// カーソウル描画
-		ShowCursor(true);
+		//ShowCursor(true);
 		CSound::Play(BGM_000); //タイトルBGM
 		//CSound::Play(BGM_004);//セレクトBGM
 		m_pStageSelectScene->Update();
@@ -152,7 +155,7 @@ void Scene::Update()
 
 	case SCENE_GAMEOVER:
 		// カーソウル描画
-		ShowCursor(true);
+		//ShowCursor(true);
 		CSound::Play(BGM_003);
 		m_pGameOverScene->Update();
 		break;
@@ -238,7 +241,7 @@ void Scene::Draw()
 
 void Scene::SetScene(EScene eScene)
 {	
-	SetCursorPos(0.0f,0.0f);
+
 	//終了処理
 	switch (m_eScene)
 	{
@@ -257,6 +260,7 @@ void Scene::SetScene(EScene eScene)
 
 	case SCENE_GAME://ゲームシーン
 		CSound::Stop(GAME_BGM_001);//ゲームBGMストップ
+		//m_pGameScene->SetStage(m_pGameScene->GetStage());
 		delete m_pGameScene;
 		break;
 
@@ -266,8 +270,9 @@ void Scene::SetScene(EScene eScene)
 		break;
 
 	case SCENE_GAMEOVER:
-		m_pGameScene->SetStage(m_pGameScene->GetStage());
+		
 		CSound::Stop(BGM_003);
+		
 		delete m_pGameOverScene;
 		break;
 
@@ -288,7 +293,7 @@ void Scene::SetScene(EScene eScene)
 		break;
 
 	case SCENE_STAGE_SELECT://メニューシーン
-		m_pStageSelectScene = new StageSlectScene;
+		m_pStageSelectScene = new StageSlectScene(m_pGameScene->GetStage());
 		break;
 
 	case SCENE_GAME://ゲームシーン

@@ -52,13 +52,17 @@ struct TEnemy {
 	XMFLOAT3	m_rotDest;	// 目的の向き
 	XMFLOAT3	m_move;		// 移動量
 	XMFLOAT3	m_scr;		// スケール
-	float collisionSize;	// 当たり判定サイズ
+	float m_searchenemyrange;	// 索敵範囲
 	XMFLOAT4X4	m_mtxWorld;	// ワールドマトリックス
 
-	int			m_nShadow;	// 丸影番号
+	int m_hitrange; 		// 当たり判定範囲
+	int m_canserange;		// 追跡範囲
 
+	int			m_nShadow;	// 丸影番号
+	float m_fTime;
 	bool m_catch;
 	bool m_use;
+	bool m_sacchi;
 	bool m_bAtack;
 	double dAnimTime;
 	bool m_SoundTrriger;
@@ -118,11 +122,13 @@ HRESULT InitEnemy(void)
 		g_enemy[i].m_nShadow = CreateShadow(g_enemy[i].m_pos, 12.0f);
 		g_enemy[i].m_scr = XMFLOAT3(20.0f,20.0f,20.0f);
 		g_enemy[i].m_use = false;
+		g_enemy[i].m_sacchi = false;
 		g_enemy[i].m_bAtack = false;
-		g_enemy[i].collisionSize = 500;
+		g_enemy[i].m_searchenemyrange = 500;
 		g_enemy[i].dAnimTime = 71 / 24;
 		g_enemy[i].m_SoundTrriger = false;
 		g_enemy[i].m_bAnimTriiger = false;
+		g_enemy[i].m_fTime = 0.0f;
 			}
 
 	//CreateEnemy(XMFLOAT3(0.0f, 500.0f, 0.0f));
@@ -170,7 +176,7 @@ void UpdateEnemy(void)
 		g_enemy[i].m_pos.y += g_enemy[i].m_move.y;
 		g_enemy[i].m_pos.z += g_enemy[i].m_move.z;
 */
-		bool hit = CollisionSphere(g_enemy[i].m_pos, g_enemy[i].collisionSize, modelPos, 50.0f);
+		bool hit = CollisionSphere(g_enemy[i].m_pos, g_enemy[i].m_searchenemyrange, modelPos, 50.0f);
 		
 
 		//// 壁にぶつかった
@@ -318,11 +324,26 @@ void UpdateEnemy(void)
 	int EnemyStartChase(int i, XMFLOAT3 pos)
 	{
 		// 索敵範囲
-		bool hit = CollisionSphere(g_enemy[i].m_initPos, g_enemy[i].collisionSize, pos, 50.0f);
+		bool hit = CollisionSphere(g_enemy[i].m_initPos, g_enemy[i].m_searchenemyrange, pos, 50.0f);
 
 		// プレイヤーとの当たり判定
-		bool hit2 = CollisionSphere(pos, 100, g_enemy[i].m_pos, 50.0f);
+		bool hit2 = CollisionSphere(pos, g_enemy[i].m_hitrange, g_enemy[i].m_pos, 50.0f);
 
+		// 追跡範囲
+		bool hit3 = CollisionSphere(g_enemy[i].m_initPos, g_enemy[i].m_canserange, pos, 50.0f);
+
+		// 察知フラグ
+		if (hit)
+		{
+			g_enemy[i].m_sacchi = true;
+		}
+		if (g_enemy[i].m_sacchi)
+		{
+			if (!hit3)
+			{
+				g_enemy[i].m_sacchi = false;
+			}
+		}
 		// プレイヤーと当たったら
 		if (hit2)
 		{
@@ -365,7 +386,7 @@ void UpdateEnemy(void)
 				// プレイヤースタン
 				if (hit2)
 				{
-					StartStanModel();	// プレイヤ―のスタンの開始
+					
 					if (!GetModelStn())
 					{
 						TimerUI::AddTime(-15);
@@ -374,7 +395,7 @@ void UpdateEnemy(void)
 					{
 						TimerUI::AddTime(0);
 					}
-					
+					StartStanModel();	// プレイヤ―のスタンの開始
 					//if (!g_bTrigger)
 					//{
 					//	StartEscapeCrew();	// 味方の逃走
@@ -399,7 +420,7 @@ void UpdateEnemy(void)
 		}
 
 		// プレイヤーが探索範囲に入ったとき
-		if (hit)
+		if (g_enemy[i].m_sacchi)
 		{
 			// プレイヤーを見る処理
 			g_enemy[i].m_rotDest.y = atan2( g_enemy[i].m_pos.x - pos.x,g_enemy[i].m_pos.z -pos.z)* 180/ PI;
@@ -481,7 +502,7 @@ void UpdateEnemy(void)
 		}	
 	}
 
-	void CreateEnemy(XMFLOAT3 pos)
+	void CreateEnemy(XMFLOAT3 pos,int hitrange,float searchenemyrange,int canserange)
 	{
 		ID3D11Device* pDevice = GetDevice();
 		ID3D11DeviceContext* pDeviceContext = GetDeviceContext();
@@ -495,7 +516,9 @@ void UpdateEnemy(void)
 			}
 			g_enemy[i].m_pos = g_enemy[i].m_initPos = pos;
 			g_enemy[i].m_use = true;
-
+			g_enemy[i].m_hitrange = hitrange;
+			g_enemy[i].m_searchenemyrange = searchenemyrange;
+			g_enemy[i].m_canserange = canserange;
 			break;
 		}
 		
@@ -509,27 +532,27 @@ void UpdateEnemy(void)
 			// 当たったらそこで止まる処理
 			if (bAout)	// size2を使わないとき
 			{
-				if (g_enemy[i].m_pos.x + g_enemy[i].collisionSize / 2 > pos.x - size1.x / 2)
+				if (g_enemy[i].m_pos.x + g_enemy[i].m_searchenemyrange / 2 > pos.x - size1.x / 2)
 				{
 					g_enemy[i].m_pos.x = pos.x - size1.x / 2;
 				}
-				if (g_enemy[i].m_pos.x - g_enemy[i].collisionSize / 2 < pos.x + size1.x / 2)
+				if (g_enemy[i].m_pos.x - g_enemy[i].m_searchenemyrange / 2 < pos.x + size1.x / 2)
 				{
 					g_enemy[i].m_pos.x = pos.x + size1.x / 2;
 				}
-				if (g_enemy[i].m_pos.y + g_enemy[i].collisionSize / 2 > pos.y - size1.y / 2)
+				if (g_enemy[i].m_pos.y + g_enemy[i].m_searchenemyrange / 2 > pos.y - size1.y / 2)
 				{
 					g_enemy[i].m_pos.y = pos.y - size1.y / 2;
 				}
-				if (g_enemy[i].m_pos.y - g_enemy[i].collisionSize / 2 < pos.y + size1.y / 2)
+				if (g_enemy[i].m_pos.y - g_enemy[i].m_searchenemyrange / 2 < pos.y + size1.y / 2)
 				{
 					g_enemy[i].m_pos.y = pos.x + size1.y / 2;
 				}
-				if (g_enemy[i].m_pos.z + g_enemy[i].collisionSize / 2 > pos.z - size1.z / 2)
+				if (g_enemy[i].m_pos.z + g_enemy[i].m_searchenemyrange / 2 > pos.z - size1.z / 2)
 				{
 					g_enemy[i].m_pos.z = pos.y - size1.z / 2;
 				}
-				if (g_enemy[i].m_pos.z - g_enemy[i].collisionSize / 2 < pos.z + size1.z / 2)
+				if (g_enemy[i].m_pos.z - g_enemy[i].m_searchenemyrange / 2 < pos.z + size1.z / 2)
 				{
 					g_enemy[i].m_pos.z = pos.x + size1.z / 2;
 				}
@@ -538,27 +561,27 @@ void UpdateEnemy(void)
 			{
 				if (g_enemy[i].m_pos.x > pos.x + size2.x)
 				{
-					g_enemy[i].m_pos.x = pos.x + size2.x + g_enemy[i].collisionSize / 2;
+					g_enemy[i].m_pos.x = pos.x + size2.x + g_enemy[i].m_searchenemyrange / 2;
 				}
 				if (g_enemy[i].m_pos.x < pos.x + size1.x)
 				{
-					g_enemy[i].m_pos.x = pos.x + size1.x - g_enemy[i].collisionSize / 2;
+					g_enemy[i].m_pos.x = pos.x + size1.x - g_enemy[i].m_searchenemyrange / 2;
 				}
-				if (g_enemy[i].m_pos.y + g_enemy[i].collisionSize / 2 > pos.y + size1.y / 2)
+				if (g_enemy[i].m_pos.y + g_enemy[i].m_searchenemyrange / 2 > pos.y + size1.y / 2)
 				{
 					//g_enemy[i].m_pos.y = pos.y + size1.y / 2;
 				}
-				if (g_enemy[i].m_pos.y - g_enemy[i].collisionSize / 2 < pos.y + size2.y &&g_enemy[i].m_pos.x  < pos.x + size2.x&&g_enemy[i].m_pos.x > pos.x + size1.x&&g_enemy[i].m_pos.z > pos.z + size1.z&&g_enemy[i].m_pos.z < pos.z + size2.z)
+				if (g_enemy[i].m_pos.y - g_enemy[i].m_searchenemyrange / 2 < pos.y + size2.y &&g_enemy[i].m_pos.x  < pos.x + size2.x&&g_enemy[i].m_pos.x > pos.x + size1.x&&g_enemy[i].m_pos.z > pos.z + size1.z&&g_enemy[i].m_pos.z < pos.z + size2.z)
 				{
-					g_enemy[i].m_pos.y = pos.y + size2.y + g_enemy[i].collisionSize / 2;
+					g_enemy[i].m_pos.y = pos.y + size2.y + g_enemy[i].m_searchenemyrange / 2;
 				}
 				if (g_enemy[i].m_pos.z < pos.z + size1.z)
 				{
-					g_enemy[i].m_pos.z = pos.z + size1.z - g_enemy[i].collisionSize / 2;
+					g_enemy[i].m_pos.z = pos.z + size1.z - g_enemy[i].m_searchenemyrange / 2;
 				}
 				if (g_enemy[i].m_pos.z > pos.z + size2.z)
 				{
-					g_enemy[i].m_pos.z = pos.z + size2.z + g_enemy[i].collisionSize / 2;
+					g_enemy[i].m_pos.z = pos.z + size2.z + g_enemy[i].m_searchenemyrange / 2;
 				}
 			}
 

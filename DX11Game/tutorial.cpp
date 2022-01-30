@@ -332,7 +332,7 @@ void Tutorial::Update(EStage stage)
 		break;
 	case STAGE_3:
 		// ìGçUåÇTips
-		if (!m_bPopupNum[10] && CollisionAABB(GetModelPos(), XMFLOAT3(10, 1000, 10), GetModelPos(), XMFLOAT3(100, 1000, 100)))
+		if (!m_bPopupNum[10] && CollisionAABB(GetModelPos(), XMFLOAT3(10, 1000, 10), XMFLOAT3(-1000, 600, -1500), XMFLOAT3(100, 1000, 100)))
 		{
 			//CreateTextureFromFile(pDevice, PATH_POPUP5_TEXTURE, &m_pTexture);
 			m_bPopupNum[10] = true;

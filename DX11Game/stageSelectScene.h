@@ -8,6 +8,7 @@ class StageSlectScene : public SceneBase
 {
 public:
 	StageSlectScene();
+	StageSlectScene(EStage stage);
 	~StageSlectScene();
 
 	void Update();
