@@ -38,7 +38,7 @@ EStage GameScene::m_eStage = STAGE_1;
 
 bool g_GoalTrigger;
 float g_BGMSound;
-
+static bool g_bUI;
 //=============================================================================
 // 初期化処理　※多分使わん、念のため
 //=============================================================================
@@ -198,6 +198,7 @@ GameScene::GameScene(EStage stage)
 	m_bTrigger_result = false;
 	g_GoalTrigger = false;	//ゴールトリガー初期化	
 	m_eStage = stage;
+	g_bUI = false;
 
 	EffectManager::SetStage(m_eStage);
 
@@ -827,6 +828,18 @@ void GameScene::Update()
 	CSound::SetVolume(GAME_BGM_001, 0.2f);
 	CSound::Play(GAME_BGM_001);
 	
+	if (GetKeyTrigger(VK_O))
+	{
+		if (g_bUI)
+		{
+			g_bUI = false;
+		}
+		else
+		{
+			g_bUI = true;
+		}
+	}
+
 	// ゴールフラグが立った時
 	if (m_bGoal)
 	{
@@ -1137,7 +1150,12 @@ void GameScene::Draw()
 	// Zバッファ無効(Zチェック無&Z更新無)
 	SetZBuffer(false);
 
+	
+
+	if (g_bUI)return;
 	//m_pThemeUI->Draw();
+
+
 
 	//　敵UI
 	ENEMY_UI->Draw();
