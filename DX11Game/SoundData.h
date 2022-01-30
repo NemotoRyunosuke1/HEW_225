@@ -26,6 +26,8 @@ enum eSE {
 	SE_PAPER,       // 紙音
 	SE_GOAL,        // ゴール音
 	SE_STER,        // スター音
+	SE_TIMEUP,      // タイムアップ音
+	SE_HEAL,      // タイムアップ音
 
 
 	MAX_SE

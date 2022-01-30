@@ -23,6 +23,7 @@ private:
 	float m_fRemainTimer;
 	float m_timerVessel;
 
+	bool m_bTrigger;
 	
 	float m_fGameOverTime;
 	float m_fStarTime[3];

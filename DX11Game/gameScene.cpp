@@ -670,7 +670,7 @@ void GameScene::Update()
 	PrintDebugProc("\n");
 #endif
 	CSound::SetVolume(GAME_BGM_001, 0.2f);
-	CSound::Play(GAME_BGM_001);
+	//CSound::Play(GAME_BGM_001);
 	//スタートタイマー
 	m_fCurrentTime = (float)timeGetTime();
 	m_timer = (m_fCurrentTime - m_fRemainTime) / 1000;

@@ -362,6 +362,7 @@ void UpdateModel(void)
 		if (!g_bWingSETrigger)
 		{
 			g_bWingSETrigger = true;
+			CSound::SetVolume(SE_SWING, 100.0f);
 			CSound::Play(SE_SWING);
 		}	
 	}
@@ -678,6 +679,7 @@ void UpdateModel(void)
 		g_accModel.z += 3;
 		//g_rotDestModel.y += 1.0f * stickX /80 ;
 		g_rotDestModel.z += 30;
+		CSound::SetVolume(SE_SWING, 100.0f);
 		CSound::Play(SE_SWING);
 		g_bWing = true;
 		g_stm -= WING_STN_DICREASE;	// スタミナ減少
@@ -692,6 +694,7 @@ void UpdateModel(void)
 		g_accModel.x += 3;
 		g_accModel.y += 3;
 		g_accModel.z += 3;
+		CSound::SetVolume(SE_SWING, 100.0f);
 		CSound::Play(SE_SWING);
 		g_bWing = true;		
 		g_stm -= WING_STN_DICREASE;	// スタミナ減少
@@ -964,6 +967,7 @@ void UpdateModel(void)
 			if (!g_bStickTrigger)
 			{
 				g_fOverHeartRecoverySpeed = OVERHEART_RECOVERY_SPEED;
+				CSound::Play(SE_HEAL);
 				g_bStickTrigger = true;
 			}
 			else
@@ -976,6 +980,7 @@ void UpdateModel(void)
 			if (!g_bStickTrigger)
 			{
 				g_fOverHeartRecoverySpeed = OVERHEART_RECOVERY_SPEED;
+				CSound::Play(SE_HEAL);
 				g_bStickTrigger = true;
 			}
 			else
@@ -988,6 +993,7 @@ void UpdateModel(void)
 			if (!g_bStickTrigger)
 			{
 				g_fOverHeartRecoverySpeed = OVERHEART_RECOVERY_SPEED;
+				CSound::Play(SE_HEAL);
 				g_bStickTrigger = true;
 			}
 			else
@@ -1000,6 +1006,7 @@ void UpdateModel(void)
 			if (!g_bStickTrigger)
 			{
 				g_fOverHeartRecoverySpeed = OVERHEART_RECOVERY_SPEED;
+				CSound::Play(SE_HEAL);
 				g_bStickTrigger = true;
 			}
 			else
@@ -1012,6 +1019,7 @@ void UpdateModel(void)
 			if (!g_bStickTrigger)
 			{
 				g_fOverHeartRecoverySpeed = OVERHEART_RECOVERY_SPEED;
+				CSound::Play(SE_HEAL);
 				g_bStickTrigger = true;
 			}
 			else

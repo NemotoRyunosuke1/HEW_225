@@ -1,5 +1,6 @@
 #include "timerUI.h"
 #include "fade.h"
+#include "Sound.h"
 
 #define GAMEOVER_TIME (20)
 #define MAX_GAMEOVER_TIME (180)
@@ -39,6 +40,7 @@ TimerUI::TimerUI()
 	m_fRemainTimer = GAMEOVER_TIME;
 	m_nScoreNum = 3;	// 星野数
 	m_timer = 0;
+	m_bTrigger = false;
 }
 TimerUI::TimerUI(float gameOverTime, float m_fStar1Time, float m_fStar2Time, float m_fStar3Time)
 {
@@ -66,6 +68,8 @@ TimerUI::TimerUI(float gameOverTime, float m_fStar1Time, float m_fStar2Time, flo
 	m_fRemainTimer = GAMEOVER_TIME;
 	m_nScoreNum = 3;	// 星野数
 	m_timer = 0;
+
+	m_bTrigger = false;
 }
 TimerUI::~TimerUI()
 {
@@ -101,7 +105,14 @@ void TimerUI::Update()
 	// タイムオーバー
 	if (m_fRemainTimer < 0)
 	{
+		if (!m_bTrigger)
+		{
+			CSound::SetVolume(SE_TIMEUP, 1.0f);
+			CSound::Play(SE_TIMEUP);
+			m_bTrigger = true;
+		}
 		StartFadeOut(SCENE_GAMEOVER);
+
 	}
 }
 void TimerUI::Draw()
