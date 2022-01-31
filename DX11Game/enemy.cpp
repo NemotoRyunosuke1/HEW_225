@@ -333,6 +333,8 @@ void UpdateEnemy(void)
 		// 追跡範囲
 		bool hit3 = CollisionSphere(g_enemy[i].m_initPos, g_enemy[i].m_canserange, pos, 50.0f);
 
+		bool hit4 = CollisionSphere(pos, 100, g_enemy[i].m_pos, 50.0f);
+
 		// 察知フラグ
 		if (hit)
 		{
@@ -385,7 +387,7 @@ void UpdateEnemy(void)
 			{
 			
 				// プレイヤースタン
-				if (hit2)
+				if (hit4)
 				{
 					
 					if (!GetModelStn())
