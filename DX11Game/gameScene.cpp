@@ -1124,6 +1124,8 @@ void GameScene::Draw()
 		m_pBuliding[i].Draw();
 	}
 	
+	
+	
 	EffectManager::Play(NONE_EFFECT);
 	//EffectManager::Play(ACCELERATION_EFFECT);
 
