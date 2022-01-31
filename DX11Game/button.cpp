@@ -16,8 +16,11 @@
 #define PATH_BUTTON_SELECT_TEXTURE1 L"data/texture/scenesenni/stageselect/selectstage1.png"
 #define PATH_BUTTON_BACK_TEXTURE L"data/texture/scenesenni/stageselect/selectback.png"
 #define PATH_BUTTON_PAUSE_TEXTURE1 L"data/texture/ムレキドリUIまとめ2/やり直す2.png"
-#define PATH_BUTTON_PAUSE_TEXTURE2 L"data/texture/ムレキドリUIまとめ2/つづける2.png"
+#define PATH_BUTTON_PAUSE1_TEXTURE1 L"data/texture/ムレキドリUIまとめ2/やり直す1.png"
+#define PATH_BUTTON_PAUSE1_TEXTURE2 L"data/texture/ムレキドリUIまとめ2/つづける2.png"
+#define PATH_BUTTON_PAUSE_TEXTURE2 L"data/texture/ムレキドリUIまとめ2/つづける1.png"
 #define PATH_BUTTON_PAUSE_TEXTURE3 L"data/texture/ムレキドリUIまとめ2/あきらめる2.png"
+#define PATH_BUTTON_PAUSE1_TEXTURE3 L"data/texture/ムレキドリUIまとめ2/あきらめる1.png"
 #define PATH_BUTTON_STAGE1_TEXTURE L"data/texture/scenesenni/stageselect/1-1.png"
 #define PATH_BUTTON_STAGE2_TEXTURE L"data/texture/scenesenni/stageselect/1-2.png"
 #define PATH_BUTTON_STAGE3_TEXTURE L"data/texture/scenesenni/stageselect/1-3.png"
@@ -359,51 +362,22 @@ void Button::Update(EScene scene)
 
 				break;
 			case SCENE_GAMEOVER:
-				if (m_textureNum == CONTINUE1_BTN)
+				if (m_textureNum == CONTINUE2_BTN)
 				{
 					if (!m_bSoudTrigger)CreateTextureFromFile(pDevice, PATH_BUTTON_CNOTINUE2_TEXTURE, &m_pTexture);	// コンティニュー1
 
-					if (cosD > 0.8f)
-					{
-
-						CreateTextureFromFile(pDevice, PATH_BUTTON_CNOTINUE1_TEXTURE, &m_pTexture);
-
-					}
-					if (cosD < -0.8f)
-					{
-						CreateTextureFromFile(pDevice, PATH_BUTTON_CNOTINUE2_TEXTURE, &m_pTexture);	
-
-					}
+					
 				}
 				if (m_textureNum == STAGE_SELECT1_BTN)
 				{
 					if (!m_bSoudTrigger)CreateTextureFromFile(pDevice, PATH_BUTTON_STAGESELECT2_TEXTURE, &m_pTexture);	// ステージセレクトに戻る1
 
-					if (cosD > 0.8f)
-					{
-						CreateTextureFromFile(pDevice, PATH_BUTTON_STAGESELECT1_TEXTURE, &m_pTexture);	// ステージセレクトに戻る1
-
-					}
-					if (cosD < -0.8f)
-					{
-						CreateTextureFromFile(pDevice, PATH_BUTTON_STAGESELECT2_TEXTURE, &m_pTexture);	// ステージセレクトに戻る2
-
-					}
 				}
 				if (m_textureNum == TITLEBACK1_BTN)
 				{
 					if (!m_bSoudTrigger)  CreateTextureFromFile(pDevice, PATH_BUTTON_BACKTITLE2_TEXTURE, &m_pTexture);	// ゲームをやめる選択時1
 
-					if (cosD > 0.8f)
-					{
-						CreateTextureFromFile(pDevice, PATH_BUTTON_BACKTITLE1_TEXTURE, &m_pTexture);	// ゲームをやめる選択時1
-
-					}
-					if (cosD < -0.8f)
-					{
-						CreateTextureFromFile(pDevice, PATH_BUTTON_BACKTITLE2_TEXTURE, &m_pTexture);	// ゲームをやめる選択時2
-
-					}
+					
 				}
 				break;
 			case MAX_SCENE:
@@ -502,7 +476,7 @@ void Button::Update(EScene scene)
 				break;
 			case SCENE_GAMEOVER:
 				
-				if (m_textureNum == CONTINUE1_BTN)
+				if (m_textureNum == CONTINUE2_BTN)
 				{
 					ID3D11Device* pDevice = GetDevice();
 					CreateTextureFromFile(pDevice, PATH_BUTTON_CNOTINUE1_TEXTURE, &m_pTexture);	// コンティニュー1

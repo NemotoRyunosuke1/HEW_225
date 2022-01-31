@@ -84,6 +84,8 @@ static bool g_bSharpTurn;	// 急旋回フラグ
 static float g_fStanRecoverySpeed;	// スタン回復スピード
 
 static bool g_trigger;
+static bool g_bGameOver;
+
 //=============================================================================
 // 初期化処理
 //=============================================================================
@@ -142,6 +144,7 @@ HRESULT InitModel(void)
 	g_bSharpTurn = false;
 	g_fStanRecoverySpeed = 0;
 	g_trigger = false;
+	g_bGameOver = false;
 
 	return hr;
 }
@@ -208,9 +211,9 @@ void UpdateModel(void)
 	{
 		EffectManager::Play(SAND_EFFECT);
 #if  _DEBUG
-		StartFadeOut(SCENE_GAMEOVER);
+		g_bGameOver = true;
 #else
-		StartFadeOut(SCENE_GAMEOVER);
+		g_bGameOver = true;
 #endif
 
 	}
@@ -366,6 +369,7 @@ void UpdateModel(void)
 		if (!g_bWingSETrigger)
 		{
 			g_bWingSETrigger = true;
+			CSound::SetVolume(SE_SWING, 100.0f);
 			CSound::Play(SE_SWING);
 		}	
 	}
@@ -682,6 +686,7 @@ void UpdateModel(void)
 		g_accModel.z += 3;
 		//g_rotDestModel.y += 1.0f * stickX /80 ;
 		g_rotDestModel.z += 30;
+		CSound::SetVolume(SE_SWING, 100.0f);
 		CSound::Play(SE_SWING);
 		g_bWing = true;
 		g_stm -= WING_STN_DICREASE;	// スタミナ減少
@@ -696,6 +701,9 @@ void UpdateModel(void)
 		g_accModel.x += 3;
 		g_accModel.y += 3;
 		g_accModel.z += 3;
+		g_rotDestModel.z += 30;
+
+		CSound::SetVolume(SE_SWING, 100.0f);
 		CSound::Play(SE_SWING);
 		g_bWing = true;		
 		g_stm -= WING_STN_DICREASE;	// スタミナ減少
@@ -968,6 +976,7 @@ void UpdateModel(void)
 			if (!g_bStickTrigger)
 			{
 				g_fOverHeartRecoverySpeed = OVERHEART_RECOVERY_SPEED;
+				CSound::Play(SE_HEAL);
 				g_bStickTrigger = true;
 			}
 			else
@@ -980,6 +989,7 @@ void UpdateModel(void)
 			if (!g_bStickTrigger)
 			{
 				g_fOverHeartRecoverySpeed = OVERHEART_RECOVERY_SPEED;
+				CSound::Play(SE_HEAL);
 				g_bStickTrigger = true;
 			}
 			else
@@ -992,6 +1002,7 @@ void UpdateModel(void)
 			if (!g_bStickTrigger)
 			{
 				g_fOverHeartRecoverySpeed = OVERHEART_RECOVERY_SPEED;
+				CSound::Play(SE_HEAL);
 				g_bStickTrigger = true;
 			}
 			else
@@ -1004,6 +1015,7 @@ void UpdateModel(void)
 			if (!g_bStickTrigger)
 			{
 				g_fOverHeartRecoverySpeed = OVERHEART_RECOVERY_SPEED;
+				CSound::Play(SE_HEAL);
 				g_bStickTrigger = true;
 			}
 			else
@@ -1016,6 +1028,7 @@ void UpdateModel(void)
 			if (!g_bStickTrigger)
 			{
 				g_fOverHeartRecoverySpeed = OVERHEART_RECOVERY_SPEED;
+				CSound::Play(SE_HEAL);
 				g_bStickTrigger = true;
 			}
 			else
@@ -1238,4 +1251,8 @@ void CollisionObjectModel(XMFLOAT3 pos, XMFLOAT3 size1, XMFLOAT3 size2, bool bAo
 bool GetModelStn()
 {
 	return g_bStan;
+}
+bool GetModelGameOver()
+{
+	return g_bGameOver;
 }

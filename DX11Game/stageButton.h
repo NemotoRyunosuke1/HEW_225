@@ -12,6 +12,7 @@ class StageButton :public Button
 {
 public:
 	StageButton();
+	StageButton(EStage stage);
 	~StageButton();
 
 	void Update();

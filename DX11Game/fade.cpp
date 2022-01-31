@@ -12,6 +12,9 @@
 //*****************************************************************************
 #define FADE_RATE 0.02f // フェードイン/アウトの刻み
 #define PATH_CURRNET_CREW	L"data/texture/画面切り替え.png"
+#define PATH_WAIT_CREW	L"data/texture/ムレキドリUIまとめ3/ちょっとまってね.png"
+#define PATH_WAIT_BIRD	L"data/texture/待機画面アニメ/タイムライン1_0000.png"
+#define PATH_WAIT_BIRD2	L"data/texture/待機画面アニメ/タイムライン2_0000.png"
 
 #define FRAME_COUNT_X 5	
 #define FRAME_COUNT_Y 18	
@@ -30,8 +33,10 @@ float g_fAlpha = 1.0f; // 不透明度
 bool  g_bFlg;
 
 static int g_nAnimFrame;
-
+static float g_fAnimTime;
 ID3D11ShaderResourceView* g_pTexture;
+ID3D11ShaderResourceView* g_pTexture1;
+ID3D11ShaderResourceView* g_pTexture2;
 
 //=============================================================================
 // コンストラクタ
@@ -62,10 +67,13 @@ HRESULT InitFade()
 {
 	ID3D11Device* pDevice = GetDevice();
 	CreateTextureFromFile(pDevice, PATH_CURRNET_CREW, &g_pTexture);
+	CreateTextureFromFile(pDevice, PATH_WAIT_CREW, &g_pTexture1);
+	CreateTextureFromFile(pDevice, PATH_WAIT_BIRD, &g_pTexture2);
 	g_nAnimFrame = 0;
 	g_eFade = FADE_IN;
 	g_fAlpha = 1.0f;
 	g_bFlg = false;
+	g_fAnimTime = 0.0f;
 	return S_OK;
 }
 
@@ -74,7 +82,10 @@ HRESULT InitFade()
 //=============================================================================
 void UninitFade()
 {
-
+	// 背景テクスチャ解放
+	SAFE_RELEASE(g_pTexture);
+	SAFE_RELEASE(g_pTexture1);
+	SAFE_RELEASE(g_pTexture2);
 }
 
 //=============================================================================
@@ -88,12 +99,16 @@ void UpdateFade()
 	case FADE_OUT:
 		g_nAnimFrame++;
 		g_fAlpha += FADE_RATE; // 不透明度を増す
+		if (g_nAnimFrame >= 30) {
+			g_bFlg = true;
+			
+		}
 		if (g_nAnimFrame >= 60) {
 			// フェードイン処理に切り替え
 			g_fAlpha = 1.0f;
 			g_eFade = FADE_IN;
 			// シーン切替
-			g_bFlg = true;
+			
 			g_nAnimFrame = 60;
 			Scene::SetScene(g_eNext);
 		}
@@ -101,17 +116,37 @@ void UpdateFade()
 		//CSound::SetVolume(1.0f - m_fAlpha);
 		break;
 	case FADE_IN:
+		
 		g_fAlpha -= FADE_RATE; // 透明度を増す
 		g_nAnimFrame--;
+		if (g_nAnimFrame <= 30) {
+			g_bFlg = false;
+			g_fAnimTime = 0.0f;
+		}
 		if (g_nAnimFrame <= 0.0f) {
 			// フェードインを終了する
 			g_fAlpha = 0.0f;
 			g_nAnimFrame = 0;
 			g_eFade = FADE_NONE;
+			g_fAnimTime = 0.0f;
 		}
 		// ボリュームもフェードイン
 		//CSound::SetVolume(1.0f - m_fAlpha);
 		break;
+	}
+	if (g_bFlg)
+	{
+		g_fAnimTime += 5.1f;
+		if (SinDeg(g_fAnimTime) > 0.8f)
+		{
+			ID3D11Device* pDevice = GetDevice();
+			CreateTextureFromFile(pDevice, PATH_WAIT_BIRD, &g_pTexture2);
+		}
+		if (SinDeg(g_fAnimTime) < -0.8f)
+		{
+			ID3D11Device* pDevice = GetDevice();
+			CreateTextureFromFile(pDevice, PATH_WAIT_BIRD2, &g_pTexture2);
+		}
 	}
 }
 
@@ -133,6 +168,27 @@ void DrawFade()
 	SetPolygonAlpha(1.0f);		// ポリゴン透明度
 	
 	DrawPolygon(pDC);	 // ポリゴン描画
+
+	if (g_bFlg)
+	{
+		SetPolygonPos(000.0f, SCREEN_HEIGHT/2 - 100);					   	// ポリゴン位置
+		SetPolygonSize(500, 200);   	// ポリゴンサイズ	
+		SetPolygonUV(0.0f, 0.0f);			// ポリゴンUV座標開始位置			   
+		SetPolygonFrameSize(1.0f , 1.0f );	// ポリゴンテクスチャサイズ			  
+		SetPolygonTexture(g_pTexture1);			// ポリゴンテクスチャ		   
+		SetPolygonColor(1.0f, 1.0f, 1.0f);		// ポリゴンカラー
+		SetPolygonAlpha(1.0f);		// ポリゴン透明
+		DrawPolygon(pDC);	 // ポリゴン描画
+
+		SetPolygonPos(SCREEN_WIDTH/2-100, -SCREEN_HEIGHT / 2 + 100);					   	// ポリゴン位置
+		SetPolygonSize(200, 200);   	// ポリゴンサイズ	
+		SetPolygonUV(0.0f, 0.0f);			// ポリゴンUV座標開始位置			   
+		SetPolygonFrameSize(1.0f, 1.0f);	// ポリゴンテクスチャサイズ			  
+		SetPolygonTexture(g_pTexture2);			// ポリゴンテクスチャ		   
+		SetPolygonColor(1.0f, 1.0f, 1.0f);		// ポリゴンカラー
+		SetPolygonAlpha(1.0f);		// ポリゴン透明
+		DrawPolygon(pDC);	 // ポリゴン描画
+	}
 	// 元に戻す
 	SetPolygonColor(1.0f, 1.0f, 1.0f);	
 	SetPolygonAlpha(1.0f);

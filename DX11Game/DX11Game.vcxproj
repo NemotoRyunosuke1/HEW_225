@@ -79,8 +79,8 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)$(ProjectName)\</OutDir>
     <TargetName>$(ProjectName)D</TargetName>
-    <IncludePath>C:\Users\hina2\OneDrive\デスクトップ\DX22\HEW\DX11Game;C:\Users\nemot\OneDrive\デスクトップ\授業\2年生\DX22\3D_game_base\DX11Game;C:\Users\naona\OneDrive\デスクトップ\HAL\2年\DX22\HEW_project_ver3\DX11Game;C:\Users\fujis\Desktop\DX22\hew\DX11Game;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\hina2\OneDrive\デスクトップ\DX22\HEW\DX11Game;C:\Users\hina2\OneDrive\デスクトップ\DX22\HEW\DX11Game\Effekseer;C:\Users\nemot\OneDrive\デスクトップ\授業\2年生\DX22\3D_game_base\DX11Game;C:\Users\nemot\OneDrive\デスクトップ\授業\2年生\DX22\3D_game_base\DX11Game\Effekseer;C:\Users\naona\OneDrive\デスクトップ\HAL\2年\DX22\HEW_project_ver3\DX11Game;C:\Users\naona\OneDrive\デスクトップ\HAL\2年\DX22\HEW_project_ver3\DX11Game\Effekseer;C:\Users\fujis\Desktop\DX22\hew\DX11Game;C:\Users\fujis\Desktop\DX22\hew\DX11Game\Effekseer;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\takum\Desktop\DX22\HEW_225\DX11Game;C:\Users\hina2\OneDrive\デスクトップ\DX22\HEW\DX11Game;C:\Users\nemot\OneDrive\デスクトップ\授業\2年生\DX22\3D_game_base\DX11Game;C:\Users\naona\OneDrive\デスクトップ\HAL\2年\DX22\HEW_project_ver3\DX11Game;C:\Users\fujis\Desktop\DX22\hew\DX11Game;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\takum\Desktop\DX22\HEW_225\DX11Game\Effekseer;C:\Users\takum\Desktop\DX22\HEW_225\DX11Game;C:\Users\hina2\OneDrive\デスクトップ\DX22\HEW\DX11Game;C:\Users\hina2\OneDrive\デスクトップ\DX22\HEW\DX11Game\Effekseer;C:\Users\nemot\OneDrive\デスクトップ\授業\2年生\DX22\3D_game_base\DX11Game;C:\Users\nemot\OneDrive\デスクトップ\授業\2年生\DX22\3D_game_base\DX11Game\Effekseer;C:\Users\naona\OneDrive\デスクトップ\HAL\2年\DX22\HEW_project_ver3\DX11Game;C:\Users\naona\OneDrive\デスクトップ\HAL\2年\DX22\HEW_project_ver3\DX11Game\Effekseer;C:\Users\fujis\Desktop\DX22\hew\DX11Game;C:\Users\fujis\Desktop\DX22\hew\DX11Game\Effekseer;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -92,8 +92,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)$(ProjectName)\</OutDir>
-    <IncludePath>C:\Users\大森　理句\OneDrive\デスクトップ\DX22\hew\DX11Game;C:\Users\hina2\OneDrive\デスクトップ\DX22\HEW\DX11Game;C:\Users\nemot\OneDrive\デスクトップ\授業\2年生\DX22\3D_game_base\DX11Game;C:\Users\naona\OneDrive\デスクトップ\HAL\2年\DX22\HEW_project_ver3\DX11Game;C:\Users\fujis\Desktop\DX22\hew\DX11Game;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\大森　理句\OneDrive\デスクトップ\DX22\hew\DX11Game\Effekseer;C:\Users\大森　理句\OneDrive\デスクトップ\DX22\hew\DX11Game;C:\Users\hina2\OneDrive\デスクトップ\DX22\HEW\DX11Game;C:\Users\hina2\OneDrive\デスクトップ\DX22\HEW\DX11Game\Effekseer;C:\Users\naona\OneDrive\デスクトップ\HAL\専科\ｴﾌｪｸﾄﾌﾟﾛｸﾞﾗﾐﾝｸﾞ\ソフト\EffekseerSample\DirectXProject\DirectXProject;C:\Users\nemot\OneDrive\デスクトップ\授業\2年生\DX22\3D_game_base\DX11Game\Effekseer;C:\Users\nemot\OneDrive\デスクトップ\授業\2年生\DX22\3D_game_base\DX11Game;C:\Users\naona\OneDrive\デスクトップ\HAL\2年\DX22\HEW_project_ver3\DX11Game;C:\Users\naona\OneDrive\デスクトップ\HAL\2年\DX22\HEW_project_ver3\DX11Game\Effekseer;C:\Users\fujis\Desktop\DX22\hew\DX11Game\Effekseer;C:\Users\fujis\Desktop\DX22\hew\DX11Game;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\takum\Desktop\DX22\HEW_225\DX11Game;C:\Users\大森　理句\OneDrive\デスクトップ\DX22\hew\DX11Game;C:\Users\hina2\OneDrive\デスクトップ\DX22\HEW\DX11Game;C:\Users\nemot\OneDrive\デスクトップ\授業\2年生\DX22\3D_game_base\DX11Game;C:\Users\naona\OneDrive\デスクトップ\HAL\2年\DX22\HEW_project_ver3\DX11Game;C:\Users\fujis\Desktop\DX22\hew\DX11Game;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\takum\Desktop\DX22\HEW_225\DX11Game\Effekseer;C:\Users\takum\Desktop\DX22\HEW_225\DX11Game;C:\Users\大森　理句\OneDrive\デスクトップ\DX22\hew\DX11Game\Effekseer;C:\Users\大森　理句\OneDrive\デスクトップ\DX22\hew\DX11Game;C:\Users\hina2\OneDrive\デスクトップ\DX22\HEW\DX11Game;C:\Users\hina2\OneDrive\デスクトップ\DX22\HEW\DX11Game\Effekseer;C:\Users\naona\OneDrive\デスクトップ\HAL\専科\ｴﾌｪｸﾄﾌﾟﾛｸﾞﾗﾐﾝｸﾞ\ソフト\EffekseerSample\DirectXProject\DirectXProject;C:\Users\nemot\OneDrive\デスクトップ\授業\2年生\DX22\3D_game_base\DX11Game\Effekseer;C:\Users\nemot\OneDrive\デスクトップ\授業\2年生\DX22\3D_game_base\DX11Game;C:\Users\naona\OneDrive\デスクトップ\HAL\2年\DX22\HEW_project_ver3\DX11Game;C:\Users\naona\OneDrive\デスクトップ\HAL\2年\DX22\HEW_project_ver3\DX11Game\Effekseer;C:\Users\fujis\Desktop\DX22\hew\DX11Game\Effekseer;C:\Users\fujis\Desktop\DX22\hew\DX11Game;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -215,6 +215,7 @@
     <ClCompile Include="stageSelectScene.cpp" />
     <ClCompile Include="staminaBar.cpp" />
     <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="themeUI.cpp" />
     <ClCompile Include="timerUI.cpp" />
     <ClCompile Include="titleBG.cpp" />
     <ClCompile Include="titleButton.cpp" />
@@ -279,6 +280,7 @@
     <ClInclude Include="stageSelectScene.h" />
     <ClInclude Include="staminaBar.h" />
     <ClInclude Include="Texture.h" />
+    <ClInclude Include="themeUI.h" />
     <ClInclude Include="timerUI.h" />
     <ClInclude Include="titleBG.h" />
     <ClInclude Include="titleButton.h" />

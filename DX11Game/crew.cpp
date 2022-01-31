@@ -42,7 +42,7 @@
 
 
 #define	CREW_RADIUS		    (20.0f)     // 境界球半径
-#define MAP_HIROSA          (20000)      // マップの広さ
+//#define MAP_HIROSA          (20000)      // マップの広さ
 
 #define CREW_LENGHT		(70)
 
@@ -77,7 +77,7 @@ static TCrew		g_crew[MAX_CREW];	// 味方情報
 static int CrewCnt;
 static int g_nMaxCrew;
 static int g_nRemainCrew;
-static bool hit2[MAX_CREW];
+//static bool hit2[MAX_CREW];
 
 static bool g_CollectTrriger;
 
@@ -103,9 +103,9 @@ HRESULT InitCrew(void)
 
 	for (int i = 0; i < MAX_CREW; ++i) {
 		// 位置・回転・スケールの初期設定
-		g_crew[i].m_pos = XMFLOAT3(rand() % MAP_HIROSA - MAP_HIROSA/2,
+		/*g_crew[i].m_pos = XMFLOAT3(rand() % MAP_HIROSA - MAP_HIROSA/2,
 			rand() % 1000 + 100.0f,
-			rand() % MAP_HIROSA - MAP_HIROSA / 2);
+			rand() % MAP_HIROSA - MAP_HIROSA / 2);*/
 		g_crew[i].m_rot = XMFLOAT3(0.0f, rand() % 360 - 180.0f, 0.0f);
 		g_crew[i].m_rotDest = g_crew[i].m_rot;
 		g_crew[i].m_move = XMFLOAT3(
@@ -116,7 +116,7 @@ HRESULT InitCrew(void)
 		g_crew[i].m_use = false;
 		// 丸影の生成
 		g_crew[i].m_nShadow = CreateShadow(g_crew[i].m_pos, 12.0f);
-		hit2[i] = false;
+		//hit2[i] = false;
 
 		g_crew[i].m_animTime = 0;	// アニメーションタイム
 
@@ -221,40 +221,40 @@ void UpdateCrew(void)
 		
 
 		// 壁にぶつかった
-		bool lr = false, fb = false;
-		if (g_crew[i].m_pos.x < -MAP_HIROSA / 2) {
-			g_crew[i].m_pos.x = -MAP_HIROSA / 2;
-			lr = true;
-		}
-		if (g_crew[i].m_pos.x > MAP_HIROSA / 2) {
-			g_crew[i].m_pos.x = MAP_HIROSA / 2;
-			lr = true;
-		}
-		if (g_crew[i].m_pos.z < -MAP_HIROSA / 2) {
-			g_crew[i].m_pos.z = -MAP_HIROSA / 2;
-			fb = true;
-		}
-		if (g_crew[i].m_pos.z > MAP_HIROSA / 2) {
-			g_crew[i].m_pos.z = MAP_HIROSA / 2;
-			fb = true;
-		}
-		if (g_crew[i].m_pos.y < 0.0f) {
-			g_crew[i].m_pos.y = 0.0f;
-		}
-		if (g_crew[i].m_pos.y > 2000.0f) {
-			g_crew[i].m_pos.y = 2000.0f;
-		}
-		if (fabsf(g_crew[i].m_rot.y - g_crew[i].m_rotDest.y) < 0.0001f) {
-			if (lr) {
-				g_crew[i].m_move.x *= -1.0f;
-			}
-			if (fb) {
-				g_crew[i].m_move.z *= -1.0f;
-			}
-			if (lr || fb) {
-				g_crew[i].m_rotDest.y = XMConvertToDegrees(atan2f(-g_crew[i].m_move.x, -g_crew[i].m_move.z));
-			}
-		}
+		//bool lr = false, fb = false;
+		//if (g_crew[i].m_pos.x < -MAP_HIROSA / 2) {
+		//	g_crew[i].m_pos.x = -MAP_HIROSA / 2;
+		//	lr = true;
+		//}
+		//if (g_crew[i].m_pos.x > MAP_HIROSA / 2) {
+		//	g_crew[i].m_pos.x = MAP_HIROSA / 2;
+		//	lr = true;
+		//}
+		//if (g_crew[i].m_pos.z < -MAP_HIROSA / 2) {
+		//	g_crew[i].m_pos.z = -MAP_HIROSA / 2;
+		//	fb = true;
+		//}
+		//if (g_crew[i].m_pos.z > MAP_HIROSA / 2) {
+		//	g_crew[i].m_pos.z = MAP_HIROSA / 2;
+		//	fb = true;
+		//}
+		//if (g_crew[i].m_pos.y < 0.0f) {
+		//	g_crew[i].m_pos.y = 0.0f;
+		//}
+		//if (g_crew[i].m_pos.y > 2000.0f) {
+		//	g_crew[i].m_pos.y = 2000.0f;
+		//}
+		//if (fabsf(g_crew[i].m_rot.y - g_crew[i].m_rotDest.y) < 0.0001f) {
+		//	if (lr) {
+		//		g_crew[i].m_move.x *= -1.0f;
+		//	}
+		//	if (fb) {
+		//		g_crew[i].m_move.z *= -1.0f;
+		//	}
+		//	if (lr || fb) {
+		//		g_crew[i].m_rotDest.y = XMConvertToDegrees(atan2f(-g_crew[i].m_move.x, -g_crew[i].m_move.z));
+		//	}
+		//}
 
 		// 目的の角度までの差分
 		float fDiffRotX = g_crew[i].m_rotDest.x - g_crew[i].m_rot.x;
@@ -461,7 +461,7 @@ int StartChase(int i, XMFLOAT3 pos)
 				Cunt::Gatherbird();
 
 				//Cunt::BirdIcon2();
-				TimerUI::AddTime(15);
+				TimerUI::AddTime(180 / g_nMaxCrew);
 				g_crew[i].m_CollectTrriger = true;
 			}
 			else

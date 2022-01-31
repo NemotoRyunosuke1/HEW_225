@@ -31,6 +31,9 @@ private:
 
 	ID3D11ShaderResourceView* m_pTextureBG;
 	ID3D11ShaderResourceView* m_pTextureText;
+	ID3D11ShaderResourceView* m_pThemeTex1;
+	ID3D11ShaderResourceView* m_pThemeTex2;
+	ID3D11ShaderResourceView* m_pThemeTex3;
 	XMFLOAT3 m_posBG;
 	XMFLOAT3 m_sizeBG;
 };
