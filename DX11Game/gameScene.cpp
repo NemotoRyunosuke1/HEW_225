@@ -38,7 +38,7 @@ EStage GameScene::m_eStage = STAGE_1;
 
 bool g_GoalTrigger;
 float g_BGMSound;
-
+static bool g_bUI;
 //=============================================================================
 // 初期化処理　※多分使わん、念のため
 //=============================================================================
@@ -198,6 +198,7 @@ GameScene::GameScene(EStage stage)
 	m_bTrigger_result = false;
 	g_GoalTrigger = false;	//ゴールトリガー初期化	
 	m_eStage = stage;
+	g_bUI = false;
 
 	EffectManager::SetStage(m_eStage);
 
@@ -521,7 +522,7 @@ GameScene::GameScene(EStage stage)
 		InitMeshField(20, 20, 2000.0f, 2000.0f);
 
 		// タイマーUI初期化
-		m_pTimerUI = new TimerUI;
+		m_pTimerUI = new TimerUI(180,180,40,80,100);
 
 		// ビルの配置
 		for (int i = 0; i < 8; i++)
@@ -705,8 +706,8 @@ GameScene::GameScene(EStage stage)
 		//CreateEnemy(XMFLOAT3(-1300.0f, 500.0f, 3000.0f), 100, 500, 2000);// 9
 
 		// ゴールUI位置初期化
-		SetGoalUI(XMFLOAT3(-1000.0f, 1000.0f, 5500.0f), 500, 200, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);
-		m_pGoal = new Goal(XMFLOAT3(-1000.0f, 1200.0f, 9000.0f));
+		SetGoalUI(XMFLOAT3(1000.0f, 500.0f, 11300.0f), 500, 200, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);
+		m_pGoal = new Goal(XMFLOAT3(1000.0f, 1000.0f, 11300.0f));
 
 		break;
 	case MAX_STAGE:
@@ -798,6 +799,18 @@ void GameScene::Update()
 	CSound::SetVolume(GAME_BGM_001, 0.2f);
 	CSound::Play(GAME_BGM_001);
 	
+	if (GetKeyTrigger(VK_O))
+	{
+		if (g_bUI)
+		{
+			g_bUI = false;
+		}
+		else
+		{
+			g_bUI = true;
+		}
+	}
+
 	// ゴールフラグが立った時
 	if (m_bGoal)
 	{
@@ -1082,9 +1095,10 @@ void GameScene::Draw()
 		m_pBuliding[i].Draw();
 	}
 	
+	
+	
 	EffectManager::Play(NONE_EFFECT);
-	//EffectManager::Play(ACCELERATION_EFFECT);
-
+	
 	// 丸影描画
 	DrawShadow();
 
@@ -1099,16 +1113,20 @@ void GameScene::Draw()
 	m_pWindManager->Draw();
 #endif
 	//m_pWindManager->Draw();
+
 	// モデル描画
 	DrawModel();
-
-	
 	
 	// 2D描画
 	// Zバッファ無効(Zチェック無&Z更新無)
 	SetZBuffer(false);
 
+	
+
+	if (g_bUI)return;
 	//m_pThemeUI->Draw();
+
+
 
 	//　敵UI
 	ENEMY_UI->Draw();
