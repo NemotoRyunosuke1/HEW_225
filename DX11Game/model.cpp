@@ -564,7 +564,10 @@ void UpdateModel(void)
 			CSound::SetVolume(SE_WIND, g_WindSound);
 			CSound::Play(SE_WIND);
 			g_bSoundTrriger = true;
+			//加速エフェクト
+			EffectManager::Play(ACCELERATION_EFFECT);
 		}
+
 
 		
 

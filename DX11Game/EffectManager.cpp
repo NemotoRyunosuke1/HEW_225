@@ -212,7 +212,7 @@ int EffectManager::Play(EEffect Handle)
 			time = 0;
 			m_handle = m_manager->Play(m_effect7, GetModelPos().x, GetModelPos().y, GetModelPos().z);      //•\Ž¦•À•W
 			m_manager->SetScale(m_handle, 4.0f, 4.0f, 4.0f);   //‘å‚«‚³
-			m_manager->SetRotation(m_handle, GetModelAcc().x + 90.0f, GetModelAcc().y + 180.0f, GetModelAcc().z + 30.0f);
+			m_manager->SetRotation(m_handle, GetModelRot().x + 180.0f, GetModelRot().y + 200.0f, 0.0f);
 			m_manager->SetSpeed(m_handle, 1.0f);
 
 			//GetModelAcc().x, GetModelAcc().y, GetModelAcc().z
