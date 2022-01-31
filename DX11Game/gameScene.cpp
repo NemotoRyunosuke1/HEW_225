@@ -330,7 +330,7 @@ GameScene::GameScene(EStage stage)
 		CrewCreate(XMFLOAT3(-3200.0f, 675.0f, 300.0f));// 5
 		CrewCreate(XMFLOAT3(-3000.0f, 500.0f, 700.0f));// 6
 
-		CrewCreate(XMFLOAT3(-100.0f, 850.0f, 2400.0f));// 7
+		CrewCreate(XMFLOAT3(-200.0f, 850.0f, 2400.0f));// 7
 		CrewCreate(XMFLOAT3(-500.0f, 850.0f, 2700.0f));// 8
 		CrewCreate(XMFLOAT3(-600.0f, 850.0f, 3200.0f));// 9
 		CrewCreate(XMFLOAT3(-900.0f, 850.0f, 3500.0f));// 10
