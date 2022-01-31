@@ -9,7 +9,7 @@
 #include "input.h"
 #include "Camera.h"
 #include "model.h"
-#include "crew.h"
+
 
 Effekseer::EffectRef m_effcet;
 Effekseer::EffectRef m_handle;
@@ -25,6 +25,7 @@ Effekseer::EffectRef EffectManager::m_effect4;		//砂埃
 Effekseer::EffectRef EffectManager::m_effect5;		//風_上_黄色
 Effekseer::EffectRef EffectManager::m_effect6;		//風_横_ver2
 Effekseer::EffectRef EffectManager::m_effect7;		//加速エフェクト
+Effekseer::EffectRef EffectManager::m_effect8;		//加速エフェクト
 Effekseer::Handle EffectManager::m_handle;
 
 
@@ -87,6 +88,7 @@ int EffectManager::Load(const char *Create)
 	m_effect5 = Effekseer::Effect::Create(m_manager, u"Assets/new_wind_jousyou_Yellow.efk");		//風_上_黄色
 	m_effect6 = Effekseer::Effect::Create(m_manager, u"Assets/Wind_yoko_ver5.efk");					//風_横_ver2
 	m_effect7 = Effekseer::Effect::Create(m_manager, u"Assets/Acceleration_ver2.efk");					//加速エフェクト
+	m_effect8 = Effekseer::Effect::Create(m_manager, u"Assets/Acceleration_y0.0.efk");					//加速エフェクト
 
 	return 0; // エフェクトハンドルを返す
 }
@@ -157,55 +159,45 @@ int EffectManager::Play(EEffect Handle)
 				{
 					// ゴール風
 					time = 0;
-					m_handle = m_manager->Play(m_effect, -1000.0f, 100.0f, 4000.0f);
+					m_handle = m_manager->Play(m_effect5, -1000.0f, 100.0f, 4000.0f);
 					m_manager->SetScale(m_handle, 7.0f, 10.0f, 7.0f);
 					m_manager->SetSpeed(m_handle, 0.5f);
-					m_manager->SetAllColor(m_handle, Effekseer::Color(255, 255, 0.0f, 255));
-
 				}
 				break;
 			case STAGE_2:
 				if (time > 129.9f)
 				{
 					time = 0;
-					m_handle = m_manager->Play(m_effect, -950.0f, 100.0f, 3600.0f);
+					m_handle = m_manager->Play(m_effect5, -950.0f, 100.0f, 3800.0f);
 					m_manager->SetScale(m_handle, 7.0f, 10.0f, 7.0f);
 					m_manager->SetSpeed(m_handle, 0.3f);
-					m_manager->SetAllColor(m_handle, Effekseer::Color(255, 255, 0.0f, 255));
-
 				}
 				break;
 			case STAGE_3:
 				if (time > 129.9f)
 				{
 					time = 0;
-					m_handle = m_manager->Play(m_effect, -1000.0f, 300.0f, 4800.0f);
+					m_handle = m_manager->Play(m_effect5, -1000.0f, 300.0f, 4800.0f);
 					m_manager->SetScale(m_handle, 7.0f, 10.0f, 7.0f);
 					m_manager->SetSpeed(m_handle, 0.3f);
-					m_manager->SetAllColor(m_handle, Effekseer::Color(255, 255, 0.0f, 255));
-
 				}//-1000.0f, 1000.0f, 9500.0f
 				break;
 			case STAGE_4:
 				if (time > 129.9f)
 				{
 					time = 0;
-					m_handle = m_manager->Play(m_effect, -1000.0f, 1200.0f, 9000.0f);
+					m_handle = m_manager->Play(m_effect5, -1000.0f, 200.0f, 9000.0f);
 					m_manager->SetScale(m_handle, 7.0f, 10.0f, 7.0f);
 					m_manager->SetSpeed(m_handle, 0.3f);
-					m_manager->SetAllColor(m_handle, Effekseer::Color(255, 255, 0.0f, 255));
-
 				}
 				break;
 			case STAGE_5:
 				if (time > 129.9f)
 				{
 					time = 0;
-					m_handle = m_manager->Play(m_effect, -1000.0f, 1200.0f, 9000.0f);
+					m_handle = m_manager->Play(m_effect5, 500.0f, 200.0f, 13000.0f);
 					m_manager->SetScale(m_handle, 7.0f, 10.0f, 7.0f);
 					m_manager->SetSpeed(m_handle, 0.3f);
-					m_manager->SetAllColor(m_handle, Effekseer::Color(255, 255, 0.0f, 255));
-
 				}
 				break; 
 			case MAX_STAGE:
@@ -229,17 +221,28 @@ int EffectManager::Play(EEffect Handle)
 		}
 		break;
 
-	case ACCELERATION_EFFECT:
-		if (time > 20.0f)
+	case ACCELERATION_EFFECT_LEFT:
+		if (time > 10.0f)
 		{
 			//加速
 			time = 0;
 			m_handle = m_manager->Play(m_effect7, GetModelPos().x, GetModelPos().y, GetModelPos().z);      //表示＆座標
 			m_manager->SetScale(m_handle, 4.0f, 4.0f, 4.0f);   //大きさ
-			m_manager->SetRotation(m_handle, GetModelRot().x + 180.0f, GetModelRot().y + 200.0f, 0.0f);
+			//m_manager->SetRotation(m_handle, GetModelAcc().x + 90.0f, GetModelAcc().y + 180.0f, GetModelAcc().z + 30.0f);
+			m_manager->SetRotation(m_handle, 0.0f, GetModelRotLight().z, 0.0f);
 			m_manager->SetSpeed(m_handle, 1.0f);
-
-			//GetModelAcc().x, GetModelAcc().y, GetModelAcc().z
+		}
+		break;
+	case ACCELERATION_EFFECT_LIGHT:
+		if (time > 10.0f)
+		{
+			//加速
+			time = 0;
+			m_handle = m_manager->Play(m_effect8, GetModelPos().x, GetModelPos().y, GetModelPos().z);      //表示＆座標
+			m_manager->SetScale(m_handle, 4.0f, 4.0f, 4.0f);   //大きさ
+			//m_manager->SetRotation(m_handle, GetModelAcc().x + 90.0f, GetModelAcc().y + 180.0f, GetModelAcc().z + 30.0f);
+			m_manager->SetRotation(m_handle, 0.0f, -GetModelRotLight().z, 0.0f);
+			m_manager->SetSpeed(m_handle, 1.0f);
 		}
 		break;
 	case MAX_EFFECT:
@@ -269,12 +272,9 @@ int EffectManager::Play(EEffect Handle)
 
 			// 2個目上昇気流
 			time = 0;
-			m_handle = m_manager->Play(m_effect, -1700.0f, 300.0f, 800.0f);      //表示＆座標
+			m_handle = m_manager->Play(m_effect, -1700.0f, 100.0f, 800.0f);      //表示＆座標
 			m_manager->SetScale(m_handle, 7.0f, 7.0f, 7.0f);   //大きさ
 			m_manager->SetSpeed(m_handle, 0.5f);
-			
-			
-			
 
 		//======================
 		//風_横
@@ -291,21 +291,7 @@ int EffectManager::Play(EEffect Handle)
 			m_manager->SetRotation(m_handle, 0.0f, 80.0f, 0.0f);
 			m_manager->SetSpeed(m_handle, 0.5f);
 
-			if (GetGoalFlgCrew())
-			{
-				// ゴール風
-				time = 0;
-				m_handle = m_manager->Play(m_effect, -950.0f, 100.0f, 3600.0f);
-				m_manager->SetScale(m_handle, 7.0f, 10.0f, 7.0f);
-				m_manager->SetSpeed(m_handle, 0.3f);
-				m_manager->SetAllColor(m_handle, Effekseer::Color(255, 255, 0.0f, 255));
-
-			}
-
 		}
-
-		
-		
 		//SetRotationのYの数値で向きが変わります
 		//80 = 左向き風    14.1 = 右向き風    59.7 = 向かい風　　 0 = 追い風
 	break;
@@ -327,37 +313,37 @@ int EffectManager::Play(EEffect Handle)
 			// 向かい風_1
 			time = 0;
 			m_handle = m_manager->Play(m_effect6, -80.0f, 500.0f, -650.0f);      //表示＆座標
-			m_manager->SetScale(m_handle, 1.5f, 2.0f, 1.5f);   //大きさ
+			m_manager->SetScale(m_handle, 1.0f, 4.0f, 1.0f);   //大きさ
 			m_manager->SetRotation(m_handle, 0.0f, 14.1f, 0.0f);
 			m_manager->SetSpeed(m_handle, 0.5f);
 
 			// 向かい風_2
 			m_handle = m_manager->Play(m_effect6, -700.0f, 500.0f, -650.0f);      //表示＆座標
-			m_manager->SetScale(m_handle, 1.5f, 2.0f, 1.5f);   //大きさ
+			m_manager->SetScale(m_handle, 1.0f, 4.0f, 1.0f);   //大きさ
 			m_manager->SetRotation(m_handle, 0.0f, 14.1f, 0.0f);
 			m_manager->SetSpeed(m_handle, 0.5f);
 
 			// 向かい風_3
 			m_handle = m_manager->Play(m_effect6, -1300.0f, 500.0f, -650.0f);      //表示＆座標
-			m_manager->SetScale(m_handle, 1.5f, 2.0f, 1.5f);   //大きさ
+			m_manager->SetScale(m_handle, 1.0f, 4.0f, 1.0f);   //大きさ
 			m_manager->SetRotation(m_handle, 0.0f, 14.1f, 0.0f);
 			m_manager->SetSpeed(m_handle, 0.5f);
 
 			// 向かい風_4
 			m_handle = m_manager->Play(m_effect6, -1900.0f, 500.0f, 150.0f);      //表示＆座標
-			m_manager->SetScale(m_handle, 1.5f, 2.0f, 1.5f);   //大きさ
+			m_manager->SetScale(m_handle, 1.5f, 4.0f, 1.5f);   //大きさ
 			m_manager->SetRotation(m_handle, 0.0f, 14.1f, 0.0f);
 			m_manager->SetSpeed(m_handle, 0.5f);
 
 			// 向かい風_5
 			m_handle = m_manager->Play(m_effect6, -1300.0f, 500.0f, 150.0f);      //表示＆座標
-			m_manager->SetScale(m_handle, 1.5f, 2.0f, 1.5f);   //大きさ
+			m_manager->SetScale(m_handle, 1.5f, 4.0f, 1.5f);   //大きさ
 			m_manager->SetRotation(m_handle, 0.0f, 14.1f, 0.0f);
 			m_manager->SetSpeed(m_handle, 0.5f);
 
 			// 向かい風_6
 			m_handle = m_manager->Play(m_effect6, -700.0f, 500.0f, 150.0f);      //表示＆座標
-			m_manager->SetScale(m_handle, 1.5f, 2.0f, 1.5f);     //大きさ
+			m_manager->SetScale(m_handle, 1.5f, 4.0f, 1.5f);     //大きさ
 			m_manager->SetRotation(m_handle, 0.0f, 14.1f, 0.0f);
 			m_manager->SetSpeed(m_handle, 0.5f);
 
@@ -371,18 +357,6 @@ int EffectManager::Play(EEffect Handle)
 			m_handle = m_manager->Play(m_effect, -1000.0f, 100.0f, 2500.0f);      //表示＆座標
 			m_manager->SetScale(m_handle, 3.0f, 4.0f, 3.0f);   //大きさ
 			m_manager->SetSpeed(m_handle, 0.5f);
-
-			
-			if (GetGoalFlgCrew())
-			{
-				// ゴール風
-				time = 0;
-				m_handle = m_manager->Play(m_effect, -950.0f, 100.0f, 3600.0f);
-				m_manager->SetScale(m_handle, 7.0f, 10.0f, 7.0f);
-				m_manager->SetSpeed(m_handle, 0.3f);
-				m_manager->SetAllColor(m_handle, Effekseer::Color(255, 255, 0.0f, 255));
-
-			}
 
 			
 
@@ -406,20 +380,8 @@ int EffectManager::Play(EEffect Handle)
 
 			// 上昇気流1
 			m_handle = m_manager->Play(m_effect, -1000.0f, 200.0f, 3000.0f);      //表示＆座標
-			m_manager->SetScale(m_handle, 3.0f, 3.0f, 3.0f);   //大きさ
+			m_manager->SetScale(m_handle, 4.0f, 4.0f, 4.0f);   //大きさ
 			m_manager->SetSpeed(m_handle, 0.5f);
-
-			if (GetGoalFlgCrew())
-			{
-				// ゴール風
-				time = 0;
-				m_handle = m_manager->Play(m_effect, -1000.0f, 300.0f, 4800.0f);
-				m_manager->SetScale(m_handle, 7.0f, 10.0f, 7.0f);
-				m_manager->SetSpeed(m_handle, 0.3f);
-				m_manager->SetAllColor(m_handle, Effekseer::Color(255, 255, 0.0f, 255));
-
-			}
-
 		}
 		break;
 	case STAGE_4:
@@ -494,18 +456,7 @@ int EffectManager::Play(EEffect Handle)
 			//14.1 = 向かい風　　59.7 = 左風  80.0 = 追い風　0.0 = 右風
 			//SetRotationのYの数値で向きが変わります
 			//80 = 左向き風    14.1 = 右向き風    59.7 = 向かい風　　 0 = 追い風
-			if (GetGoalFlgCrew())
-			{
-				// ゴール風
-				time = 0;
-				m_handle = m_manager->Play(m_effect, -1000.0f, 1200.0f, 9000.0f);
-				m_manager->SetScale(m_handle, 7.0f, 10.0f, 7.0f);
-				m_manager->SetSpeed(m_handle, 0.3f);
-				m_manager->SetAllColor(m_handle, Effekseer::Color(255, 255, 0.0f, 255));
-
-			}
 			
-
 		}
 		break;
 
@@ -515,31 +466,31 @@ int EffectManager::Play(EEffect Handle)
 			// 向かい風
 			time = 0;
 			m_handle = m_manager->Play(m_effect6, 0.0f, 500.0f, 1500.0f);      //表示＆座標
-			m_manager->SetScale(m_handle, 3.0f, 3.0f, 3.0f);   //大きさ
+			m_manager->SetScale(m_handle, 4.0f, 3.0f, 4.0f);   //大きさ
 			m_manager->SetRotation(m_handle, 0.0f, 14.1f, 0.0f);
 			m_manager->SetSpeed(m_handle, 0.8f);
 
 			// 追い風1
 			m_handle = m_manager->Play(m_effect6, -1000.0f, 500.0f, -500.0f);      //表示＆座標
-			m_manager->SetScale(m_handle, 3.0f, 3.0f, 3.0f);   //大きさ
+			m_manager->SetScale(m_handle, 4.0f, 3.0f, 4.0f);   //大きさ
 			m_manager->SetRotation(m_handle, 0.0f, 80.0f, 0.0f);
 			m_manager->SetSpeed(m_handle, 0.8f);
 
 			// 追い風2
 			m_handle = m_manager->Play(m_effect6, 2000.0f, 500.0f, 1500.0f);      //表示＆座標
-			m_manager->SetScale(m_handle, 3.0f, 3.0f, 3.0f);   //大きさ
+			m_manager->SetScale(m_handle, 4.0f, 3.0f, 4.0f);   //大きさ
 			m_manager->SetRotation(m_handle, 0.0f, 80.0f, 0.0f);
 			m_manager->SetSpeed(m_handle, 0.8f);
 
 			// 追い風3
-			m_handle = m_manager->Play(m_effect6, -3000.0f, 500.0f, 6000.0f);      //表示＆座標
-			m_manager->SetScale(m_handle, 3.0f, 3.0f, 3.0f);   //大きさ
+			m_handle = m_manager->Play(m_effect6, -3000.0f, 500.0f, 6100.0f);      //表示＆座標
+			m_manager->SetScale(m_handle, 4.0f, 3.0f, 5.0f);   //大きさ
 			m_manager->SetRotation(m_handle, 0.0f, 80.0f, 0.0f);
 			m_manager->SetSpeed(m_handle, 0.8f);
 
 			// 追い風4
 			m_handle = m_manager->Play(m_effect6, -3800.0f, 500.0f, 9000.0f);      //表示＆座標
-			m_manager->SetScale(m_handle, 3.0f, 3.0f, 3.0f);   //大きさ
+			m_manager->SetScale(m_handle, 2.0f, 3.0f, 2.0f);   //大きさ
 			m_manager->SetRotation(m_handle, 0.0f, 80.0f, 0.0f);
 			m_manager->SetSpeed(m_handle, 0.8f);
 
@@ -551,49 +502,21 @@ int EffectManager::Play(EEffect Handle)
 
 			// 左風1
 			m_handle = m_manager->Play(m_effect6, -3200.0f, 500.0f, 8400.0f);      //表示＆座標
-			m_manager->SetScale(m_handle, 3.0f, 3.0f, 3.0f);   //大きさ
+			m_manager->SetScale(m_handle, 2.0f, 3.0f, 2.0f);   //大きさ
 			m_manager->SetRotation(m_handle, 0.0f, 59.7f, 0.0f);
 			m_manager->SetSpeed(m_handle, 0.8f);
 
 			// 左風2
 			m_handle = m_manager->Play(m_effect6, -4200.0f, 500.0f, 9500.0f);      //表示＆座標
-			m_manager->SetScale(m_handle, 3.0f, 3.0f, 3.0f);   //大きさ
+			m_manager->SetScale(m_handle, 2.0f, 3.0f, 2.0f);   //大きさ
 			m_manager->SetRotation(m_handle, 0.0f, 59.7f, 0.0f);
 			m_manager->SetSpeed(m_handle, 0.8f);
 
 			// 右風1
-			m_handle = m_manager->Play(m_effect6, -1000.0f, 500.0f, 11300.0f);      //表示＆座標
-			m_manager->SetScale(m_handle, 20.0f, 3.0f, 3.0f);   //大きさ
+			m_handle = m_manager->Play(m_effect6, -3600.0f, 500.0f, 11300.0f);      //表示＆座標
+			m_manager->SetScale(m_handle, 6.0f, 3.0f, 3.0f);   //大きさ
 			m_manager->SetRotation(m_handle, 0.0f, 0.0f, 0.0f);
 			m_manager->SetSpeed(m_handle, 0.8f);
-
-			// 左風3
-			m_handle = m_manager->Play(m_effect6, 2000.0f, 500.0f, 5000.0f);      //表示＆座標
-			m_manager->SetScale(m_handle, 8.0f, 3.0f, 3.0f);   //大きさ
-			m_manager->SetRotation(m_handle, 0.0f, 59.7f, 0.0f);
-			m_manager->SetSpeed(m_handle, 0.8f);
-
-			
-			///m_pWind[1].Create(XMFLOAT3(-1000.0f, 500.0f, -500.0f), XMFLOAT3(600.0f, 600.0f, 600.0f), XMFLOAT3(0.0f, 1.0f, 1.0f));    // 追い風1
-			///m_pWind[2].Create(XMFLOAT3(2000.0f, 500.0f, 1500.0f), XMFLOAT3(600.0f, 600.0f, 600.0f), XMFLOAT3(0.0f, 0.0f, 1.0f));     // 追い風2
-			///m_pWind[3].Create(XMFLOAT3(-3000.0f, 500.0f, 6000.0f), XMFLOAT3(600.0f, 600.0f, 2000.0f), XMFLOAT3(0.0f, 0.0f, 1.0f));   // 追い風3
-			///m_pWind[4].Create(XMFLOAT3(-3800.0f, 500.0f, 8900.0f), XMFLOAT3(300.0f, 600.0f, 500.0f), XMFLOAT3(0.0f, 0.0f, 1.0f));    // 追い風4
-			///m_pWind[5].Create(XMFLOAT3(-4600.0f, 500.0f, 9900.0f), XMFLOAT3(300.0f, 600.0f, 500.0f), XMFLOAT3(0.0f, 0.0f, 1.0f));    // 追い風5
-			///m_pWind[0].Create(XMFLOAT3(0.0f, 500.0f, 1500.0f), XMFLOAT3(600.0f, 600.0f, 600.0f), XMFLOAT3(0.0f, 0.0f, -1.0f));       // 向かい風1
-			///m_pWind[6].Create(XMFLOAT3(-3100.0f, 500.0f, 8400.0f), XMFLOAT3(500.0f, 600.0f, 300.0f), XMFLOAT3(-1.0f, 0.0f, 0.0f));   // 左風1
-			///m_pWind[7].Create(XMFLOAT3(-4000.0f, 500.0f, 9500.0f), XMFLOAT3(500.0f, 600.0f, 300.0f), XMFLOAT3(-1.0f, 0.0f, 0.0f));   // 左風2
-			///m_pWind[8].Create(XMFLOAT3(-4000.0f, 500.0f, 11300.0f), XMFLOAT3(1000.0f, 600.0f, 300.0f), XMFLOAT3(1.0f, 0.0f, 0.0f));    // 右風1
-		
-			if (GetGoalFlgCrew())
-			{
-				// ゴール風
-				time = 0;
-				m_handle = m_manager->Play(m_effect, 1000.0f, 10.0f, 11300.0f);
-				m_manager->SetScale(m_handle, 7.0f, 10.0f, 7.0f);
-				m_manager->SetSpeed(m_handle, 0.3f);
-				m_manager->SetAllColor(m_handle, Effekseer::Color(255, 255, 0.0f, 255));
-
-			}
 
 		}
 		break;
@@ -607,17 +530,6 @@ int EffectManager::Play(EEffect Handle)
 
 	//}
 	//メモ
-	///m_pWind[0].Create(XMFLOAT3(-3000.0f, 500.0f, -150.0f), XMFLOAT3(500.0f, 300.0f, 1100.0f), XMFLOAT3(0.0f, 0.0f, 1.0f));  // 左側追い風
-	///m_pWind[1].Create(XMFLOAT3(-1000.0f, 700.0f, -100.0f), XMFLOAT3(600.0f, 1300.0f, 1100.0f), XMFLOAT3(0.0f, 0.0f, -1.0f));  // 真ん中向かい風
-	///m_pWind[2].Create(XMFLOAT3(1000.0f, 500.0f, -150.0f), XMFLOAT3(500.0f, 300.0f, 1100.0f), XMFLOAT3(0.0f, 0.0f, 1.0f));  // 右側追い風
-	///m_pWind[3].Create(XMFLOAT3(-5000.0f, 650.0f, 3000.0f), XMFLOAT3(500.0f, 1200.0f, 500.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));  // 左側上昇気流
-	///m_pWind[4].Create(XMFLOAT3(-2000.0f, 650.0f, 1000.0f), XMFLOAT3(500.0f, 1200.0f, 500.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));  // 左側建物後ろ上昇気流
-	///m_pWind[5].Create(XMFLOAT3(0.0f, 650.0f, 1000.0f), XMFLOAT3(500.0f, 1200.0f, 500.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));  // 右側建物後ろ上昇気流
-	///m_pWind[6].Create(XMFLOAT3(3000.0f, 650.0f, 3000.0f), XMFLOAT3(500.0f, 1200.0f, 500.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));  // 右側上昇気流
-	///m_pWind[7].Create(XMFLOAT3(-1400.0f, 1250.0f, 7000.0f), XMFLOAT3(500.0f, 300.0f, 300.0f), XMFLOAT3(0.0f, 0.0f, 1.0f));  // ゴール前手前左追い風
-	///m_pWind[8].Create(XMFLOAT3(-600.0f, 1250.0f, 7000.0f), XMFLOAT3(500.0f, 300.0f, 300.0f), XMFLOAT3(0.0f, 0.0f, 1.0f));  // ゴール前手前右追い風
-	///m_pWind[9].Create(XMFLOAT3(-1400.0f, 1250.0f, 8500.0f), XMFLOAT3(500.0f, 300.0f, 500.0f), XMFLOAT3(0.0f, 0.0f, 1.0f));  // ゴール前奥左追い風
-	///m_pWind[10].Create(XMFLOAT3(-600.0f, 1250.0f, 8500.0f), XMFLOAT3(500.0f, 300.0f, 500.0f), XMFLOAT3(0.0f, 0.0f, 1.0f));  // ゴール前奥右追い風
 	
 	
 	m_manager->Update();
