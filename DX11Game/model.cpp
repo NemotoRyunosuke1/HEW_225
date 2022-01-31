@@ -538,7 +538,7 @@ void UpdateModel(void)
 		if (bWind1[i])
 		{
 			
-				g_accModel.x = 5.0f * (unsigned)WindVec[i].x + 1.1f;
+				g_accModel.x = 7.0f * (unsigned)WindVec[i].x + 1.1f;
 				g_accModel.y = 5.0f * (unsigned)WindVec[i].y + 1.1f;
 				g_accModel.z = 5.0f * (unsigned)WindVec[i].z + 1.1f;
 				g_rotDestModel.x = 130 * WindVec[i].y;
@@ -816,7 +816,7 @@ void UpdateModel(void)
 
 	// é©ìÆëOà⁄ìÆ
 	g_moveModel.z -= CosDeg(g_rotModel.y) * VALUE_MOVE_MODEL * g_accModel.z;
-	g_moveModel.x -= SinDeg(g_rotModel.y) * VALUE_MOVE_MODEL * g_accModel.z;
+	g_moveModel.x -= SinDeg(g_rotModel.y) * VALUE_MOVE_MODEL * g_accModel.x;
 	g_moveModel.y += SinDeg(g_rotModel.x) * VALUE_MOVE_MODEL * g_accModel.y ;
 	
 	// è„è∏&â∫ç~èàóù

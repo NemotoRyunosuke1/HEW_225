@@ -8,6 +8,7 @@
 
 #include "button.h"
 
+
 class StageButton :public Button
 {
 public:

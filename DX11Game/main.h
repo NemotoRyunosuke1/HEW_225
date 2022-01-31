@@ -94,6 +94,16 @@ enum EStage
 	MAX_STAGE
 };
 
+// ステージクリア情報
+typedef struct
+{
+	bool m_bClear = false;	// クリアフラグ
+	int m_nStar = 0;	// 星の数
+
+	void SetClear(bool clear) { m_bClear = clear; };
+	void SetStar(int star) { m_nStar = star; };
+}TStage;
+
 
 //*****************************************************************************
 // 構造体定義

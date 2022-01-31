@@ -395,7 +395,7 @@ GameScene::GameScene(EStage stage)
 		InitMeshField(20, 20, 2000.0f, 2000.0f);
 
 		// タイマーUI初期化
-		m_pTimerUI = new TimerUI;
+		m_pTimerUI = new TimerUI(80,180,40,80,100);
 
 		// ビルの配置
 		for (int i = 0; i < 30; i++)  // 横
@@ -460,7 +460,7 @@ GameScene::GameScene(EStage stage)
 		InitMeshField(20, 20, 2000.0f, 2000.0f);
 
 		// タイマーUI初期化
-		m_pTimerUI = new TimerUI;
+		m_pTimerUI = new TimerUI(80, 180, 40, 80, 100);
 
 		// 仲間の配置
 		CrewCreate(XMFLOAT3(-1000.0f, 500.0f, 900.0f));// 1
@@ -1043,6 +1043,7 @@ void GameScene::Update()
 	{
 		// ゴールについたとき
 		m_bGoal = true;
+		m_nScore = m_pTimerUI->GetScore();
 	}
 
 	
@@ -1053,6 +1054,10 @@ void GameScene::Update()
 
 	// ゴールUI更新
 	UpdateGoalUI();
+#if _DEBUG
+	PrintDebugProc("[ｽｺｱ   [%d]: ]\n", m_pTimerUI->GetScore());
+
+#endif // _DEBUG
 
 
 }

@@ -136,7 +136,7 @@ void Tutorial::Update(EStage stage)
 
 		if (m_bPopupNum2[0])
 		{
-			if (m_nCnt > 4)
+			if (m_nCnt > 5)
 			{
 				
 				// ÉQÅ[ÉÄÇ…ñﬂÇÈ
@@ -148,7 +148,7 @@ void Tutorial::Update(EStage stage)
 					}
 
 				}
-				m_nCnt = 4;
+				m_nCnt = 5;
 			}
 
 				
@@ -166,19 +166,19 @@ void Tutorial::Update(EStage stage)
 				CreateTextureFromFile(pDevice, PATH_POPUP3_TEXTURE, &m_pTexture);
 				break;
 			case 3:
-				CreateTextureFromFile(pDevice, PATH_POPUP8_TEXTURE, &m_pTexture);
+				CreateTextureFromFile(pDevice, PATH_POPUP4_TEXTURE, &m_pTexture);
 				break;
 			case 4:
-				CreateTextureFromFile(pDevice, PATH_POPUP4_TEXTURE, &m_pTexture);
+				CreateTextureFromFile(pDevice, PATH_POPUP5_TEXTURE, &m_pTexture);
 				break;
 			case 5:
-				CreateTextureFromFile(pDevice, PATH_POPUP7_TEXTURE, &m_pTexture);
+				CreateTextureFromFile(pDevice, PATH_POPUP6_TEXTURE, &m_pTexture);
 				break;
 			case 6:
-				CreateTextureFromFile(pDevice, PATH_POPUP8_TEXTURE, &m_pTexture);
+				CreateTextureFromFile(pDevice, PATH_POPUP7_TEXTURE, &m_pTexture);
 				break;
 			case 7:
-				CreateTextureFromFile(pDevice, PATH_POPUP4_TEXTURE, &m_pTexture);
+				CreateTextureFromFile(pDevice, PATH_POPUP8_TEXTURE, &m_pTexture);
 				break;
 			default:
 				break;
@@ -203,10 +203,10 @@ void Tutorial::Update(EStage stage)
 			switch (m_nCnt)
 			{
 			case 0:
-				CreateTextureFromFile(pDevice, PATH_POPUP5_TEXTURE, &m_pTexture);
+				CreateTextureFromFile(pDevice, PATH_POPUP7_TEXTURE, &m_pTexture);
 				break;
 			case 1:
-				CreateTextureFromFile(pDevice, PATH_POPUP6_TEXTURE, &m_pTexture);
+				CreateTextureFromFile(pDevice, PATH_POPUP8_TEXTURE, &m_pTexture);
 				break;
 
 			default:
@@ -244,10 +244,10 @@ void Tutorial::Update(EStage stage)
 			switch (m_nCnt)
 			{
 			case 0:
-				CreateTextureFromFile(pDevice, PATH_POPUP9_TEXTURE, &m_pTexture);
+				CreateTextureFromFile(pDevice, PATH_POPUP10_TEXTURE, &m_pTexture);
 				break;
 			case 1:
-				CreateTextureFromFile(pDevice, PATH_POPUP10_TEXTURE, &m_pTexture);
+				CreateTextureFromFile(pDevice, PATH_POPUP11_TEXTURE, &m_pTexture);
 				break;
 			
 			default:
@@ -305,7 +305,7 @@ void Tutorial::Update(EStage stage)
 		if (!m_bPopupNum[7] && CollisionAABB(GetModelPos(), XMFLOAT3(10, 1000, 10), XMFLOAT3(-600, 800, 900), XMFLOAT3(100, 1000, 100)))
 		{
 
-			CreateTextureFromFile(pDevice, PATH_POPUP7_TEXTURE, &m_pTexture);
+			CreateTextureFromFile(pDevice, PATH_POPUP9_TEXTURE, &m_pTexture);
 			m_bPopupNum[7] = true;
 			m_bPopupNum2[7] = true;
 			

@@ -260,6 +260,11 @@ void Scene::SetScene(EScene eScene)
 
 	case SCENE_GAME://ゲームシーン
 		CSound::Stop(GAME_BGM_001);//ゲームBGMストップ
+		if (m_pGameScene->GetClear())
+		{
+			m_pStageSelectScene->m_tStage[m_eStage].SetStar(m_pGameScene->GetScore());
+			m_pStageSelectScene->m_tStage[m_eStage].SetClear(true);
+		}
 		//m_pGameScene->SetStage(m_pGameScene->GetStage());
 		delete m_pGameScene;
 		break;

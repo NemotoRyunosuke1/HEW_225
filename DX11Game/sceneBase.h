@@ -3,6 +3,7 @@
 #include "main.h"
 #include "fade.h"
 
+
 class SceneBase
 {
 public:

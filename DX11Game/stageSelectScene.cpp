@@ -11,6 +11,7 @@
 
 static bool StageTrrger;
 EStage StageSlectScene::m_eStage = STAGE_1;
+TStage StageSlectScene::m_tStage[];
 
 //=============================================================================
 // コンストラクタ
@@ -29,7 +30,7 @@ StageSlectScene::StageSlectScene(EStage stage)
 	m_pStageButton = new StageButton(stage);
 	StageTrrger = false;
 
-	m_pStageSelectBG = new StageSelectBG;
+	m_pStageSelectBG = new StageSelectBG(m_tStage);
 }
 //=============================================================================
 // デストラクト

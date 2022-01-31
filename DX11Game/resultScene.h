@@ -20,6 +20,7 @@ public:
 	void Draw();
 	float GetFade();
 	void SetScore(int ScoreNum) { m_nScore = ScoreNum; };
+	int GetScore() { return m_nScore; };
 private:
 
 	bool m_use;			// 使用フラグ

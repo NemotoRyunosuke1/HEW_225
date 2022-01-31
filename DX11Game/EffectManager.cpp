@@ -562,11 +562,18 @@ int EffectManager::Play(EEffect Handle)
 			m_manager->SetSpeed(m_handle, 0.8f);
 
 			// 右風1
-			m_handle = m_manager->Play(m_effect6, -4000.0f, 500.0f, 11300.0f);      //表示＆座標
-			m_manager->SetScale(m_handle, 3.0f, 3.0f, 3.0f);   //大きさ
+			m_handle = m_manager->Play(m_effect6, -1000.0f, 500.0f, 11300.0f);      //表示＆座標
+			m_manager->SetScale(m_handle, 20.0f, 3.0f, 3.0f);   //大きさ
 			m_manager->SetRotation(m_handle, 0.0f, 0.0f, 0.0f);
 			m_manager->SetSpeed(m_handle, 0.8f);
 
+			// 左風3
+			m_handle = m_manager->Play(m_effect6, 2000.0f, 500.0f, 5000.0f);      //表示＆座標
+			m_manager->SetScale(m_handle, 8.0f, 3.0f, 3.0f);   //大きさ
+			m_manager->SetRotation(m_handle, 0.0f, 59.7f, 0.0f);
+			m_manager->SetSpeed(m_handle, 0.8f);
+
+			
 			///m_pWind[1].Create(XMFLOAT3(-1000.0f, 500.0f, -500.0f), XMFLOAT3(600.0f, 600.0f, 600.0f), XMFLOAT3(0.0f, 1.0f, 1.0f));    // 追い風1
 			///m_pWind[2].Create(XMFLOAT3(2000.0f, 500.0f, 1500.0f), XMFLOAT3(600.0f, 600.0f, 600.0f), XMFLOAT3(0.0f, 0.0f, 1.0f));     // 追い風2
 			///m_pWind[3].Create(XMFLOAT3(-3000.0f, 500.0f, 6000.0f), XMFLOAT3(600.0f, 600.0f, 2000.0f), XMFLOAT3(0.0f, 0.0f, 1.0f));   // 追い風3
