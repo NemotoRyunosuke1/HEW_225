@@ -385,8 +385,8 @@ GameScene::GameScene(EStage stage)
 		CrewCreate(XMFLOAT3(-1000.0f, 500.0f, 3400.0f));// 8
 		
 		// ゴールUI位置初期化
-		SetGoalUI(XMFLOAT3(-950.0f, 600.0f,3600.0f), 500, 200, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);
-		m_pGoal = new Goal(XMFLOAT3(-950.0f, 600.0f, 3600.0f));
+		SetGoalUI(XMFLOAT3(-950.0f, 600.0f,3800.0f), 500, 200, XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), 0);
+		m_pGoal = new Goal(XMFLOAT3(-950.0f, 600.0f, 3800.0f));
 
 		break;
 	case STAGE_3:	// ステージ3
