@@ -184,7 +184,7 @@ int EffectManager::Play(EEffect Handle)
 				if (time > 129.9f)
 				{
 					time = 0;
-					m_handle = m_manager->Play(m_effect5, -1000.0f, 1200.0f, 9000.0f);
+					m_handle = m_manager->Play(m_effect5, -1000.0f, 200.0f, 9000.0f);
 					m_manager->SetScale(m_handle, 7.0f, 10.0f, 7.0f);
 					m_manager->SetSpeed(m_handle, 0.3f);
 				}
@@ -193,7 +193,7 @@ int EffectManager::Play(EEffect Handle)
 				if (time > 129.9f)
 				{
 					time = 0;
-					m_handle = m_manager->Play(m_effect5, -1000.0f, 1200.0f, 9000.0f);
+					m_handle = m_manager->Play(m_effect5, 500.0f, 200.0f, 13000.0f);
 					m_manager->SetScale(m_handle, 7.0f, 10.0f, 7.0f);
 					m_manager->SetSpeed(m_handle, 0.3f);
 				}
@@ -453,31 +453,31 @@ int EffectManager::Play(EEffect Handle)
 			// 向かい風
 			time = 0;
 			m_handle = m_manager->Play(m_effect6, 0.0f, 500.0f, 1500.0f);      //表示＆座標
-			m_manager->SetScale(m_handle, 3.0f, 3.0f, 3.0f);   //大きさ
+			m_manager->SetScale(m_handle, 4.0f, 3.0f, 4.0f);   //大きさ
 			m_manager->SetRotation(m_handle, 0.0f, 14.1f, 0.0f);
 			m_manager->SetSpeed(m_handle, 0.8f);
 
 			// 追い風1
 			m_handle = m_manager->Play(m_effect6, -1000.0f, 500.0f, -500.0f);      //表示＆座標
-			m_manager->SetScale(m_handle, 3.0f, 3.0f, 3.0f);   //大きさ
+			m_manager->SetScale(m_handle, 4.0f, 3.0f, 4.0f);   //大きさ
 			m_manager->SetRotation(m_handle, 0.0f, 80.0f, 0.0f);
 			m_manager->SetSpeed(m_handle, 0.8f);
 
 			// 追い風2
 			m_handle = m_manager->Play(m_effect6, 2000.0f, 500.0f, 1500.0f);      //表示＆座標
-			m_manager->SetScale(m_handle, 3.0f, 3.0f, 3.0f);   //大きさ
+			m_manager->SetScale(m_handle, 4.0f, 3.0f, 4.0f);   //大きさ
 			m_manager->SetRotation(m_handle, 0.0f, 80.0f, 0.0f);
 			m_manager->SetSpeed(m_handle, 0.8f);
 
 			// 追い風3
-			m_handle = m_manager->Play(m_effect6, -3000.0f, 500.0f, 6000.0f);      //表示＆座標
-			m_manager->SetScale(m_handle, 3.0f, 3.0f, 3.0f);   //大きさ
+			m_handle = m_manager->Play(m_effect6, -3000.0f, 500.0f, 6100.0f);      //表示＆座標
+			m_manager->SetScale(m_handle, 4.0f, 3.0f, 5.0f);   //大きさ
 			m_manager->SetRotation(m_handle, 0.0f, 80.0f, 0.0f);
 			m_manager->SetSpeed(m_handle, 0.8f);
 
 			// 追い風4
 			m_handle = m_manager->Play(m_effect6, -3800.0f, 500.0f, 9000.0f);      //表示＆座標
-			m_manager->SetScale(m_handle, 3.0f, 3.0f, 3.0f);   //大きさ
+			m_manager->SetScale(m_handle, 2.0f, 3.0f, 2.0f);   //大きさ
 			m_manager->SetRotation(m_handle, 0.0f, 80.0f, 0.0f);
 			m_manager->SetSpeed(m_handle, 0.8f);
 
@@ -489,19 +489,19 @@ int EffectManager::Play(EEffect Handle)
 
 			// 左風1
 			m_handle = m_manager->Play(m_effect6, -3200.0f, 500.0f, 8400.0f);      //表示＆座標
-			m_manager->SetScale(m_handle, 3.0f, 3.0f, 3.0f);   //大きさ
+			m_manager->SetScale(m_handle, 2.0f, 3.0f, 2.0f);   //大きさ
 			m_manager->SetRotation(m_handle, 0.0f, 59.7f, 0.0f);
 			m_manager->SetSpeed(m_handle, 0.8f);
 
 			// 左風2
 			m_handle = m_manager->Play(m_effect6, -4200.0f, 500.0f, 9500.0f);      //表示＆座標
-			m_manager->SetScale(m_handle, 3.0f, 3.0f, 3.0f);   //大きさ
+			m_manager->SetScale(m_handle, 2.0f, 3.0f, 2.0f);   //大きさ
 			m_manager->SetRotation(m_handle, 0.0f, 59.7f, 0.0f);
 			m_manager->SetSpeed(m_handle, 0.8f);
 
 			// 右風1
-			m_handle = m_manager->Play(m_effect6, -4000.0f, 500.0f, 11300.0f);      //表示＆座標
-			m_manager->SetScale(m_handle, 3.0f, 3.0f, 3.0f);   //大きさ
+			m_handle = m_manager->Play(m_effect6, -3600.0f, 500.0f, 11300.0f);      //表示＆座標
+			m_manager->SetScale(m_handle, 6.0f, 3.0f, 3.0f);   //大きさ
 			m_manager->SetRotation(m_handle, 0.0f, 0.0f, 0.0f);
 			m_manager->SetSpeed(m_handle, 0.8f);
 
