@@ -176,7 +176,7 @@ void Cunt::Draw()
 		SetPolygonUV(0.0f, 0.0f);
 		SetPolygonFrameSize(1.0f, 1.0f);
 		DrawPolygon(pBC);
-		EffectManager::Play(GOAL_EFFECT);
+		
 		
 	}
 
