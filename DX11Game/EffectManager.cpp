@@ -581,7 +581,7 @@ int EffectManager::Play(EEffect Handle)
 			{
 				// ƒS[ƒ‹•—
 				time = 0;
-				m_handle = m_manager->Play(m_effect, -1000.0f, 1200.0f, 9000.0f);
+				m_handle = m_manager->Play(m_effect, 1000.0f, 10.0f, 11300.0f);
 				m_manager->SetScale(m_handle, 7.0f, 10.0f, 7.0f);
 				m_manager->SetSpeed(m_handle, 0.3f);
 				m_manager->SetAllColor(m_handle, Effekseer::Color(255, 255, 0.0f, 255));

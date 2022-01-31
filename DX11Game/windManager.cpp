@@ -106,7 +106,8 @@ WindManager::WindManager(EStage stage)
 		m_pWind[8].Create(XMFLOAT3(-4000.0f, 500.0f, 11300.0f), XMFLOAT3(1000.0f, 600.0f, 300.0f), XMFLOAT3(1.0f, 0.0f, 0.0f));    // 右風1
 		
 		// 追い風デバック用
-		m_pWind[9].Create(XMFLOAT3(-2000.0f, 1300.0f, 3000.0f), XMFLOAT3(600.0f, 600.0f, 600.0f), XMFLOAT3(0.0f, 0.0f, 1.0f));     // 追い風
+		//m_pWind[9].Create(XMFLOAT3(-2000.0f, 1300.0f, 3000.0f), XMFLOAT3(600.0f, 600.0f, 600.0f), XMFLOAT3(0.0f, 0.0f, 1.0f));     // 追い風
+		m_pWind[MAX_WIND - 1].Create(XMFLOAT3(1000.0f, 1000.0f, 11300.0f), XMFLOAT3(600.0f, 1200.0f, 600.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));  // ゴール
 
 		break;
 	case MAX_STAGE:
