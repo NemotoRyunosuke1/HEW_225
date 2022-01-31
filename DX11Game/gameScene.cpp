@@ -519,35 +519,6 @@ GameScene::GameScene(EStage stage)
 		InitMeshField(20, 20, 2000.0f, 2000.0f);
 
 		// ƒrƒ‹‚Ì”z’u
-		//for (int i = 0; i < 5; i++)  // áŠQ•¨
-		//{
-		//	for (int j = 0; j < 4; j++)
-		//	{
-		//		for (int k = 0; k < 2; k++)
-		//		{
-		//			for (int l = 0; l < 2; l++)
-		//			{
-		//				m_pBuliding[l + k * 2 + j * 4 + i * 16].Create(XMFLOAT3(-2900 + k * 300 + j * 900, 10, 0 + l * 300 + i * 1200), XMFLOAT3(10.0f, 10.0f + rand() % 5, 10.0f));
-		//			}
-		//		}
-		//	}
-		//}
-		//for (int i = 0; i < 30; i++)  // ‰¡
-		//{
-		//	for (int j = 0; j < 2; j++)
-		//	{
-		//		m_pBuliding[i + j * 30 + 80].Create(XMFLOAT3(-3500 + j * 4100, 10, -2100 + i * 300), XMFLOAT3(10.0f, 10.0f + rand() % 5, 10.0f));
-		//	}
-		//}
-		//for (int i = 0; i < 13; i++) // ƒS[ƒ‹‚ÌŒã‚ë
-		//{
-		//	m_pBuliding[i + 140].Create(XMFLOAT3(-3200 + i * 300, 10, 6600), XMFLOAT3(10.0f, 10.0f + rand() % 5, 10.0f));
-		//}
-		//
-		//for (int i = 0; i < 13; i++)
-		//{
-		//	m_pBuliding[i + 153].Create(XMFLOAT3(-3200 + i * 300, 10, -2100), XMFLOAT3(10.0f, 10.0f + rand() % 5, 10.0f));
-		//}
 		for (int i = 0; i < 8; i++)
 		{
 			m_pBuliding[i].Create(XMFLOAT3(-2000, 10, -1500 + i * 300), XMFLOAT3(10.0f, 10.0f + rand() % 5, 10.0f));
