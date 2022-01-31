@@ -185,31 +185,31 @@ void Pause::Draw()
 	SetPolygonAlpha(1.0f);
 	DrawPolygon(pBC);
 
-	// お題1
-	SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
-	SetPolygonSize(m_size.x, m_size.y);	// ポリゴンサイズ
-	SetPolygonPos(m_pos.x, m_pos.y);	// ポリゴン位置
-	SetPolygonTexture(m_pThemeTex1);	// ポリゴンテクスチャ
-	SetPolygonAlpha(1.0f);	// ポリゴン透明度
-	SetPolygonUV(0.0f, 0.0f);	// ポリゴンテクスチャ位置
-	DrawPolygon(pBC);			// ポリゴン描画
-	// お題1
-	SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
-	SetPolygonSize(m_size.x, m_size.y);	// ポリゴンサイズ
-	SetPolygonPos(m_pos.x, m_pos.y - m_size.y/2);	// ポリゴン位置
-	SetPolygonTexture(m_pThemeTex2);	// ポリゴンテクスチャ
-	SetPolygonAlpha(1.0f);	// ポリゴン透明度
-	SetPolygonUV(0.0f, 0.0f);	// ポリゴンテクスチャ位置
-	DrawPolygon(pBC);			// ポリゴン描画
-// お題1
-	SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
-	SetPolygonSize(m_size.x, m_size.y);	// ポリゴンサイズ
-	SetPolygonPos(m_pos.x, m_pos.y - m_size.y/2 * 2);	// ポリゴン位置
-	SetPolygonTexture(m_pThemeTex3);	// ポリゴンテクスチャ
-	SetPolygonAlpha(1.0f);	// ポリゴン透明度
-	SetPolygonUV(0.0f, 0.0f);	// ポリゴンテクスチャ位置
-	DrawPolygon(pBC);			// ポリゴン描画
-
+//	// お題1
+//	SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
+//	SetPolygonSize(m_size.x, m_size.y);	// ポリゴンサイズ
+//	SetPolygonPos(m_pos.x, m_pos.y);	// ポリゴン位置
+//	SetPolygonTexture(m_pThemeTex1);	// ポリゴンテクスチャ
+//	SetPolygonAlpha(1.0f);	// ポリゴン透明度
+//	SetPolygonUV(0.0f, 0.0f);	// ポリゴンテクスチャ位置
+//	DrawPolygon(pBC);			// ポリゴン描画
+//	// お題1
+//	SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
+//	SetPolygonSize(m_size.x, m_size.y);	// ポリゴンサイズ
+//	SetPolygonPos(m_pos.x, m_pos.y - m_size.y/2);	// ポリゴン位置
+//	SetPolygonTexture(m_pThemeTex2);	// ポリゴンテクスチャ
+//	SetPolygonAlpha(1.0f);	// ポリゴン透明度
+//	SetPolygonUV(0.0f, 0.0f);	// ポリゴンテクスチャ位置
+//	DrawPolygon(pBC);			// ポリゴン描画
+//// お題1
+//	SetPolygonColor(1.0f, 1.0f, 1.0f);	//ポリゴンカラー
+//	SetPolygonSize(m_size.x, m_size.y);	// ポリゴンサイズ
+//	SetPolygonPos(m_pos.x, m_pos.y - m_size.y/2 * 2);	// ポリゴン位置
+//	SetPolygonTexture(m_pThemeTex3);	// ポリゴンテクスチャ
+//	SetPolygonAlpha(1.0f);	// ポリゴン透明度
+//	SetPolygonUV(0.0f, 0.0f);	// ポリゴンテクスチャ位置
+//	DrawPolygon(pBC);			// ポリゴン描画
+//
 
 	// ボタン描画
 	for (int i = 0; i < MAX_BUTTON; i++)
