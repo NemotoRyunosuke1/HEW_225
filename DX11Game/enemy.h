@@ -20,5 +20,5 @@ void UpdateEnemy(void);
 void DrawEnemy(void);
 
 int EnemyStartChase(int i, XMFLOAT3 pos);
-void CreateEnemy(XMFLOAT3 pos, int hitrange, float searchenemyrange, int canserange);
+void CreateEnemy(XMFLOAT3 pos, int hitrange, float searchenemyrange, int canserange,int movespeed);
 void CollisionEnemy(XMFLOAT3 pos, XMFLOAT3 size1, XMFLOAT3 size2, bool aout);

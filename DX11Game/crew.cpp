@@ -42,7 +42,7 @@
 
 
 #define	CREW_RADIUS		    (20.0f)     // 境界球半径
-#define MAP_HIROSA          (20000)      // マップの広さ
+//#define MAP_HIROSA          (20000)      // マップの広さ
 
 #define CREW_LENGHT		(70)
 
@@ -221,40 +221,40 @@ void UpdateCrew(void)
 		
 
 		// 壁にぶつかった
-		bool lr = false, fb = false;
-		if (g_crew[i].m_pos.x < -MAP_HIROSA / 2) {
-			g_crew[i].m_pos.x = -MAP_HIROSA / 2;
-			lr = true;
-		}
-		if (g_crew[i].m_pos.x > MAP_HIROSA / 2) {
-			g_crew[i].m_pos.x = MAP_HIROSA / 2;
-			lr = true;
-		}
-		if (g_crew[i].m_pos.z < -MAP_HIROSA / 2) {
-			g_crew[i].m_pos.z = -MAP_HIROSA / 2;
-			fb = true;
-		}
-		if (g_crew[i].m_pos.z > MAP_HIROSA / 2) {
-			g_crew[i].m_pos.z = MAP_HIROSA / 2;
-			fb = true;
-		}
-		if (g_crew[i].m_pos.y < 0.0f) {
-			g_crew[i].m_pos.y = 0.0f;
-		}
-		if (g_crew[i].m_pos.y > 2000.0f) {
-			g_crew[i].m_pos.y = 2000.0f;
-		}
-		if (fabsf(g_crew[i].m_rot.y - g_crew[i].m_rotDest.y) < 0.0001f) {
-			if (lr) {
-				g_crew[i].m_move.x *= -1.0f;
-			}
-			if (fb) {
-				g_crew[i].m_move.z *= -1.0f;
-			}
-			if (lr || fb) {
-				g_crew[i].m_rotDest.y = XMConvertToDegrees(atan2f(-g_crew[i].m_move.x, -g_crew[i].m_move.z));
-			}
-		}
+		//bool lr = false, fb = false;
+		//if (g_crew[i].m_pos.x < -MAP_HIROSA / 2) {
+		//	g_crew[i].m_pos.x = -MAP_HIROSA / 2;
+		//	lr = true;
+		//}
+		//if (g_crew[i].m_pos.x > MAP_HIROSA / 2) {
+		//	g_crew[i].m_pos.x = MAP_HIROSA / 2;
+		//	lr = true;
+		//}
+		//if (g_crew[i].m_pos.z < -MAP_HIROSA / 2) {
+		//	g_crew[i].m_pos.z = -MAP_HIROSA / 2;
+		//	fb = true;
+		//}
+		//if (g_crew[i].m_pos.z > MAP_HIROSA / 2) {
+		//	g_crew[i].m_pos.z = MAP_HIROSA / 2;
+		//	fb = true;
+		//}
+		//if (g_crew[i].m_pos.y < 0.0f) {
+		//	g_crew[i].m_pos.y = 0.0f;
+		//}
+		//if (g_crew[i].m_pos.y > 2000.0f) {
+		//	g_crew[i].m_pos.y = 2000.0f;
+		//}
+		//if (fabsf(g_crew[i].m_rot.y - g_crew[i].m_rotDest.y) < 0.0001f) {
+		//	if (lr) {
+		//		g_crew[i].m_move.x *= -1.0f;
+		//	}
+		//	if (fb) {
+		//		g_crew[i].m_move.z *= -1.0f;
+		//	}
+		//	if (lr || fb) {
+		//		g_crew[i].m_rotDest.y = XMConvertToDegrees(atan2f(-g_crew[i].m_move.x, -g_crew[i].m_move.z));
+		//	}
+		//}
 
 		// 目的の角度までの差分
 		float fDiffRotX = g_crew[i].m_rotDest.x - g_crew[i].m_rot.x;

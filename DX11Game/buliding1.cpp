@@ -2,6 +2,8 @@
 
 #define MODEL_PLANE			"data/model/buliding2.fbx"
 
+CAssimpModel Buliding::m_model;
+bool Buliding::m_bLoad = false;
 
 Buliding::Buliding()
 {
@@ -14,18 +16,24 @@ Buliding::Buliding()
 	ID3D11Device* pDevice = GetDevice();
 	ID3D11DeviceContext* pDeviceContext = GetDeviceContext();
 	// モデルデータの読み込み
-	if (!m_model.Load(pDevice, pDeviceContext, MODEL_PLANE)) {
-		MessageBoxA(GetMainWnd(), "モデルデータ読み込みエラー", "InitModel", MB_OK);
+	if (!m_bLoad)
+	{
+		if (!m_model.Load(pDevice, pDeviceContext, MODEL_PLANE)) {
+			MessageBoxA(GetMainWnd(), "モデルデータ読み込みエラー", "InitModel", MB_OK);
+		}
+		m_bLoad = true;
 	}
+	
 	//m_model.GetMaterial();// ->SetReflectLight(XMFLOAT4(0.5f, 0.5f, 0.5f, 1.0f), XMFLOAT4(0.5f, 0.5f, 0.5f, 1.0f), XMFLOAT4(0.5f, 0.5f, 0.5f, 1.0f), XMFLOAT4(0.0f, 0.0f, 0.0f, 0.0f));
 	//m_model.GetMaterial()->SetReflectLight(XMFLOAT4(0.5f, 0.5f, 0.5f, 1.0f), XMFLOAT4(0.5f, 0.5f, 0.5f, 1.0f), XMFLOAT4(0.5f, 0.5f, 0.5f, 1.0f), XMFLOAT4(0.0f, 0.0f, 0.0f, 0.0f));
-	m_model.SetLight(XMFLOAT4(0.6f, 0.6f, 0.6f, 1.0f), XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f));
+	//m_model.SetLight(XMFLOAT4(0.6f, 0.6f, 0.6f, 1.0f), XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f), XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f));
 }
 
 Buliding::~Buliding()
 {
 	// モデルの解放
 	m_model.Release();
+	m_bLoad = false;
 }
 
 void Buliding::Update()
