@@ -18,6 +18,19 @@
 #define Result1			L"data/texture/resulttime/40second.png"		//条件1 [40秒残し]
 #define Result2			L"data/texture/resulttime/80second.png"		//条件2 [80秒残し]
 #define Result3			L"data/texture/resulttime/130second.png"		//条件3 [130秒残し]
+#define Result10			L"data/texture/10second.png"		//条件3 [130秒残し]
+#define Result20			L"data/texture/20second.png"		//条件3 [130秒残し]
+#define Result30			L"data/texture/30second.png"		//条件3 [130秒残し]
+#define Result40			L"data/texture/40second.png"		//条件3 [130秒残し]
+#define Result50			L"data/texture/50second.png"		//条件3 [130秒残し]
+#define Result60			L"data/texture/60second.png"		//条件3 [130秒残し]
+#define Result70			L"data/texture/70second.png"		//条件3 [130秒残し]
+#define Result80			L"data/texture/80second.png"		//条件3 [130秒残し]
+#define Result90			L"data/texture/90second.png"		//条件3 [130秒残し]
+#define Result100			L"data/texture/100second.png"		//条件3 [130秒残し]
+#define Result110			L"data/texture/110second.png"		//条件3 [130秒残し]
+#define Result120			L"data/texture/120second.png"		//条件3 [130秒残し]
+#define Result130			L"data/texture/130second.png"		//条件3 [130秒残し]
 
 #define FINISH			L"data/texture/ムレキドリUIまとめ4/GOAL!_00000(2).png"		//FINISH
 #define BACK			L"data/texture/back.png"		//FINISH
@@ -147,6 +160,205 @@ ResultScene::ResultScene()
 	{
 		m_bTrigger[i] = false;
 	}
+}
+ResultScene::ResultScene(EStage stage)
+{
+	//----------------
+	// 変数初期化
+	//----------------
+
+	// 星１
+	m_pos1 = XMFLOAT3(-300, 100, 0);
+	m_size1 = XMFLOAT3(100, 100, 0);
+	m_IconPos1 = XMFLOAT3(100, 100, 0);		// 位置
+	m_Iconsize1 = XMFLOAT3(100, 50, 0);	    // サイズ
+
+	/*
+	// 星２
+	m_pos2 = XMFLOAT3(300, 00, 0);
+	m_size2 = XMFLOAT3(100, 100, 0);
+	m_IconPos2 = XMFLOAT3(100, 100, 0);		// 位置
+	m_Iconsize2 = XMFLOAT3(100, 50, 0);	    // サイズ
+
+	// 星３
+	m_pos3 = XMFLOAT3(300, -100, 0);
+	m_size3 = XMFLOAT3(100, 100, 0);
+	m_IconPos3 = XMFLOAT3(100, 100, 0);		// 位置
+	m_Iconsize3 = XMFLOAT3(100, 50, 0);	    // サイズ
+	*/
+
+	// リザルトロゴ
+	m_pos4 = XMFLOAT3(0, 250, 0);
+	m_size4 = XMFLOAT3(500, 300, 0);
+	m_IconPos4 = XMFLOAT3(100, 100, 0);		// 位置
+	m_Iconsize4 = XMFLOAT3(100, 50, 0);	    // サイズ
+
+	// 条件1 [40秒残し]
+	m_pos5 = XMFLOAT3(0, 100, 0);
+	m_size5 = XMFLOAT3(500, 150, 0);
+	m_IconPos5 = XMFLOAT3(100, 100, 0);		// 位置
+	m_Iconsize5 = XMFLOAT3(100, 50, 0);	    // サイズ
+
+	// 条件2 [80秒残し]
+	m_pos6 = XMFLOAT3(0, 0, 0);
+	m_size6 = XMFLOAT3(500, 150, 0);
+	m_IconPos6 = XMFLOAT3(100, 100, 0);		// 位置
+	m_Iconsize6 = XMFLOAT3(100, 50, 0);	    // サイズ
+
+	// 条件3 [130秒残し]
+	m_pos7 = XMFLOAT3(0, -100, 0);
+	m_size7 = XMFLOAT3(500, 150, 0);
+	m_IconPos7 = XMFLOAT3(100, 100, 0);		// 位置
+	m_Iconsize7 = XMFLOAT3(100, 50, 0);	    // サイズ
+
+	// フィニッシュ
+	m_posFinish = XMFLOAT3(0, 00, 0);
+	m_sizeFinish = XMFLOAT3(400, 400, 0);
+	//// シーン遷移ロゴ
+	//m_pos8 = XMFLOAT3(0, 250, 0);
+	//m_size8 = XMFLOAT3(300, 100, 0);
+	//m_IconPos8 = XMFLOAT3(200, 200, 0);		// 位置
+	//m_Iconsize8 = XMFLOAT3(100, 50, 0);	    // サイズ
+
+	// Aで戻る
+	m_posAReturn = XMFLOAT3(SCREEN_WIDTH / 2.0f - 150, -SCREEN_HEIGHT / 2.0f + 50, 0);
+	m_sizeAReturn = XMFLOAT3(300, 100, 0);
+	m_posBackBG = XMFLOAT3(SCREEN_WIDTH / 2.0f - 150, -SCREEN_HEIGHT / 2.0f + 50, 0);
+	m_sizeBackBG = XMFLOAT3(300, 100, 0);
+	//--------------------
+	//テクスチャ読み込み
+	//--------------------
+
+	// 星１ 
+	ID3D11Device* pDevice = GetDevice();
+	CreateTextureFromFile(pDevice, Star1, &m_pIconTexture1);
+
+	// 星２ 
+	ID3D11Device* pDevice1 = GetDevice();
+	CreateTextureFromFile(pDevice1, Star2, &m_pIconTexture2);
+
+	// 星３ 
+	ID3D11Device* pDevice2 = GetDevice();
+	CreateTextureFromFile(pDevice2, Star3, &m_pIconTexture3);
+
+	// リザルトロゴ 
+	ID3D11Device* pDevice3 = GetDevice();
+	CreateTextureFromFile(pDevice3, Result, &m_pIconTexture4);
+
+	// 条件1 [40秒残し] 
+	ID3D11Device* pDevice4 = GetDevice();
+	CreateTextureFromFile(pDevice4, Result1, &m_pIconTexture5);
+
+	// 条件2 [80秒残し] 
+	ID3D11Device* pDevice5 = GetDevice();
+	CreateTextureFromFile(pDevice5, Result2, &m_pIconTexture6);
+
+	// 条件3 [130秒残し] 
+	ID3D11Device* pDevice6 = GetDevice();
+	CreateTextureFromFile(pDevice6, Result3, &m_pIconTexture7);
+
+	// FINISH
+	CreateTextureFromFile(pDevice6, FINISH, &m_pTextureFinish);
+
+	// Aで戻るテクスチャ読み込み
+	CreateTextureFromFile(pDevice6, BACK, &m_pTextureBack);
+	CreateTextureFromFile(pDevice6, BACK_BG, &m_pTextureBackBG);
+	// シーン遷移ロゴ 
+	//ID3D11Device* pDevice1 = GetDevice();
+	//CreateTextureFromFile(pDevice1, Result, &m_pIconTexture8);
+
+	// 変数初期化
+	m_fAlpha = 0.0f;	// 透明度
+	m_fAlphaFinish = 1.0f;
+	m_fTime = 0.0f;	//時間
+	m_fAnimTime = 0.0f;
+	m_nScore = 3;	// 星の数
+	m_bResult = false;
+	m_bResult2 = false;
+	for (int i = 0; i < 3; i++)
+	{
+		m_fStarAngle[i] = 0.0f;
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		m_bTrigger[i] = false;
+	}
+	switch (stage)
+	{
+	case STAGE_1:
+		// 条件1 [40秒残し] 
+		
+		CreateTextureFromFile(pDevice4, Result1, &m_pIconTexture5);
+
+		// 条件2 [80秒残し] 
+		
+		CreateTextureFromFile(pDevice5, Result2, &m_pIconTexture6);
+
+		// 条件3 [130秒残し] 
+		
+		CreateTextureFromFile(pDevice6, Result3, &m_pIconTexture7);
+
+		break;
+	case STAGE_2:
+		// 条件1 [40秒残し] 
+		CreateTextureFromFile(pDevice4, Result1, &m_pIconTexture5);
+
+		// 条件2 [80秒残し] 
+	
+		CreateTextureFromFile(pDevice5, Result2, &m_pIconTexture6);
+
+		// 条件3 [130秒残し] 
+		
+		CreateTextureFromFile(pDevice6, Result3, &m_pIconTexture7);
+
+		break;
+	case STAGE_3:
+		// 条件1 [40秒残し] 
+		
+		CreateTextureFromFile(pDevice4, Result40, &m_pIconTexture5);
+
+		// 条件2 [80秒残し] 
+	
+		CreateTextureFromFile(pDevice5, Result80, &m_pIconTexture6);
+
+		// 条件3 [130秒残し] 
+	
+		CreateTextureFromFile(pDevice6, Result100, &m_pIconTexture7);
+
+		break;
+	case STAGE_4:
+		// 条件1 [40秒残し] 
+		
+		CreateTextureFromFile(pDevice4, Result40, &m_pIconTexture5);
+
+		// 条件2 [80秒残し] 
+		
+		CreateTextureFromFile(pDevice5, Result80, &m_pIconTexture6);
+
+		// 条件3 [130秒残し] 
+		
+		CreateTextureFromFile(pDevice6, Result100, &m_pIconTexture7);
+		break;
+	case STAGE_5:
+		// 条件1 [40秒残し] 
+		
+		CreateTextureFromFile(pDevice4, Result40, &m_pIconTexture5);
+
+		// 条件2 [80秒残し] 
+		
+		CreateTextureFromFile(pDevice5, Result80, &m_pIconTexture6);
+
+		// 条件3 [130秒残し] 
+	
+		CreateTextureFromFile(pDevice6, Result100, &m_pIconTexture7);
+
+		break;
+	case MAX_STAGE:
+		break;
+	default:
+		break;
+	}
+
 }
 //=============================================================================
 // デストラクタ

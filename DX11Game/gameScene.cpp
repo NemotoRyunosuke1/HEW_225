@@ -252,7 +252,7 @@ GameScene::GameScene(EStage stage)
 	m_pScoreUI = new ScoreUI;
 
 	// リザルトシーン初期化
-	m_pResult = new ResultScene;
+	m_pResult = new ResultScene(m_eStage);
 
 	// レバガチャ初期化
 	m_pLever = new Lever;

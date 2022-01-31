@@ -7,11 +7,11 @@
 TitleButton::TitleButton()
 {
 	m_pButton = new Button[MAX_TITLE_BUTTON];
-	m_pButton[0].CreateButton(XMFLOAT3(650,180,0), XMFLOAT3(360, -30, 0),START_1_TBTN );
-	m_pButton[0].SetSelect(true);
-	m_pButton[1].CreateButton(XMFLOAT3(650, 180,0), XMFLOAT3(360, -150, 0),OPTION_1_TBTN );
+	//m_pButton[0].CreateButton(XMFLOAT3(650,180,0), XMFLOAT3(360, -30, 0),START_1_TBTN );
+	//m_pButton[0].SetSelect(true);
+	m_pButton[1].CreateButton(XMFLOAT3(650, 180,0), XMFLOAT3(360, -150, 0), START_1_TBTN);
 	m_pButton[2].CreateButton(XMFLOAT3(650, 180,0), XMFLOAT3(360, -270, 0),ENDGAME_1_TBTN );
-	m_cnt = 0;
+	m_cnt = 1;
 	m_Trigger = false;
 	m_NextScene = false;
 	m_Option = false;
@@ -62,7 +62,7 @@ void TitleButton::Update()
 		{
 			m_cnt--;
 			m_Trigger = true;
-			if (m_cnt < 0) m_cnt = 0;
+			if (m_cnt <1) m_cnt = 1;
 		}
 	}
 	else
@@ -73,13 +73,13 @@ void TitleButton::Update()
 	if (GetKeyRelease(VK_W) || GetKeyRelease(VK_UP))
 	{
 		m_cnt--;
-		if (m_cnt < 0) m_cnt = 2;
+		if (m_cnt < 1) m_cnt = 2;
 	}
 	if (GetKeyRelease(VK_S) || GetKeyRelease(VK_DOWN))
 	{
 		
 		m_cnt++;
-		if (m_cnt > 2) m_cnt = 0;
+		if (m_cnt > 2) m_cnt = 1;
 	}
 
 	for (int i = 0; i < 3; i++)
@@ -114,7 +114,7 @@ void TitleButton::Update()
 	}
 	
 	// ステージセレクトボタン
-	m_NextScene = m_pButton[0].GetFlg();
+	m_NextScene = m_pButton[1].GetFlg();
 	
 	// オプションボタン
 	m_Option = m_pButton[1].GetFlg();

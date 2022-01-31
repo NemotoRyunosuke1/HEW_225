@@ -48,7 +48,7 @@ StageSelectBG::StageSelectBG(TStage* pStage )
 	for (int i = 0; i < MAX_STAGE; i++,pStage++)
 	{
 		m_tStage[i].m_bClear = pStage->m_bClear;
-		m_tStage[i].m_nStar = pStage[i].m_nStar;
+		m_tStage[i].m_nStar = pStage->m_nStar;
 	}
 	
 }

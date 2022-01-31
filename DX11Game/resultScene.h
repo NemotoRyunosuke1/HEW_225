@@ -14,6 +14,7 @@ class ResultScene :public SceneBase
 {
 public:
 	ResultScene();
+	ResultScene(EStage stage);
 	~ResultScene();
 
 	void Update();
