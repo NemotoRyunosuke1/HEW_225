@@ -224,7 +224,7 @@ int EffectManager::Play(EEffect Handle)
 	case ACCELERATION_EFFECT_LEFT:
 		if (time > 10.0f)
 		{
-			//‰Á‘¬
+			//‰Á‘¬@//
 			time = 0;
 			m_handle = m_manager->Play(m_effect7, GetModelPos().x, GetModelPos().y, GetModelPos().z);      //•\Ž¦•À•W
 			m_manager->SetScale(m_handle, 4.0f, 4.0f, 4.0f);   //‘å‚«‚³
@@ -233,6 +233,7 @@ int EffectManager::Play(EEffect Handle)
 			m_manager->SetSpeed(m_handle, 1.0f);
 		}
 		break;
+
 	case ACCELERATION_EFFECT_LIGHT:
 		if (time > 10.0f)
 		{
