@@ -692,7 +692,7 @@ void UpdateModel(void)
 		g_stm -= WING_STN_DICREASE;	// スタミナ減少
 
 		//加速エフェクト
-		EffectManager::Play(ACCELERATION_EFFECT);
+		EffectManager::Play(ACCELERATION_EFFECT_LEFT);
 	}
 
 	// スペースキー羽ばた
@@ -709,8 +709,20 @@ void UpdateModel(void)
 		g_stm -= WING_STN_DICREASE;	// スタミナ減少
 
 		//加速エフェクト
-		EffectManager::Play(ACCELERATION_EFFECT);
+		//EffectManager::Play(ACCELERATION_EFFECT);
 		
+
+		//左向いている時
+		if (GetModelRotLight().x <= 0.0f)
+		{
+			EffectManager::Play(ACCELERATION_EFFECT_LEFT);
+		}
+		//右向いている時
+		if (GetModelRotLight().x >= 0.0f)
+		{
+			EffectManager::Play(ACCELERATION_EFFECT_LIGHT);
+		}
+
 		/*CSound::SetVolume(SE_SWING, 5.0f);
 		CSound::Play(SE_SWING);*/
 		//g_rotDestModel.y += 1.0f;// *g_rotDestModel.y / 10;

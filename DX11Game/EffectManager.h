@@ -29,7 +29,8 @@ enum EEffect
 	SAND_EFFECT,
 	GOAL_EFFECT,
 	WIND_EFFECT,
-	ACCELERATION_EFFECT,
+	ACCELERATION_EFFECT_LEFT,
+	ACCELERATION_EFFECT_LIGHT,
 
 	NONE_EFFECT,
 	MAX_EFFECT
@@ -66,6 +67,7 @@ private:
 	static Effekseer::EffectRef m_effect5;	//風_上_黄色
 	static Effekseer::EffectRef m_effect6;	//風_横_ver2
 	static Effekseer::EffectRef m_effect7;	//加速エフェクト
+	static Effekseer::EffectRef m_effect8;	//加速エフェクト
 	static Effekseer::Handle m_handle;
 
 	static EStage m_estage;
