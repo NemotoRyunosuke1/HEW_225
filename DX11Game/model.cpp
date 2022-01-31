@@ -691,8 +691,20 @@ void UpdateModel(void)
 		g_bWing = true;
 		g_stm -= WING_STN_DICREASE;	// スタミナ減少
 
-		//加速エフェクト
-		EffectManager::Play(ACCELERATION_EFFECT_LEFT);
+		////加速エフェクト
+		//EffectManager::Play(ACCELERATION_EFFECT_LEFT);
+
+		//左向いている時
+		if (GetModelRotLight().x <= 0.0f)
+		{
+			EffectManager::Play(ACCELERATION_EFFECT_LEFT);
+		}
+		//右向いている時
+		if (GetModelRotLight().x >= 0.0f)
+		{
+			EffectManager::Play(ACCELERATION_EFFECT_LIGHT);
+		}
+
 	}
 
 	// スペースキー羽ばた
