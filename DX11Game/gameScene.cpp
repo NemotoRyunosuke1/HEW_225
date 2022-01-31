@@ -258,7 +258,7 @@ GameScene::GameScene(EStage stage)
 
 	
 	// タイマーUI初期化
-	m_pTimerUI = new TimerUI;
+	//m_pTimerUI = new TimerUI;
 
 	// チュートリアル初期化
 	m_pTutorial = new Tutorial;
@@ -271,6 +271,9 @@ GameScene::GameScene(EStage stage)
 	case STAGE_1:	// ステージ1
 		// 地面の配置
 		InitMeshField(20, 20, 2000.0f, 2000.0f);
+
+		// タイマーUI初期化
+		m_pTimerUI = new TimerUI(60.0f,180.0f, 40.0f, 60, 120);
 
 		// ビルの配置
 		for (int i = 0; i < 8; i++)  // 左横
@@ -342,6 +345,9 @@ GameScene::GameScene(EStage stage)
 		// 地面の配置
 		InitMeshField(20, 20, 2000.0f, 2000.0f);
 
+		// タイマーUI初期化
+		m_pTimerUI = new TimerUI;
+
 		// ビルの配置
 		for (int i = 0; i < 5; i++)  // プレイヤー初期値の前
 		{
@@ -386,6 +392,9 @@ GameScene::GameScene(EStage stage)
 	case STAGE_3:	// ステージ3
 		// 地面の配置
 		InitMeshField(20, 20, 2000.0f, 2000.0f);
+
+		// タイマーUI初期化
+		m_pTimerUI = new TimerUI;
 
 		// ビルの配置
 		for (int i = 0; i < 30; i++)  // 横
@@ -449,6 +458,9 @@ GameScene::GameScene(EStage stage)
 			// 地面の配置
 		InitMeshField(20, 20, 2000.0f, 2000.0f);
 
+		// タイマーUI初期化
+		m_pTimerUI = new TimerUI;
+
 		// 仲間の配置
 		CrewCreate(XMFLOAT3(-1000.0f, 500.0f, 900.0f));// 1
 		CrewCreate(XMFLOAT3(-1900.0f, 500.0f, 1100.0f));// 2
@@ -507,6 +519,9 @@ GameScene::GameScene(EStage stage)
 	case STAGE_5:	// ステージ5
 		// 地面の配置
 		InitMeshField(20, 20, 2000.0f, 2000.0f);
+
+		// タイマーUI初期化
+		m_pTimerUI = new TimerUI;
 
 		// ビルの配置
 	//for (int i = 0; i < 5; i++)  // 障害物
@@ -1112,9 +1127,11 @@ void GameScene::Draw()
 #if _DEBUG
 	m_pWindManager->Draw();
 #endif
-	
+	//m_pWindManager->Draw();
 	// モデル描画
 	DrawModel();
+
+	
 	
 	// 2D描画
 	// Zバッファ無効(Zチェック無&Z更新無)

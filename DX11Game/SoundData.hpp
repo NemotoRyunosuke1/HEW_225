@@ -24,6 +24,8 @@ LPCWSTR g_pszFileSE[MAX_SE] = {
 	L"paper.mp3",						// 紙音
 	L"goal4.mp3",						// ゴール音
 	L"ster.mp3",						// スター音
+	L"hue.mp3",						// timeup音
+	L"heal2.mp3",						// 回復音
 
 
 };
