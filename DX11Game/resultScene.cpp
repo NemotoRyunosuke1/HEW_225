@@ -288,28 +288,28 @@ ResultScene::ResultScene(EStage stage)
 	case STAGE_1:
 		// ğŒ1 [40•bc‚µ] 
 		
-		CreateTextureFromFile(pDevice4, Result1, &m_pIconTexture5);
+		CreateTextureFromFile(pDevice4, Result40, &m_pIconTexture5);
 
 		// ğŒ2 [80•bc‚µ] 
 		
-		CreateTextureFromFile(pDevice5, Result2, &m_pIconTexture6);
+		CreateTextureFromFile(pDevice5, Result60, &m_pIconTexture6);
 
 		// ğŒ3 [130•bc‚µ] 
 		
-		CreateTextureFromFile(pDevice6, Result3, &m_pIconTexture7);
+		CreateTextureFromFile(pDevice6, Result120, &m_pIconTexture7);
 
 		break;
 	case STAGE_2:
 		// ğŒ1 [40•bc‚µ] 
-		CreateTextureFromFile(pDevice4, Result1, &m_pIconTexture5);
+		CreateTextureFromFile(pDevice4, Result40, &m_pIconTexture5);
 
 		// ğŒ2 [80•bc‚µ] 
 	
-		CreateTextureFromFile(pDevice5, Result2, &m_pIconTexture6);
+		CreateTextureFromFile(pDevice5, Result80, &m_pIconTexture6);
 
 		// ğŒ3 [130•bc‚µ] 
 		
-		CreateTextureFromFile(pDevice6, Result3, &m_pIconTexture7);
+		CreateTextureFromFile(pDevice6, Result130, &m_pIconTexture7);
 
 		break;
 	case STAGE_3:
